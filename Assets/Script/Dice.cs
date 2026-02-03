@@ -15,8 +15,17 @@ public class Dice : MonoBehaviour
 
     public void Initialize(int index, DiceData data)
     {
-        MyState = new DiceState(data, index, 1);
-        UpdateDiceImage(1);
+        if(data == null)
+        {
+            gameObject.SetActive(false);
+            MyState = null;
+        }       
+        else
+        {
+            gameObject.SetActive(true);
+            MyState = new DiceState(data, index, 1);
+            UpdateDiceImage(1);
+        }   
     }
 
     public void UpdateDiceImage(int value)

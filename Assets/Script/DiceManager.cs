@@ -20,6 +20,8 @@ public class DiceManager : MonoBehaviour
     [Header("주사위 데이터")]
     public List<DiceData> diceDatas;
 
+    [Header("플레이어 정보")]
+    public PlayerSo player;
 
     [Header("기본 설정")]
     public DiceData defaultDiceData;
@@ -37,13 +39,27 @@ public class DiceManager : MonoBehaviour
         {
             GameManager.instance.diceManager = this;
         }
+        
+        SetupUseDiceScript();
 
         SetupDiceBoard();
 
         _originalPosition = new Vector3[panelDiceScript.Length];
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            _originalPosition[i] = panelDiceScript[i].transform.position;
+            if(panelDiceScript[i] != null)
+                _originalPosition[i] = panelDiceScript[i].transform.position;
+        }
+    }
+
+    public void SetupUseDiceScript()
+    {
+        for(int i = 0;i< panelDiceScript.Length; i++)
+        {
+            if (!panelDiceScript[i].gameObject.activeSelf)
+            {
+                panelDiceScript[i] = null;
+            }
         }
     }
 
@@ -52,14 +68,20 @@ public class DiceManager : MonoBehaviour
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
             DiceData dataToUse = defaultDiceData;
-            if(i < diceDatas.Count && diceDatas[i] != null)
-            {
-                dataToUse = diceDatas[i];
-            }
 
-            panelDiceScript[i].Initialize(i, dataToUse);
+            //if(i < diceDatas.Count && diceDatas[i] != null)
+            //{
+            //    dataToUse = diceDatas[i];
+            //}
+            
+            dataToUse = player.DiceSo[i];
+            if(panelDiceScript [i] != null)
+                panelDiceScript[i].Initialize(i, dataToUse);
+            
         }
     }
+
+
 
     public void StartRolling()
     {

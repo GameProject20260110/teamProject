@@ -12,20 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31c274f08b97a844ca9329e48847c2fd, type: 3}
   m_Name: player
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSo
-  itemSo1:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   DiceSo:
-  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
+  - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
+  - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
   - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
   - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
   heart: 0
   gold: 24
   roundScore: 1234

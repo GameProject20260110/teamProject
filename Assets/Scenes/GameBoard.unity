@@ -3755,17 +3755,15 @@ MonoBehaviour:
   - {fileID: 494824176}
   - {fileID: 946507316}
   - {fileID: 1193525359}
-  boardResultImage:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  diceAbilities:
+  diceDatas:
   - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
-  defaultDiceAbilit: {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
-  defaultDiceSkin: {fileID: 11400000, guid: a2a0f760336f6a2479154757fbdc27b7, type: 2}
+  - {fileID: 11400000, guid: 1825aa418ee355c4e89dc42f257584d7, type: 2}
+  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
+  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
+  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
+  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
+  player: {fileID: 11400000, guid: 8a24a149812fe8e4ebac57431cd58922, type: 2}
+  defaultDiceData: {fileID: 0}
 --- !u!4 &1601443937
 Transform:
   m_ObjectHideFlags: 0
