@@ -5,7 +5,7 @@ using System.Collections.Generic;
 public class Wand : ItemSo
 {
     public int bonusScore = 2;
-    public override void RoundStart(DiceState myState, List<DiceState> allDice, ref int totalSoce, List<ScoreEventData> events)
+    public override void RoundStart(List<DiceState> allDice, ref int totalSoce, List<ScoreEventData> events)
     {
         foreach (var dice in allDice)
         {

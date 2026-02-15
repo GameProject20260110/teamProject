@@ -12,15 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91b5591c5edbfc644a5319a1927274e9, type: 3}
   m_Name: 24.mut
   m_EditorClassIdentifier: Assembly-CSharp::MutDiceAbility
-  type: 3
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 3
   diceNum: 24
   abilityName: "\uBB34\uD2B8 \uC8FC\uC0AC\uC704"
-  weight: 50
   gold: 1
   sell: 0
   Desc: "[\uBB34\uD2B8 \uC8FC\uC0AC\uC704]\n\u2605\n\n\uC0C1\uC810\uC758 \uBB34\uC791\uC704
     \uC8FC\uC0AC\uC704 \uD6A8\uACFC\uB85C \uC774 \uC8FC\uC0AC\uC704\uC758 \uD6A8\uACFC\uB97C
     \uBCC0\uACBD\uD55C\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561: 1Gold"
   skin: {fileID: 11400000, guid: ce5bcf68c9f9e1544b1789167b164fec, type: 2}
+  gacha: {fileID: 11400000, guid: 3100cef10b54e704098fca9673883448, type: 2}

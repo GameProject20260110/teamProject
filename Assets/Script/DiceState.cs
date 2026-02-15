@@ -16,6 +16,7 @@ public class DiceState
     public bool change;
 
     public bool isIgnored = false;
+    public bool isMulti = false;
     public int multiBonusScore;
     public int plusBonusScore;
 
@@ -32,6 +33,7 @@ public class DiceState
         scoreValue = value;
         changeValue = 0;
         change = false;
+        isMulti = false;
         isIgnored = false;
 
         if(data != null)

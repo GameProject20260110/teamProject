@@ -1951,7 +1951,7 @@ MonoBehaviour:
   heart: 0
   gold: 50
   hasShoes: 0
-  dices: {fileID: 0}
+  dices: {fileID: 11400000, guid: f2ea0edc6ebbc704f87f6da0a1eefcbc, type: 2}
   diceManager: {fileID: 1601443936}
   maxRerollCount: 1
   currentScore: 0
@@ -4512,7 +4512,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DIceController
   isTestMode: 1
   testAbilities:
-  - {fileID: 11400000, guid: 33b6fca4d8cbe5d4f87e0d19cba77511, type: 2}
+  - {fileID: 11400000, guid: a66ee5bafdf4c7b4aa2eba95e416bf9d, type: 2}
   - {fileID: 11400000, guid: d85d0fbb8eb846840959456dadbb3d2b, type: 2}
   - {fileID: 11400000, guid: af172d08c85afa34fa7094152de468e1, type: 2}
   - {fileID: 11400000, guid: 25264d68415b27543aec5816f4f8bcd1, type: 2}

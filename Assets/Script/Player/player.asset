@@ -13,19 +13,20 @@ MonoBehaviour:
   m_Name: player
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSo
   itemSo:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 0a638f1b9a484b54190abf67736c33e2, type: 2}
+  - {fileID: 11400000, guid: 0a638f1b9a484b54190abf67736c33e2, type: 2}
+  - {fileID: 11400000, guid: 0a638f1b9a484b54190abf67736c33e2, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   DiceSo:
+  - {fileID: 11400000, guid: 33b6fca4d8cbe5d4f87e0d19cba77511, type: 2}
+  - {fileID: 11400000, guid: bbefd29e5bebaa54c8b8a4a6c628e981, type: 2}
   - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
-  - {fileID: 11400000, guid: e3869276cba878047af376fe3cd215d6, type: 2}
-  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
-  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
-  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
-  - {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
+  - {fileID: 11400000, guid: 3277e2ae45ba67244b90ea71b4079c28, type: 2}
+  - {fileID: 11400000, guid: fef8e39bfb53ecd4e8d246001872c2b1, type: 2}
+  - {fileID: 11400000, guid: a758304e389a93f4ab1277099afc2a44, type: 2}
+  gold: 0
   bestRound: 7
   bestScore: 1231

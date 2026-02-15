@@ -15,10 +15,10 @@ MonoBehaviour:
   itemIcon: {fileID: -6416704506416456542, guid: 824d49beeeab6954e8b9250480e1bdd3, type: 3}
   itemNum: 3
   itemName: "\uB9C8\uC11D"
-  weight: 10
   gold: 5
   sell: 0
-  effectNum: 1
+  isConsumable: 1
   itemDesc: "[\uBC29\uD328]\n\u2605\u2605\u2605\u2605\u2605\n\n\uD50C\uB808\uC774\uC5B4\uC5D0\uAC8C
     \uD558\uD2B8 \uD558\uB098\uB97C \uCD94\uAC00\uD55C\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561:
     5Gold"
+  bonusScore: 2

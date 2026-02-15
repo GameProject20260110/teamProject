@@ -34,12 +34,14 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
+
+
         // 점수 로직
         // 1. 룰상 효과
         foreach (var state in simulationStates)
         {
 
-            if (state == null || state.isIgnored) continue;
+            //if (state == null || state.isIgnored) continue;
             state.diceData.OnRuleEffect(state, simulationStates, scoreEvents);
         }
 
@@ -60,8 +62,18 @@ public class ScoreManager : MonoBehaviour
                 continue;
             }
 
-            totalScore += state.scoreValue;
-            scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, totalScore, $"+{state.scoreValue}"));
+            if (state.isMulti)
+            {
+                totalScore *= state.scoreValue;
+                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, state.diceIndex, totalScore, $"x{state.scoreValue}"));
+            }
+            else
+            {
+                totalScore += state.scoreValue;
+                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, totalScore, $"+{state.scoreValue}"));
+            }
+
+            
             state.diceData.CalculateEffect(state, simulationStates, ref totalScore, scoreEvents);
         }
 

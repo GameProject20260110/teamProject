@@ -5,15 +5,15 @@ using UnityEngine;
 
 public class ShopItem : MonoBehaviour
 {
+    public static ShopItem instance;
 
-    int totalDice = 0;
-    int totalItem = 0;
     BuyDice[] buyDice;
     BuyItem[] buyItem;
+    public bool hasShoes = false;
 
-    [Header("데이터 베이스")]
-    public ItemSo[] itemDB;
-    public DiceData[] DiceDB;
+    [Header("가챠 데이터")]
+    public DiceGachaTable diceGacha;
+    public ItemGachaTable itemGacha;
     
     [Header("구매 아이템 슬롯")]
     public ItemSlot[] itemSlots;
@@ -26,11 +26,19 @@ public class ShopItem : MonoBehaviour
     public GameObject myDicePanel;
     public GameObject Iventory;
 
+    private void Awake()
+    {
+        if(instance == null)
+        {
+            instance = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
 
-    int randomIndex = -1;
-    //List<int> usedIndex = new List<int>();
-
-    void Start()
+    private void Start()
     {
         SetUp();
         Reroll();
@@ -38,29 +46,21 @@ public class ShopItem : MonoBehaviour
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
     }
 
-    public void Reroll()
+
+
+    private void Reroll()
     {
         RerollDice();
         ReRollItem();
     }
 
-    public void SetUp()
+    private void SetUp()
     {
         buyDice = new BuyDice[DiceSlotNum];
         buyItem = new BuyItem[itemSlotNum];
-
-        for (int i = 0; i < DiceDB.Length; i++)
-        {
-            totalDice += DiceDB[i].weight;
-        }
-
-        for (int i = 0; i < itemDB.Length; i++)
-        {
-            totalItem += itemDB[i].weight;
-        }
+        hasShoes = false;
 
         BuyDice slotChildDice = null;
-        
 
         for (int i = myDicePanel.transform.childCount - 1; i >= 0; i--)
         {
@@ -90,42 +90,7 @@ public class ShopItem : MonoBehaviour
         }
     }
 
-    int RandomDice()
-    {
-        int weight = 0;
-        int selectNum = 0; 
-        selectNum = Mathf.RoundToInt(totalDice * Random.Range(0.0f,1.0f));
-
-        for(int i = 0; i < DiceDB.Length; i++)
-        {
-            weight += DiceDB[i].weight;
-            if(selectNum <= weight)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-    int RandomItem()
-    {
-        int weight = 0;
-        int selectNum = 0;
-        selectNum = Mathf.RoundToInt(totalItem * Random.Range(0.0f, 1.0f));
-
-        for (int i = 0; i < itemDB.Length; i++)
-        {
-            weight += itemDB[i].weight;
-            if (selectNum <= weight)
-            {
-                return i;
-            }
-        }
-        return -1;
-    }
-
-
-    void RerollDice()
+    private void RerollDice()
     {
         for (int i = 0; i < DiceSlotNum; i++)
         {
@@ -141,14 +106,13 @@ public class ShopItem : MonoBehaviour
                 buyDice[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
 
-            randomIndex = RandomDice();
-
-            buyDice[i].UpdateDiceInfo(DiceDB[randomIndex], false);
+            DiceData dice = diceGacha.Roll();
+            buyDice[i].UpdateDiceInfo(dice, false);
 
         }
     }
 
-    void ReRollItem()
+    private void ReRollItem()
     {
         for(int i = 0; i < itemSlotNum; i++)
         {
@@ -164,17 +128,11 @@ public class ShopItem : MonoBehaviour
                 buyItem[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
 
-
-            randomIndex = RandomItem();
-
-            buyItem[i].UpdateInfo(itemDB[randomIndex], false);
+            ItemSo item = itemGacha.Roll();
+            buyItem[i].UpdateInfo(item, false);
         }
 
     }
-
-
-
-
 
     public void SelectDiceComb()
     {
@@ -185,7 +143,7 @@ public class ShopItem : MonoBehaviour
             myDicePanelSlot = myDicePanel.transform.GetChild(i).gameObject;
             if (myDicePanelSlot.transform.childCount == 0)
             {
-                Player.instance.PushPlayerDices(Player.instance.defaultDice);
+                Player.instance.PushPlayerDices(Player.instance.defaultDice,i);
 
             }
         }

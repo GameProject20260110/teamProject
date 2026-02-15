@@ -47,7 +47,7 @@ public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
         if (eventData.button == PointerEventData.InputButton.Right && bought)
         {
             Debug.Log(index);
-            if(GameManager.instance.hasShoes) 
+            if(ShopItem.instance.hasShoes) 
                 DescManager.instance.SellGold(DiceInfo.gold);
             else
                 DescManager.instance.SellGold(DiceInfo.sell);

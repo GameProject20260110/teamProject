@@ -65,7 +65,7 @@ public class DiceSelectManager : MonoBehaviour
             synergyDice = Synergy.transform.GetChild(i);
             if (!synergyDice.gameObject.activeSelf)
             {
-                Player.instance.PushPlayerDices(Player.instance.defaultDice);
+                Player.instance.PushPlayerDices(Player.instance.defaultDice,i);
                 synergyDice.GetComponent<SynergyDice>().UpdateDiceInfo(Player.instance.defaultDice);
                 synergyDice.gameObject.SetActive(true);
             }
