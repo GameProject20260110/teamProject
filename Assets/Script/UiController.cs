@@ -17,6 +17,7 @@ public class UiController : MonoBehaviour
     public TextMeshProUGUI lifeText;     
     public TextMeshProUGUI targetScoreInfoText;
     public TextMeshProUGUI myScoreInfoText;
+    public TextMeshProUGUI goldText;
 
     [Header("라운드 결과 패널 (승리/패배)")]
     public GameObject resultPanel;
@@ -35,6 +36,14 @@ public class UiController : MonoBehaviour
     public Button rollBtn;
     public TextMeshProUGUI rerollText;
 
+    [Header("확정 버튼")]
+    public Button confirmBtn;
+
+    [Header("라이프")]
+    public Transform lifeContainer;
+    public Image heartPrefab;
+
+    private List<Image> lifeHearts = new List<Image>();
 
     private void Awake()
     {
@@ -51,25 +60,86 @@ public class UiController : MonoBehaviour
     private void Start()
     {
         //AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
+
+        if(GameManager.instance != null)
+        {
+            SubscribeToEvents();
+            GameManager.instance.NotifyAllUI();
+        }
     }
 
-    public void UpdateInGameInfo(int round, int lives, int currentScore, int targetScore)
+    private void OnDisable()
     {
-        if(roundInfoText)
+        if (GameManager.instance != null) UnSubscribeToEvents();
+    }
+
+    private void SubscribeToEvents()
+    {
+        GameManager.instance.OnGoldChanged += UpdateGoldUi;
+        GameManager.instance.OnScoreChanged += UpdateScoreUi;
+        GameManager.instance.OnLivesChanged += UpdateLivesUi;
+        GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
+        GameManager.instance.OnRerollCountChanged += UPdateRerollUi;
+    }
+
+    private void UnSubscribeToEvents()
+    {
+        GameManager.instance.OnGoldChanged -= UpdateGoldUi;
+        GameManager.instance.OnScoreChanged -= UpdateScoreUi;
+        GameManager.instance.OnLivesChanged -= UpdateLivesUi;
+        GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
+        GameManager.instance.OnRerollCountChanged -= UPdateRerollUi;
+    }
+
+    private void UpdateGoldUi(int gold)
+    {
+        if(goldText != null)
         {
-            roundInfoText.text = $"Round: {round.ToString()}";
+            goldText.text = gold.ToString("N0");
         }
-        if(lifeText)
+    }
+
+    private void UpdateScoreUi(int score)
+    {
+        if(myScoreInfoText != null)
         {
-            lifeText.text = $"Lives: {lives.ToString()}";
+            myScoreInfoText.SetText("{0}", score);
         }
-        if(targetScoreInfoText)
+    }
+
+    private void UpdateLivesUi(int lives)
+    {
+        while(lifeHearts.Count < lives)
         {
-            targetScoreInfoText.text = $"Target Score: {targetScore.ToString()}";
+            Image newHeart = Instantiate(heartPrefab, lifeContainer);
+
+            lifeHearts.Add(newHeart);
         }
-        if(myScoreInfoText)
+
+        for(int i = 0; i < lifeHearts.Count; i++)
         {
-            myScoreInfoText.text = $"My Score: {currentScore.ToString()}";
+            if(i < lives)
+            {
+                lifeHearts[i].gameObject.SetActive(true);
+            }
+            else
+            {
+                lifeHearts[i].gameObject.SetActive(false);
+            }
+        }
+    }
+
+    private void UpdateRoundAndGoalUi(int round, int targetScore)
+    { 
+        Debug.Log($"[UI] 라운드 갱신 시도: Round {round}, Target {targetScore}");
+        if (roundInfoText != null)
+        {
+            roundInfoText.SetText("{0}", round);
+        }
+
+        if (targetScoreInfoText != null)
+        {
+            targetScoreInfoText.SetText("target score : {0}", targetScore);
         }
     }
 
@@ -161,11 +231,11 @@ public class UiController : MonoBehaviour
         }
     }
 
-    public void UpdateRerollInfo(int count, bool isFirst)
+    public void UPdateRerollUi(int count)
     {
         if(rerollText != null)
         {
-            rerollText.text = isFirst ? "Roll" : $"Reroll :{count}";
+            rerollText.SetText("Reroll: {0}", count);
         }
     }
 
@@ -174,6 +244,14 @@ public class UiController : MonoBehaviour
         if(rollBtn != null)
         {
             rollBtn.interactable = state;
+        }
+    }
+
+    public void SetConfirmBtnInteratable(bool state)
+    {
+        if (confirmBtn != null)
+        {
+            confirmBtn.interactable = state;
         }
     }
 

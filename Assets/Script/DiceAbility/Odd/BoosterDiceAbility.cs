@@ -28,7 +28,6 @@ public class BoosterDiceAbility : DiceData
             {
                 GameManager.instance.hasUsedPlusReroll = true;
                 GameManager.instance.CurrentRerollCount++;
-                UiController.instance.UpdateRerollInfo(GameManager.instance.CurrentRerollCount, false);
                 events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, 0, "Booster +1 Reroll"));
             }
         }
