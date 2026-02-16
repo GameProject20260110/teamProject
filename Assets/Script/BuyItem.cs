@@ -37,8 +37,7 @@ public class BuyItem : BuyThings, IPointerClickHandler, IEndDragHandler
         {
             DescManager.instance.SellGold(itemInfo.sell);
             Player.instance.PullPlayerItems(itemInfo);
-            if (itemInfo.itemNum == 7)
-                GameManager.instance.hasShoes = false;
+            itemInfo.Reusable();
             Destroy(gameObject);
         }
     }
@@ -58,8 +57,10 @@ public class BuyItem : BuyThings, IPointerClickHandler, IEndDragHandler
                 bought = !bought;
                 DescManager.instance.BuyGold(itemInfo.gold);
                 Player.instance.PushPlayerItems(itemInfo);
-                if (itemInfo.itemNum == 7)
-                    GameManager.instance.hasShoes = true;
+                itemInfo.Consumable();
+                itemInfo.Reusable();
+                
+                if(itemInfo.isConsumable) Destroy(gameObject);
             }
         }
         else

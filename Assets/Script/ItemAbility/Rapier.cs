@@ -6,7 +6,7 @@ public class Rapier : ItemSo
 {
 
     public int bonusScore = 5;
-    public override void RoundStart(DiceState myState, List<DiceState> allDice, ref int totalSocre, List<ScoreEventData> events)
+    public override void RoundStart(List<DiceState> allDice, ref int totalSocre, List<ScoreEventData> events)
     {
         totalSocre += bonusScore;
         events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, 0, $"Rapier +{bonusScore}"));

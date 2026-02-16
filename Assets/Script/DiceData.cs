@@ -7,17 +7,16 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DiceData", menuName = "Scriptable Objects/DiceData")]
 public class DiceData : ScriptableObject
 {
-    public ScoreManager.DiceType type;
+    
     public int multiBonusScore = 1;
     public int plusBonusScore = 0;
-    protected bool reroll = true;
+
+    [Header("주사위 기본 정보")]
+    public ScoreManager.DiceType type;
     public int diceNum;
     public string abilityName;
-    public int weight;
     public int gold;
     public int sell;
-    
-    // public bool Reroll { get => reroll; set => reroll = value; }
     
     [TextArea]
     public string Desc;
