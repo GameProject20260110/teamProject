@@ -36,6 +36,9 @@ public class GameManager : MonoBehaviour
     private List<int> _lastValues;
     private bool _isFirstRoll = true;
     private int _currentRerollCount;
+    private int _finalCalculateScore = 0;
+    private List<ScoreEventData> _scoreEvents = new List<ScoreEventData>();
+    private List<ItemSo> _usedConsumableItems = new List<ItemSo>();
 
     public int CurrentRerollCount
     {
@@ -158,16 +161,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void OnClickScoreConfirm()
+    public void ProcessRollResult(int tempScore)
     {
-        if (UiController.instance.rollBtn.interactable == false && diceManager.isRolling) return;
-        Debug.Log("점수 확정 버튼 클릭");
-        CompleteRound();    
-    }
+        var result = ScoreManager.instance.CalculateScore(diceManager.panelDiceScript);
 
-    public void ProcessRollResult(int finalScore)
-    {
-        currentScore = finalScore;
+        _finalCalculateScore = result.finalScore;
+        _scoreEvents = result.events;
+        _usedConsumableItems = result.consumedItems;
+
+        currentScore = _finalCalculateScore;
         OnScoreChanged?.Invoke(currentScore);
 
         if (diceManager != null)
@@ -203,6 +205,14 @@ public class GameManager : MonoBehaviour
             UiController.instance.SetConfirmBtnInteratable(true);
         }
     }
+    
+    public void OnClickScoreConfirm()
+    {
+        if (UiController.instance.rollBtn.interactable == false && diceManager.isRolling) return;
+        Debug.Log("점수 확정 버튼 클릭");
+        StartCoroutine(PlayScoreSequenceAndComplete());
+    }
+
 
     public void CompleteRound()
     {
@@ -261,6 +271,38 @@ public class GameManager : MonoBehaviour
     public void LoadSelectScreen()
     {
         SceneManager.LoadScene("DiceSelect");
+    }
+
+    private IEnumerator PlayScoreSequenceAndComplete()
+    {
+        UiController.instance.SetConfirmBtnInteratable(false);
+        UiController.instance.SetRollBtnInteractable(false);
+
+        if(ScoreVisualizer.instance != null && _scoreEvents != null)
+        {
+            yield return ScoreVisualizer.instance.PlayScoreEventSequence(diceManager.panelDiceScript, _scoreEvents);
+        }
+
+        if(_usedConsumableItems != null && _usedConsumableItems.Count > 0)
+        {
+            RemoveUsedItems(_usedConsumableItems);
+        }
+
+        CompleteRound();
+    }
+
+    private void RemoveUsedItems(List<ItemSo> itemsToRemove)
+    {
+        if (playerData == null || playerData.itemSo == null) return;
+
+        foreach (var item in itemsToRemove)
+        {
+            if(playerData.itemSo.Contains(item))
+            {
+                playerData.itemSo.Remove(item);
+            }
+        }
+        // UI 인벤토리 갱신 필요
     }
 }
     

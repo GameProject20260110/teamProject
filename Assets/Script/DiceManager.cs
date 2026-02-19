@@ -190,7 +190,7 @@ public class DiceManager : MonoBehaviour
 
         // 점수 계산
         var result = ScoreManager.instance.CalculateScore(panelDiceScript, ScoreManager.DiceType.Roll);
-        int finalScore = result.totalScore;
+        int finalScore = result.finalScore;
         List<ScoreEventData> events = result.events;
         if(ScoreVisualizer.instance != null)
         {

@@ -1,10 +1,12 @@
+using NUnit.Framework;
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "playSo",menuName = "Scriptable Object/playerData")]
 public class PlayerSo : ScriptableObject
 {
     [Header("¿Œ ∞‘¿”")]
-    public ItemSo[] itemSo;
+    public List<ItemSo> itemSo = new List<ItemSo>();
     public DiceData[] DiceSo;
     public int gold;
 

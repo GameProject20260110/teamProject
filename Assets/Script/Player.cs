@@ -52,7 +52,7 @@ public class Player : MonoBehaviour
 
     public void PushPlayerItems(ItemSo item)
     {
-        for (int i = 0; i < player.itemSo.Length; i++)
+        for (int i = 0; i < player.itemSo.Count; i++)
         {
             if (player.itemSo[i] == null)
             {
@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
     public void PullPlayerItems(ItemSo item)
     {
-        for (int i = 0; i < player.itemSo.Length; i++)
+        for (int i = 0; i < player.itemSo.Count; i++)
         {
             if (player.itemSo[i] == item)
             {

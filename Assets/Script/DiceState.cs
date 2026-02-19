@@ -22,8 +22,18 @@ public class DiceState
 
     public ScoreManager.DiceType currentType;
     public bool isForceOdd = false;
+    public bool isForceEven = false;
 
-    public bool IsCurrentEven => !isForceOdd && (modifiedValue % 2 == 0);
+    public bool IsCurrentEven
+    {
+        get
+        {
+            if (isForceEven) return true;
+            if (isForceOdd) return true;
+            return modifiedValue % 2 == 0;
+        }
+    }
+
     public DiceState(DiceData data, int index, int value)
     {
         diceData = data;
@@ -50,6 +60,7 @@ public class DiceState
             this.plusBonusScore = 0;
         }
         this.isForceOdd = false;
+        this.isForceEven = false;
     }
 
 }
