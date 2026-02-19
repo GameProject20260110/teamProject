@@ -14,12 +14,12 @@ public class ScoreManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-
-    public (int totalScore, List<ScoreEventData> events) CalculateScore(Dice[] uiDice, DiceType filterType = DiceType.Roll)
+    public (int finalScore, List<ScoreEventData> events, List<ItemSo> consumedItems) CalculateScore(Dice[] uiDice, DiceType filterType = DiceType.Roll)
     {
         List<DiceState> simulationStates = new List<DiceState>();
         List<ScoreEventData> scoreEvents = new List<ScoreEventData>();
-        int totalScore = 0;
+        List<ItemSo> itemsToComsume = new List<ItemSo>();
+        int finalScore = 0;
 
         for(int i = 0; i < uiDice.Length; i++)
         {
@@ -31,6 +31,25 @@ public class ScoreManager : MonoBehaviour
                     continue;
                 }
                 simulationStates.Add(new DiceState(data, i, uiDice[i].MyState.originalValue));
+            }
+        }
+
+        if(GameManager.instance != null && GameManager.instance.playerData != null)
+        {
+            List<ItemSo> inventory = GameManager.instance.playerData.itemSo;
+
+            if(inventory != null)
+            {
+                foreach(var item in inventory)
+                {
+                    if (item == null) continue;
+                    item.RoundStart(simulationStates, ref finalScore, scoreEvents);
+
+                    if(item.isConsumable)
+                    {
+                        itemsToComsume.Add(item);
+                    }
+                }
             }
         }
 
@@ -64,33 +83,33 @@ public class ScoreManager : MonoBehaviour
 
             if (state.isMulti)
             {
-                totalScore *= state.scoreValue;
-                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, state.diceIndex, totalScore, $"x{state.scoreValue}"));
+                finalScore *= state.scoreValue;
+                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, state.diceIndex, finalScore, $"x{state.scoreValue}"));
             }
             else
             {
-                totalScore += state.scoreValue;
-                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, totalScore, $"+{state.scoreValue}"));
+                finalScore += state.scoreValue;
+                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.scoreValue}"));
             }
 
             
-            state.diceData.CalculateEffect(state, simulationStates, ref totalScore, scoreEvents);
+            state.diceData.CalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 
         // 4. 점수 계산 후 효과
         foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;
-            state.diceData.AfterCalculateEffect(state, simulationStates, ref totalScore, scoreEvents);
+            state.diceData.AfterCalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 
         scoreEvents.Add(new ScoreEventData(
             ScoreEventData.Type.FinalScore, 
             -1,
-            totalScore,
+            finalScore,
             "Total"));
 
-        return (totalScore, scoreEvents);
+        return (finalScore, scoreEvents, itemsToComsume);
     }
 
 }

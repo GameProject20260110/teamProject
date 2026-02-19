@@ -13,8 +13,7 @@ public class UiController : MonoBehaviour
     public DiceSkin defaultDiceSkin;
 
     [Header("인게임 정보 UI (상시 표시)")]
-    public TextMeshProUGUI roundInfoText; 
-    public TextMeshProUGUI lifeText;     
+    public TextMeshProUGUI roundInfoText;  
     public TextMeshProUGUI targetScoreInfoText;
     public TextMeshProUGUI myScoreInfoText;
     public TextMeshProUGUI goldText;

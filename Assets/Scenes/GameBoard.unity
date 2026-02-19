@@ -291,7 +291,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &97389987
 MonoBehaviour:
@@ -347,7 +347,7 @@ MonoBehaviour:
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 1
-  m_HorizontalAlignment: 4
+  m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -1950,8 +1950,6 @@ MonoBehaviour:
   currentLives: 3
   heart: 0
   gold: 50
-  hasShoes: 0
-  dices: {fileID: 11400000, guid: f2ea0edc6ebbc704f87f6da0a1eefcbc, type: 2}
   diceManager: {fileID: 1601443936}
   maxRerollCount: 1
   currentScore: 0
