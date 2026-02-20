@@ -21,13 +21,18 @@ public class DiceSelectManager : MonoBehaviour
 
     void Start()
     {
-        for (int i = 0; i < Player.instance.player.DiceSo.Length; i++)
+        foreach(var dice in PlayerManager.instance.dices)
         {
-            if (Player.instance.player.DiceSo[i] != null)
-            {
-                PushSynergyDice(Player.instance.player.DiceSo[i]);
-            }
+            if(dice != null) PushSynergyDice(dice);
         }
+
+        //for (int i = 0; i < Player.instance.player.DiceSo.Length; i++)
+        //{
+        //    if (Player.instance.player.DiceSo[i] != null)
+        //    {
+        //        PushSynergyDice(Player.instance.player.DiceSo[i]);
+        //    }
+        //}
     }
 
     public void PushSynergyDice(DiceData Dice)
@@ -65,8 +70,9 @@ public class DiceSelectManager : MonoBehaviour
             synergyDice = Synergy.transform.GetChild(i);
             if (!synergyDice.gameObject.activeSelf)
             {
-                Player.instance.PushPlayerDices(Player.instance.defaultDice,i);
-                synergyDice.GetComponent<SynergyDice>().UpdateDiceInfo(Player.instance.defaultDice);
+                //Player.instance.PushPlayerDices(Player.instance.defaultDice,i);
+                PlayerManager.instance.PushPlayerDices(PlayerManager.instance.defaultDice, i);
+                synergyDice.GetComponent<SynergyDice>().UpdateDiceInfo(PlayerManager.instance.defaultDice);
                 synergyDice.gameObject.SetActive(true);
             }
         }

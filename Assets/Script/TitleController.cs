@@ -11,9 +11,7 @@ public class TitleController : MonoBehaviour
     void Start()
     {
         uiManager.InitUI();
-#if UNITY_EDITOR
-        Player.instance.player.DiceSo = Enumerable.Repeat(Player.instance.defaultDice, 6).ToArray();
-#endif
+
 
         if (AudioManager.instance != null)
         {

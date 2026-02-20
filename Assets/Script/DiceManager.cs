@@ -24,10 +24,7 @@ public class DiceManager : MonoBehaviour
     [Header("주사위 데이터")]
     //public List<DiceData> diceDatas;
 
-    public PlayerSo player;
-
     [Header("기본 설정")]
-    public DiceData defaultDiceData;
    
     public bool isRolling => _isRolling;
 
@@ -56,7 +53,7 @@ public class DiceManager : MonoBehaviour
     {
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            DiceData dataToUse = defaultDiceData;
+            DiceData dataToUse = PlayerManager.instance.defaultDice;
             //if(i < diceDatas.Count && diceDatas[i] != null)
             //{
                 
@@ -74,14 +71,14 @@ public class DiceManager : MonoBehaviour
             // 2. 테스트 데이터가 없거나 테스트 모드가 아니면 -> 기본 덱 사용
             if (dataToUse == null)
             {
-                if (player != null && i < player.DiceSo.Length)
+                if (PlayerManager.instance != null && i < PlayerManager.instance.dices.Count)
                 {
-                    dataToUse = player.DiceSo[i];
+                    dataToUse = PlayerManager.instance.dices[i];
                 }
                 // 그래도 없으면 디폴트 사용
                 else
                 {
-                    dataToUse = defaultDiceData;
+                    dataToUse = PlayerManager.instance.defaultDice;
                 }
             }
 

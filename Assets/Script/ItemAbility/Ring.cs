@@ -8,7 +8,7 @@ public class Ring : ItemSo
     public override void Consumable()
     {
         DiceData dice = gacha.Roll();
-        int randNum = Random.Range(0, Player.instance.player.DiceSo.Length);
+        int randNum = Random.Range(0, PlayerManager.instance.dices.Count);
         Transform slots = ShopItem.instance.myDicePanel.transform.GetChild(randNum);
         slots.GetComponentInChildren<BuyDice>().ChangeDiceInfo(dice);       
     }

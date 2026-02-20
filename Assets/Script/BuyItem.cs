@@ -36,7 +36,8 @@ public class BuyItem : BuyThings, IPointerClickHandler, IEndDragHandler
         if (eventData.button == PointerEventData.InputButton.Right && bought)
         {
             DescManager.instance.SellGold(itemInfo.sell);
-            Player.instance.PullPlayerItems(itemInfo);
+            //Player.instance.PullPlayerItems(itemInfo);
+            PlayerManager.instance.PullPlayerItems(itemInfo);
             itemInfo.Reusable();
             Destroy(gameObject);
         }
@@ -47,7 +48,7 @@ public class BuyItem : BuyThings, IPointerClickHandler, IEndDragHandler
         if (!bought)
         {
             if (!transform.parent.CompareTag("Inventory") || transform.parent == canvas ||
-                GameManager.instance.gold - itemInfo.gold < 0)
+                PlayerManager.instance.gold - itemInfo.gold < 0)
             {
                 transform.SetParent(previousParent);
                 rect.position = previousParent.GetComponent<RectTransform>().position;
@@ -56,7 +57,8 @@ public class BuyItem : BuyThings, IPointerClickHandler, IEndDragHandler
             {
                 bought = !bought;
                 DescManager.instance.BuyGold(itemInfo.gold);
-                Player.instance.PushPlayerItems(itemInfo);
+                //Player.instance.PushPlayerItems(itemInfo);
+                PlayerManager.instance.PushPlayerItems(itemInfo);
                 itemInfo.Consumable();
                 itemInfo.Reusable();
                 
