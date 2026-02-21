@@ -3,45 +3,38 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class BuyThings : MonoBehaviour, IBeginDragHandler, IDragHandler
+public class BuyThings : MonoBehaviour, IBeginDragHandler, IDragHandler,
+    IPointerEnterHandler, IPointerExitHandler
 {
 
     protected Image img;
     protected bool bought = false;
-    protected Image childImage;
-    protected TextMeshProUGUI Desc;
     protected Transform canvas;
     [SerializeField]protected Transform previousParent;
     protected RectTransform rect;
     protected CanvasGroup canvasGroup;
     public bool inPotiner = false;
-    protected bool isDragged = false;
+    public bool isDragged = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake()
+    protected virtual void Awake()
     {
         img = GetComponent<Image>();
-        childImage = GetComponentsInChildren<Image>(true)[1];
         canvas = FindObjectOfType<Canvas>().transform;
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
-        Desc = childImage.GetComponentInChildren<TextMeshProUGUI>();
+
+
     }
 
-    public virtual void OnPointerEnter()
+    public virtual void OnPointerEnter(PointerEventData eventData)
     {
         inPotiner = true;
-        DescManager.instance.DeSelectDesc();
-        childImage.gameObject.SetActive(true);
     }
 
-    public virtual void OnPointerExit()
+    public virtual void OnPointerExit(PointerEventData eventData)
     {
         inPotiner = false;
-        if (!DescManager.instance.descOn)
-        {
-            childImage.gameObject.SetActive(false);
-        }
     }
 
     public virtual void OnBeginDrag(PointerEventData eventData)

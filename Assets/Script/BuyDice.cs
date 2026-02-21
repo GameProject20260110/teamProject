@@ -7,11 +7,25 @@ using UnityEngine.UI;
 public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
 {
     public DiceData DiceInfo;
+    public RectTransform DescPosition;
     public int index;
 
-    public override void OnPointerEnter() { base.OnPointerEnter(); }
+    protected override void Awake()
+    {
+        base.Awake();
+    }
 
-    public override void OnPointerExit() { base.OnPointerExit(); }
+    public override void OnPointerEnter(PointerEventData eventData) { 
+        base.OnPointerEnter(eventData);
+        Debug.Log("enter");
+        PopupManager.instance.OpenPopup(DiceInfo, DescPosition);
+    }
+
+    public override void OnPointerExit(PointerEventData eventData) { 
+        base.OnPointerExit(eventData);
+        Debug.Log("exit");
+        PopupManager.instance.ClosePopup();
+    }
 
     public override void OnBeginDrag(PointerEventData eventData) { base.OnBeginDrag(eventData); }
 
@@ -21,17 +35,15 @@ public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
     {
         DiceInfo = data;
         img.sprite = data.skin.GetSprite(1);
-        Desc.text = data.Desc;
         bought = buy;
         index = GetComponentInParent<ItemSlot>().slotIndex;
+        DescPosition = GetComponentsInChildren<RectTransform>(true)[1];
     }
 
     public void ChangeDiceInfo(DiceData data)
     {
         DiceInfo = data;
         img.sprite = data.skin.GetSprite(1);
-        Desc.text = data.Desc;
-        //Player.instance.PushPlayerDices(data, index);
         PlayerManager.instance.PushPlayerDices(data, index);
     }
 
@@ -39,11 +51,6 @@ public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
     {
         if (eventData.button == PointerEventData.InputButton.Left)
         {
-            if (inPotiner)
-            {
-                DescManager.instance.SelectDesc(childImage.gameObject);
-            }
-
         }
         if (eventData.button == PointerEventData.InputButton.Right && bought)
         {
@@ -52,7 +59,6 @@ public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
                 DescManager.instance.SellGold(DiceInfo.gold);
             else
                 DescManager.instance.SellGold(DiceInfo.sell);
-            //Player.instance.PullPlayerDices(DiceInfo, index);
             PlayerManager.instance.PullPlayerDices(DiceInfo, index);
             Destroy(gameObject);
         }
@@ -74,7 +80,6 @@ public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
                 index = GetComponentInParent<ItemSlot>().slotIndex;
                 bought = !bought;
                 DescManager.instance.BuyGold(DiceInfo.gold);
-                //Player.instance.PushPlayerDices(DiceInfo,index);
                 PlayerManager.instance.PushPlayerDices(DiceInfo, index);
             }
         }
@@ -110,7 +115,7 @@ public class BuyDice : BuyThings, IPointerClickHandler, IEndDragHandler
 
         canvasGroup.alpha = 1.0f;
         canvasGroup.blocksRaycasts = true;
-        //isDragged = false;
+        isDragged = false;
     }
 
 }

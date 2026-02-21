@@ -8,10 +8,8 @@ public class PlayerManager : MonoBehaviour
     public List<DiceData> dices = new List<DiceData>();
     public List<ItemSo> items = new List<ItemSo>();
     public int gold;
-    public int level;
     public int currentRound;
-    public int maxLives;
-    public int currentLives;
+    public int heart;
 
     public DiceData defaultDice;
     private DiceData[] allDices;
@@ -33,6 +31,21 @@ public class PlayerManager : MonoBehaviour
             Destroy(gameObject);
         }
         
+    }
+
+    private void Start()
+    {
+        if(dices.Count == 0)
+        {
+            for(int i = 0; i < 6; i++)
+            {
+                dices.Add(defaultDice);
+            }
+            gold = 50;
+            currentRound = 1;
+            heart = 3;
+
+        }
     }
 
     public void PushPlayerDices(DiceData Dice)
@@ -91,11 +104,9 @@ public class PlayerManager : MonoBehaviour
     public void Save()
     {
         PlayerSaveData data = new PlayerSaveData();
-        data.gold = gold;
-        data.level = level;
+        data.gold = gold;      
         data.currentRound = currentRound;
-        data.maxLives = maxLives;
-        data.currentLives = currentLives;
+        data.heart = heart;
 
         foreach (var dice in dices)
             data.diceNames.Add(dice.name);
@@ -115,11 +126,8 @@ public class PlayerManager : MonoBehaviour
         PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json);
 
         gold = data.gold;
-        level = data.level;
+        heart = data.heart;
         currentRound = data.currentRound;
-        maxLives = data.maxLives;
-        currentLives = data.currentLives;
-
 
         dices.Clear();
         items.Clear();
