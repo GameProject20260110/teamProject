@@ -208,9 +208,16 @@ public class GameManager : MonoBehaviour
     
     public void OnClickScoreConfirm()
     {
-        if (UiController.instance.rollBtn.interactable == false && diceManager.isRolling) return;
-        Debug.Log("점수 확정 버튼 클릭");
-        StartCoroutine(PlayScoreSequenceAndComplete());
+        if (diceManager.isRolling) return;
+
+        UiController.instance.SetConfirmBtnInteratable(false);
+        UiController.instance.SetRollBtnInteractable(false);
+
+        if(_usedConsumableItems != null && _usedConsumableItems.Count > 0)
+        {
+            RemoveUsedItems(_usedConsumableItems);
+        }
+        CompleteRound();
     }
 
 
@@ -271,24 +278,6 @@ public class GameManager : MonoBehaviour
     public void LoadSelectScreen()
     {
         SceneManager.LoadScene("DiceSelect");
-    }
-
-    private IEnumerator PlayScoreSequenceAndComplete()
-    {
-        UiController.instance.SetConfirmBtnInteratable(false);
-        UiController.instance.SetRollBtnInteractable(false);
-
-        if(ScoreVisualizer.instance != null && _scoreEvents != null)
-        {
-            yield return ScoreVisualizer.instance.PlayScoreEventSequence(diceManager.panelDiceScript, _scoreEvents);
-        }
-
-        if(_usedConsumableItems != null && _usedConsumableItems.Count > 0)
-        {
-            RemoveUsedItems(_usedConsumableItems);
-        }
-
-        CompleteRound();
     }
 
     private void RemoveUsedItems(List<ItemSo> itemsToRemove)
