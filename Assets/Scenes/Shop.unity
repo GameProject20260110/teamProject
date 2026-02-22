@@ -530,6 +530,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 5
+  full: 0
 --- !u!114 &158216086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1218,6 +1219,7 @@ GameObject:
   - component: {fileID: 269058332}
   - component: {fileID: 269058331}
   - component: {fileID: 269058330}
+  - component: {fileID: 269058333}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1299,6 +1301,50 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &269058333
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 269058329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &276519086
 GameObject:
   m_ObjectHideFlags: 0
@@ -2221,9 +2267,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0919ff4d29cc5a845ad1064db5aee67c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PopupManager
-  closePanel: {fileID: 751906686}
   dicePopup: {fileID: 237663261}
   itemPopup: {fileID: 237663261}
+  playerGold: {fileID: 1690221382}
+  playerRound: {fileID: 756947799}
+  closePanel: {fileID: 751906686}
 --- !u!4 &413760687
 Transform:
   m_ObjectHideFlags: 0
@@ -2290,6 +2338,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &417452822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2417,7 +2466,6 @@ GameObject:
   m_Component:
   - component: {fileID: 461141163}
   - component: {fileID: 461141162}
-  - component: {fileID: 461141164}
   m_Layer: 0
   m_Name: ShopManager
   m_TagString: Untagged
@@ -2471,21 +2519,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &461141164
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 461141161}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cbae088c38498442840f1587456c15f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DescManager
-  textGold: {fileID: 1690221382}
-  currentRound: {fileID: 756947799}
-  descOn: 0
 --- !u!1 &494344052
 GameObject:
   m_ObjectHideFlags: 0
@@ -2750,6 +2783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 4
+  full: 0
 --- !u!114 &515845063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3227,6 +3261,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!1 &632260753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3316,6 +3351,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 3
+  full: 0
 --- !u!1001 &633289727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4127,6 +4163,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &766582854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4429,6 +4466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &819502426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4867,6 +4905,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &859169230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5136,6 +5175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 5
+  full: 0
 --- !u!1 &944402631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5640,6 +5680,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 1
+  full: 0
 --- !u!1001 &1022264238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5812,6 +5853,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &1022778231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6838,6 +6880,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 2
+  full: 0
 --- !u!114 &1402687455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6965,6 +7008,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 4
+  full: 0
 --- !u!1 &1426606529
 GameObject:
   m_ObjectHideFlags: 0
@@ -7017,6 +7061,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 1
+  full: 0
 --- !u!114 &1426606532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7971,6 +8016,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &1544964292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8172,6 +8218,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &1596938022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8299,6 +8346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 2
+  full: 0
 --- !u!1 &1690221380
 GameObject:
   m_ObjectHideFlags: 0
@@ -8661,6 +8709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &1741009782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8853,6 +8902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &1755281606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8943,6 +8993,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 3
+  full: 0
 --- !u!114 &1782846822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9505,6 +9556,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
+  full: 0
 --- !u!114 &1887559733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9937,6 +9989,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 6
+  full: 0
 --- !u!1 &2025466013
 GameObject:
   m_ObjectHideFlags: 0

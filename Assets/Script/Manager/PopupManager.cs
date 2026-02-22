@@ -6,14 +6,20 @@ public class PopupManager : MonoBehaviour
 {
     public static PopupManager instance;
 
-    public GameObject closePanel;
-    
+    [Header("주사위 팝업")]
     public RectTransform dicePopup;
     private TextMeshProUGUI diceDesc;
 
+    [Header("아이템 팝업")]
     public RectTransform itemPopup;
     private TextMeshProUGUI itemDesc;
 
+    [Header("플레이어 정보")]
+    public TextMeshProUGUI playerGold;
+    public TextMeshProUGUI playerRound;
+
+    [Header("기타")]
+    public GameObject closePanel;
     private Canvas rootCanvas;
 
     private void Awake()
@@ -26,12 +32,23 @@ public class PopupManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        rootCanvas = FindObjectOfType<Canvas>().rootCanvas;
+        rootCanvas = FindFirstObjectByType<Canvas>().rootCanvas;
 
         diceDesc = dicePopup.GetComponentInChildren<TextMeshProUGUI>();
         itemDesc = itemPopup.GetComponentInChildren<TextMeshProUGUI>();
-
     }
+
+    private void Start()
+    {
+        SetStatus();
+    }
+
+    public void SetStatus()
+    {
+        playerGold.text = PlayerManager.instance.gold.ToString();
+        playerRound.text = PlayerManager.instance.currentRound.ToString();
+    }
+
 
     public void OpenPopup(DiceData data, RectTransform targetRect)
     {
@@ -47,8 +64,6 @@ public class PopupManager : MonoBehaviour
        
         dicePopup.localPosition = localPos + new Vector2(targetRect.sizeDelta.x, 0);
         dicePopup.gameObject.SetActive(true);
-                  
-        //closePanel.SetActive(true);
     }
 
     public void OpenPopup(ItemSo data, RectTransform targetRect)
@@ -65,14 +80,23 @@ public class PopupManager : MonoBehaviour
 
         itemPopup.localPosition = localPos + new Vector2(targetRect.sizeDelta.x, 0);
         itemPopup.gameObject.SetActive(true);
-
-        //closePanel.SetActive(true);
     }
 
     public void ClosePopup()
     {
         dicePopup.gameObject.SetActive(false);
         itemPopup.gameObject.SetActive(false);
-        //closePanel.SetActive(false);
+    }
+
+    public void BuyItems(int gold)
+    {
+        PlayerManager.instance.gold -= gold;
+        playerGold.text = PlayerManager.instance.gold.ToString();
+    }
+
+    public void SellItems(int gold)
+    {
+        PlayerManager.instance.gold += gold;
+        playerGold.text = PlayerManager.instance.gold.ToString();
     }
 }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 8.Mace
   m_EditorClassIdentifier: Assembly-CSharp::Mace
   itemIcon: {fileID: 0}
-  itemNum: 0
+  itemNum: 8
   itemName: "\uBA54\uC774\uC2A4"
   gold: 5
   sell: 0

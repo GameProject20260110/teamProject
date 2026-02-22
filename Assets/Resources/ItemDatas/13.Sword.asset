@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 13.Sword
   m_EditorClassIdentifier: Assembly-CSharp::Sword
   itemIcon: {fileID: 0}
-  itemNum: 0
+  itemNum: 13
   itemName: "\uC18C\uB4DC"
   gold: 4
   sell: 0

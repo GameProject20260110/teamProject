@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 9.Ax
   m_EditorClassIdentifier: Assembly-CSharp::Ax
   itemIcon: {fileID: 0}
-  itemNum: 0
+  itemNum: 9
   itemName: "\uB3C4\uB07C"
   gold: 5
   sell: 0

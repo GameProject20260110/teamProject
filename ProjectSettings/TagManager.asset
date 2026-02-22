@@ -10,6 +10,7 @@ TagManager:
   - Synergy
   - Inventory
   - BuyDice
+  - BuyItem
   layers:
   - Default
   - TransparentFX

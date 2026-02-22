@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 16. Bead
   m_EditorClassIdentifier: Assembly-CSharp::Bead
   itemIcon: {fileID: 0}
-  itemNum: 0
+  itemNum: 16
   itemName: "\uAD6C\uC2AC"
   gold: 3
   sell: 0

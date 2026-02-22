@@ -54,30 +54,26 @@ public class DiceManager : MonoBehaviour
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
             DiceData dataToUse = PlayerManager.instance.defaultDice;
-            //if(i < diceDatas.Count && diceDatas[i] != null)
-            //{
-                
-                
-            //}
 
+            // 1. 테스트 모드
             if(isTestMode && testAbilities != null && i < testAbilities.Length)
             {
                 if (testAbilities[i] != null)
                 {
                     dataToUse = testAbilities[i];
                 }
-            }
-
-            // 2. 테스트 데이터가 없거나 테스트 모드가 아니면 -> 기본 덱 사용
-            if (dataToUse == null)
+            }          
+            else   // 2. 테스트 데이터가 없거나 테스트 모드가 아니면 -> 기본 덱 사용
             {
                 if (PlayerManager.instance != null && i < PlayerManager.instance.dices.Count)
                 {
+                    Debug.Log(1);
                     dataToUse = PlayerManager.instance.dices[i];
                 }
                 // 그래도 없으면 디폴트 사용
                 else
                 {
+                    Debug.Log(2);
                     dataToUse = PlayerManager.instance.defaultDice;
                 }
             }

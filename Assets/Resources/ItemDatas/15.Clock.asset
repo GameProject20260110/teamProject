@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 15.Clock
   m_EditorClassIdentifier: Assembly-CSharp::Clock
   itemIcon: {fileID: 0}
-  itemNum: 0
+  itemNum: 15
   itemName: "\uC2DC\uACC4"
   gold: 5
   sell: 0
