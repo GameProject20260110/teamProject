@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abbc537849522e143b5b2dbcbec09602, type: 3}
   m_Name: 8.Mace
   m_EditorClassIdentifier: Assembly-CSharp::Mace
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -4519581290376263607, guid: 04d8eab24763a004b9438936680b59dd, type: 3}
   itemNum: 8
   itemName: "\uBA54\uC774\uC2A4"
   gold: 5

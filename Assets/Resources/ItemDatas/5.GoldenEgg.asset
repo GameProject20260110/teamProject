@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081c325189bec2f458fe82827bd09fe5, type: 3}
   m_Name: 5.GoldenEgg
   m_EditorClassIdentifier: Assembly-CSharp::GoldenEgg
-  itemIcon: {fileID: 7675826601332790545, guid: a53650392a24528409f16ba9db71453d, type: 3}
+  itemIcon: {fileID: -5079978604105338203, guid: 8ee9f5d16ccccf4429f713d4ff74efae, type: 3}
   itemNum: 5
   itemName: "\uD669\uAE08 \uC54C"
-  weight: 40
   gold: 2
   sell: 0
-  effectNum: 1
+  isConsumable: 0
   itemDesc: "[\uD669\uAE08 \uC54C]\n\u2605\u2605\n\n\uB77C\uC6B4\uB4DC \uC885\uB8CC
     \uC2DC +1 \uACE8\uB4DC\uB97C \uC5BB\uB294\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561:
     2Gold"

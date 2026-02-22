@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1b4edac276e68f244992a23572a0c464, type: 3}
   m_Name: 9.Ax
   m_EditorClassIdentifier: Assembly-CSharp::Ax
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: -8864645360043674332, guid: 76da1f68f0c6f864a92f66dba108b348, type: 3}
   itemNum: 9
   itemName: "\uB3C4\uB07C"
   gold: 5

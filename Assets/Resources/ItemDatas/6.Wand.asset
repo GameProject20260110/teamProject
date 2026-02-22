@@ -12,13 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bf2f6262fae834e9d1dec4d5c985c6, type: 3}
   m_Name: 6.Wand
   m_EditorClassIdentifier: Assembly-CSharp::Wand
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 8979405933268748967, guid: cd88c7dffac75d040b25e5ea53dc98c0, type: 3}
   itemNum: 6
   itemName: "\uC644\uB4DC"
-  weight: 30
   gold: 3
   sell: 0
-  effectNum: 0
+  isConsumable: 0
   itemDesc: "[\uC644\uB4DC]\n\u2605\u2605\u2605\n\n\uD6A8\uACFC\uAC00 \uC5C6\uB294
     \uC8FC\uC0AC\uC704 \uC810\uC218 +2\n\n\uAD6C\uB9E4 \uAE08\uC561: 3Gold"
   bonusScore: 2

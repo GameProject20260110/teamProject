@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bf2f0b5dd4927ca4098306464b6b5132, type: 3}
   m_Name: 15.Clock
   m_EditorClassIdentifier: Assembly-CSharp::Clock
-  itemIcon: {fileID: 0}
+  itemIcon: {fileID: 6325397865789782373, guid: 0aa4cbd63bc647b46a86508531476359, type: 3}
   itemNum: 15
   itemName: "\uC2DC\uACC4"
   gold: 5
