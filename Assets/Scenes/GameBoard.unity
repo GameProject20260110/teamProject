@@ -1292,7 +1292,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::UiController
   defaultDiceSkin: {fileID: 11400000, guid: a2a0f760336f6a2479154757fbdc27b7, type: 2}
   roundInfoText: {fileID: 1779552945}
-  lifeText: {fileID: 0}
   targetScoreInfoText: {fileID: 370001214}
   myScoreInfoText: {fileID: 365483011}
   goldText: {fileID: 257948136}
@@ -4508,7 +4507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3a995d791c18b489d7720d69c2cbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DIceController
-  isTestMode: 1
+  isTestMode: 0
   testAbilities:
   - {fileID: 11400000, guid: a66ee5bafdf4c7b4aa2eba95e416bf9d, type: 2}
   - {fileID: 11400000, guid: d85d0fbb8eb846840959456dadbb3d2b, type: 2}
@@ -4525,8 +4524,6 @@ MonoBehaviour:
   - {fileID: 494824176}
   - {fileID: 946507316}
   - {fileID: 1193525359}
-  player: {fileID: 11400000, guid: 8a24a149812fe8e4ebac57431cd58922, type: 2}
-  defaultDiceData: {fileID: 0}
 --- !u!4 &1601443937
 Transform:
   m_ObjectHideFlags: 0
