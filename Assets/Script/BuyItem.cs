@@ -35,7 +35,6 @@ public class BuyItem : BuyPurchasable<ItemSo>
     {
         PlayerManager.instance.PullPlayerItems(Data);
         PopupManager.instance.SellItems(GetSellPrice());
-        Data.Reusable();
     }
 
     protected override void OnSwap(BuyPurchasable<ItemSo> other)
