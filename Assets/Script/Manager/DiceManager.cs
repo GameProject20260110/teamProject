@@ -21,10 +21,8 @@ public class DiceManager : MonoBehaviour
     [Header("주사위 오브젝트")]
     public Dice[] panelDiceScript;
 
-    [Header("주사위 데이터")]
-    //public List<DiceData> diceDatas;
-
     [Header("기본 설정")]
+    public DiceData defaultDice;
    
     public bool isRolling => _isRolling;
 
@@ -51,40 +49,52 @@ public class DiceManager : MonoBehaviour
 
     public void SetupDiceBoard()
     {
+        if (panelDiceScript == null) return;
+
+        DiceData fallbackDice = defaultDice;
+
+        if(PlayerManager.instance != null && PlayerManager.instance.defaultDice != null)
+        {
+            fallbackDice = PlayerManager.instance.defaultDice;
+        }
+
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            DiceData dataToUse = PlayerManager.instance.defaultDice;
+            if (panelDiceScript[i] == null) continue;
 
-            // 1. 테스트 모드
-            if(isTestMode && testAbilities != null && i < testAbilities.Length)
+            DiceData dataToUse = null;
+
+            if(isTestMode)
             {
-                if (testAbilities[i] != null)
+                if(testAbilities != null && i < testAbilities.Length)
                 {
                     dataToUse = testAbilities[i];
                 }
-            }          
-            else   // 2. 테스트 데이터가 없거나 테스트 모드가 아니면 -> 기본 덱 사용
-            {
-                if (PlayerManager.instance != null && i < PlayerManager.instance.dices.Count)
-                {
-                    Debug.Log(1);
-                    dataToUse = PlayerManager.instance.dices[i];
-                }
-                // 그래도 없으면 디폴트 사용
                 else
                 {
-                    Debug.Log(2);
-                    dataToUse = PlayerManager.instance.defaultDice;
+                    dataToUse = fallbackDice;
+                }
+            }
+            else
+            {
+                if(PlayerManager.instance != null && PlayerManager.instance.dices != null && i < PlayerManager.instance.dices.Count)
+                {
+                    dataToUse = PlayerManager.instance.dices[i];
+                }
+                else
+                {
+                    dataToUse = fallbackDice;
                 }
             }
 
-            if (dataToUse != null)
+            if(dataToUse != null)
             {
+                panelDiceScript[i].gameObject.SetActive(true);
                 panelDiceScript[i].Initialize(i, dataToUse);
             }
             else
             {
-                Debug.LogError($"[DiceManager] {i}번 주사위 데이터가 없습니다!");
+                panelDiceScript[i].gameObject.SetActive(false);
             }
         }
     }

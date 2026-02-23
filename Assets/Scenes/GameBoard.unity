@@ -4507,15 +4507,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f3a995d791c18b489d7720d69c2cbe5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DIceController
-  isTestMode: 0
+  isTestMode: 1
   testAbilities:
-  - {fileID: 11400000, guid: a66ee5bafdf4c7b4aa2eba95e416bf9d, type: 2}
-  - {fileID: 11400000, guid: d85d0fbb8eb846840959456dadbb3d2b, type: 2}
-  - {fileID: 11400000, guid: af172d08c85afa34fa7094152de468e1, type: 2}
-  - {fileID: 11400000, guid: 25264d68415b27543aec5816f4f8bcd1, type: 2}
-  - {fileID: 11400000, guid: dbd38cce60da8be43864b31507581bea, type: 2}
-  - {fileID: 11400000, guid: 33b6fca4d8cbe5d4f87e0d19cba77511, type: 2}
-  testDiceValues: 000000000000000000000000000000000000000000000000
+  - {fileID: 11400000, guid: 7b07223adff4417428b47855ffa49c43, type: 2}
+  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  testDiceValues: 020000000200000001000000010000000100000001000000
   rollArea: {fileID: 812174709}
   panelDiceScript:
   - {fileID: 258712858}

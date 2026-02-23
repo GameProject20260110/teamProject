@@ -42,7 +42,8 @@ public class ScoreVisualizer : MonoBehaviour
                     {
                         PlayDotweenEffect(targetDice, "Punch");
                         ShowFloatingText(targetDice.transform.position, evt.desc);
-                        
+
+                        if (evt.currentDiceScore > 0) targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
                     }
                     UpdateScoreBoard(evt.value);
                     yield return new WaitForSeconds(1.0f);
@@ -52,6 +53,7 @@ public class ScoreVisualizer : MonoBehaviour
                     {
                         targetDice.transform.DOPunchScale(Vector3.one * 0.35f, 0.3f);
                         ShowFloatingText(targetDice.transform.position, evt.desc);
+                        if (evt.currentDiceScore >= 0) targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
                     }
                     UpdateScoreBoard(evt.value);
                     yield return new WaitForSeconds(1.0f);
@@ -67,6 +69,7 @@ public class ScoreVisualizer : MonoBehaviour
                         lastTween = PlayDotweenEffect(dice, "Jump");
 
                         ShowFloatingText(dice.transform.position, evt.desc);
+
                     }
 
                     if(lastTween != null)
