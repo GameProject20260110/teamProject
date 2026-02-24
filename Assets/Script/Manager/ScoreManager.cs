@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -32,6 +33,15 @@ public class ScoreManager : MonoBehaviour
                 }
                 simulationStates.Add(new DiceState(data, i, uiDice[i].MyState.originalValue));
             }
+        }
+
+        // 0´Ü°è
+        foreach(var state in simulationStates)
+        {
+            if (state == null || state.isIgnored) continue;
+            finalScore += state.originalValue;
+
+            scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
         }
 
         if(GameManager.instance != null && GameManager.instance.playerData != null)
@@ -81,18 +91,17 @@ public class ScoreManager : MonoBehaviour
                 continue;
             }
 
-            if (state.isMulti)
-            {
-                finalScore *= state.scoreValue;
-                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, state.diceIndex, finalScore, $"x{state.scoreValue}"));
-            }
-            else
-            {
-                finalScore += state.scoreValue;
-                scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.scoreValue}"));
-            }
+            //if (state.isMulti)
+            //{
+            //    finalScore *= state.scoreValue;
+            //    scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, state.diceIndex, finalScore, $"x{state.scoreValue}"));
+            //}
+            //else
+            //{
+            //    finalScore += state.scoreValue;
+            //    scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.scoreValue}"));
+            //}
 
-            
             state.diceData.CalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 

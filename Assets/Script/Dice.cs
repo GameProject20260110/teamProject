@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
+using TMPro;
 
 public class Dice : MonoBehaviour
 {
@@ -11,12 +12,17 @@ public class Dice : MonoBehaviour
     public GameObject effectPrefab;
     public AudioClip rollSound;
 
+    public TextMeshProUGUI diceScoreText;
+
     public DiceState MyState { get; private set; }
+
+    private int _currentDiceScore = 0;
 
     public void Initialize(int index, DiceData data)
     {
         MyState = new DiceState(data, index, 1);
         UpdateDiceImage(1);
+        UpdateDiceScoreUi(-1);
     }
 
     public void UpdateDiceImage(int value)
@@ -27,8 +33,36 @@ public class Dice : MonoBehaviour
         }
     }
 
+    public void UpdateDiceScoreUi(int targetScore, bool anim = false)
+    {
+        if(diceScoreText != null)
+        {
+            if(targetScore < 0)
+            {
+                diceScoreText.gameObject.SetActive(false);
+                _currentDiceScore = 0;
+            }
+            else
+            {
+                diceScoreText.gameObject.SetActive(true);
+                if (anim && _currentDiceScore > 0)
+                {
+                    DOVirtual.Int(_currentDiceScore, targetScore, 0.5f, (x) =>
+                    {
+                        diceScoreText.text = x.ToString();
+                    });
+                }
+                else
+                {
+                    diceScoreText.text = targetScore.ToString();
+                }
+            }
+        }
+    }
+
     public void StartRoll(float duration)
     {
+        UpdateDiceScoreUi(-1);
         StartCoroutine(ChangeImageDuringRoll(duration));
     }
 
