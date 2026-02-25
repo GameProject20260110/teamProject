@@ -69,6 +69,8 @@ public class GameManager : MonoBehaviour
     void Start()
     {
         StartRound();
+        if (AudioManager.instance != null)
+            AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
     }

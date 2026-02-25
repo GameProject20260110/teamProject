@@ -5,6 +5,7 @@ using UnityEngine;
 public class DevilDiceAbility : DiceData
 {
     public int bonusScore = 5;
+    public int panelty = 3;
 
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
@@ -19,7 +20,6 @@ public class DevilDiceAbility : DiceData
             }
             else
             {
-                int panelty = 3;
                 totalScore -= panelty;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil -{panelty}"));
             }

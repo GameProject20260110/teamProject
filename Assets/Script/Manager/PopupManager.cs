@@ -20,7 +20,9 @@ public class PopupManager : MonoBehaviour
 
     [Header("±‚≈∏")]
     public GameObject closePanel;
+    public Button StartBtn;
     private Canvas rootCanvas;
+
 
     private void Awake()
     {
@@ -36,6 +38,7 @@ public class PopupManager : MonoBehaviour
 
         diceDesc = dicePopup.GetComponentInChildren<TextMeshProUGUI>();
         itemDesc = itemPopup.GetComponentInChildren<TextMeshProUGUI>();
+        StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
     }
 
     private void Start()

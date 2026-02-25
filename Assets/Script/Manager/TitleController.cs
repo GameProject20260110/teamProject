@@ -3,15 +3,17 @@ using System.Linq;
 using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class TitleController : MonoBehaviour
 {
     public TitleUiManager uiManager;
+    public Button StartBtn;
 
     void Start()
     {
         uiManager.InitUI();
-
+        StartBtn.onClick.AddListener(() => SceneController.instance.LoadHomeScreen());
 
         if (AudioManager.instance != null)
         {
@@ -32,11 +34,6 @@ public class TitleController : MonoBehaviour
                 OnClickExit();
             }
         }
-    }
-
-    public void OnClickStart()
-    {
-        SceneManager.LoadScene("HomeScreen");
     }
     
     public void OnClickExit()

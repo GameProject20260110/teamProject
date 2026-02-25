@@ -13,7 +13,7 @@ public class SkyDiceAbility : DiceData
         {
             if (dice != null && dice.IsCurrentEven)
             {
-                int add = dice.scoreValue * (currentBonusScore - 1);
+                int add = dice.scoreValue * currentBonusScore - 1;
                 totalScore += add;
                 events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, dice.diceIndex, totalScore, $"Sky x{currentBonusScore}"));
             }

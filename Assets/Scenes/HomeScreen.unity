@@ -575,58 +575,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!1 &111849341
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 111849343}
-  - component: {fileID: 111849342}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &111849342
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111849341}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad9215d96cbc5541999f0b3442e3c58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  currentRound: 1
-  targetScore: 20
-  maxLives: 3
-  currentLives: 0
-  maxRerollCount: 1
-  currentScore: 0
-  bestScore: 0
-  diceManager: {fileID: 0}
---- !u!4 &111849343
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 111849341}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &155219209
 GameObject:
   m_ObjectHideFlags: 0
@@ -2874,7 +2822,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1091399290}
   - component: {fileID: 1091399289}
-  - component: {fileID: 1091399288}
   m_Layer: 0
   m_Name: UIManger
   m_TagString: Untagged
@@ -2882,19 +2829,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1091399288
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1091399287}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dee2858a74e25504ba91fa2268bd7091, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  player: {fileID: 11400000, guid: 8a24a149812fe8e4ebac57431cd58922, type: 2}
 --- !u!114 &1091399289
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2910,6 +2844,8 @@ MonoBehaviour:
   clip: {fileID: 8300000, guid: 152a6451e6bc8ec42acd57a0552c1d75, type: 3}
   bestRoundtext: {fileID: 2109896434}
   bestScoretext: {fileID: 1503708285}
+  StartBtn: {fileID: 1166761965}
+  DiceSelectBtn: {fileID: 1801278485}
 --- !u!4 &1091399290
 Transform:
   m_ObjectHideFlags: 0
@@ -3312,7 +3248,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 111849342}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadGameScreen
         m_Mode: 1
@@ -5687,7 +5623,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 111849342}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadSelectScreen
         m_Mode: 1
@@ -7071,6 +7007,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
   bgmVolume: 0.5
   bgmVolumeMute: 0
+  bgm: 0
   sfxClips:
   - {fileID: 8300000, guid: 9aefcf2cb9cfa2947aa4cede27d8f662, type: 3}
   sfxVolume: 0.5
@@ -7100,6 +7037,5 @@ SceneRoots:
   - {fileID: 1038738945}
   - {fileID: 1094375640}
   - {fileID: 1091399290}
-  - {fileID: 111849343}
   - {fileID: 2132113982}
   - {fileID: 1752772673}

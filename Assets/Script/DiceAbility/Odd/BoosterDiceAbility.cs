@@ -21,14 +21,18 @@ public class BoosterDiceAbility : DiceData
 
         if (count >= 3)
         {
-            totalScore += (currentBonusScore * allDice.Count);
-            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, 0, $"Booster All +{currentBonusScore}"));
+            foreach (var dice in allDice)
+            {
+                dice.scoreValue += currentBonusScore;
+                totalScore += currentBonusScore;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Booster +{currentBonusScore}"));
+            }
 
-            if (!GameManager.instance.hasUsedPlusReroll) 
+            if (!GameManager.instance.hasUsedPlusReroll)
             {
                 GameManager.instance.hasUsedPlusReroll = true;
                 GameManager.instance.CurrentRerollCount++;
-                events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, 0, "Booster +1 Reroll"));
+                events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, totalScore, "Booster +1 Reroll"));
             }
         }
     }

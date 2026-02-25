@@ -530,7 +530,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 5
-  full: 0
 --- !u!114 &158216086
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2272,6 +2271,7 @@ MonoBehaviour:
   playerGold: {fileID: 1690221382}
   playerRound: {fileID: 756947799}
   closePanel: {fileID: 751906686}
+  StartBtn: {fileID: 1454814485}
 --- !u!4 &413760687
 Transform:
   m_ObjectHideFlags: 0
@@ -2338,7 +2338,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &417452822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2783,7 +2782,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 4
-  full: 0
 --- !u!114 &515845063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3261,7 +3259,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!1 &632260753
 GameObject:
   m_ObjectHideFlags: 0
@@ -3351,7 +3348,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 3
-  full: 0
 --- !u!1001 &633289727
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4163,7 +4159,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &766582854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4466,7 +4461,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &819502426
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4905,7 +4899,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &859169230
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5175,7 +5168,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 5
-  full: 0
 --- !u!1 &944402631
 GameObject:
   m_ObjectHideFlags: 0
@@ -5680,7 +5672,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 1
-  full: 0
 --- !u!1001 &1022264238
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5853,7 +5844,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &1022778231
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6880,7 +6870,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 2
-  full: 0
 --- !u!114 &1402687455
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7008,7 +6997,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 4
-  full: 0
 --- !u!1 &1426606529
 GameObject:
   m_ObjectHideFlags: 0
@@ -7061,7 +7049,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 1
-  full: 0
 --- !u!114 &1426606532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8016,7 +8003,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &1544964292
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8218,7 +8204,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &1596938022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8346,7 +8331,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 2
-  full: 0
 --- !u!1 &1690221380
 GameObject:
   m_ObjectHideFlags: 0
@@ -8709,7 +8693,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &1741009782
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8902,7 +8885,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &1755281606
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8993,7 +8975,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 3
-  full: 0
 --- !u!114 &1782846822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9556,7 +9537,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
-  full: 0
 --- !u!114 &1887559733
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9989,7 +9969,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 6
-  full: 0
 --- !u!1 &2025466013
 GameObject:
   m_ObjectHideFlags: 0
