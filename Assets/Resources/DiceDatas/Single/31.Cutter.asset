@@ -10,14 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 17ea93f1ba9331748943fdbf6d55ae33, type: 3}
-  m_Name: 30.Cutter
+  m_Name: 31.Cutter
   m_EditorClassIdentifier: Assembly-CSharp::CutterDiceAbility
-  type: 3
   multiBonusScore: 1
   plusBonusScore: 0
-  diceNum: 30
+  type: 3
+  diceNum: 31
   abilityName: "\uCEE4\uD130 \uC8FC\uC0AC\uC704"
-  weight: 10
   gold: 5
   sell: 0
   Desc: "[\uCEE4\uD130 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\u2605\n\n\uC790\uC2E0\uC758

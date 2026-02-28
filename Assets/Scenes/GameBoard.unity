@@ -833,6 +833,7 @@ MonoBehaviour:
   diceImage: {fileID: 258712856}
   effectPrefab: {fileID: 0}
   rollSound: {fileID: 0}
+  diceScoreText: {fileID: 0}
 --- !u!1 &264751818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1558,6 +1559,7 @@ MonoBehaviour:
   diceImage: {fileID: 494824174}
   effectPrefab: {fileID: 0}
   rollSound: {fileID: 0}
+  diceScoreText: {fileID: 0}
 --- !u!1 &578364336
 GameObject:
   m_ObjectHideFlags: 0
@@ -2600,6 +2602,7 @@ MonoBehaviour:
   diceImage: {fileID: 946507314}
   effectPrefab: {fileID: 0}
   rollSound: {fileID: 0}
+  diceScoreText: {fileID: 0}
 --- !u!1 &946912530
 GameObject:
   m_ObjectHideFlags: 0
@@ -2950,6 +2953,7 @@ MonoBehaviour:
   diceImage: {fileID: 988091366}
   effectPrefab: {fileID: 0}
   rollSound: {fileID: 0}
+  diceScoreText: {fileID: 0}
 --- !u!1 &1014774052
 GameObject:
   m_ObjectHideFlags: 0
@@ -3375,6 +3379,7 @@ MonoBehaviour:
   diceImage: {fileID: 1193525357}
   effectPrefab: {fileID: 0}
   rollSound: {fileID: 0}
+  diceScoreText: {fileID: 0}
 --- !u!1 &1213203417
 GameObject:
   m_ObjectHideFlags: 0
@@ -4509,13 +4514,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DIceController
   isTestMode: 1
   testAbilities:
-  - {fileID: 11400000, guid: 7b07223adff4417428b47855ffa49c43, type: 2}
+  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  - {fileID: 11400000, guid: 400681737b4eb6e4789a6af1059401cd, type: 2}
   - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
   - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+  - {fileID: 11400000, guid: 400681737b4eb6e4789a6af1059401cd, type: 2}
   - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-  - {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-  testDiceValues: 020000000200000001000000010000000100000001000000
+  testDiceValues: 050000000500000005000000050000000500000005000000
   rollArea: {fileID: 812174709}
   panelDiceScript:
   - {fileID: 258712858}
@@ -4524,6 +4529,7 @@ MonoBehaviour:
   - {fileID: 494824176}
   - {fileID: 946507316}
   - {fileID: 1193525359}
+  defaultDice: {fileID: 0}
 --- !u!4 &1601443937
 Transform:
   m_ObjectHideFlags: 0
@@ -4767,6 +4773,7 @@ MonoBehaviour:
   diceImage: {fileID: 1662827597}
   effectPrefab: {fileID: 0}
   rollSound: {fileID: 0}
+  diceScoreText: {fileID: 0}
 --- !u!1 &1710158516
 GameObject:
   m_ObjectHideFlags: 0

@@ -181,7 +181,8 @@ public class ScoreVisualizer : MonoBehaviour
     public void ShowFloatingText(Vector3 wordPos, string text)
     {
         if (floatingText == null) return;
-
+        if(AudioManager.instance != null)
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Score);
         GameObject obj = Instantiate(floatingText, effectCanvas);
         obj.transform.position = wordPos + Vector3.up * 70f;
 

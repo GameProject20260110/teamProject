@@ -1,16 +1,16 @@
+using System.Collections.Generic;
 using UnityEngine;
 
-public class BouncerDiceAbility : MonoBehaviour
+[CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/bouncer")]
+public class BouncerDiceAbility : DiceData
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public int plusScore = 10;
+    public int bonusScore = 2;
+    public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        totalScore += plusScore;
+        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"+{plusScore}"));
+        totalScore *= bonusScore;
+        events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, myState.diceIndex, totalScore, $"x{bonusScore}"));
     }
 }

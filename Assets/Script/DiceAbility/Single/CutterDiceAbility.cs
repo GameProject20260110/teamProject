@@ -4,23 +4,18 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/cutter")]
 public class CutterDiceAbility : DiceData
 {
-    
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
-    {
-        int count = 2;
-        int usedNum = -1;
-        int randNum = -1;
-        while(count > 0)
-        {
-            randNum = Random.Range(0,allDice.Count - 1);
-            if (randNum == usedNum) continue;
 
-            usedNum = randNum;
-            allDice[randNum].isMulti = true;
-            Debug.Log(allDice[randNum].diceData.diceNum);
-            count--;
-        }
-        
+    public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
+    {
+        List<DiceState> others = allDice.FindAll(d => d != myState);
+
+        if (others.Count == 0) return;
+
+        int randNum = Random.Range(0, others.Count);
+        int add = myState.scoreValue * others[randNum].modifiedValue;
+        totalScore += add;
+        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, others[randNum].diceIndex, totalScore, $"Cutter"));
+        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Cutter +{add}"));
     }
 
 }

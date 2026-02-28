@@ -20,6 +20,7 @@ public class DeadDiceAbility : DiceData
             }
         }
         int finalMultiplier = deadCount * myState.multiBonusScore + myState.plusBonusScore;
+        totalScore *= finalMultiplier;
         events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, totalScore, $"Dead x {finalMultiplier}"));
     }
 }

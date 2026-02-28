@@ -8,10 +8,13 @@ public class PurgeDiceAbility : DiceData
 
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
+        int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+
         foreach (var dice in allDice)
         {
             if (dice == null) return;
-            totalScore += bonusScore;
+            dice.scoreValue += currentBonusScore;
+            totalScore += currentBonusScore;
             events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Purge +{bonusScore}"));
         }       
     }

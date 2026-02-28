@@ -2743,63 +2743,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 746342918}
   m_CullTransparentMesh: 1
---- !u!1 &802439197
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 802439199}
-  - component: {fileID: 802439198}
-  m_Layer: 0
-  m_Name: AudioManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &802439198
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802439197}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e316dee11442efc47bcf508831957889, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  bgmClip:
-  - {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
-  - {fileID: 8300000, guid: 152a6451e6bc8ec42acd57a0552c1d75, type: 3}
-  - {fileID: 8300000, guid: 08f40560f4d009c4ba7467490cb1afbc, type: 3}
-  - {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
-  bgmVolume: 0.5
-  bgmVolumeMute: 0
-  bgm: 4
-  sfxClips:
-  - {fileID: 8300000, guid: 9aefcf2cb9cfa2947aa4cede27d8f662, type: 3}
-  sfxVolume: 0.5
-  sfxVolumeMute: 0
-  channels: 4
---- !u!4 &802439199
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 802439197}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 945.3277, y: 681.90784, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &803121782
 GameObject:
   m_ObjectHideFlags: 0
@@ -4211,8 +4154,6 @@ GameObject:
   - component: {fileID: 1200034857}
   - component: {fileID: 1200034859}
   - component: {fileID: 1200034858}
-  - component: {fileID: 1200034860}
-  - component: {fileID: 1200034861}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -4248,6 +4189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleController
   uiManager: {fileID: 1200034859}
+  StartBtn: {fileID: 363883548}
 --- !u!114 &1200034859
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4261,40 +4203,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TitleUiManager
   exitPanel: {fileID: 307135840}
---- !u!114 &1200034860
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200034855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dee2858a74e25504ba91fa2268bd7091, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Player
-  defaultDice: {fileID: 11400000, guid: 4b64720d23fc19843a6f6e7167793ba4, type: 2}
-  player: {fileID: 11400000, guid: 8a24a149812fe8e4ebac57431cd58922, type: 2}
---- !u!114 &1200034861
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200034855}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bad9215d96cbc5541999f0b3442e3c58, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManager
-  currentRound: 1
-  targetScore: 20
-  maxLives: 3
-  currentLives: 0
-  maxRerollCount: 1
-  currentScore: 0
-  bestScore: 0
-  diceManager: {fileID: 0}
 --- !u!1 &1224171224
 GameObject:
   m_ObjectHideFlags: 0
@@ -4586,7 +4494,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200034861}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: LoadShopScreen
         m_Mode: 1
@@ -5169,6 +5077,115 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1592315611}
   m_CullTransparentMesh: 1
+--- !u!1 &1624598957
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1624598959}
+  - component: {fileID: 1624598958}
+  - component: {fileID: 1624598962}
+  - component: {fileID: 1624598961}
+  - component: {fileID: 1624598960}
+  m_Layer: 0
+  m_Name: DontDestroyManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1624598958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624598957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd8ff9b85c367d64daae106315382505, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
+  dices: []
+  items: []
+  gold: 0
+  currentRound: 0
+  heart: 0
+  defaultDice: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
+--- !u!4 &1624598959
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624598957}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 695.38654, y: 651.7029, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1624598960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624598957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e316dee11442efc47bcf508831957889, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::AudioManager
+  bgmClip:
+  - {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
+  - {fileID: 8300000, guid: 152a6451e6bc8ec42acd57a0552c1d75, type: 3}
+  - {fileID: 8300000, guid: 08f40560f4d009c4ba7467490cb1afbc, type: 3}
+  - {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
+  bgmVolume: 0.5
+  bgmVolumeMute: 0
+  bgm: 4
+  sfxClips:
+  - {fileID: 8300000, guid: 17c559c56b296124b9606531a49e753e, type: 3}
+  - {fileID: 8300000, guid: 5e174d43f1ed7244d864aab19fedbfa1, type: 3}
+  - {fileID: 8300000, guid: bbe002e85398fb9448133c77aafcf7db, type: 3}
+  sfxVolume: 0.5
+  sfxVolumeMute: 0
+  channels: 5
+--- !u!114 &1624598961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624598957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5944d9d5f057a07468d6a481dc48b109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
+  ResolutionIndex: 0
+  IsFullScreen: 0
+  MasterVolume: 1
+  MusicVolume: 0.6
+  SfxVolume: 0.75
+--- !u!114 &1624598962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1624598957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: edb9c24281b70ad4ebb28e0b9ccfcc05, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneController
 --- !u!1 &1668075841
 GameObject:
   m_ObjectHideFlags: 0
@@ -6226,55 +6243,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1888339498}
   m_CullTransparentMesh: 1
---- !u!1 &1900093688
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1900093690}
-  - component: {fileID: 1900093689}
-  m_Layer: 0
-  m_Name: SettingsManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1900093689
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900093688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5944d9d5f057a07468d6a481dc48b109, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::SettingsManager
-  ResolutionIndex: 0
-  IsFullScreen: 0
-  MasterVolume: 1
-  MusicVolume: 0.6
-  SfxVolume: 0.75
---- !u!4 &1900093690
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1900093688}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 945.3277, y: 681.90784, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1932755609
 GameObject:
   m_ObjectHideFlags: 0
@@ -7265,5 +7233,4 @@ SceneRoots:
   - {fileID: 882694599}
   - {fileID: 1200034857}
   - {fileID: 1019618834}
-  - {fileID: 802439199}
-  - {fileID: 1900093690}
+  - {fileID: 1624598959}

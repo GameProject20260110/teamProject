@@ -16,8 +16,9 @@ public class CherryDiceAbility : DiceData
             {
                 if (dice != null && !dice.IsCurrentEven)
                 {
+                    dice.scoreValue += currentBonusScore;
                     totalScore += currentBonusScore;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, "Cherry!"));
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Cherry! +{currentBonusScore}"));
                 }
             }
         }

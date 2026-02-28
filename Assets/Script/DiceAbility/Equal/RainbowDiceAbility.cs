@@ -21,8 +21,7 @@ public class RainbowDiceAbility : DiceData
         }
         if (isAllSame)
         {
-            int score = totalScore * bonusScore;
-            totalScore = score;
+            totalScore *= bonusScore;
             events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, totalScore, "Rainbow"));
         }
     }
