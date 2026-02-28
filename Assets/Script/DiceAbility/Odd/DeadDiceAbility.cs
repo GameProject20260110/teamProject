@@ -19,7 +19,7 @@ public class DeadDiceAbility : DiceData
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, "Dead bonus"));
             }
         }
-        int finalMultiplier = Mathf.Min(1, deadCount * myState.multiBonusScore + myState.plusBonusScore);
+        int finalMultiplier = deadCount * myState.multiBonusScore + myState.plusBonusScore;
         totalScore *= finalMultiplier;
         events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, totalScore, $"Dead x {finalMultiplier}"));
     }

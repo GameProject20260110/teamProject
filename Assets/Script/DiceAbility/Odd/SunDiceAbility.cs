@@ -15,7 +15,7 @@ public class SunDiceAbility : DiceData
         {
             if(dice != null && dice.currentType == ScoreManager.DiceType.Odd && !localUseData.Contains(dice.diceData))
             {
-                dice.multiBonusScore *= 2;
+                dice.multiBonusScore *= bonusScore;
                 localUseData.Add(dice.diceData);
             }   
         }

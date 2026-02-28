@@ -10,14 +10,15 @@ public class TurboDiceAbility : DiceData
     {
         if(myState.IsCurrentEven)
         {
-            int currentBonusScore = bonusScore * myState.multiBonusScore + plusBonusScore;
+            int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
             foreach(var dice in allDice)
             {
                 if(dice != null && dice.IsCurrentEven)
                 {
-                    int add = dice.scoreValue * currentBonusScore;
+                    int add = dice.scoreValue * (currentBonusScore - 1);
+                    dice.scoreValue *= currentBonusScore;
                     totalScore += add;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, dice.diceIndex, totalScore, $"Turbo x{currentBonusScore}"));
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Turbo +{add}"));
                 }
             }
         }

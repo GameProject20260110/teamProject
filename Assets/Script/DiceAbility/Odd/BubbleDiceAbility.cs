@@ -8,7 +8,7 @@ public class BubbleDiceAbility : DiceData
 
     public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
     {
-        int finalScore = bonusScore * multiBonusScore + plusBonusScore;
+        int finalScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
         if(myState.IsCurrentEven)
         {

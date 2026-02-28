@@ -29,7 +29,7 @@ public class DiceState
         get
         {
             if (isForceEven) return true;
-            if (isForceOdd) return true;
+            if (isForceOdd) return false;
             return modifiedValue % 2 == 0;
         }
     }

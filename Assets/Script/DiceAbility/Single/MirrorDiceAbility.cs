@@ -24,13 +24,6 @@ public class MirrorDiceAbility : DiceData
 
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int score, List<ScoreEventData> events)
     {
-
-        //if (ScoreManager.instance.effects.Count > 0)
-        //{
-        //    var lastEffect = ScoreManager.instance.effects[ScoreManager.instance.effects.Count - 2];
-        //    lastEffect.Execute(allDice, events);
-        //}
-
         if(myState.diceIndex > 0)
         {
             var targetDice = allDice[myState.diceIndex - 1];

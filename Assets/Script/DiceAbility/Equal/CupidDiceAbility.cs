@@ -8,6 +8,8 @@ public class CupidDiceAbility : DiceData
     public int bonusScore = 2;
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
+        int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+
         int[] localBonus = new int[7];
 
         foreach (var dice in allDice)
@@ -19,8 +21,10 @@ public class CupidDiceAbility : DiceData
         {
             if(localBonus[dice.modifiedValue] >= 2)
             {
-                dice.scoreValue *= bonusScore;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Cupid x{bonusScore}"));
+                int add = dice.scoreValue * (currentBonusScore - 1);
+                dice.scoreValue *= currentBonusScore;
+                totalScore += add;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Cupid +{add}"));
             }
         }
     }

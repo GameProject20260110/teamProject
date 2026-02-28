@@ -15,8 +15,8 @@ public class CoreDiceAbility : DiceData
             {
                 if (dice.diceData is CoreDiceAbility) continue;
 
-                dice.diceData.CalculateEffect(myState, allDice, ref totalScore, events);
-                dice.diceData.AfterCalculateEffect(myState, allDice, ref totalScore, events);
+                dice.diceData.CalculateEffect(dice, allDice, ref totalScore, events);
+                dice.diceData.AfterCalculateEffect(dice, allDice, ref totalScore, events);
             }
         }
     }

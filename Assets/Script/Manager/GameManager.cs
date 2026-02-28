@@ -133,15 +133,16 @@ public class GameManager : MonoBehaviour
     {
 
         if (UiController.instance.rollBtn.interactable == false) return;
-
+        if(AudioManager.instance != null)
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Roll);
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.rollBtn.interactable = false;
 
-        for (int i = 0; i < diceManager.panelDiceScript.Length; i++)
-        {
-            diceManager.panelDiceScript[i].MyState.diceData.multiBonusScore = 1;
-            diceManager.panelDiceScript[i].MyState.diceData.plusBonusScore = 0;
-        }
+        //for (int i = 0; i < diceManager.panelDiceScript.Length; i++)
+        //{
+        //    diceManager.panelDiceScript[i].MyState.diceData.multiBonusScore = 1;
+        //    diceManager.panelDiceScript[i].MyState.diceData.plusBonusScore = 0;
+        //}
 
         if (_isFirstRoll)
         {

@@ -21,23 +21,27 @@ public class SceneController : MonoBehaviour
     public void LoadGameScene()
     {
         PlayerManager.instance.Save();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
         SceneManager.LoadScene("GameBoard");
     }
 
     public void LoadDiceSelect()
     {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
         SceneManager.LoadScene("DiceSelect");
     }
 
     public void LoadHomeScreen()
     {
         PlayerManager.instance.Save();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
         SceneManager.LoadScene("HomeScreen");
     }
 
     public void LoadShop()
     {
         PlayerManager.instance.Save();
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
         SceneManager.LoadScene("Shop");
     }
 }

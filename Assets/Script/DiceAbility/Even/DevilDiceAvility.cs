@@ -9,17 +9,19 @@ public class DevilDiceAbility : DiceData
 
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        int currentPlus = bonusScore * multiBonusScore + plusBonusScore;
+        int currentPlus = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
         foreach(var dice in allDice)
         {
             if(dice.IsCurrentEven)
             {
+                dice.scoreValue += currentPlus;
                 totalScore += currentPlus;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil +{currentPlus}"));
             }
             else
             {
+                dice.scoreValue -= panelty;
                 totalScore -= panelty;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil -{panelty}"));
             }

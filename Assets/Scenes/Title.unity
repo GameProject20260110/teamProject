@@ -5151,7 +5151,9 @@ MonoBehaviour:
   bgmVolumeMute: 0
   bgm: 4
   sfxClips:
-  - {fileID: 8300000, guid: 9aefcf2cb9cfa2947aa4cede27d8f662, type: 3}
+  - {fileID: 8300000, guid: 17c559c56b296124b9606531a49e753e, type: 3}
+  - {fileID: 8300000, guid: 5e174d43f1ed7244d864aab19fedbfa1, type: 3}
+  - {fileID: 8300000, guid: bbe002e85398fb9448133c77aafcf7db, type: 3}
   sfxVolume: 0.5
   sfxVolumeMute: 0
   channels: 5
