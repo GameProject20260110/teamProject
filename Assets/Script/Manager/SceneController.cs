@@ -21,7 +21,8 @@ public class SceneController : MonoBehaviour
     public void LoadGameScene()
     {
         PlayerManager.instance.Save();
-        AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
+        if(AudioManager.instance != null)
+            AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
         SceneManager.LoadScene("GameBoard");
     }
 

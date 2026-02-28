@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2924bb20aab20274eb68e79b657a08e8, type: 3}
   m_Name: 7.Chain
   m_EditorClassIdentifier: Assembly-CSharp::ChainDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 7
   abilityName: "\uCCB4\uC778 \uC8FC\uC0AC\uC704"
-  weight: 40
-  gold: 2
-  sell: 0
+  gold: 7
+  sell: 5
   Desc: "[\uCCB4\uC778 \uC8FC\uC0AC\uC704]\n\u2605\u2605\n\n\uBB34\uC791\uC704\uB85C
     \uC8FC\uC0AC\uC704 3\uAC1C\uC758 \uB208\uAE08\uC744 6\uC73C\uB85C \uBC14\uAFBC\uB2E4.\n\n\uAD6C\uB9E4
     \uAE08\uC561: 2Gold"

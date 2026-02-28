@@ -9,6 +9,7 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
     protected abstract string DropTag { get; }
     protected abstract string SlotTag { get; }
+    
 
     protected abstract int GetCost();
     protected abstract int GetSellPrice();
@@ -54,6 +55,8 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         ResetDragState();
     }
 
+    protected virtual bool IsInvaildDrop() => false;
+
     private void HandleUnboughtDrop(PointerEventData eventData)
     {
         var other = eventData.pointerCurrentRaycast.gameObject;
@@ -61,7 +64,8 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         bool isInvalidDrop = transform.parent == canvas
             || PlayerManager.instance.gold - GetCost() < 0
             || (other != null && other.CompareTag(DropTag))
-            || !transform.parent.CompareTag(SlotTag);
+            || !transform.parent.CompareTag(SlotTag)
+            || IsInvaildDrop();
 
         if (isInvalidDrop) { RevertToParent(); return; }
 

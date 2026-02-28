@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 52dcd3d0bd092e345a1d3a48999a0005, type: 3}
   m_Name: 3.Shot
   m_EditorClassIdentifier: Assembly-CSharp::ShotDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 3
   abilityName: "\uC0F7 \uC8FC\uC0AC\uC704"
-  weight: 50
-  gold: 1
-  sell: 0
+  gold: 6
+  sell: 4
   Desc: "[\uC0F7 \uC8FC\uC0AC\uC704]\n\u2605\n\n\uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758
     \uC810\uC218 +3\n\n\uAD6C\uB9E4 \uAE08\uC561: 1Gold"
   skin: {fileID: 11400000, guid: fc6d1d2d69085804cabe940dec917c80, type: 2}

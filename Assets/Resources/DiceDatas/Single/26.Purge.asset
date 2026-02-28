@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fb9f66d5ad3e05449c3a296fd94e7aa, type: 3}
   m_Name: 26.Purge
   m_EditorClassIdentifier: Assembly-CSharp::PurgeDiceAbility
-  type: 3
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 3
   diceNum: 26
   abilityName: "\uD37C\uC9C0 \uC8FC\uC0AC\uC704"
-  weight: 40
-  gold: 2
-  sell: 0
+  gold: 7
+  sell: 5
   Desc: "[\uD37C\uC9C0 \uC8FC\uC0AC\uC704]\n\u2605\u2605\n\n\uC790\uC2E0\uC758 \uBAA8\uB4E0
     \uC8FC\uC0AC\uC704\uC758 \uC810\uC218\uB97C +3\uC810\n\n\uAD6C\uB9E4 \uAE08\uC561:
     2Gold"

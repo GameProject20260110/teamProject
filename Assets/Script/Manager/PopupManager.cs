@@ -93,6 +93,7 @@ public class PopupManager : MonoBehaviour
 
     public void BuyItems(int gold)
     {
+        if (PlayerManager.instance.gold < gold) return;
         PlayerManager.instance.gold -= gold;
         playerGold.text = PlayerManager.instance.gold.ToString();
     }

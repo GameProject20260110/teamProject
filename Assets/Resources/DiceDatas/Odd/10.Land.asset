@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9151ba5f3d1077348b0249cb0a81ef92, type: 3}
   m_Name: 10.Land
   m_EditorClassIdentifier: Assembly-CSharp::LandDiceAbility
-  type: 1
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 1
   diceNum: 10
   abilityName: "\uB79C\uB4DC \uC8FC\uC0AC\uC704"
-  weight: 30
-  gold: 3
-  sell: 0
+  gold: 9
+  sell: 6
   Desc: "[\uB79C\uB4DC \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\n\n\uBAA8\uB4E0 \uD640\uC218
     \uB208\uAE08\uC758 \uC810\uC218 *2\n\n\uAD6C\uB9E4 \uAE08\uC561: 3Gold"
   skin: {fileID: 11400000, guid: b2842a69e8d44cb4598ca6ba74226180, type: 2}

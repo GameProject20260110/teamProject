@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 27adb1fde79d0b3418612a6c34d642ff, type: 3}
   m_Name: 9.Core
   m_EditorClassIdentifier: Assembly-CSharp::CoreDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 9
   abilityName: "\uCF54\uC5B4 \uC8FC\uC0AC\uC704"
-  weight: 20
-  gold: 4
-  sell: 0
+  gold: 11
+  sell: 7
   Desc: "[\uCF54\uC5B4 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\n\n\uC774\uC804\uC5D0
     \uC0AC\uC6A9\uD55C \"\uC9DD\uC218\"\uBA85\uC774 \uC50C\uC5EC\uC9C4 \uC8FC\uC0AC\uC704\uC758
     \uD6A8\uACFC\uB97C \uBCF5\uC0AC\uD55C\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561: 4Gold"

@@ -7,6 +7,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     public List<DiceData> dices = new List<DiceData>();
     public List<ItemSo> items = new List<ItemSo>();
+    public bool[] SpecialSlots = new bool[6];
     public int gold;
     public int currentRound;
     public int heart;
@@ -84,7 +85,7 @@ public class PlayerManager : MonoBehaviour
     {
         if (dices[index] == Dice)
         {
-            dices[index] = null;
+            dices[index] = defaultDice;
         }
     }
 

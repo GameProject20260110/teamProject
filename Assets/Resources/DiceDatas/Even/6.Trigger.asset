@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b9e9a2b840fbe7241b474043e4d0b1e2, type: 3}
   m_Name: 6.Trigger
   m_EditorClassIdentifier: Assembly-CSharp::TriggerDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 6
   abilityName: "\uD2B8\uB9AC\uAC70 \uC8FC\uC0AC\uC704"
-  weight: 30
-  gold: 3
-  sell: 0
+  gold: 9
+  sell: 6
   Desc: "[\uD2B8\uB9AC\uAC70 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\n\n\uBAA8\uB4E0
     \uC8FC\uC0AC\uC704\uC758 \uB208\uAE08\uC774 \uC9DD\uC218\uC77C \uACBD\uC6B0 \uB77C\uC6B4\uB4DC
     \uC810\uC218*2\n\n\uAD6C\uB9E4 \uAE08\uC561: 3Gold"

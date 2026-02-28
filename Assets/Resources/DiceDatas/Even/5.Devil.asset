@@ -12,16 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30114a4005b9e1e4f975eb4b94644618, type: 3}
   m_Name: 5.Devil
   m_EditorClassIdentifier: Assembly-CSharp::DevilDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 5
   abilityName: "\uB370\uBE4C \uC8FC\uC0AC\uC704"
-  weight: 50
-  gold: 1
-  sell: 0
+  gold: 6
+  sell: 4
   Desc: "[\uB370\uBE4C \uC8FC\uC0AC\uC704]\n\u2605\n\n\uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758
     \uC810\uC218 +5\uC810 \uBAA8\uB4E0 \uD640\uC218 \uB208\uAE08\uC758 \uC810\uC218
     -3\uC810\n\n\uAD6C\uB9E4 \uAE08\uC561: 1Gold"
   skin: {fileID: 11400000, guid: d096198e4897c0b4b9bfb4a0f933f6fc, type: 2}
   bonusScore: 5
+  panelty: 3
