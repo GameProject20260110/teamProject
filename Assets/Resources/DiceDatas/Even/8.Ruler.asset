@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a30b2fd9e94cc24aa1ec65f691f04b4, type: 3}
   m_Name: 8.Ruler
   m_EditorClassIdentifier: Assembly-CSharp::RulerDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 8
   abilityName: "\uB8F0\uB7EC \uC8FC\uC0AC\uC704"
-  weight: 10
-  gold: 5
-  sell: 0
+  gold: 13
+  sell: 8
   Desc: "[\uB8F0\uB7EC \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\u2605\n\n\uB8F0\uC0C1
     / \uC774 \uC8FC\uC0AC\uC704\uB294 \uC9DD\uC218\uBA85\uC774 \uC4F0\uC5EC\uC9C0\uC9C0
     \uC54A\uC740 \uAC83\uC73C\uB85C \uCDE8\uAE09\uD55C\uB2E4. \uACC4\uC0B0 \uD6C4

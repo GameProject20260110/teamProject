@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
@@ -7,6 +6,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     public List<DiceData> dices = new List<DiceData>();
     public List<ItemSo> items = new List<ItemSo>();
+    public bool[] SpecialSlots = new bool[6];
     public int gold;
     public int currentRound;
     public int heart;
@@ -33,21 +33,6 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    private void Start()
-    {
-        if(dices.Count == 0)
-        {
-            for(int i = 0; i < 6; i++)
-            {
-                dices.Add(defaultDice);
-            }
-            gold = 50;
-            currentRound = 1;
-            heart = 3;
-
-        }
-    }
-
     public void PushPlayerDices(DiceData Dice)
     {
         for (int i = 0; i < dices.Count; i++)
@@ -68,7 +53,7 @@ public class PlayerManager : MonoBehaviour
         {
             if (dices[i] == Dice)
             {
-                dices[i] = null;
+                dices[i] = defaultDice;
                 return;
             }
 
@@ -84,13 +69,13 @@ public class PlayerManager : MonoBehaviour
     {
         if (dices[index] == Dice)
         {
-            dices[index] = null;
+            dices[index] = defaultDice;
         }
     }
 
     public void PushPlayerItems(ItemSo item)
     {
-        if (PlayerManager.instance.items.Count > 7) return;
+        if (items.Count >= 7) return;
         items.Add(item);
 
     }
@@ -101,12 +86,26 @@ public class PlayerManager : MonoBehaviour
 
     }
 
+    private void InitDefault()
+    {
+        SpecialSlots[0] = true;
+        for(int i = 0; i < 6; i++)
+        {
+            dices.Add(defaultDice);
+        }
+        gold = 999;
+        currentRound = 1;
+        heart = 3;
+    }
+
     public void Save()
     {
         PlayerSaveData data = new PlayerSaveData();
         data.gold = gold;      
         data.currentRound = currentRound;
         data.heart = heart;
+
+        data.specialSlots = this.SpecialSlots;
 
         foreach (var dice in dices)
             data.diceNames.Add(dice.name);
@@ -120,7 +119,11 @@ public class PlayerManager : MonoBehaviour
     public void Load()
     {
         string path = SavePath();
-        if (!System.IO.File.Exists(path)) return;
+        if (!System.IO.File.Exists(path))
+        {
+            InitDefault();
+            return;
+        }
 
         string json = System.IO.File.ReadAllText(path);
         PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json);
@@ -131,6 +134,8 @@ public class PlayerManager : MonoBehaviour
 
         dices.Clear();
         items.Clear();
+
+        this.SpecialSlots = data.specialSlots;
 
         foreach(var name in data.diceNames)
         {
@@ -147,7 +152,15 @@ public class PlayerManager : MonoBehaviour
     private string SavePath()
     {
         Debug.Log(Application.persistentDataPath);
-        return Application.persistentDataPath + "/playerData.json";
-        
+        return Application.persistentDataPath + "/playerData.json";        
+    }
+
+    public void DeleteSave()
+    {
+        string path = SavePath();
+        if (System.IO.File.Exists(path))
+        {
+            System.IO.File.Delete(path);
+        }
     }
 }

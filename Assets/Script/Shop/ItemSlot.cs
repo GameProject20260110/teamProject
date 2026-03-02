@@ -9,10 +9,20 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     RectTransform rect;
     public int slotIndex;
 
+    [SerializeField] private Image specialSlotImage;
+    public bool hasSpecialSlot { get; private set; } = false;
+
     void Awake()
     {
         image = GetComponent<Image>();
         rect = GetComponent<RectTransform>();
+    }
+
+    public void SetSpecialSlot(bool value)
+    {
+        hasSpecialSlot = value;
+        if(specialSlotImage != null)
+            specialSlotImage.gameObject.SetActive(value);
     }
 
     public void OnPointerEnter(PointerEventData eventData)
@@ -27,6 +37,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
             image.color = Color.white;
     }
 
+    // BuyPurchasable.OnEndDrag 보다 먼저 실행
     public void OnDrop(PointerEventData eventData)
     {
         if (eventData.pointerDrag != null)

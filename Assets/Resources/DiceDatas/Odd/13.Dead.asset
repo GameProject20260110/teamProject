@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 73e9033850673c049b4acbcfa8d5a81d, type: 3}
   m_Name: 13.Dead
   m_EditorClassIdentifier: Assembly-CSharp::DeadDiceAbility
-  type: 1
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 1
   diceNum: 13
   abilityName: "\uB370\uB4DC \uC8FC\uC0AC\uC704"
-  weight: 10
-  gold: 5
-  sell: 0
+  gold: 13
+  sell: 8
   Desc: "[\uB370\uB4DC \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\u2605\n\n\uD640\uC218
     \uB208\uAE08\uC758 \uC8FC\uC0AC\uC704 \uC218 * \uB77C\uC6B4\uB4DC \uC810\uC218\n\n\uAD6C\uB9E4
     \uAE08\uC561: 5Gold"

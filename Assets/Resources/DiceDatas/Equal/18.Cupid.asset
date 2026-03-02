@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dfdfe724b5cf66347b24ca500b85ab5d, type: 3}
   m_Name: 18.Cupid
   m_EditorClassIdentifier: Assembly-CSharp::CupidDiceAbility
-  type: 2
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 2
   diceNum: 18
   abilityName: "\uD050\uD53C\uD2B8\uC8FC\uC0AC\uC704"
-  weight: 40
-  gold: 2
-  sell: 0
+  gold: 7
+  sell: 5
   Desc: "[\uD050\uD53C\uD2B8 \uC8FC\uC0AC\uC704]\n\u2605\u2605\n\n\uB3D9\uC77C\uD55C
     \uB208\uAE08\uC774 \uC788\uB294 \uC8FC\uC0AC\uC704\uC758 \uC810\uC218\uB97C *2\uD55C\uB2E4.\n\n\uAD6C\uB9E4
     \uAE08\uC561: 2Gold"

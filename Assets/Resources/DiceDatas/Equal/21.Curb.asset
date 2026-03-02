@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5d62adc4e61d05642ad07b15e295573b, type: 3}
   m_Name: 21.Curb
   m_EditorClassIdentifier: Assembly-CSharp::CurbDiceAbility
-  type: 2
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 2
   diceNum: 21
   abilityName: "\uCEE4\uBE0C \uC8FC\uC0AC\uC704"
-  weight: 20
-  gold: 4
-  sell: 0
+  gold: 11
+  sell: 7
   Desc: "[\uCEE4\uBE0C \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\n\n\uB208\uAE08\uC774
     \uAC19\uC740 \uC8FC\uC0AC\uC704 \uC218 * \uB208\uAE08\uC774 \uAC19\uC740 \uC8FC\uC0AC\uC704
     \uB208\uAE08 \uC744 \uACF1\uD55C\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561: 4Gold"

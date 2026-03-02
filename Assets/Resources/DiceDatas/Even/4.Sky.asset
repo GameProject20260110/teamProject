@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1529878c49bae94ca15d5eac0e88e63, type: 3}
   m_Name: 4.Sky
   m_EditorClassIdentifier: Assembly-CSharp::SkyDiceAbility
-  type: 0
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 0
   diceNum: 4
   abilityName: "\uC2A4\uCE74\uC774 \uC8FC\uC0AC\uC704"
-  weight: 30
-  gold: 3
-  sell: 0
+  gold: 9
+  sell: 6
   Desc: "[\uC2A4\uCE74\uC774 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\n\n\uBAA8\uB4E0
     \uC9DD\uC218 \uB208\uAE08 \uC810\uC218 *2\n\n\uAD6C\uB9E4 \uAE08\uC561: 3Gold"
   skin: {fileID: 11400000, guid: 6ce041719ccebf14392472690f7eb66f, type: 2}

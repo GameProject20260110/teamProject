@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8b6906f7185689478d161ba4763be22, type: 3}
   m_Name: 12.Cherry
   m_EditorClassIdentifier: Assembly-CSharp::CherryDiceAbility
-  type: 1
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 1
   diceNum: 12
   abilityName: "\uCCB4\uB9AC \uC8FC\uC0AC\uC704"
-  weight: 30
-  gold: 3
-  sell: 0
+  gold: 9
+  sell: 6
   Desc: "[\uCCB4\uB9AC \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\n\n\uC774 \uC8FC\uC0AC\uC704\uC758
     \uB208\uAE08\uC774 \uD640\uC218\uC77C \uB54C \uBAA8\uB4E0 \uD640\uC218 \uB208\uAE08\uC758
     \uC810\uC218 +5\n\n\uAD6C\uB9E4 \uAE08\uC561: 3Gold"

@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c3bc6693fb96b7840a28ddb276bd562b, type: 3}
   m_Name: 19.Rainbow
   m_EditorClassIdentifier: Assembly-CSharp::RainbowDiceAbility
-  type: 2
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 2
   diceNum: 19
   abilityName: "\uB808\uC778\uBCF4\uC6B0 \uC8FC\uC0AC\uC704"
-  weight: 20
-  gold: 4
-  sell: 0
+  gold: 11
+  sell: 7
   Desc: "[\uB808\uC778\uBCF4\uC6B0 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\n\n\uBAA8\uB4E0
     \uC8FC\uC0AC\uC704\uC758 \uB208\uAE08\uC774 \uAC19\uB2E4\uBA74 \uB77C\uC6B4\uB4DC
     \uC810\uC218 *3\n\n\uAD6C\uB9E4 \uAE08\uC561: 4Gold"

@@ -13,6 +13,8 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
+    protected override bool IsInvaildDrop() => !GetComponentInParent<ItemSlot>().hasSpecialSlot;
+
     public void UpdateDiceInfo(DiceData data, bool buy)
     {
         bought = buy;
@@ -36,6 +38,8 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override void OnBuy()
     {
         Slot = GetComponentInParent<ItemSlot>();
+        if (Slot == null && !Slot.hasSpecialSlot) return;
+
         PopupManager.instance.BuyItems(GetCost());
         PlayerManager.instance.PushPlayerDices(Data, Slot.slotIndex);
     }

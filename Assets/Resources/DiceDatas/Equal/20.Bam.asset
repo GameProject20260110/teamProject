@@ -12,14 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 530a8f17b7508e94eb76f407a4b792a1, type: 3}
   m_Name: 20.Bam
   m_EditorClassIdentifier: Assembly-CSharp::BamDiceAbility
-  type: 2
   multiBonusScore: 1
   plusBonusScore: 0
+  type: 2
   diceNum: 20
   abilityName: "\uBC24 \uC8FC\uC0AC\uC704"
-  weight: 50
-  gold: 1
-  sell: 0
+  gold: 6
+  sell: 4
   Desc: "[\uBC24 \uC8FC\uC0AC\uC704]\n\u2605\n\n\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uB97C
     \uD604\uC7AC \uAC00\uC7A5 \uB192\uC740 \uB208\uAE08\uC73C\uB85C \uBC14\uAFBC\uB2E4.\n\n\uAD6C\uB9E4
     \uAE08\uC561: 1Gold"

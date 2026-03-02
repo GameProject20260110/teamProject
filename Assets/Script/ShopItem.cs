@@ -1,6 +1,5 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using TMPro;
+//using System.Collections.Generic;
+//using TMPro;
 using UnityEngine;
 
 public class ShopItem : MonoBehaviour
@@ -23,6 +22,7 @@ public class ShopItem : MonoBehaviour
     [Header("ÇÁ¸®ÆÕ")]
     public GameObject Dice;
     public GameObject Item;
+    public GameObject SpecialSlot;
     public GameObject myDicePanel;
     public GameObject Iventory;
 
@@ -41,14 +41,11 @@ public class ShopItem : MonoBehaviour
     private void Start()
     {
         SetUp();
-        Reroll();
-
+        ReRoll();
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
     }
 
-
-
-    private void Reroll()
+    public void ReRoll()
     {
         RerollDice();
         ReRollItem();
@@ -60,22 +57,18 @@ public class ShopItem : MonoBehaviour
         buyItem = new BuyItem[itemSlotNum];
         hasShoes = false;
 
+        ItemSlot diceSlot = null;
         BuyDice slotChildDice = null;
 
-        for (int i = myDicePanel.transform.childCount - 1; i >= 0; i--)
+        for (int i = 0; i < myDicePanel.transform.childCount; i++)
         {
-            slotChildDice = myDicePanel.transform.GetChild(myDicePanel.transform.childCount - 1 - i).GetComponentInChildren<BuyDice>();
-            Debug.Log(slotChildDice);
-            //if (Player.instance.player.DiceSo[i] == null)
-            //{
-            //    Player.instance.PushPlayerDices(Player.instance.defaultDice,i);
-            //    PlayerManager.instance.PushPlayerDices(Player.instance.defaultDice, i);
-            //}
-            //slotChildDice.UpdateDiceInfo(Player.instance.player.DiceSo[i], true);
+            diceSlot = myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
+            slotChildDice = diceSlot.GetComponentInChildren<BuyDice>();
+
+            diceSlot.SetSpecialSlot(PlayerManager.instance.SpecialSlots[i]);
 
             if (PlayerManager.instance.dices[i] == null)
             {
-                //Player.instance.PushPlayerDices(Player.instance.defaultDice, i);
                 PlayerManager.instance.PushPlayerDices(PlayerManager.instance.defaultDice, i);
             }
             slotChildDice.UpdateDiceInfo(PlayerManager.instance.dices[i], true);
@@ -85,31 +78,17 @@ public class ShopItem : MonoBehaviour
         Transform slotChildItem = null;
         GameObject item;
 
-        //for (int i = 0; i < Iventory.transform.childCount; i++)
-        //{
-        //    if (/*Player.instance.player.itemSo[i] != null*/ PlayerManager.instance.items[i] != null)
-        //    {
-        //        
-        //        item = Instantiate(Item);
-        //        //item.GetComponent<BuyItem>().UpdateInfo(Player.instance.player.itemSo[i], true);
-        //        item.GetComponent<BuyItem>().UpdateInfo(PlayerManager.instance.items[i], true);
-        //        item.transform.SetParent(slotChildItem.transform);
-        //        item.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
-        //    }
-
-        //}
-
         for(int i = 0; i < PlayerManager.instance.items.Count; i++)
         {
             slotChildItem = Iventory.transform.GetChild(i);
             item = Instantiate(Item);
             item.GetComponent<BuyItem>().UpdateInfo(PlayerManager.instance.items[i], true);
             item.transform.SetParent(slotChildItem.transform);
-            item.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            item.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
         }
 
-        
+
     }
 
     private void RerollDice()
@@ -141,7 +120,6 @@ public class ShopItem : MonoBehaviour
             if (itemSlots[i + DiceSlotNum].transform.childCount > 0)
             {
                 buyItem[i] = itemSlots[i + DiceSlotNum].transform.GetComponentInChildren<BuyItem>();
-
             }
             else
             {
@@ -155,20 +133,4 @@ public class ShopItem : MonoBehaviour
         }
 
     }
-
-    public void SelectDiceComb()
-    {
-        GameObject myDicePanelSlot;
-        
-        for (int i = 0; i < myDicePanel.transform.childCount; i++)
-        {
-            myDicePanelSlot = myDicePanel.transform.GetChild(i).gameObject;
-            if (myDicePanelSlot.transform.childCount == 0)
-            {
-                //Player.instance.PushPlayerDices(Player.instance.defaultDice,i);
-                PlayerManager.instance.PushPlayerDices(PlayerManager.instance.defaultDice, i);
-            }
-        }
-    }
-
 }
