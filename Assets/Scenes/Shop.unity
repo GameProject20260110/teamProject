@@ -6576,7 +6576,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   dices: []
   items: []
-  SpecialSlots: 000000000000
+  SpecialSlots: 010000000000
   gold: 0
   currentRound: 0
   heart: 0

@@ -1,6 +1,5 @@
-using NUnit.Framework;
-using System.Collections.Generic;
-using TMPro;
+//using System.Collections.Generic;
+//using TMPro;
 using UnityEngine;
 
 public class ShopItem : MonoBehaviour
@@ -58,11 +57,15 @@ public class ShopItem : MonoBehaviour
         buyItem = new BuyItem[itemSlotNum];
         hasShoes = false;
 
+        ItemSlot diceSlot = null;
         BuyDice slotChildDice = null;
 
         for (int i = 0; i < myDicePanel.transform.childCount; i++)
         {
-            slotChildDice = myDicePanel.transform.GetChild(i).GetComponentInChildren<BuyDice>();
+            diceSlot = myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
+            slotChildDice = diceSlot.GetComponentInChildren<BuyDice>();
+
+            diceSlot.SetSpecialSlot(PlayerManager.instance.SpecialSlots[i]);
 
             if (PlayerManager.instance.dices[i] == null)
             {
@@ -81,9 +84,11 @@ public class ShopItem : MonoBehaviour
             item = Instantiate(Item);
             item.GetComponent<BuyItem>().UpdateInfo(PlayerManager.instance.items[i], true);
             item.transform.SetParent(slotChildItem.transform);
-            item.transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            item.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
         }
+
+
     }
 
     private void RerollDice()
