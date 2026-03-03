@@ -4,17 +4,10 @@ using UnityEngine.UI;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
-using JetBrains.Annotations;
-using System.Security.Cryptography;
-using System.Drawing;
 
 public class DiceManager : MonoBehaviour
 {
-    [Header("테스트용")]
-    public bool isTestMode = false;
-    public DiceData[] testAbilities;
-    public int[] testDiceValues = new int[6];
-    
+  
     [Header("UI 연결")]
     public RectTransform rollArea;
 
@@ -26,25 +19,16 @@ public class DiceManager : MonoBehaviour
    
     public bool isRolling => _isRolling;
 
+    private bool UseTestMode => TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
+
     private bool _isRolling = false;
-    // 원래 자리 기억용
-    private Vector3[] _originalPosition;
     private float padding = 100.0f;
 
     void Start()
     {
-        if(GameManager.instance != null)
-        {
-            GameManager.instance.diceManager = this;
-        }
+        if(GameManager.instance != null) GameManager.instance.diceManager = this;
 
         SetupDiceBoard();
-
-        _originalPosition = new Vector3[panelDiceScript.Length];
-        for(int i = 0; i < panelDiceScript.Length; i++)
-        {
-            _originalPosition[i] = panelDiceScript[i].transform.position;
-        }
     }
 
     public void SetupDiceBoard()
@@ -58,17 +42,37 @@ public class DiceManager : MonoBehaviour
             fallbackDice = PlayerManager.instance.defaultDice;
         }
 
+        bool isSlotUnlock = false;
+
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
             if (panelDiceScript[i] == null) continue;
 
+            if (UseTestMode)
+            {
+                isSlotUnlock = TestModeManager.instance.testDiceSlot[i];
+            }
+            else
+            {
+                if(PlayerManager.instance != null && i < PlayerManager.instance.SpecialSlots.Length)
+                {
+                    isSlotUnlock = PlayerManager.instance.SpecialSlots[i];
+                }
+            }
+
+            if (!isSlotUnlock)
+            {
+                panelDiceScript[i].transform.parent.gameObject.SetActive(false);
+                continue;
+            }
+
             DiceData dataToUse = null;
 
-            if(isTestMode)
+            if (UseTestMode)
             {
-                if(testAbilities != null && i < testAbilities.Length)
+                if (TestModeManager.instance.testAbilities != null && i < TestModeManager.instance.testAbilities.Length && TestModeManager.instance.testAbilities[i] != null)
                 {
-                    dataToUse = testAbilities[i];
+                    dataToUse = TestModeManager.instance.testAbilities[i];
                 }
                 else
                 {
@@ -77,7 +81,7 @@ public class DiceManager : MonoBehaviour
             }
             else
             {
-                if(PlayerManager.instance != null && PlayerManager.instance.dices != null && i < PlayerManager.instance.dices.Count)
+                if (PlayerManager.instance != null && PlayerManager.instance.dices != null && i < PlayerManager.instance.dices.Count)
                 {
                     dataToUse = PlayerManager.instance.dices[i];
                 }
@@ -89,12 +93,9 @@ public class DiceManager : MonoBehaviour
 
             if(dataToUse != null)
             {
+                panelDiceScript[i].transform.parent.gameObject.SetActive(true);
                 panelDiceScript[i].gameObject.SetActive(true);
                 panelDiceScript[i].Initialize(i, dataToUse);
-            }
-            else
-            {
-                panelDiceScript[i].gameObject.SetActive(false);
             }
         }
     }
@@ -117,7 +118,7 @@ public class DiceManager : MonoBehaviour
 
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            if (panelDiceScript[i] == null) continue;
+            if (panelDiceScript[i] == null || !panelDiceScript[i].gameObject.activeSelf) continue;
 
             Dice currentDice = panelDiceScript[i];
             Transform diceTransform = currentDice.transform;
@@ -130,17 +131,13 @@ public class DiceManager : MonoBehaviour
             int randomResult = Random.Range(1, 7);
 
             // 테스트 모드(눈금 강제)
-            if(isTestMode && testDiceValues != null && i < testDiceValues.Length)
+            if (UseTestMode && TestModeManager.instance.testValues != null && i < TestModeManager.instance.testValues.Length)
             {
-                if (testDiceValues[i] > 0)
+                if (TestModeManager.instance.testValues[i] > 0)
                 {
-                    randomResult = Mathf.Clamp(testDiceValues[i], 1, 6);
+                    randomResult = Mathf.Clamp(TestModeManager.instance.testValues[i], 1, 6);
                 }
             }
-
-
-            // dice 객체에 데이터 입력
-            currentDice.SetResult(randomResult);
 
             int boundCount = Random.Range(2, 5);
 
@@ -181,11 +178,11 @@ public class DiceManager : MonoBehaviour
 
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            if (panelDiceScript[i] == null) continue;
+            if (panelDiceScript[i] == null || !panelDiceScript[i].transform.parent.gameObject.activeSelf) continue;
             Transform diceTransform = panelDiceScript[i].transform;
 
-            returnSequence.Join(diceTransform.DOMove(_originalPosition[i], 0.5f));
-            returnSequence.Join(diceTransform.DORotate(Vector3.zero, 0.5f));
+            returnSequence.Join(diceTransform.DOLocalMove(Vector3.zero, 0.5f));
+            returnSequence.Join(diceTransform.DOLocalRotate(Vector3.zero, 0.5f));
         }
 
         yield return returnSequence.WaitForCompletion();
@@ -201,7 +198,7 @@ public class DiceManager : MonoBehaviour
         }
         if(GameManager.instance != null)
         {
-            GameManager.instance.ProcessRollResult(finalScore);
+            GameManager.instance.ProcessRollResult(result.finalScore, result.consumedItems);
         }
 
         _isRolling = false;
@@ -211,9 +208,8 @@ public class DiceManager : MonoBehaviour
         Sprite[] lastDiceSprite = new Sprite[panelDiceScript.Length];
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            lastDiceSprite[i] = panelDiceScript[i].GetCurrentSprite();
+            if (panelDiceScript[i] != null && panelDiceScript[i].gameObject.activeSelf) lastDiceSprite[i] = panelDiceScript[i].GetCurrentSprite();
         }
-
         return lastDiceSprite;
     }
 

@@ -32,6 +32,8 @@ public class GameManager : MonoBehaviour
     public int bestScore = 0;
     public bool hasUsedPlusReroll = false;
 
+    private bool useTestMode = TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
+
     private List<DiceData> _lastDiceDatas;
     private List<int> _lastValues;
     private bool _isFirstRoll = true;
@@ -65,33 +67,33 @@ public class GameManager : MonoBehaviour
 
         currentLives = maxLives;
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+
+    public void InitializeRoundData()
     {
-        StartRound();
-        if (AudioManager.instance != null)
-            AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
-        UiController.instance.SetRollBtnInteractable(true);
-        UiController.instance.SetConfirmBtnInteratable(false);
+        _isFirstRoll = true;
+        _currentRerollCount = maxRerollCount;
+        currentScore = 0;
+        if (UiController.instance != null) UiController.instance.UpdateRerollUi(_currentRerollCount);
     }
-    
+
     public void NotifyAllUI()
     {
-        int currentGoldVal = (playerData != null) ? playerData.gold : gold;
+        int currentGoldVal = (PlayerManager.instance != null) ? PlayerManager.instance.gold : 0;
         OnGoldChanged?.Invoke(currentGoldVal);
+
         OnScoreChanged?.Invoke(currentScore);
         OnLivesChanged?.Invoke(currentLives);
         OnRoundAndGoalChanged?.Invoke(currentRound, targetScore);
         OnRerollCountChanged?.Invoke(_currentRerollCount);
     }
 
-    public void AddGold(int gold)
+    public void AddGold(int amount)
     {
-        if (playerData != null)
+        if (PlayerManager.instance != null)
         {
-            playerData.gold += gold;
-            if (playerData.gold < 0) { playerData.gold = 0; }
-            OnGoldChanged?.Invoke(playerData.gold);
+            PlayerManager.instance.gold += amount;
+            if (PlayerManager.instance.gold < 0) { PlayerManager.instance.gold = 0; }
+            OnGoldChanged?.Invoke(PlayerManager.instance.gold);
         }
         else
         {
@@ -118,7 +120,7 @@ public class GameManager : MonoBehaviour
         NotifyAllUI();
 
         UiController.instance.HideAllPanels();
-        UiController.instance.UPdateRerollUi(_currentRerollCount);
+        UiController.instance.UpdateRerollUi(_currentRerollCount);
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
 
@@ -157,22 +159,17 @@ public class GameManager : MonoBehaviour
             Debug.Log("다시 굴리기");
         }
 
-        UiController.instance.UPdateRerollUi(_currentRerollCount);
+        UiController.instance.UpdateRerollUi(_currentRerollCount);
         if(!_isFirstRoll && _currentRerollCount <= 0)
         {
             UiController.instance.SetRollBtnInteractable(false);
         }
     }
 
-    public void ProcessRollResult(int tempScore)
+    public void ProcessRollResult(int finalScore, List<ItemSo> consumedItems)
     {
-        var result = ScoreManager.instance.CalculateScore(diceManager.panelDiceScript);
-
-        _finalCalculateScore = result.finalScore;
-        _scoreEvents = result.events;
-        _usedConsumableItems = result.consumedItems;
-
-        currentScore = _finalCalculateScore;
+        currentScore = finalScore;
+        _usedConsumableItems = consumedItems;
         OnScoreChanged?.Invoke(currentScore);
 
         if (diceManager != null)
@@ -182,7 +179,7 @@ public class GameManager : MonoBehaviour
 
             foreach(var dice in diceManager.panelDiceScript)
             {
-                if(dice != null && dice.MyState != null)
+                if(dice != null && dice.MyState != null && dice.gameObject.activeSelf)
                 {
                     _lastDiceDatas.Add(dice.MyState.diceData);
                     _lastValues.Add(dice.MyState.originalValue);
@@ -220,47 +217,31 @@ public class GameManager : MonoBehaviour
         {
             RemoveUsedItems(_usedConsumableItems);
         }
-        CompleteRound();
+
+        if (RoundManager.instance != null) RoundManager.instance.CompleteRound(currentScore);
     }
 
-
-    public void CompleteRound()
+    public void HandleGameOver()
     {
-        UiController.instance.SetRollBtnInteractable(false);
-
-        bool isSuccess = currentScore >= targetScore;
-
-        if (isSuccess)
+        Debug.Log("게임 오버 처리");
+        List<int> fakeValues = new List<int>();
+        if(_lastValues != null)
         {
-            UiController.instance.ShowResultPanel(true, targetScore, currentScore, currentLives);
-        }
-        else
-        {
-            ModifyLives(-1);
-            if (currentLives > 0)
+            for(int i = 0; i < _lastValues.Count; i++)
             {
-                UiController.instance.ShowResultPanel(false, targetScore, currentScore, currentLives);
-            }
-            else
-            {
-                // 게임 오버시 모든 눈금을 1로 채워서 보여주기 위해 사용
-                List<int> fakeValue = new List<int>();
-                if(_lastValues != null)
-                {
-                    for(int i = 0; i < _lastValues.Count; i++)
-                    {
-                        fakeValue.Add(1);
-                    }
-                }
-                UiController.instance.ShowGameOverPanel(currentRound, bestScore, _lastDiceDatas, fakeValue);
+                fakeValues.Add(1);
             }
         }
+        UiController.instance.ShowGameOverPanel(currentRound, bestScore, _lastDiceDatas, fakeValues);
     }
 
     public void OnClickNextRound()
     {
         Debug.Log("다음 라운드로 이동~");
-        // 라운드 이동 처리 필요
+        if(RoundManager.instance != null)
+        {
+            RoundManager.instance.GoNextRound();
+        }
     }
 
     public void LoadHomeScreen()
@@ -268,7 +249,7 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene("HomeScreen");
     }
 
-    public void LoadShopScreen()
+    public void LoadShopScreen()    
     {
         SceneManager.LoadScene("Shop");
     }

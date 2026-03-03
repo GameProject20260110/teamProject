@@ -78,7 +78,7 @@ public class UiController : MonoBehaviour
         GameManager.instance.OnScoreChanged += UpdateScoreUi;
         GameManager.instance.OnLivesChanged += UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
-        GameManager.instance.OnRerollCountChanged += UPdateRerollUi;
+        GameManager.instance.OnRerollCountChanged += UpdateRerollUi;
     }
 
     private void UnSubscribeToEvents()
@@ -87,7 +87,7 @@ public class UiController : MonoBehaviour
         GameManager.instance.OnScoreChanged -= UpdateScoreUi;
         GameManager.instance.OnLivesChanged -= UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
-        GameManager.instance.OnRerollCountChanged -= UPdateRerollUi;
+        GameManager.instance.OnRerollCountChanged -= UpdateRerollUi;
     }
 
     private void UpdateGoldUi(int gold)
@@ -230,7 +230,7 @@ public class UiController : MonoBehaviour
         }
     }
 
-    public void UPdateRerollUi(int count)
+    public void UpdateRerollUi(int count)
     {
         if(rerollText != null)
         {

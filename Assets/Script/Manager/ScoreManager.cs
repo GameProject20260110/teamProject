@@ -63,16 +63,25 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
+        // 아이템 효과
+        List<ItemSo> playerInventory = new List<ItemSo>();
 
-
-        // 점수 로직
-        // 1. 룰상 효과
-        foreach (var state in simulationStates)
+        if(TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
         {
+            playerInventory = TestModeManager.instance.testItem;
+        }
+        else if(PlayerManager.instance != null)
+        {
+            playerInventory = PlayerManager.instance.items;
+        }
 
+         // 점수 로직
+         // 1. 룰상 효과
+         foreach (var state in simulationStates)
+         {
             //if (state == null || state.isIgnored) continue;
             state.diceData.OnRuleEffect(state, simulationStates, scoreEvents);
-        }
+         }
 
         // 2. 굴림 효과
         foreach (var state in simulationStates)

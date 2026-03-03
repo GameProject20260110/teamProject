@@ -1,7 +1,4 @@
-using JetBrains.Annotations;
-using NUnit.Framework;
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "DiceData", menuName = "Scriptable Objects/DiceData")]
