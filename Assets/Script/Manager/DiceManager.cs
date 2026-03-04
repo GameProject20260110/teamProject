@@ -118,7 +118,7 @@ public class DiceManager : MonoBehaviour
 
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            if (panelDiceScript[i] == null || !panelDiceScript[i].gameObject.activeSelf) continue;
+            if (panelDiceScript[i] == null || !panelDiceScript[i].gameObject.activeInHierarchy) continue;
 
             Dice currentDice = panelDiceScript[i];
             Transform diceTransform = currentDice.transform;
@@ -178,7 +178,7 @@ public class DiceManager : MonoBehaviour
 
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
-            if (panelDiceScript[i] == null || !panelDiceScript[i].transform.parent.gameObject.activeSelf) continue;
+            if (panelDiceScript[i] == null || !panelDiceScript[i].transform.parent.gameObject.activeInHierarchy) continue;
             Transform diceTransform = panelDiceScript[i].transform;
 
             returnSequence.Join(diceTransform.DOLocalMove(Vector3.zero, 0.5f));

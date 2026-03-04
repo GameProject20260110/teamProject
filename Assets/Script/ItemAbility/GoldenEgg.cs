@@ -7,6 +7,6 @@ public class GoldenEgg : ItemSo
     public int bonusScore = 1;
     public override void RoundEnd()
     {
-        GameManager.instance.gold += bonusScore;
+        PlayerManager.instance.gold += bonusScore;
     }
 }

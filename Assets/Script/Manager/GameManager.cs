@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
+using UnityEngine.InputSystem.Controls;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,17 +15,9 @@ public class GameManager : MonoBehaviour
 
     public event Action<int> OnGoldChanged;
     public event Action<int> OnScoreChanged;
-    public event Action<int> OnLivesChanged;
+    public event Action<int> OnHeartsChanged;
     public event Action<int, int> OnRoundAndGoalChanged;
     public event Action<int> OnRerollCountChanged;
-
-    [Header("테스트용 설정")]
-    public int currentRound = 1;
-    public int targetScore = 20;
-    public int maxLives = 3;
-    public int currentLives;
-    public int heart = 3;
-    public int gold = 50;
 
     public DiceManager diceManager;
     public int maxRerollCount = 1;
@@ -32,15 +25,26 @@ public class GameManager : MonoBehaviour
     public int bestScore = 0;
     public bool hasUsedPlusReroll = false;
 
-    private bool useTestMode = TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
-
     private List<DiceData> _lastDiceDatas;
     private List<int> _lastValues;
+    private List<ItemSo> _usedConsumableItems = new List<ItemSo>();
     private bool _isFirstRoll = true;
     private int _currentRerollCount;
-    private int _finalCalculateScore = 0;
-    private List<ScoreEventData> _scoreEvents = new List<ScoreEventData>();
-    private List<ItemSo> _usedConsumableItems = new List<ItemSo>();
+    private int _fallbackHeart;
+
+    public int CurrentHearts
+    {
+        get => PlayerManager.instance != null ? PlayerManager.instance.heart : _fallbackHeart;
+        private set
+        {
+            if (PlayerManager.instance != null)
+            {
+                PlayerManager.instance.heart = value;
+            }
+            else
+                _fallbackHeart = value;
+        }
+    }
 
     public int CurrentRerollCount
     {
@@ -64,8 +68,11 @@ public class GameManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+    }
 
-        currentLives = maxLives;
+    private void Start()
+    {
+        NotifyAllUI();
     }
 
     public void InitializeRoundData()
@@ -78,11 +85,13 @@ public class GameManager : MonoBehaviour
 
     public void NotifyAllUI()
     {
-        int currentGoldVal = (PlayerManager.instance != null) ? PlayerManager.instance.gold : 0;
-        OnGoldChanged?.Invoke(currentGoldVal);
+        int gold = PlayerManager.instance != null ? PlayerManager.instance.gold : 0;
+        int currentRound = RoundManager.instance != null ? RoundManager.instance.currentRound : 0;
+        int targetScore = RoundManager.instance != null ? RoundManager.instance.targetScore : 0;
 
+        OnGoldChanged?.Invoke(gold);
         OnScoreChanged?.Invoke(currentScore);
-        OnLivesChanged?.Invoke(currentLives);
+        OnHeartsChanged?.Invoke(CurrentHearts);
         OnRoundAndGoalChanged?.Invoke(currentRound, targetScore);
         OnRerollCountChanged?.Invoke(_currentRerollCount);
     }
@@ -95,17 +104,23 @@ public class GameManager : MonoBehaviour
             if (PlayerManager.instance.gold < 0) { PlayerManager.instance.gold = 0; }
             OnGoldChanged?.Invoke(PlayerManager.instance.gold);
         }
-        else
-        {
-            this.gold += gold;
-            OnGoldChanged?.Invoke(gold);
-        }
     }
 
-    public void ModifyLives(int lives)
+    public void ModifyHearts(int heart)
     {
-        currentLives += lives;
-        OnLivesChanged?.Invoke(currentLives);
+        if (PlayerManager.instance != null)
+        {
+            PlayerManager.instance.heart += heart;
+            if (PlayerManager.instance.heart < 0) PlayerManager.instance.heart = 0;
+            PlayerManager.instance.Save();
+        }
+        else
+        {
+            _fallbackHeart += heart;
+            if(_fallbackHeart < 0) _fallbackHeart = 0;
+        }
+        OnHeartsChanged?.Invoke(CurrentHearts);
+
     }
 
     public void StartRound()
@@ -140,11 +155,6 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.rollBtn.interactable = false;
 
-        //for (int i = 0; i < diceManager.panelDiceScript.Length; i++)
-        //{
-        //    diceManager.panelDiceScript[i].MyState.diceData.multiBonusScore = 1;
-        //    diceManager.panelDiceScript[i].MyState.diceData.plusBonusScore = 0;
-        //}
 
         if (_isFirstRoll)
         {
@@ -205,7 +215,21 @@ public class GameManager : MonoBehaviour
             UiController.instance.SetConfirmBtnInteratable(true);
         }
     }
-    
+
+    public void HandleGameOver()
+    {
+        Debug.Log("게임 오버 처리");
+        List<int> fakeValues = new List<int>();
+        if (_lastValues != null)
+        {
+            for (int i = 0; i < _lastValues.Count; i++)
+            {
+                fakeValues.Add(1);
+            }
+        }
+        UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound, bestScore, _lastDiceDatas, fakeValues);
+    }
+
     public void OnClickScoreConfirm()
     {
         if (diceManager.isRolling) return;
@@ -221,19 +245,7 @@ public class GameManager : MonoBehaviour
         if (RoundManager.instance != null) RoundManager.instance.CompleteRound(currentScore);
     }
 
-    public void HandleGameOver()
-    {
-        Debug.Log("게임 오버 처리");
-        List<int> fakeValues = new List<int>();
-        if(_lastValues != null)
-        {
-            for(int i = 0; i < _lastValues.Count; i++)
-            {
-                fakeValues.Add(1);
-            }
-        }
-        UiController.instance.ShowGameOverPanel(currentRound, bestScore, _lastDiceDatas, fakeValues);
-    }
+    
 
     public void OnClickNextRound()
     {
@@ -266,16 +278,13 @@ public class GameManager : MonoBehaviour
 
     private void RemoveUsedItems(List<ItemSo> itemsToRemove)
     {
-        if (playerData == null || playerData.itemSo == null) return;
+        if (PlayerManager.instance == null) return;
 
         foreach (var item in itemsToRemove)
         {
-            if(playerData.itemSo.Contains(item))
-            {
-                playerData.itemSo.Remove(item);
-            }
+            PlayerManager.instance.items.Remove(item);
         }
-        // UI 인벤토리 갱신 필요
+        UiController.instance.RefreshInventory();
     }
 }
     

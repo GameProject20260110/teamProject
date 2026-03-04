@@ -7,8 +7,8 @@ public class SellerDiceAbility : DiceData
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         if (myState == null) return;
-        totalScore += GameManager.instance.gold;
-        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Seller +{GameManager.instance.gold}"));
+        totalScore += PlayerManager.instance.gold;
+        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Seller +{PlayerManager.instance.gold}"));
     }
 
 }

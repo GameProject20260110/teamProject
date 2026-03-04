@@ -6,7 +6,7 @@ public class RoundData
 {
     public int roundNum;
     public int targetScore;
-
+    public int goldReward;
     public Sprite enemyImage;
     public bool bossStage;
 
@@ -21,5 +21,12 @@ public class StageDataSo : ScriptableObject
     public RoundData GetRoundData(int round)
     {
         return allRounds.Find(x => x.roundNum == round);
+    }
+
+    public int GetGoldReward(int round)
+    {
+        RoundData data = GetRoundData(round);
+        if (data != null && data.goldReward > 0) return data.goldReward;
+        return round + 9;
     }
 }

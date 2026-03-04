@@ -1,3 +1,4 @@
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class RoundManager : MonoBehaviour
@@ -19,6 +20,10 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+        if (TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
+        {
+            TestModeManager.instance.ApplyTestStats();
+        }
         StartRound();
     }
 
@@ -27,6 +32,29 @@ public class RoundManager : MonoBehaviour
         if(UseTestMode)
         {
             targetScore = 9999;
+
+            GimmickManager.instance?.ClearGimmick();
+            var tm = TestModeManager.instance;
+            if (!tm.noGimmick && tm.testGimmick != null)
+            {
+                GimmickManager.instance.currentActiveGimmick.Clear();
+                foreach(var gimmick in tm.testGimmick)
+                {
+                    if (gimmick == null) return;
+                    GimmickManager.instance.currentActiveGimmick.Add(gimmick);
+                    gimmick.ExecuteGimmick();
+                    Debug.Log("Å×½ºÆ® ¸ðµå ±â¹Í °­Á¦ È°¼ºÈ­");
+                }
+            }
+            else if(tm.noGimmick)
+            {
+                Debug.Log("Å×½ºÆ® ¸ðµå ±â¹Í ºñÈ°¼ºÈ­");
+            }
+
+            if(GameManager.instance != null)
+            {
+                GameManager.instance.maxRerollCount = 9999;
+            }
         }
         else
         {
@@ -58,7 +86,6 @@ public class RoundManager : MonoBehaviour
         if (GameManager.instance != null)
         {
             GameManager.instance.InitializeRoundData();
-            GameManager.instance.NotifyAllUI();
         }
 
         if(UiController.instance != null)
@@ -80,23 +107,37 @@ public class RoundManager : MonoBehaviour
 
         bool isSuccess = finalScore >= targetScore;
 
+        
         if(isSuccess)
         {
-            UiController.instance.ShowResultPanel(true, targetScore, finalScore, GameManager.instance.currentLives);
+            if(currentStageData != null && GameManager.instance != null)
+            {
+                int reward = currentStageData.GetGoldReward(currentRound);
+                GameManager.instance.AddGold(reward);
+                Debug.Log($"¶ó¿îµå ¼º°ø! °ñµå {reward} È¹µæ");
+            }
+            UiController.instance.ShowResultPanel(true, targetScore, finalScore, GameManager.instance.CurrentHearts);
         }
         else
         {
-            GameManager.instance.ModifyLives(-1);
+            GameManager.instance.ModifyHearts(-1);
 
-            if(GameManager.instance.currentLives > 0)
+            if(GameManager.instance.CurrentHearts > 0)
             {
-                UiController.instance.ShowResultPanel(false, targetScore, finalScore, GameManager.instance.currentLives);
+                if (currentStageData != null && GameManager.instance != null)
+                {
+                    int reward = currentStageData.GetGoldReward(currentRound);
+                    GameManager.instance.AddGold(reward);
+                    Debug.Log($"¶ó¿îµå ½ÇÆÐ °ñµå {reward} È¹µæ");
+                }
+                UiController.instance.ShowResultPanel(false, targetScore, finalScore, GameManager.instance.CurrentHearts);
             }
             else
             {
                 GameManager.instance.HandleGameOver();
             }
         }
+        GimmickManager.instance.ClearGimmick();
     }
 
     public void GoNextRound()

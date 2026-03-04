@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Collections.LowLevel.Unsafe;
 
 public class GimmickManager : MonoBehaviour
 {
@@ -19,15 +20,20 @@ public class GimmickManager : MonoBehaviour
 
     public void ApplyGimmick(int round)
     {
-        currentActiveGimmick.Clear();
+        ClearGimmick();
 
         if(round == 15)
         {
             GimmickSo firstGimmick = DrawGimmick(15);
             currentActiveGimmick.Add(firstGimmick);
 
-            var availableGimmick = allGimmicks.Where(g => g != firstGimmick).ToList();
-            GimmickSo secondGimmick = availableGimmick[Random.Range(0, availableGimmick.Count)];
+            GimmickSo secondGimmick;
+            int safety = 0;
+            do
+            {
+                secondGimmick = DrawGimmick(15);
+                safety++;
+            } while (secondGimmick == firstGimmick && safety < 50);
 
             currentActiveGimmick.Add(secondGimmick);
         }
@@ -82,5 +88,10 @@ public class GimmickManager : MonoBehaviour
     public bool IsGimmickActive(GimmickType type)
     {
         return currentActiveGimmick.Any(g => g.gimmickType == type);
+    }
+
+    public void ClearGimmick()
+    {
+        currentActiveGimmick.Clear();
     }
 }

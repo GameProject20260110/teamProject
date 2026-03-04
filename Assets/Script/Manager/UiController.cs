@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UiController : MonoBehaviour
@@ -18,12 +19,16 @@ public class UiController : MonoBehaviour
     public TextMeshProUGUI myScoreInfoText;
     public TextMeshProUGUI goldText;
 
+    [Header("아이템 인벤토리")]
+    public List<Image> itemIcon;
+
     [Header("라운드 결과 패널 (승리/패배)")]
     public GameObject resultPanel;
     public TextMeshProUGUI resultTitleText;  
     public TextMeshProUGUI resultTargetScoreText;
     public TextMeshProUGUI resultMyScoreText;
-    public TextMeshProUGUI resultLifeText; 
+    public Transform resultLifeContainer;
+    public Image resultHeartPrefab;
 
     [Header("게임 오버 패널")]
     public GameObject gameOverPanel;
@@ -42,7 +47,8 @@ public class UiController : MonoBehaviour
     public Transform lifeContainer;
     public Image heartPrefab;
 
-    private List<Image> lifeHearts = new List<Image>();
+    private List<Image> hearts = new List<Image>();
+    private List<Image> resultHearts = new List<Image>();
 
     private void Awake()
     {
@@ -63,8 +69,10 @@ public class UiController : MonoBehaviour
         if(GameManager.instance != null)
         {
             SubscribeToEvents();
-            GameManager.instance.NotifyAllUI();
         }
+
+        SetUpItemSlotEvents();
+        RefreshInventory();
     }
 
     private void OnDisable()
@@ -76,7 +84,7 @@ public class UiController : MonoBehaviour
     {
         GameManager.instance.OnGoldChanged += UpdateGoldUi;
         GameManager.instance.OnScoreChanged += UpdateScoreUi;
-        GameManager.instance.OnLivesChanged += UpdateLivesUi;
+        GameManager.instance.OnHeartsChanged += UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
         GameManager.instance.OnRerollCountChanged += UpdateRerollUi;
     }
@@ -85,7 +93,7 @@ public class UiController : MonoBehaviour
     {
         GameManager.instance.OnGoldChanged -= UpdateGoldUi;
         GameManager.instance.OnScoreChanged -= UpdateScoreUi;
-        GameManager.instance.OnLivesChanged -= UpdateLivesUi;
+        GameManager.instance.OnHeartsChanged -= UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
         GameManager.instance.OnRerollCountChanged -= UpdateRerollUi;
     }
@@ -108,22 +116,23 @@ public class UiController : MonoBehaviour
 
     private void UpdateLivesUi(int lives)
     {
-        while(lifeHearts.Count < lives)
+        
+        while (hearts.Count < lives)
         {
             Image newHeart = Instantiate(heartPrefab, lifeContainer);
 
-            lifeHearts.Add(newHeart);
+            hearts.Add(newHeart);
         }
 
-        for(int i = 0; i < lifeHearts.Count; i++)
+        for(int i = 0; i < hearts.Count; i++)
         {
             if(i < lives)
             {
-                lifeHearts[i].gameObject.SetActive(true);
+                hearts[i].gameObject.SetActive(true);
             }
             else
             {
-                lifeHearts[i].gameObject.SetActive(false);
+                hearts[i].gameObject.SetActive(false);
             }
         }
     }
@@ -142,6 +151,36 @@ public class UiController : MonoBehaviour
         }
     }
 
+    public void RefreshInventory()
+    {
+        if (itemIcon == null) return;
+
+        List<ItemSo> items = GetCurrentItems() ?? new List<ItemSo>();
+        if(TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
+        {
+            items = TestModeManager.instance.testItem;
+        }
+        else
+        {
+            items = PlayerManager.instance?.items;
+        }
+
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (itemIcon[i] == null) return;
+            if(i < items.Count && items[i] != null)
+            {
+                itemIcon[i].sprite = items[i].itemIcon;
+                itemIcon[i].color = Color.white;
+            }
+            else
+            {
+                itemIcon[i].sprite = null;
+                itemIcon[i].color = new Color(1, 1, 1, 0);
+            }
+        }
+    }
+
     public void HideAllPanels()
     {
         if (resultPanel) resultPanel.SetActive(false);
@@ -155,14 +194,7 @@ public class UiController : MonoBehaviour
             resultPanel.SetActive(true);
         }
 
-        if(isSuccess)
-        {   
-            resultTitleText.text = "ROUND CLEAR!";
-        }
-        else
-        {
-            resultTitleText.text = "ROUND FAILED!";
-        }
+        resultTitleText.text = isSuccess ? "Round Clear!" : "Round Failed";
 
         if (resultTargetScoreText) 
         {
@@ -174,9 +206,22 @@ public class UiController : MonoBehaviour
             resultMyScoreText.text = $"My Score: {currentScore}";
         }
 
-        if(resultLifeText)
+        UpdateResultHearts(currentLife);
+        RefreshInventory();
+    }
+
+    private void UpdateResultHearts(int currentLife)
+    {
+        if (resultLifeContainer == null || resultHeartPrefab == null) return;
+
+        while(resultHearts.Count < currentLife)
         {
-            resultLifeText.text = $"Life Left: ♥ X {currentLife}";
+            resultHearts.Add(Instantiate(resultHeartPrefab, resultLifeContainer));
+        }
+
+        for(int i = 0; i < resultHearts.Count; i++) 
+        {
+            resultHearts[i].gameObject.SetActive(i < currentLife);
         }
     }
 
@@ -259,4 +304,45 @@ public class UiController : MonoBehaviour
         GameManager.instance.LoadHomeScreen();
     }
 
+    private void SetUpItemSlotEvents()
+    {
+        if (itemIcon == null) return;
+
+        for (int i = 0; i < itemIcon.Count; i++)
+        {
+            if (itemIcon[i] == null) continue;
+
+            int index = i;
+            var trigger = itemIcon[i].gameObject.GetComponent<EventTrigger>() ?? itemIcon[i].gameObject.AddComponent<EventTrigger>();
+
+            var enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
+            enterEntry.callback.AddListener(_ => OnItemSlotHover(index));
+            trigger.triggers.Add(enterEntry);
+
+            var exitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
+            exitEntry.callback.AddListener(_ => OnItemSlotExit(index));
+            trigger.triggers.Add(exitEntry);
+        }
+    }
+
+    private void OnItemSlotHover(int index)
+    {
+        List<ItemSo> items = GetCurrentItems();
+        if(itemIcon == null || index >= itemIcon.Count || items[index] == null) return;
+
+        PopupManager.instance?.OpenPopup(items[index], itemIcon[index].GetComponent<RectTransform>());
+    }
+    private void OnItemSlotExit(int index)
+    {
+        PopupManager.instance?.ClosePopup();
+    }
+
+    private List<ItemSo> GetCurrentItems()
+    {
+        if(TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
+        {
+            return TestModeManager.instance.testItem;
+        }
+        return PlayerManager.instance?.items;
+    }
 }

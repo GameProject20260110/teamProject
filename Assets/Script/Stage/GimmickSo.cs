@@ -6,7 +6,7 @@ public enum GimmickType
     NoScoreFromNormalDice = 1,
     NoReroll = 2,
     LoseRandomItem = 3,
-    RandomItemPermanentLess = 4,
+    NegateRandomItem = 4,
     NegateRandomDiceEffect = 5,
     LoseGold = 6,
     DoubleTargetScore = 7,

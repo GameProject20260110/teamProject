@@ -36,14 +36,26 @@ public class PopupManager : MonoBehaviour
         }
         rootCanvas = FindFirstObjectByType<Canvas>().rootCanvas;
 
-        diceDesc = dicePopup.GetComponentInChildren<TextMeshProUGUI>();
-        itemDesc = itemPopup.GetComponentInChildren<TextMeshProUGUI>();
-        StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
+        if(dicePopup != null)
+        {
+            diceDesc = dicePopup.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        
+        if(itemPopup != null)
+        {
+            itemDesc = itemPopup.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        
+        if(StartBtn != null)
+        {
+            StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
+        }
     }
 
     private void Start()
     {
-        SetStatus();
+        ClosePopup();
+        if (playerGold != null) SetStatus();
     }
 
     public void SetStatus()
@@ -55,40 +67,24 @@ public class PopupManager : MonoBehaviour
 
     public void OpenPopup(DiceData data, RectTransform targetRect)
     {
+        if (diceDesc == null) return;
         this.diceDesc.text = data.Desc;
-
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rootCanvas.GetComponent<RectTransform>(),
-            screenPos,
-            rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out Vector2 localPos
-            );
-       
-        dicePopup.localPosition = localPos + new Vector2(targetRect.sizeDelta.x, 0);
+        dicePopup.localPosition = CalcLocalPosPopup(targetRect);
         dicePopup.gameObject.SetActive(true);
     }
 
     public void OpenPopup(ItemSo data, RectTransform targetRect)
     {
+        if (itemDesc == null) return;
         this.itemDesc.text = data.itemDesc;
-
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rootCanvas.GetComponent<RectTransform>(),
-            screenPos,
-            rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out Vector2 localPos
-            );
-
-        itemPopup.localPosition = localPos + new Vector2(targetRect.sizeDelta.x, 0);
+        itemPopup.localPosition = CalcLocalPosPopup(targetRect);
         itemPopup.gameObject.SetActive(true);
     }
 
     public void ClosePopup()
     {
-        dicePopup.gameObject.SetActive(false);
-        itemPopup.gameObject.SetActive(false);
+        if(diceDesc != null) dicePopup.gameObject.SetActive(false);
+        if(itemDesc != null) itemPopup.gameObject.SetActive(false);
     }
 
     public void BuyItems(int gold)
@@ -102,5 +98,17 @@ public class PopupManager : MonoBehaviour
     {
         PlayerManager.instance.gold += gold;
         playerGold.text = PlayerManager.instance.gold.ToString();
+    }
+
+    private Vector2 CalcLocalPosPopup(RectTransform targetRect)
+    {
+        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            rootCanvas.GetComponent<RectTransform>(),
+            screenPos,
+            rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+            out Vector2 localPos
+        );
+        return localPos + new Vector2(targetRect.sizeDelta.x, 0);
     }
 }
