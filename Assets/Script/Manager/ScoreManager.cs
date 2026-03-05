@@ -1,8 +1,5 @@
-using System;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -24,7 +21,9 @@ public class ScoreManager : MonoBehaviour
 
         for(int i = 0; i < uiDice.Length; i++)
         {
-            if (uiDice[i] != null)
+            if (uiDice[i] == null) continue;
+            if (!uiDice[i].gameObject.activeInHierarchy) continue;
+            if (uiDice[i] != null && uiDice[i].MyState != null && uiDice[i].MyState.diceData != null)
             {
                 DiceData data = uiDice[i].MyState.diceData;
                 if(filterType != DiceType.Roll && data.type != filterType)
@@ -35,18 +34,42 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
+        bool gimmickNoScoreNormal = IsGimmickActive(GimmickType.NoScoreFromNormalDice);
+        bool gimmickNegateItem = IsGimmickActive(GimmickType.NegateRandomItem);
+        bool gimmickNegateDiceEffect = IsGimmickActive(GimmickType.NegateRandomDiceEffect);
+
+        if(gimmickNegateDiceEffect)
+        {
+            var candidates = simulationStates.FindAll(s => s != null && !s.isIgnored && s.diceData.type != DiceType.None);
+
+            if(candidates.Count > 0)
+            {
+                DiceState target = candidates[UnityEngine.Random.Range(0, candidates.Count)];
+                target.isIgnored = true;
+                // 기믹 연출 이벤트 추가 필요
+                Debug.Log($"{target.diceIndex} 효과 무효화!");
+            }
+        }
+
         // 0단계
-        foreach(var state in simulationStates)
+        foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;
-            finalScore += state.originalValue;
 
+            if(gimmickNoScoreNormal && state.diceData.type == DiceType.None)
+            {
+                // 기믹 연출 이벤트 추가 필요
+                Debug.Log("효과 없는 주사위 점수 획득 불가!");
+                continue;
+            }
+
+            finalScore += state.originalValue;
             scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
         }
 
         if(GameManager.instance != null && GameManager.instance.playerData != null)
         {
-            List<ItemSo> inventory = GameManager.instance.playerData.itemSo;
+            List<ItemSo> inventory = GetPlayerInventory();
 
             if(inventory != null)
             {
@@ -63,16 +86,36 @@ public class ScoreManager : MonoBehaviour
             }
         }
 
+        // 아이템 효과
+        List<ItemSo> playerInventory = new List<ItemSo>();
 
-
-        // 점수 로직
-        // 1. 룰상 효과
-        foreach (var state in simulationStates)
+        if(playerInventory != null)
         {
+            foreach (var item in playerInventory)
+            {
+                if (item == null) continue;
 
-            //if (state == null || state.isIgnored) continue;
-            state.diceData.OnRuleEffect(state, simulationStates, scoreEvents);
+                if (gimmickNegateItem && Random.value < 0.25f)
+                {
+                    Debug.Log($"{item.itemName} 무효화");
+                    continue;
+                }
+                item.RoundStart(simulationStates, ref finalScore, scoreEvents);
+
+                if(item.isConsumable)
+                {
+                    itemsToComsume.Add(item);
+                }
+            }
+
         }
+
+         // 점수 로직
+         // 1. 룰상 효과
+         foreach (var state in simulationStates)
+         {
+            state.diceData.OnRuleEffect(state, simulationStates, scoreEvents);
+         }
 
         // 2. 굴림 효과
         foreach (var state in simulationStates)
@@ -90,17 +133,6 @@ public class ScoreManager : MonoBehaviour
             {
                 continue;
             }
-
-            //if (state.isMulti)
-            //{
-            //    finalScore *= state.scoreValue;
-            //    scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, state.diceIndex, finalScore, $"x{state.scoreValue}"));
-            //}
-            //else
-            //{
-            //    finalScore += state.scoreValue;
-            //    scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.scoreValue}"));
-            //}
 
             state.diceData.CalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
@@ -121,6 +153,21 @@ public class ScoreManager : MonoBehaviour
         return (finalScore, scoreEvents, itemsToComsume);
     }
 
+    private bool IsGimmickActive(GimmickType type)
+    {
+        return GimmickManager.instance != null && GimmickManager.instance.IsGimmickActive(type);
+    }
+
+    private List<ItemSo> GetPlayerInventory()
+    {
+        if(TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
+        {
+            return TestModeManager.instance.testItem;
+        }
+        if (PlayerManager.instance != null) return PlayerManager.instance.items;
+
+        return null;
+    }
 }
 
 
