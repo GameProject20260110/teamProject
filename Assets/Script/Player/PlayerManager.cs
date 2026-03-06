@@ -136,17 +136,36 @@ public class PlayerManager : MonoBehaviour
         items.Clear();
 
         this.SpecialSlots = data.specialSlots;
-
-        foreach(var name in data.diceNames)
+        if(data.specialSlots != null && data.specialSlots.Length == 6)
         {
-            var dice = System.Array.Find(allDices, s=>s.name == name);
-            if (dice != null) dices.Add(dice);
+            this.SpecialSlots = data.specialSlots;
+        }else
+        {
+            this.SpecialSlots = new bool[6];
         }
+
+         foreach (var name in data.diceNames)
+         {
+            var dice = System.Array.Find(allDices, s => s.name == name);
+            if (dice != null) dices.Add(dice);
+         }
         foreach (var name in data.itemNames)
         {
             var item = System.Array.Find(allItems, s => s.name == name);
             if (item != null) items.Add(item);
         }
+        if (dices.Count == 0) InitDefault();
+
+        bool anyUnlocked = false;
+        foreach (var slot in SpecialSlots)
+        {
+            if (slot)
+            {
+                anyUnlocked = true;
+                break;
+            }
+        }
+        if (!anyUnlocked) SpecialSlots[0] = true;
     }
 
     private string SavePath()

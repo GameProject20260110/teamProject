@@ -2,6 +2,7 @@ using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
 
+[System.Serializable]
 public class RoundData
 {
     public int roundNum;
@@ -28,5 +29,35 @@ public class StageDataSo : ScriptableObject
         RoundData data = GetRoundData(round);
         if (data != null && data.goldReward > 0) return data.goldReward;
         return round + 9;
+    }
+
+    [ContextMenu("라운드 기본값 생성")]
+    public void GeneratorRoundDefaultRounds()
+    {
+        allRounds.Clear();
+
+        int[] targetScores = new int[]
+        {
+            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+        };
+        int[] goldReward = new int[]
+        {
+            10, 11, 12, 13, 14, 15, 16, 17, 18 ,19, 20, 21, 22, 23, 24
+        };
+
+        for(int i = 0; i < 15; i++)
+        {
+            int roundNum = i + 1;
+            bool isBoss = (roundNum % 5 == 0);
+
+            allRounds.Add(new RoundData
+            {
+                roundNum = roundNum,
+                targetScore = targetScores[i],
+                goldReward = goldReward[i],
+                bossStage = isBoss,
+                hasGimmick = isBoss
+            });
+        }
     }
 }

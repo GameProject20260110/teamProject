@@ -165,7 +165,7 @@ public class UiController : MonoBehaviour
             items = PlayerManager.instance?.items;
         }
 
-        for (int i = 0; i < items.Count; i++)
+        for (int i = 0; i < itemIcon.Count; i++)
         {
             if (itemIcon[i] == null) return;
             if(i < items.Count && items[i] != null)
@@ -175,8 +175,7 @@ public class UiController : MonoBehaviour
             }
             else
             {
-                itemIcon[i].sprite = null;
-                itemIcon[i].color = new Color(1, 1, 1, 0);
+                itemIcon[i].gameObject.SetActive(false);
             }
         }
     }
@@ -328,7 +327,7 @@ public class UiController : MonoBehaviour
     private void OnItemSlotHover(int index)
     {
         List<ItemSo> items = GetCurrentItems();
-        if(itemIcon == null || index >= itemIcon.Count || items[index] == null) return;
+        if (items == null || index >= items.Count || items[index] == null) return;
 
         PopupManager.instance?.OpenPopup(items[index], itemIcon[index].GetComponent<RectTransform>());
     }

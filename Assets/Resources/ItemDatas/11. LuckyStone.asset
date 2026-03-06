@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 322b6a179396b924e849c7d469a2978d, type: 3}
+  m_Name: 11. LuckyStone
+  m_EditorClassIdentifier: Assembly-CSharp::LuckyStone
+  itemIcon: {fileID: -6422874858587772593, guid: ea47d9ddc63897c40b513aa79d10ff06, type: 3}
+  itemNum: 11
+  itemName: "\uD589\uC6B4\uC758\uB3CC"
+  gold: 6
+  sell: 0
+  isConsumable: 0
+  itemDesc: "\uD589\uC6B4\uC758\uB3CC"
+  discountChance: 0.2
+  discountAmount: 2
