@@ -5,7 +5,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
 {
     protected override string DropTag => "BuyItem";
     protected override string SlotTag => "Inventory";
-    protected override int GetCost() => Data.gold;
+    protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
     protected override int GetSellPrice() => Data.sell;
 
     protected override void OpenPopup() =>

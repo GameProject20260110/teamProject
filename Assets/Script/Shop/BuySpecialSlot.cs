@@ -23,12 +23,14 @@ public class BuySpecialSlot : MonoBehaviour
 
     public void OnClickBuy()
     {
+        int finalPrice = LuckyStone.CalcDiscount(gold);
+
         foreach(var slot in DiceSlot)
         {
-            if (!slot.hasSpecialSlot && PlayerManager.instance.gold >= gold && level < 6)
+            if (!slot.hasSpecialSlot && PlayerManager.instance.gold >= finalPrice && level < 6)
             {
                 slot.SetSpecialSlot(true); 
-                PopupManager.instance.BuyItems(gold);
+                PopupManager.instance.BuyItems(finalPrice);
                 PlayerManager.instance.SpecialSlots[level] = true;
                 StateUpdate();
                 TextUpdate();               

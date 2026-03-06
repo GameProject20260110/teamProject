@@ -91,6 +91,8 @@ public class AudioManager : MonoBehaviour
 
     public void PlaySfx(Sfx sfx)
     {
+        if (sfxClips == null || (int)sfx >= sfxClips.Length) return;
+
         for (int index = 0; index < channels; index++)
         {
             int loopIndex = (index + channelIndex) % sfxPlayer.Length;
