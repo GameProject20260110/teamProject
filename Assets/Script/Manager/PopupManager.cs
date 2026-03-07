@@ -55,7 +55,26 @@ public class PopupManager : MonoBehaviour
     private void Start()
     {
         ClosePopup();
-        if (playerGold != null) SetStatus();
+        if (playerGold != null)
+        {
+            int gold = PlayerShopManager.instance != null && PlayerShopManager.instance.IsOpen ? 
+                PlayerShopManager.instance.TempGold : PlayerManager.instance.gold;
+            playerGold.text = gold.ToString();
+            playerRound.text = PlayerManager.instance.currentRound.ToString();
+        }
+        
+    }
+
+    private void OnEnable()
+    {
+        if(PlayerShopManager.instance != null)
+            PlayerShopManager.instance.OnGoldChanged += UpdateGold;
+    }
+
+    private void OnDisable()
+    {
+        if (PlayerShopManager.instance != null)
+            PlayerShopManager.instance.OnGoldChanged -= UpdateGold;
     }
 
     public void SetStatus()
@@ -87,18 +106,7 @@ public class PopupManager : MonoBehaviour
         if(itemDesc != null) itemPopup.gameObject.SetActive(false);
     }
 
-    public void BuyItems(int gold)
-    {
-        if (PlayerManager.instance.gold < gold) return;
-        PlayerManager.instance.gold -= gold;
-        playerGold.text = PlayerManager.instance.gold.ToString();
-    }
-
-    public void SellItems(int gold)
-    {
-        PlayerManager.instance.gold += gold;
-        playerGold.text = PlayerManager.instance.gold.ToString();
-    }
+    private void UpdateGold(int gold) => playerGold.text = $"{gold}";
 
     private Vector2 CalcLocalPosPopup(RectTransform targetRect)
     {

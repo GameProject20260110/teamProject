@@ -1,5 +1,3 @@
-//using System.Collections.Generic;
-//using TMPro;
 using UnityEngine;
 
 public class ShopItem : MonoBehaviour
@@ -40,13 +38,34 @@ public class ShopItem : MonoBehaviour
 
     private void Start()
     {
+        PlayerShopManager.instance.Open();
         SetUp();
         ReRoll();
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
     }
 
+    public void OnLeaveButton()
+    {
+        PlayerShopManager.instance.Commit();
+    }
+
+    public void OnDiscardButton()
+    {
+        PlayerShopManager.instance.Discard();
+    }
+
+
     public void ReRoll()
     {
+        if (PlayerShopManager.instance.RerollCount > 0)
+        {
+            bool success = PlayerShopManager.instance.TryReroll();
+            if (!success)
+            {
+                Debug.Log("[Shop] 골드 부족으로 리롤 불가");
+                return;
+            }
+        }
         RerollDice();
         ReRollItem();
     }
@@ -57,38 +76,28 @@ public class ShopItem : MonoBehaviour
         buyItem = new BuyItem[itemSlotNum];
         hasShoes = false;
 
-        ItemSlot diceSlot = null;
-        BuyDice slotChildDice = null;
-
         for (int i = 0; i < myDicePanel.transform.childCount; i++)
         {
-            diceSlot = myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
-            slotChildDice = diceSlot.GetComponentInChildren<BuyDice>();
-
+            var diceSlot = myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
+            var slotChildDice = diceSlot.GetComponentInChildren<BuyDice>();
+            
             diceSlot.SetSpecialSlot(PlayerManager.instance.SpecialSlots[i]);
-
-            if (PlayerManager.instance.dices[i] == null)
-            {
-                PlayerManager.instance.PushPlayerDices(PlayerManager.instance.defaultDice, i);
-            }
-            slotChildDice.UpdateDiceInfo(PlayerManager.instance.dices[i], true);
+            
+            var dice = PlayerShopManager.instance.TempDices[i] ?? PlayerManager.instance.defaultDice;
+            
+            slotChildDice.UpdateDiceInfo(dice, true);
 
         }
-
-        Transform slotChildItem = null;
-        GameObject item;
 
         for(int i = 0; i < PlayerManager.instance.items.Count; i++)
         {
-            slotChildItem = Iventory.transform.GetChild(i);
-            item = Instantiate(Item);
-            item.GetComponent<BuyItem>().UpdateInfo(PlayerManager.instance.items[i], true);
-            item.transform.SetParent(slotChildItem.transform);
+            var slotChildItem = Iventory.transform.GetChild(i);
+            var item = Instantiate(Item);
+            item.GetComponent<BuyItem>().UpdateInfo(PlayerShopManager.instance.TempItems[i], true);
+            item.transform.SetParent(slotChildItem);
             item.GetComponent<RectTransform>().localPosition = Vector3.zero;
 
         }
-
-
     }
 
     private void RerollDice()
@@ -97,8 +106,7 @@ public class ShopItem : MonoBehaviour
         {
             if (itemSlots[i].transform.childCount > 0)
             {
-                buyDice[i] = itemSlots[i].transform.GetComponentInChildren<BuyDice>();
-                     
+                buyDice[i] = itemSlots[i].transform.GetComponentInChildren<BuyDice>();                    
             }
             else
             {
@@ -107,8 +115,7 @@ public class ShopItem : MonoBehaviour
                 buyDice[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
 
-            DiceData dice = diceGacha.Roll();
-            buyDice[i].UpdateDiceInfo(dice, false);
+            buyDice[i].UpdateDiceInfo(diceGacha.Roll(), false);
 
         }
     }
@@ -117,19 +124,17 @@ public class ShopItem : MonoBehaviour
     {
         for(int i = 0; i < itemSlotNum; i++)
         {
+            int slotIdx = i + DiceSlotNum;
+
             if (itemSlots[i + DiceSlotNum].transform.childCount > 0)
-            {
                 buyItem[i] = itemSlots[i + DiceSlotNum].transform.GetComponentInChildren<BuyItem>();
-            }
             else
             {
                 buyItem[i] = Instantiate(Item).GetComponent<BuyItem>();
                 buyItem[i].transform.SetParent(itemSlots[i + DiceSlotNum].transform);
                 buyItem[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
-
-            ItemSo item = itemGacha.Roll();
-            buyItem[i].UpdateInfo(item, false);
+            buyItem[i].UpdateInfo(itemGacha.Roll(), false);
         }
 
     }

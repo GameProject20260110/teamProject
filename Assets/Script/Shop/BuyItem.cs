@@ -1,5 +1,4 @@
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class BuyItem : BuyPurchasable<ItemSo>
 {
@@ -7,13 +6,14 @@ public class BuyItem : BuyPurchasable<ItemSo>
     protected override string SlotTag => "Inventory";
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
     protected override int GetSellPrice() => Data.sell;
+    protected override string GetItemName() => Data.name;
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
-    public void UpdateInfo(ItemSo item, bool buy)
+    public void UpdateInfo(ItemSo item, bool isBought)
     {
-        bought = buy;
+        bought = isBought;
         descPosition = GetComponentsInChildren<RectTransform>(true)[1];
         ApplyData(item);
     }
@@ -26,19 +26,18 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override void OnBuy()
     {
-        PlayerManager.instance.PushPlayerItems(Data);
-        PopupManager.instance.BuyItems(GetCost());
+        bool success = PlayerShopManager.instance.TryPurchaseItem(Data);
+        if (!success) RevertToParent();
     }
-        
 
     protected override void OnSell()
     {
-        PlayerManager.instance.PullPlayerItems(Data);
-        PopupManager.instance.SellItems(GetSellPrice());
+        PlayerShopManager.instance.SellItem(Data, GetSellPrice());
     }
 
     protected override void OnSwap(BuyPurchasable<ItemSo> other)
     {
+        // 아이템 슬롯 간 순서 교환 — 골드 변동 없음
         var otherItem = (BuyItem)other;
         ItemSo tmp = otherItem.Data;
         otherItem.ApplyData(Data);

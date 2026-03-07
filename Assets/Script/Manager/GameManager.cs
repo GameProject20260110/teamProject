@@ -11,8 +11,6 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
-    public PlayerSo playerData;
-
     public event Action<int> OnGoldChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnHeartsChanged;
@@ -61,7 +59,6 @@ public class GameManager : MonoBehaviour
     {
         if(instance == null)
         {
-            //DontDestroyOnLoad(gameObject);
             instance = this;
         }
         else
