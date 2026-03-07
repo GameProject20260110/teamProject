@@ -1,4 +1,4 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,19 +6,19 @@ public class PopupManager : MonoBehaviour
 {
     public static PopupManager instance;
 
-    [Header("ÁÖ»çÀ§ ÆË¾÷")]
+    [Header("ì£¼ì‚¬ìœ„ íŒì—…")]
     public RectTransform dicePopup;
     private TextMeshProUGUI diceDesc;
 
-    [Header("¾ÆÀÌÅÛ ÆË¾÷")]
+    [Header("ì•„ì´í…œ íŒì—…")]
     public RectTransform itemPopup;
     private TextMeshProUGUI itemDesc;
 
-    [Header("ÇÃ·¹ÀÌ¾î Á¤º¸")]
+    [Header("í”Œë ˆì´ì–´ ì •ë³´")]
     public TextMeshProUGUI playerGold;
     public TextMeshProUGUI playerRound;
 
-    [Header("±âÅ¸")]
+    [Header("ê¸°íƒ€")]
     public GameObject closePanel;
     public Button StartBtn;
     private Canvas rootCanvas;
@@ -55,7 +55,21 @@ public class PopupManager : MonoBehaviour
     private void Start()
     {
         ClosePopup();
-        if (playerGold != null) SetStatus();
+        if (playerGold != null)
+        {
+            int gold = PlayerShopManager.instance != null && PlayerShopManager.instance.IsOpen ? 
+                PlayerShopManager.instance.TempGold : PlayerManager.instance.gold;
+            playerGold.text = gold.ToString();
+            playerRound.text = PlayerManager.instance.currentRound.ToString();
+        }
+        if (PlayerShopManager.instance != null)
+            PlayerShopManager.instance.OnGoldChanged += UpdateGold;
+    }
+
+    private void OnDestroy()
+    {
+        if (PlayerShopManager.instance != null)
+            PlayerShopManager.instance.OnGoldChanged -= UpdateGold;
     }
 
     public void SetStatus()
@@ -87,18 +101,7 @@ public class PopupManager : MonoBehaviour
         if(itemDesc != null) itemPopup.gameObject.SetActive(false);
     }
 
-    public void BuyItems(int gold)
-    {
-        if (PlayerManager.instance.gold < gold) return;
-        PlayerManager.instance.gold -= gold;
-        playerGold.text = PlayerManager.instance.gold.ToString();
-    }
-
-    public void SellItems(int gold)
-    {
-        PlayerManager.instance.gold += gold;
-        playerGold.text = PlayerManager.instance.gold.ToString();
-    }
+    private void UpdateGold(int gold) => playerGold.text = $"{gold}";
 
     private Vector2 CalcLocalPosPopup(RectTransform targetRect)
     {

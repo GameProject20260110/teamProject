@@ -67,7 +67,7 @@ public class ScoreManager : MonoBehaviour
             scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
         }
 
-        if(GameManager.instance != null && GameManager.instance.playerData != null)
+        if(GameManager.instance != null /*&& PlayerManager.instance != null*/)
         {
             List<ItemSo> inventory = GetPlayerInventory();
 

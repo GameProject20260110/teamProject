@@ -1,13 +1,12 @@
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class BuySpecialSlot : MonoBehaviour
 {
     [SerializeField] private int gold = 8;
     [SerializeField] private int level = 1;
 
-    [Header("�ؽ�Ʈ")]
+    [Header("텍스트")]
     [SerializeField] private TextMeshProUGUI levelText;
     [SerializeField] private TextMeshProUGUI goldText;
     [SerializeField] private ItemSlot[] DiceSlot;
@@ -23,19 +22,25 @@ public class BuySpecialSlot : MonoBehaviour
 
     public void OnClickBuy()
     {
+        if (level >= 6) return;
+
         int finalPrice = LuckyStone.CalcDiscount(gold);
 
         foreach(var slot in DiceSlot)
         {
-            if (!slot.hasSpecialSlot && PlayerManager.instance.gold >= finalPrice && level < 6)
+            if (slot.hasSpecialSlot) continue;
+
+            bool success = PlayerShopManager.instance.TryPurchaseSpecialSlot(finalPrice, level);
+            if (!success)
             {
-                slot.SetSpecialSlot(true); 
-                PopupManager.instance.BuyItems(finalPrice);
-                PlayerManager.instance.SpecialSlots[level] = true;
-                StateUpdate();
-                TextUpdate();               
+                Debug.Log("골드 부족 — 슬롯 구매 불가");
                 return;
             }
+
+            slot.SetSpecialSlot(true);
+            StateUpdate();
+            TextUpdate();
+            return;
         }
     }
 
