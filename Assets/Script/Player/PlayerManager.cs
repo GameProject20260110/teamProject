@@ -11,6 +11,8 @@ public class PlayerManager : MonoBehaviour
     public int currentRound;
     public int heart;
 
+    private int DiceSlotCount = 6;
+
     public DiceData defaultDice;
     private DiceData[] allDices;
     private ItemSo[] allItems;
@@ -33,63 +35,10 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    public void PushPlayerDices(DiceData Dice)
-    {
-        for (int i = 0; i < dices.Count; i++)
-        {
-            if (dices[i] == null)
-            {
-                dices[i] = Dice;
-                return;
-            }
-
-        }
-
-    }
-
-    public void PullPlayerDices(DiceData Dice)
-    {
-        for (int i = 0; i < dices.Count; i++)
-        {
-            if (dices[i] == Dice)
-            {
-                dices[i] = defaultDice;
-                return;
-            }
-
-        }
-    }
-
-    public void PushPlayerDices(DiceData Dice, int index)
-    {     
-        dices[index] = Dice;
-    }
-
-    public void PullPlayerDices(DiceData Dice, int index)
-    {
-        if (dices[index] == Dice)
-        {
-            dices[index] = defaultDice;
-        }
-    }
-
-    public void PushPlayerItems(ItemSo item)
-    {
-        if (items.Count >= 7) return;
-        items.Add(item);
-
-    }
-
-    public void PullPlayerItems(ItemSo item)
-    {
-        items.Remove(item);
-
-    }
-
     private void InitDefault()
     {
         SpecialSlots[0] = true;
-        for(int i = 0; i < 6; i++)
+        for(int i = 0; i < DiceSlotCount; i++)
         {
             dices.Add(defaultDice);
         }
@@ -113,7 +62,16 @@ public class PlayerManager : MonoBehaviour
             data.itemNames.Add(item.name);
         
         string json = JsonUtility.ToJson(data, true);
-        System.IO.File.WriteAllText(SavePath(), json);
+        try
+        {
+            System.IO.File.WriteAllText(SavePath(), json);
+        }
+        catch(System.Exception ex)
+        {
+            Debug.LogError($" 저장 실패 : {ex.Message} (PlayerManager)");
+        }
+
+        
     }
 
     public void Load()
@@ -139,7 +97,8 @@ public class PlayerManager : MonoBehaviour
         if(data.specialSlots != null && data.specialSlots.Length == 6)
         {
             this.SpecialSlots = data.specialSlots;
-        }else
+        }
+        else
         {
             this.SpecialSlots = new bool[6];
         }

@@ -1,4 +1,4 @@
-using TMPro;
+ï»¿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -6,19 +6,19 @@ public class PopupManager : MonoBehaviour
 {
     public static PopupManager instance;
 
-    [Header("ÁÖ»çÀ§ ÆË¾÷")]
+    [Header("ì£¼ì‚¬ìœ„ íŒì—…")]
     public RectTransform dicePopup;
     private TextMeshProUGUI diceDesc;
 
-    [Header("¾ÆÀÌÅÛ ÆË¾÷")]
+    [Header("ì•„ì´í…œ íŒì—…")]
     public RectTransform itemPopup;
     private TextMeshProUGUI itemDesc;
 
-    [Header("ÇÃ·¹ÀÌ¾î Á¤º¸")]
+    [Header("í”Œë ˆì´ì–´ ì •ë³´")]
     public TextMeshProUGUI playerGold;
     public TextMeshProUGUI playerRound;
 
-    [Header("±âÅ¸")]
+    [Header("ê¸°íƒ€")]
     public GameObject closePanel;
     public Button StartBtn;
     private Canvas rootCanvas;
@@ -62,16 +62,11 @@ public class PopupManager : MonoBehaviour
             playerGold.text = gold.ToString();
             playerRound.text = PlayerManager.instance.currentRound.ToString();
         }
-        
-    }
-
-    private void OnEnable()
-    {
-        if(PlayerShopManager.instance != null)
+        if (PlayerShopManager.instance != null)
             PlayerShopManager.instance.OnGoldChanged += UpdateGold;
     }
 
-    private void OnDisable()
+    private void OnDestroy()
     {
         if (PlayerShopManager.instance != null)
             PlayerShopManager.instance.OnGoldChanged -= UpdateGold;

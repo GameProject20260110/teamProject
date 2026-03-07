@@ -44,6 +44,17 @@ public class ShopItem : MonoBehaviour
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
     }
 
+    private void OnValidate()
+    {
+        if (itemSlots != null && itemSlots.Length != DiceSlotNum + itemSlotNum)
+            Debug.LogError($" itemSlots 크기 ({itemSlots.Length}) != DiceSlotNum({DiceSlotNum}) + itemSlotNum({itemSlotNum})(ShopItem)");
+
+        if (Dice == null) Debug.LogWarning("Dice 프리팹이 비어있습니다.(ShopItem)");
+        if (Item == null) Debug.LogWarning("Item 프리팹이 비어있습니다.(ShopItem)");
+        if (diceGacha == null) Debug.LogWarning("DiceGacha 프리팹이 비어있습니다.(ShopItem)");
+        if (itemGacha == null) Debug.LogWarning("ItemGacha 프리팹이 비어있습니다.(ShopItem)");
+    }
+
     public void OnLeaveButton()
     {
         PlayerShopManager.instance.Commit();
@@ -89,7 +100,7 @@ public class ShopItem : MonoBehaviour
 
         }
 
-        for(int i = 0; i < PlayerManager.instance.items.Count; i++)
+        for(int i = 0; i < PlayerShopManager.instance.TempItems.Count; i++)
         {
             var slotChildItem = Iventory.transform.GetChild(i);
             var item = Instantiate(Item);
@@ -124,8 +135,6 @@ public class ShopItem : MonoBehaviour
     {
         for(int i = 0; i < itemSlotNum; i++)
         {
-            int slotIdx = i + DiceSlotNum;
-
             if (itemSlots[i + DiceSlotNum].transform.childCount > 0)
                 buyItem[i] = itemSlots[i + DiceSlotNum].transform.GetComponentInChildren<BuyItem>();
             else

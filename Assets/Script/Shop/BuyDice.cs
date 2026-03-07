@@ -36,13 +36,13 @@ public class BuyDice : BuyPurchasable<DiceData>
         img.sprite = data.skin.GetSprite(1);
     }
 
-    protected override void OnBuy()
+    protected override bool OnBuy()
     {
         Slot = GetComponentInParent<ItemSlot>();
-        if (Slot == null || !Slot.hasSpecialSlot) return;
+        if (Slot == null || !Slot.hasSpecialSlot) return false;
 
-        bool success = PlayerShopManager.instance.TryPurchaseDice(Data, Slot.slotIndex);
-        if (!success) RevertToParent();
+        return PlayerShopManager.instance.TryPurchaseDice(Data, Slot.slotIndex);
+        
     }
 
     protected override void OnSell()

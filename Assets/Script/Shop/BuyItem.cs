@@ -24,10 +24,9 @@ public class BuyItem : BuyPurchasable<ItemSo>
         img.sprite = data.itemIcon;
     }
 
-    protected override void OnBuy()
+    protected override bool OnBuy()
     {
-        bool success = PlayerShopManager.instance.TryPurchaseItem(Data);
-        if (!success) RevertToParent();
+        return PlayerShopManager.instance.TryPurchaseItem(Data);       
     }
 
     protected override void OnSell()
