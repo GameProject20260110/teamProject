@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
         _currentRerollCount = maxRerollCount;
         currentScore = 0;
         if (UiController.instance != null) UiController.instance.UpdateRerollUi(_currentRerollCount);
+        NotifyAllUI();
     }
 
     public void NotifyAllUI()
@@ -216,6 +217,17 @@ public class GameManager : MonoBehaviour
     public void HandleGameOver()
     {
         Debug.Log("게임 오버 처리");
+
+        if(PlayerManager.instance != null)
+        {
+            PlayerManager.instance.ResetData();
+        }
+
+        if(GimmickManager.instance != null)
+        {
+            GimmickManager.instance.ClearGimmick();
+        }
+
         List<int> fakeValues = new List<int>();
         if (_lastValues != null)
         {
@@ -242,7 +254,6 @@ public class GameManager : MonoBehaviour
         if (RoundManager.instance != null) RoundManager.instance.CompleteRound(currentScore);
     }
 
-    
 
     public void OnClickNextRound()
     {
@@ -255,6 +266,10 @@ public class GameManager : MonoBehaviour
 
     public void LoadHomeScreen()
     {
+        if(PlayerManager.instance != null && !PlayerManager.instance.isGameOver)
+        {
+            PlayerManager.instance.Save();
+        }
         SceneManager.LoadScene("HomeScreen");
     }
 
