@@ -47,6 +47,8 @@ public class UiController : MonoBehaviour
     public Transform lifeContainer;
     public Image heartPrefab;
 
+    public GameObject settingPanel;
+
     private List<Image> hearts = new List<Image>();
     private List<Image> resultHearts = new List<Image>();
 
@@ -65,6 +67,7 @@ public class UiController : MonoBehaviour
     private void Start()
     {
         //AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
+        if(settingPanel != null) settingPanel.SetActive(false);
 
         if(GameManager.instance != null)
         {
@@ -156,20 +159,13 @@ public class UiController : MonoBehaviour
         if (itemIcon == null) return;
 
         List<ItemSo> items = GetCurrentItems() ?? new List<ItemSo>();
-        if(TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
-        {
-            items = TestModeManager.instance.testItem;
-        }
-        else
-        {
-            items = PlayerManager.instance?.items;
-        }
-
+        
         for (int i = 0; i < itemIcon.Count; i++)
         {
             if (itemIcon[i] == null) return;
             if(i < items.Count && items[i] != null)
             {
+                itemIcon[i].gameObject.SetActive(true);
                 itemIcon[i].sprite = items[i].itemIcon;
                 itemIcon[i].color = Color.white;
             }
@@ -343,5 +339,19 @@ public class UiController : MonoBehaviour
             return TestModeManager.instance.testItem;
         }
         return PlayerManager.instance?.items;
+    }
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleSettingPanel();
+        }
+    }
+
+    public void ToggleSettingPanel()
+    {
+        if (settingPanel == null) return;
+        settingPanel.SetActive(!settingPanel.activeSelf);
     }
 }

@@ -20,6 +20,10 @@ public class RoundManager : MonoBehaviour
 
     private void Start()
     {
+        if(PlayerManager.instance != null && PlayerManager.instance.currentRound > 1)
+        {
+            currentRound = PlayerManager.instance.currentRound;
+        }
         if (TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
         {
             TestModeManager.instance.ApplyTestStats();

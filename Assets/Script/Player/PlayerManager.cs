@@ -10,12 +10,14 @@ public class PlayerManager : MonoBehaviour
     public int gold;
     public int currentRound;
     public int heart;
+    public bool isGameOver;
 
     private int DiceSlotCount = 6;
 
     public DiceData defaultDice;
     private DiceData[] allDices;
     private ItemSo[] allItems;
+    
 
     private void Awake()
     {
@@ -125,6 +127,16 @@ public class PlayerManager : MonoBehaviour
             }
         }
         if (!anyUnlocked) SpecialSlots[0] = true;
+    }
+
+    public void ResetData()
+    {
+        isGameOver = true;
+        dices.Clear();
+        items.Clear();
+        SpecialSlots = new bool[6];
+        DeleteSave();
+        InitDefault();
     }
 
     private string SavePath()
