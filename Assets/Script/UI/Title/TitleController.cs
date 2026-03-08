@@ -13,7 +13,7 @@ public class TitleController : MonoBehaviour
     void Start()
     {
         uiManager.InitUI();
-        StartBtn.onClick.AddListener(() => SceneController.instance.LoadHomeScreen());
+        StartBtn.onClick.AddListener(() => SceneController.instance.LoadHomeScene());
 
         if (AudioManager.instance != null)
         {
