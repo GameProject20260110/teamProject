@@ -20,6 +20,7 @@ public class SettingsManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(gameObject);
             LoadSettings();
+            Debug.Log("초기화 완료");
         }
         else
         {

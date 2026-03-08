@@ -5,7 +5,6 @@ using UnityEngine.UI;
 public class HomeScreenUI : MonoBehaviour
 {
     public static HomeScreenUI instance;
-    public AudioClip clip;
     [Header("Button")]
     public Button StartBtn;
 
@@ -25,7 +24,7 @@ public class HomeScreenUI : MonoBehaviour
     void Start()
     {
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Home, true);
-        StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
+        StartBtn.onClick.AddListener(() => SceneController.instance.LoadShopScene());
     }
 
 }

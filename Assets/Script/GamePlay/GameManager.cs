@@ -70,6 +70,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NotifyAllUI();
+        AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle,true);
     }
 
     public void InitializeRoundData()
