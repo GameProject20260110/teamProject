@@ -159,13 +159,13 @@ public class GameManager : MonoBehaviour
         {
             _isFirstRoll = false;
             diceManager.StartRolling();
-            Debug.Log("Ã¹¹øÂ° ±¼¸®±â");
+            Debug.Log("Ã¹ï¿½ï¿½Â° ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
         else if(!_isFirstRoll && _currentRerollCount > 0)
         {
             _currentRerollCount--;
             diceManager.StartRolling();
-            Debug.Log("´Ù½Ã ±¼¸®±â");
+            Debug.Log("ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½");
         }
 
         UiController.instance.UpdateRerollUi(_currentRerollCount);
@@ -196,7 +196,7 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // ÃÖ°í Á¡¼ö °»½Å
+        // ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         if(currentScore > bestScore)
         {
             bestScore = currentScore;
@@ -204,7 +204,7 @@ public class GameManager : MonoBehaviour
 
         if (_currentRerollCount <= 0)
         {
-            Debug.Log("¸®·Ñ È½¼ö ¼ÒÁø");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½");
             UiController.instance.SetRollBtnInteractable(false);
             UiController.instance.SetConfirmBtnInteratable(true);
         }
@@ -217,7 +217,7 @@ public class GameManager : MonoBehaviour
 
     public void HandleGameOver()
     {
-        Debug.Log("°ÔÀÓ ¿À¹ö Ã³¸®");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã³ï¿½ï¿½");
 
         if(PlayerManager.instance != null)
         {
@@ -255,10 +255,20 @@ public class GameManager : MonoBehaviour
         if (RoundManager.instance != null) RoundManager.instance.CompleteRound(currentScore);
     }
 
+    public void OnClickSurrenButton()
+    {
+        if(_isFirstRoll) return;
+
+        if(RoundManager.instance != null && RoundManager.instance.currentRound > 1)
+        {
+            PlayerManager.instance.ResetData();
+        }
+        RoundManager.instance.StartRound();
+    }
 
     public void OnClickNextRound()
     {
-        Debug.Log("´ÙÀ½ ¶ó¿îµå·Î ÀÌµ¿~");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ìµï¿½~");
         if(RoundManager.instance != null)
         {
             RoundManager.instance.GoNextRound();

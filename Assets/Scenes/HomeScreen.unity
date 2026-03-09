@@ -2556,7 +2556,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2960356765668391020, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3818285362005904855, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2578,21 +2578,25 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
       objectReference: {fileID: 1094375641}
+    - target: {fileID: 5173531846312641664, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: ToggleSettingsPanel
+      objectReference: {fileID: 0}
     - target: {fileID: 5601209943525775511, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_Name
       value: Option
       objectReference: {fileID: 0}
     - target: {fileID: 5601209943525775511, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6261100934540195093, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6298660720017146013, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6923559965603017442, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
@@ -2600,7 +2604,7 @@ PrefabInstance:
       objectReference: {fileID: 1094375641}
     - target: {fileID: 8296730037958386987, guid: adfeb68adb00c88428222e6f4d5f01a3, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

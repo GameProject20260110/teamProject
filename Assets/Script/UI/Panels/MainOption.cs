@@ -26,21 +26,10 @@ public class MainOption : MonoBehaviour
         UpdateUI();
     }
 
-    public void OpenUI()
+    public void ToggleSettingsPanel()
     {
-        if (UIWindow)
-        {
-            UIWindow.SetActive(true);
-        }
-    }
-
-    public void CloseUI()
-    {
-        if (UIWindow)
-        {
-            Debug.Log("Close");
-            UIWindow.SetActive(false);
-        }
+        if(UIWindow == null) return;
+        UIWindow.SetActive(!UIWindow.activeSelf);
     }
 
     public void ChangeConfirm()
