@@ -89,7 +89,7 @@ public class ShopItem : MonoBehaviour
 
         for (int i = 0; i < myDicePanel.transform.childCount; i++)
         {
-            var diceSlot = myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
+            var diceSlot = myDicePanel.transform.GetChild(i).GetComponentInChildren<ItemSlot>();
             var slotChildDice = diceSlot.GetComponentInChildren<BuyDice>();
             
             diceSlot.SetSpecialSlot(PlayerManager.instance.SpecialSlots[i]);
@@ -100,13 +100,14 @@ public class ShopItem : MonoBehaviour
 
         }
 
+        Debug.Log(PlayerShopManager.instance.TempItems.Count);
         for(int i = 0; i < PlayerShopManager.instance.TempItems.Count; i++)
         {
             var slotChildItem = Iventory.transform.GetChild(i);
-            var item = Instantiate(Item);
-            item.GetComponent<BuyItem>().UpdateInfo(PlayerShopManager.instance.TempItems[i], true);
+            var item = Instantiate(Item); 
             item.transform.SetParent(slotChildItem);
             item.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            item.GetComponent<BuyItem>().UpdateInfo(PlayerShopManager.instance.TempItems[i], true);
 
         }
     }

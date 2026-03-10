@@ -8,7 +8,7 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override string SlotTag => "MySlot";
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
     protected override int GetSellPrice() => Data.sell;
-    protected override string GetItemName() => Data.name;
+    protected override string GetItemName() => Data.abilityName;
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
@@ -22,6 +22,9 @@ public class BuyDice : BuyPurchasable<DiceData>
         Slot = GetComponentInParent<ItemSlot>();
         descPosition = GetComponentsInChildren<RectTransform>(true)[1];
         ApplyData(data);
+        if (Slot.GetComponentInParent<SlotUI>() == null) return;
+        Slot.GetComponentInParent<SlotUI>().UpdateSlotUI(GetItemName(), GetCost());
+        
     }
 
     public void ChangeDiceInfo(DiceData data)

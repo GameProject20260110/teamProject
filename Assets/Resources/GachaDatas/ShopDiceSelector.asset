@@ -13,10 +13,6 @@ MonoBehaviour:
   m_Name: ShopDiceSelector
   m_EditorClassIdentifier: Assembly-CSharp::DiceGachaTable
   diceWeights:
-  - dice: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-    weight: 50
-  - dice: {fileID: 11400000, guid: 3a81c44f3b26352488fe480bd6ce9824, type: 2}
-    weight: 50
   - dice: {fileID: 11400000, guid: 97e69c32f976aa341b1024253a86f99d, type: 2}
     weight: 50
   - dice: {fileID: 11400000, guid: 7b07223adff4417428b47855ffa49c43, type: 2}
