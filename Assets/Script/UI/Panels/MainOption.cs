@@ -21,9 +21,11 @@ public class MainOption : MonoBehaviour
 
     private void Start()
     {
-
-        SettingsManager.instance.LoadSettings();
-        UpdateUI();
+        if(SettingsManager.instance != null)
+        {
+            SettingsManager.instance.LoadSettings();
+            UpdateUI();
+        }
     }
 
     public void ToggleSettingsPanel()

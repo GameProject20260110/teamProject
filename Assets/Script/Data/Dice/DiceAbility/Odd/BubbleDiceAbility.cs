@@ -15,7 +15,7 @@ public class BubbleDiceAbility : DiceData
             myState.isForceOdd = true;
             myState.scoreValue += finalScore;
 
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, 0, "Bubble"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, 0, "Bubble", myState.scoreValue));
         }
 
         

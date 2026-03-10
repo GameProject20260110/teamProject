@@ -17,13 +17,13 @@ public class DevilDiceAbility : DiceData
             {
                 dice.scoreValue += currentPlus;
                 totalScore += currentPlus;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil +{currentPlus}"));
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil +{currentPlus}", dice.scoreValue));
             }
             else
             {
                 dice.scoreValue -= panelty;
                 totalScore -= panelty;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil -{panelty}"));
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Devil -{panelty}", dice.scoreValue));
             }
         }
     }

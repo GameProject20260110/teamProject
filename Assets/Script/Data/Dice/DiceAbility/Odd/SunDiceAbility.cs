@@ -13,6 +13,7 @@ public class SunDiceAbility : DiceData
 
         foreach (var dice in allDice)
         {
+            if (dice == myState) continue;
             if(dice != null && dice.currentType == ScoreManager.DiceType.Odd && !localUseData.Contains(dice.diceData))
             {
                 dice.multiBonusScore *= bonusScore;

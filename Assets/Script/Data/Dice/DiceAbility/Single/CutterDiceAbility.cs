@@ -15,7 +15,7 @@ public class CutterDiceAbility : DiceData
         int add = myState.scoreValue * others[randNum].modifiedValue;
         totalScore += add;
         events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, others[randNum].diceIndex, totalScore, $"Cutter"));
-        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Cutter +{add}"));
+        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Cutter +{add}", myState.scoreValue));
     }
 
 }

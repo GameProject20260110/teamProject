@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using static UnityEngine.Rendering.DebugUI;
 using UnityEngine.InputSystem.Controls;
+using NUnit.Framework.Constraints;
 
 public class GameManager : MonoBehaviour
 {
@@ -70,7 +71,10 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NotifyAllUI();
-        AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle,true);
+        if(AudioManager.instance != null)
+        {
+            AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
+        }
     }
 
     public void InitializeRoundData()
@@ -126,6 +130,7 @@ public class GameManager : MonoBehaviour
     {
         if (UiController.instance == null) return;
 
+        UiController.instance.SetSurrenBtnInteractable(false);
         _isFirstRoll = true;
         _currentRerollCount = maxRerollCount;
         currentScore = 0;
@@ -143,6 +148,14 @@ public class GameManager : MonoBehaviour
             diceManager.SetupDiceBoard();
         }
 
+        foreach(var dice in diceManager.panelDiceScript)
+        {
+            if(dice != null && dice.gameObject.activeSelf)
+            {
+                dice.UpdateDiceScoreUi(-1, false);
+            }
+        }
+
     }
 
     public void OnClickRollBtn()
@@ -158,14 +171,13 @@ public class GameManager : MonoBehaviour
         if (_isFirstRoll)
         {
             _isFirstRoll = false;
+            UiController.instance.SetSurrenBtnInteractable(true);
             diceManager.StartRolling();
-            Debug.Log("ù��° ������");
         }
         else if(!_isFirstRoll && _currentRerollCount > 0)
         {
             _currentRerollCount--;
             diceManager.StartRolling();
-            Debug.Log("�ٽ� ������");
         }
 
         UiController.instance.UpdateRerollUi(_currentRerollCount);
@@ -196,7 +208,6 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        // �ְ� ���� ����
         if(currentScore > bestScore)
         {
             bestScore = currentScore;
@@ -204,7 +215,6 @@ public class GameManager : MonoBehaviour
 
         if (_currentRerollCount <= 0)
         {
-            Debug.Log("���� Ƚ�� ����");
             UiController.instance.SetRollBtnInteractable(false);
             UiController.instance.SetConfirmBtnInteratable(true);
         }
@@ -217,7 +227,6 @@ public class GameManager : MonoBehaviour
 
     public void HandleGameOver()
     {
-        Debug.Log("���� ���� ó��");
 
         if(PlayerManager.instance != null)
         {
@@ -258,17 +267,23 @@ public class GameManager : MonoBehaviour
     public void OnClickSurrenButton()
     {
         if(_isFirstRoll) return;
+        if (PlayerManager.instance == null) return;
+        if (RoundManager.instance.currentRound <= 1) return;
 
-        if(RoundManager.instance != null && RoundManager.instance.currentRound > 1)
+        if(PlayerManager.instance != null)
         {
             PlayerManager.instance.ResetData();
         }
+        if(GimmickManager.instance != null)
+        {
+            GimmickManager.instance.ClearGimmick();
+        }
+
         RoundManager.instance.StartRound();
     }
 
     public void OnClickNextRound()
     {
-        Debug.Log("���� ����� �̵�~");
         if(RoundManager.instance != null)
         {
             RoundManager.instance.GoNextRound();

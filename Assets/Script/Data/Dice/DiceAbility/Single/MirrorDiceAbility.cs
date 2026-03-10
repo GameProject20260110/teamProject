@@ -10,7 +10,8 @@ public class MirrorDiceAbility : DiceData
     {
         if(myState.diceIndex > 0)
         {
-            allDice[myState.diceIndex - 1].diceData.OnRuleEffect(myState, allDice, events);
+            var targetDice = allDice[myState.diceIndex - 1];
+            targetDice.diceData.OnRuleEffect(targetDice, allDice, events);
         }
     }
 
@@ -18,7 +19,8 @@ public class MirrorDiceAbility : DiceData
     {
         if(myState.diceIndex > 0)
         {
-            allDice[myState.diceIndex - 1].diceData.OnRollEffect(myState, allDice, events);
+            var targetDice = allDice[myState.diceIndex - 1];
+            targetDice.diceData.OnRollEffect(targetDice, allDice, events);
         }
     }
 
@@ -35,7 +37,8 @@ public class MirrorDiceAbility : DiceData
     {
         if(myState.diceIndex > 0)
         {
-            allDice[myState.diceIndex - 1].diceData.AfterCalculateEffect(myState, allDice, ref score, events);
+            var targetDice = allDice[myState.diceIndex - 1];
+            targetDice.diceData.AfterCalculateEffect(targetDice, allDice, ref score, events);
         }
     }
 

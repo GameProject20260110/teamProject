@@ -19,7 +19,7 @@ public class CurbDiceAbility : DiceData
         {
             int score = localBonus[dice.modifiedValue] * dice.modifiedValue;
             totalScore += score;
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"curb +{score}"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"curb +{score}", dice.scoreValue));
         }
     }
 

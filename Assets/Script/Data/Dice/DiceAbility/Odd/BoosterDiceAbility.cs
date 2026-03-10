@@ -25,7 +25,7 @@ public class BoosterDiceAbility : DiceData
             {
                 dice.scoreValue += currentBonusScore;
                 totalScore += currentBonusScore;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Booster +{currentBonusScore}"));
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Booster +{currentBonusScore}", dice.scoreValue));
             }
 
             if (!GameManager.instance.hasUsedPlusReroll)

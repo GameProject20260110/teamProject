@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -67,29 +68,10 @@ public class ScoreManager : MonoBehaviour
             scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
         }
 
-        if(GameManager.instance != null /*&& PlayerManager.instance != null*/)
-        {
-            List<ItemSo> inventory = GetPlayerInventory();
-
-            if(inventory != null)
-            {
-                foreach(var item in inventory)
-                {
-                    if (item == null) continue;
-                    item.RoundStart(simulationStates, ref finalScore, scoreEvents);
-
-                    if(item.isConsumable)
-                    {
-                        itemsToComsume.Add(item);
-                    }
-                }
-            }
-        }
 
         // 아이템 효과
-        List<ItemSo> playerInventory = new List<ItemSo>();
-
-        if(playerInventory != null)
+        List<ItemSo> playerInventory = GetPlayerInventory();
+        if(playerInventory != null /*&& PlayerManager.instance != null*/)
         {
             foreach (var item in playerInventory)
             {
@@ -141,7 +123,17 @@ public class ScoreManager : MonoBehaviour
         foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;
+            if (state.diceData is CutterDiceAbility) continue;
             state.diceData.AfterCalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
+        }
+
+        foreach(var state in simulationStates)
+        {
+            if (state == null || state.isIgnored) continue;
+            if (state.diceData is CutterDiceAbility)
+            {
+                state.diceData.AfterCalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
+            }
         }
 
         scoreEvents.Add(new ScoreEventData(

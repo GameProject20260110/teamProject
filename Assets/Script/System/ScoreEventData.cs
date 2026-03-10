@@ -10,7 +10,7 @@ public class ScoreEventData
         GlobalBuffs,   // 전체 효과
         Multiplier,    // 점수 배율
         FinalScore,     // 최종 점수
-        Wait
+        GainGold
     }
 
     public Type type; 

@@ -11,22 +11,15 @@ public class RulerDiceAbility : DiceData
 
     public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        int bonus = 0;
         foreach(var dice in allDice)
         {
-            if (dice == null) continue;
+            if (dice == null || dice == myState) continue;
 
-            if(dice.currentType == ScoreManager.DiceType.Even)
-            {
-                bonus += dice.scoreValue;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, 0, "Ruler"));
-            }
+            if (dice.currentType != ScoreManager.DiceType.Even) continue;
 
-            if(bonus > 0)
-            {
-                totalScore += bonus;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"+{bonus} (Ruler)"));
-            }
+            dice.diceData.CalculateEffect(dice, allDice, ref totalScore, events);
+            dice.diceData.AfterCalculateEffect(dice, allDice, ref totalScore, events);
+            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, dice.diceIndex, totalScore, $"Ruler: {dice.diceData.name} Àç¹ßµ¿"));
         }
     }
 }

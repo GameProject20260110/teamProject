@@ -9,12 +9,6 @@ public class ChainDiceAbility : DiceData
 
     public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
     {
-        for (int i = 0; i < count; i++)
-        {
-            int randomIndex = Random.Range(0, allDice.Count);
-            allDice[randomIndex].scoreValue = bonusScore;
-        }
-
         List<DiceState> targets = new List<DiceState>(allDice);
         int loopCount = Mathf.Min(count, targets.Count);
 

@@ -12,10 +12,10 @@ public class PurgeDiceAbility : DiceData
 
         foreach (var dice in allDice)
         {
-            if (dice == null) return;
+            if (dice == null) continue;
             dice.scoreValue += currentBonusScore;
             totalScore += currentBonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Purge +{bonusScore}"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Purge +{bonusScore}", dice.scoreValue));
         }       
     }
 }

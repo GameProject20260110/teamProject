@@ -47,6 +47,8 @@ public class UiController : MonoBehaviour
     public Transform lifeContainer;
     public Image heartPrefab;
 
+    public Button surrenBtn;
+
     public GameObject settingPanel;
 
     private List<Image> hearts = new List<Image>();
@@ -291,6 +293,14 @@ public class UiController : MonoBehaviour
         if (confirmBtn != null)
         {
             confirmBtn.interactable = state;
+        }
+    }
+
+    public void SetSurrenBtnInteractable(bool state)
+    {
+        if(surrenBtn != null)
+        {
+            surrenBtn.interactable = state;
         }
     }
 
