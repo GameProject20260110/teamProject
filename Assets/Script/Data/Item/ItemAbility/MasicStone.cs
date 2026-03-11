@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class MasicStone : ItemSo
 {
     public int bonusScore = 2;
-    public override void RoundStart(List<DiceState> allDice, ref int totalSoce, List<ScoreEventData> events)
+    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        totalSoce *= bonusScore;
+        totalScore *= bonusScore;
         allDice[0].isIgnored = true;
-        events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, -1, 0, $"MasicStone x{bonusScore}"));
+        events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, -1, totalScore, $"MasicStone x{bonusScore}"));
     }
 }

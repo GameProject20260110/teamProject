@@ -21,26 +21,17 @@ public class MainOption : MonoBehaviour
 
     private void Start()
     {
-
-        SettingsManager.instance.LoadSettings();
-        UpdateUI();
-    }
-
-    public void OpenUI()
-    {
-        if (UIWindow)
+        if(SettingsManager.instance != null)
         {
-            UIWindow.SetActive(true);
+            SettingsManager.instance.LoadSettings();
+            UpdateUI();
         }
     }
 
-    public void CloseUI()
+    public void ToggleSettingsPanel()
     {
-        if (UIWindow)
-        {
-            Debug.Log("Close");
-            UIWindow.SetActive(false);
-        }
+        if(UIWindow == null) return;
+        UIWindow.SetActive(!UIWindow.activeSelf);
     }
 
     public void ChangeConfirm()

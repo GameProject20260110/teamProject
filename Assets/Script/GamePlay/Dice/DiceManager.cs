@@ -42,7 +42,7 @@ public class DiceManager : MonoBehaviour
             fallbackDice = PlayerManager.instance.defaultDice;
         }
 
-        bool isSlotUnlock = false;
+        DiceData dataToUse = null;
 
         for(int i = 0; i < panelDiceScript.Length; i++)
         {
@@ -50,27 +50,12 @@ public class DiceManager : MonoBehaviour
 
             if (UseTestMode)
             {
-                isSlotUnlock = TestModeManager.instance.testDiceSlot[i];
-            }
-            else
-            {
-                if(PlayerManager.instance != null && i < PlayerManager.instance.SpecialSlots.Length)
-                {
-                    isSlotUnlock = PlayerManager.instance.SpecialSlots[i];
-                }
-            }
+                bool isSlotUnlocked = i < TestModeManager.instance.testDiceSlot.Length && TestModeManager.instance.testDiceSlot[i];
 
-            if (!isSlotUnlock)
-            {
-                panelDiceScript[i].transform.parent.gameObject.SetActive(false);
-                continue;
-            }
-
-            DiceData dataToUse = null;
-
-            if (UseTestMode)
-            {
-                if (TestModeManager.instance.testAbilities != null && i < TestModeManager.instance.testAbilities.Length && TestModeManager.instance.testAbilities[i] != null)
+                if(isSlotUnlocked 
+                && TestModeManager.instance.testAbilities[i] 
+                && i < TestModeManager.instance.testDiceSlot.Length 
+                && TestModeManager.instance.testAbilities[i] != null)
                 {
                     dataToUse = TestModeManager.instance.testAbilities[i];
                 }
@@ -81,7 +66,9 @@ public class DiceManager : MonoBehaviour
             }
             else
             {
-                if (PlayerManager.instance != null && PlayerManager.instance.dices != null && i < PlayerManager.instance.dices.Count)
+                bool isSpecialSlot = PlayerManager.instance != null && i < PlayerManager.instance.SpecialSlots.Length && PlayerManager.instance.SpecialSlots[i];
+
+                if(isSpecialSlot && PlayerManager.instance.dices != null && i < PlayerManager.instance.dices.Count && PlayerManager.instance.dices[i] != null)
                 {
                     dataToUse = PlayerManager.instance.dices[i];
                 }
@@ -90,13 +77,11 @@ public class DiceManager : MonoBehaviour
                     dataToUse = fallbackDice;
                 }
             }
+            panelDiceScript[i].transform.parent.gameObject.SetActive(true);
+            panelDiceScript[i].gameObject.SetActive(true);
 
-            if(dataToUse != null)
-            {
-                panelDiceScript[i].transform.parent.gameObject.SetActive(true);
-                panelDiceScript[i].gameObject.SetActive(true);
-                panelDiceScript[i].Initialize(i, dataToUse);
-            }
+            if(dataToUse == null) dataToUse = fallbackDice;
+            panelDiceScript[i].Initialize(i, dataToUse);
         }
     }
 

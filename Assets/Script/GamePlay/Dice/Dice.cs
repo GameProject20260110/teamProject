@@ -45,8 +45,10 @@ public class Dice : MonoBehaviour
             else
             {
                 diceScoreText.gameObject.SetActive(true);
-                if (anim && _currentDiceScore > 0)
+                if (anim && _currentDiceScore != targetScore)
                 {
+                    int from = _currentDiceScore;
+                    _currentDiceScore = targetScore;
                     DOVirtual.Int(_currentDiceScore, targetScore, 0.5f, (x) =>
                     {
                         diceScoreText.text = x.ToString();
@@ -54,6 +56,7 @@ public class Dice : MonoBehaviour
                 }
                 else
                 {
+                    _currentDiceScore += targetScore;
                     diceScoreText.text = targetScore.ToString();
                 }
             }

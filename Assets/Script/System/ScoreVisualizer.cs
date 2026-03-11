@@ -1,4 +1,3 @@
-using NUnit.Framework;
 using System.Collections;
 using TMPro;
 using UnityEngine;
@@ -15,6 +14,9 @@ public class ScoreVisualizer : MonoBehaviour
     public GameObject floatingText;
     public Transform effectCanvas;
 
+    public RectTransform goldUiTarget;
+    public GameObject goldIconPrefab;
+
     private int _currentDisplayScore = 0;
     private void Awake()
     {
@@ -23,10 +25,6 @@ public class ScoreVisualizer : MonoBehaviour
 
     public IEnumerator PlayScoreEventSequence(Dice[] uiDice, List<ScoreEventData> scoreEvent)
     {
-
-        _currentDisplayScore = 0;
-        finalScoreText.text = "0";
-
         foreach (var evt in scoreEvent)
         {
             Dice targetDice = null;
@@ -118,10 +116,37 @@ public class ScoreVisualizer : MonoBehaviour
                     }
                     break;
                 case ScoreEventData.Type.FinalScore:
-                            finalScoreText.text = evt.value.ToString();
-                            finalScoreText.transform.DOPunchScale(Vector3.one * 0.35f, 0.3f);
-                            yield return new WaitForSeconds(0.35f);
-                            break;
+                    UpdateScoreBoard(evt.value);
+                    finalScoreText.transform.DOPunchScale(Vector3.one * 0.35f, 0.3f);
+                    yield return new WaitForSeconds(0.35f);
+                    break;
+                case ScoreEventData.Type.GainGold:
+                    Vector3 startPos = targetDice != null ? targetDice.transform.position : effectCanvas.position;
+
+                    ShowFloatingText(startPos, evt.desc);
+
+                    if(goldIconPrefab != null && goldUiTarget != null)
+                    {
+                        GameObject icon = Instantiate(goldIconPrefab, effectCanvas);
+                        icon.transform.position = startPos;
+                        icon.transform.DOMove(goldUiTarget.position, 0.6f).SetEase(Ease.InBack).OnComplete(() =>
+                        {
+                            Destroy(icon);
+                            if(GameManager.instance != null)
+                            {
+                                GameManager.instance.NotifyAllUI();
+                            }
+                        });
+                    }
+                    else
+                    {
+                        if(GameManager.instance != null)
+                        {
+                            GameManager.instance.NotifyAllUI();
+                        }
+                    }
+                    yield return new WaitForSeconds(0.7f);
+                    break;
             }
         }
     }

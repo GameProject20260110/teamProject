@@ -9,8 +9,10 @@ public class GoblinDiceAbility : DiceData
     public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         if(myState == null) return;
-        PlayerManager.instance.gold += myState.modifiedValue;
-        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Gold +{myState.modifiedValue}"));
-    }
+        if (PlayerManager.instance == null) return;
 
+        int gold = myState.modifiedValue;
+        PlayerManager.instance.gold += gold;
+        events.Add(new ScoreEventData(ScoreEventData.Type.GainGold, myState.diceIndex, gold, $"Gold +{gold}"));
+    }
 }

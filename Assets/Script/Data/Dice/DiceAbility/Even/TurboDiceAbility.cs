@@ -8,6 +8,8 @@ public class TurboDiceAbility : DiceData
 
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
+        if (myState.diceData != this) return;
+
         if(myState.IsCurrentEven)
         {
             int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
@@ -18,7 +20,7 @@ public class TurboDiceAbility : DiceData
                     int add = dice.scoreValue * (currentBonusScore - 1);
                     dice.scoreValue *= currentBonusScore;
                     totalScore += add;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Turbo +{add}"));
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Turbo +{add}", dice.scoreValue));
                 }
             }
         }

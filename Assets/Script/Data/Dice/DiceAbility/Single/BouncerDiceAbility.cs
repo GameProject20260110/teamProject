@@ -8,6 +8,7 @@ public class BouncerDiceAbility : DiceData
     public int bonusScore = 2;
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
+
         totalScore += plusScore;
         events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"+{plusScore}"));
         totalScore *= bonusScore;

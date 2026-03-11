@@ -18,7 +18,7 @@ public class LandDiceAbility : DiceData
                 int add = dice.scoreValue * (currentBonusScore - 1);
                 dice.scoreValue *= currentBonusScore;
                 totalScore += add;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Land! +{add}"));
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Land! +{add}", dice.scoreValue));
             }
         }
     }

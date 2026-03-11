@@ -1386,7 +1386,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 655435761}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
-        m_MethodName: CloseUI
+        m_MethodName: ToggleSettingsPanel
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
