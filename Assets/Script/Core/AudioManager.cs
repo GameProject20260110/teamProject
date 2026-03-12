@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -48,7 +49,6 @@ public class AudioManager : MonoBehaviour
         bgmObject.transform.parent = transform;
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
         bgmPlayer.playOnAwake = false;
-        //bgmPlayer.volume = bgmVolume;
         bgmPlayer.clip = bgmClip[0];
         bgmPlayer.loop = true;
         bgmEffect = Camera.main.GetComponent<AudioHighPassFilter>();
@@ -63,8 +63,10 @@ public class AudioManager : MonoBehaviour
             sfxPlayer[index] = sfxObject.AddComponent<AudioSource>();
             sfxPlayer[index].playOnAwake = false;
             sfxPlayer[index].bypassListenerEffects = true;
-            //sfxPlayer[index].volume = sfxVolume;
         }
+
+        if(SettingsManager.instance != null)
+            SettingsManager.instance.ApplySettings();
     }
 
     public void PlayBgm(Bgm bgm, bool isPlay)
@@ -110,6 +112,11 @@ public class AudioManager : MonoBehaviour
             break;
         }
 
+    }
+
+    public void SetMasterVolume(float volume)
+    {
+        AudioListener.volume = volume;
     }
 
     public void SetBgmVolume(float volume)
