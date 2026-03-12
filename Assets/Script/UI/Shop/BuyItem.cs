@@ -10,6 +10,13 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
+    protected override bool IsInvaildDrop(GameObject other)
+    {
+        if (other != null && other.CompareTag(DropTag)) return true;
+
+        return !transform.parent.CompareTag(SlotTag);
+    }
+        
 
     public void UpdateInfo(ItemSo item, bool isBought)
     {
@@ -32,9 +39,11 @@ public class BuyItem : BuyPurchasable<ItemSo>
         return PlayerShopManager.instance.TryPurchaseItem(Data);       
     }
 
-    protected override void OnSell()
+    protected override bool OnSell()
     {
         PlayerShopManager.instance.SellItem(Data, GetSellPrice());
+        Destroy(gameObject);
+        return true;
     }
 
     protected override void OnSwap(BuyPurchasable<ItemSo> other)

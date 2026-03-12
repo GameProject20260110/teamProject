@@ -133,9 +133,7 @@ public class PlayerManager : MonoBehaviour
     {
         isGameOver = true;
         dices.Clear();
-        items.Clear();
-        SpecialSlots = new bool[6];
-        //DeleteSave();
+        items.Clear();    
         InitDefault();
         Save();
     }

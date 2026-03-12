@@ -110,7 +110,7 @@ public class PlayerShopManager : MonoBehaviour
 
     public void SellDice(DiceData dice, int slotIndex, int sellPrice)
     {
-        Debug.Log(slotIndex);
+
         TempDices[slotIndex] = PlayerManager.instance.defaultDice;
         GainGold(sellPrice);
     }

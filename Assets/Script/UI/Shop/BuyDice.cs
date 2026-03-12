@@ -13,8 +13,12 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
-    protected override bool IsInvaildDrop() =>
-        !GetComponentInParent<ItemSlot>().hasSpecialSlot;
+    protected override bool IsInvaildDrop(GameObject other)
+    {
+        if (!GetComponentInParent<ItemSlot>().hasSpecialSlot || !other.transform.parent.CompareTag(SlotTag)) return true;
+        return other.GetComponent<BuyDice>().Data.diceNum != 0;
+    }
+        
 
     public void UpdateDiceInfo(DiceData data, bool isBought)
     {
@@ -45,12 +49,20 @@ public class BuyDice : BuyPurchasable<DiceData>
         if (Slot == null || !Slot.hasSpecialSlot) return false;
 
         return PlayerShopManager.instance.TryPurchaseDice(Data, Slot.slotIndex);
-        
     }
 
-    protected override void OnSell()
+    protected override void OnDropSuccess(GameObject other)
     {
+        other.GetComponent<BuyDice>().ChangeDiceInfo(Data);
+    }
+
+    protected override bool OnSell()
+    {
+        if(Data.diceNum == 0) return false;
+
         PlayerShopManager.instance.SellDice(Data, Slot.slotIndex, GetSellPrice());
+        ChangeDiceInfo(PlayerManager.instance.defaultDice);
+        return true;
     }
 
     protected override void OnSwap(BuyPurchasable<DiceData> other)

@@ -17,7 +17,7 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     protected abstract void ApplyData(T data);
     protected abstract void OpenPopup();
     protected abstract bool OnBuy();
-    protected abstract void OnSell();
+    protected abstract bool OnSell();
     protected abstract void OnSwap(BuyPurchasable<T> other);
     protected abstract void OnSlotMove();
 
@@ -39,9 +39,8 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     {
         if(eventData.button == PointerEventData.InputButton.Right && bought)
         {
-            OnSell();
-            PopupManager.instance.ClosePopup();
-            Destroy(gameObject);
+            bool success = OnSell();
+            if(success) PopupManager.instance.ClosePopup();
         }
     }
 
@@ -56,7 +55,9 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         ResetDragState();
     }
 
-    protected virtual bool IsInvaildDrop() => false;
+    protected virtual bool IsInvaildDrop(GameObject other) => false;
+
+    protected virtual void OnDropSuccess(GameObject other) { }
 
     private void HandleUnboughtDrop(PointerEventData eventData)
     {
@@ -64,15 +65,17 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
         bool isInvalidDrop = transform.parent == canvas
             || PlayerShopManager.instance.TempGold - GetCost() < 0
-            || (other != null && other.CompareTag(DropTag))
-            || !transform.parent.CompareTag(SlotTag)
-            || IsInvaildDrop();
+            || IsInvaildDrop(other);
 
-        if (isInvalidDrop) { RevertToParent(); return; }
+        if (isInvalidDrop) { RevertToParent(); Debug.Log("DropFail"); return; }
 
         bool success = OnBuy();
-        if (success) bought = true;
-        else RevertToParent();
+        if (success)
+        {
+            OnDropSuccess(other);
+            bought = true;
+        }
+        if(Data.GetType() == typeof(DiceData))RevertToParent();
     }
 
     private void HandleBoughtDrop(PointerEventData eventData)
