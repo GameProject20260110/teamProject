@@ -54,6 +54,7 @@ public class SceneController : MonoBehaviour
             Debug.LogWarning("loadingPanel이 비어있습니다.");
     }
 
+    public void ReloadCurrentScene() => LoadAsync(SceneManager.GetActiveScene().name).Forget();
     public void LoadGameScene() => LoadAsync(SceneBattle).Forget(); 
     public void LoadHomeScene() => LoadAsync(SceneHome).Forget();
     public void LoadTitleScene() => LoadAsync(SceneTitle).Forget();

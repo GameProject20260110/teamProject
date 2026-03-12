@@ -39,10 +39,10 @@ public class PlayerManager : MonoBehaviour
 
     private void InitDefault()
     {
-        SpecialSlots[0] = true;
         for(int i = 0; i < DiceSlotCount; i++)
         {
             dices.Add(defaultDice);
+            SpecialSlots[i] = (i == 0);
         }
         gold = 999;
         currentRound = 1;
@@ -135,8 +135,9 @@ public class PlayerManager : MonoBehaviour
         dices.Clear();
         items.Clear();
         SpecialSlots = new bool[6];
-        DeleteSave();
+        //DeleteSave();
         InitDefault();
+        Save();
     }
 
     private string SavePath()

@@ -1,147 +1,204 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MainOption : MonoBehaviour
 {
-    public static UiController instance = null;
+    public static MainOption instance = null;
+
+    [Header("패널")]
     public GameObject UIWindow = null;
 
-    [Header("사운드")]
-    public GameObject bgmVolumeImage;
-    public GameObject bgmVolumeMuteImage;
-    public GameObject sfxVolumeImage;
-    public GameObject sfxVolumeMuteImage;
+    [Header("탭 패널")]
+    public GameObject gamePanel;
+    public GameObject videoPanel;
+    public GameObject audioPanel;
 
-    [Header("환경 설정 UI")]
-    public TMP_Dropdown IsFullscreen;
-    public TMP_Dropdown Resolution;
-    public Slider Music;
-    public Slider Sfx;
+    public Button gamePanelBtn;
+    public Button videoPanelBtn;
+    public Button audioPanelBtn;
+
+    [Header("비디오")]
+    public TextMeshProUGUI screenModeLabel;
+    private int _screenModeIndex = 0;
+    private readonly string[] _screenModeNames = { "전체화면", "창모드" };
+
+    public TextMeshProUGUI resolutionLabel;
+    private int _resolutionIndex = 0;
+    private readonly string[] _resolutionNames = { "1920 x 1080", "1600 x 900", "1280 x 720" };
+
+    [Header("사운드")]
+    public Slider masterSlider;
+    public Slider bgmSlider;
+    public Slider sfxSlider;
+
+    public TextMeshProUGUI masterlabel;
+    public TextMeshProUGUI bgmLabel;
+    public TextMeshProUGUI sfxLabel;
+
+    private bool _isUpdatingSlider = false;
+
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+    }
 
     private void Start()
     {
-        if(SettingsManager.instance != null)
+        InitSliderListeners();
+
+        if (SettingsManager.instance != null) PullFromSettings();
+
+        RefreshLabel();
+        ShowTab(0);
+    }
+
+    private void InitSliderListeners()
+    {
+        if(masterSlider)
         {
-            SettingsManager.instance.LoadSettings();
-            UpdateUI();
+            masterSlider.minValue = 0f;
+            masterSlider.maxValue = 1f;
+            masterSlider.onValueChanged.AddListener(OnMasterSliderChanged);
         }
+        if (bgmSlider)
+        {
+            bgmSlider.minValue = 0f;
+            bgmSlider.maxValue = 1f;
+            bgmSlider.onValueChanged.AddListener(OnBgmSliderChanged);
+        }
+        if (sfxSlider)
+        {
+            sfxSlider.minValue = 0f;
+            sfxSlider.maxValue = 1f;
+            sfxSlider.onValueChanged.AddListener(OnSfxSliderChanged);
+        }
+    }
+
+    private void PullFromSettings()
+    {
+        var sm = SettingsManager.instance;
+
+        _screenModeIndex = sm.IsFullScreen ? 0 : 1;
+        _resolutionIndex = sm.ResolutionIndex;
+
+        _isUpdatingSlider = true;
+        if (masterSlider) masterSlider.value = sm.MasterVolume;
+        if (bgmSlider) bgmSlider.value = sm.MusicVolume;
+        if (sfxSlider) sfxSlider.value = sm.SfxVolume;
+        _isUpdatingSlider = false;
     }
 
     public void ToggleSettingsPanel()
     {
-        if(UIWindow == null) return;
-        UIWindow.SetActive(!UIWindow.activeSelf);
-    }
+        if (UIWindow == null) return;
+        bool open = !UIWindow.activeSelf;
+        UIWindow.SetActive(open);
 
-    public void ChangeConfirm()
-    {
-        SettingsManager.instance.SaveSettings();
-    }
-
-    public void UpdateUI()
-    {
-        IsFullscreen.value = (PlayerPrefs.GetInt("IsFullscreen") == 1 ? 0 : 1);
-        Resolution.value = PlayerPrefs.GetInt("ResolutionIndex");
-        Music.value = PlayerPrefs.GetFloat("MusicVolume");
-        Sfx.value = PlayerPrefs.GetFloat("SfxVolume");
-    }
-
-    public void ChangeScreenMode(int index) // 화면 모드 전환
-    {
-        switch (index)
+        if (open)
         {
-            case 0:
-                Screen.fullScreenMode = FullScreenMode.FullScreenWindow;
-                SettingsManager.instance.IsFullScreen = true;
-                Debug.Log("전체화면");
-                break;
-            case 1:
-                Screen.fullScreenMode = FullScreenMode.Windowed;
-                SettingsManager.instance.IsFullScreen = false;
-                Debug.Log("창모드");
-                break;
-            default:
-                Debug.Log("Error");
-                break;
+            PullFromSettings();
+            RefreshLabel();
+        }
+        else 
+            SettingsManager.instance.SaveSettings();
+    }
+
+    public void ShowTab(int index)
+    {
+        gamePanel?.SetActive(index == 0);
+        videoPanel?.SetActive(index == 1);
+        audioPanel?.SetActive(index == 2);
+    }
+
+    private void RefreshLabel()
+    {
+        if(screenModeLabel) screenModeLabel.text = _screenModeNames[_screenModeIndex];
+        if(resolutionLabel) resolutionLabel.text = _resolutionNames[_resolutionIndex];
+
+        if(masterSlider && masterlabel)
+            masterlabel.text = Mathf.RoundToInt(masterSlider.value * 100) + "%";
+        if (bgmSlider && bgmLabel)
+            bgmLabel.text = Mathf.RoundToInt(bgmSlider.value * 100) + "%";
+        if (sfxSlider && sfxLabel)
+            sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100) + "%";
+    }
+
+    public void OnResetClick()
+    {
+        if (PlayerManager.instance != null && SceneController.instance != null)
+        {
+            PlayerManager.instance.ResetData();
+            ToggleSettingsPanel();
+            SceneController.instance.ReloadCurrentScene();
         }
     }
 
-    public void ChangeResolution(int index) // 화면 해상도 조절
+    public void ScreenModePrev() => CycleScreenMode(-1);
+    public void ScreenModNext() => CycleScreenMode(1);
+
+    private void CycleScreenMode(int dir)
     {
-        switch (index)
+        _screenModeIndex = (_screenModeIndex + dir + _screenModeNames.Length) % _screenModeNames.Length;
+        ApplyScreenMode();
+        if(screenModeLabel) screenModeLabel.text = _screenModeNames[_screenModeIndex];
+    }
+
+    private void ApplyScreenMode()
+    {
+        bool full = _screenModeIndex == 0;
+        Screen.fullScreenMode = full ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        SettingsManager.instance.IsFullScreen = full;
+    }
+
+    public void ResolutionPrev() => CycleResolution(-1);
+    public void ResolutionNext() => CycleResolution(+1);
+
+    private void CycleResolution(int dir)
+    {
+        _resolutionIndex = (_resolutionIndex + dir + _resolutionNames.Length) % _resolutionNames.Length;
+        ApplyResolution();
+        if(resolutionLabel) resolutionLabel.text = _resolutionNames[_resolutionIndex];
+
+    }
+
+    private void ApplyResolution()
+    {
+        SettingsManager.instance.ResolutionIndex = _resolutionIndex;
+        switch (_resolutionIndex)
         {
-            case 0:
-                Screen.SetResolution(1920, 1080, Screen.fullScreenMode);
-                SettingsManager.instance.ResolutionIndex = index;
-                break;
-            case 1:
-                Screen.SetResolution(1600, 900, Screen.fullScreenMode);
-                SettingsManager.instance.ResolutionIndex = index;
-                break;
-            case 2:
-                Screen.SetResolution(1280, 720, Screen.fullScreenMode);
-                SettingsManager.instance.ResolutionIndex = index;
-                break;
-            default:
-                break;
+            case 0: Screen.SetResolution(1920, 1080, Screen.fullScreenMode); break;
+            case 1: Screen.SetResolution(1600, 900, Screen.fullScreenMode); break;
+            case 2: Screen.SetResolution(1280, 720, Screen.fullScreenMode); break;
         }
     }
 
-    public void SetBgmVolume(float volume) // 배경음 조절
+
+    private void OnMasterSliderChanged(float value)
     {
-        AudioManager.instance.SetBgmVolume(volume);
-        SettingsManager.instance.MusicVolume = volume;
+        if (_isUpdatingSlider) return;
+        AudioManager.instance.SetMasterVolume(value);
+        SettingsManager.instance.MasterVolume = value;
+        if(masterlabel) masterlabel.text = Mathf.RoundToInt(value * 100) + "%";
+
     }
 
-    public void SetSfxVolume(float volume) // 효과음 조절
+    private void OnBgmSliderChanged(float value)
     {
-        AudioManager.instance.SetSfxVolume(volume);
-        SettingsManager.instance.SfxVolume = volume;
+        if (_isUpdatingSlider) return;
+        AudioManager.instance.SetBgmVolume(value);
+        SettingsManager.instance.MusicVolume = value;
+        if (bgmLabel) bgmLabel.text = Mathf.RoundToInt(value * 100) + "%";
+
     }
 
-    public void FBgmButton()
+    private void OnSfxSliderChanged(float value)
     {
-        if (!AudioManager.instance.bgmVolumeMute) // 음소거 상태 아닐때
-        {
-            //bgmVolumeImage.SetActive(false);
-            //bgmVolumeMuteImage.SetActive(true);
-        }
-        else // 음소거 상태
-        {
-            //bgmVolumeImage.SetActive(true);
-            //bgmVolumeMuteImage.SetActive(false);
-        }
-        AudioManager.instance.bgmVolumeMute = !AudioManager.instance.bgmVolumeMute;
-        SetBgmVolume(AudioManager.instance.bgmVolume);
-    }
+        if (_isUpdatingSlider) return;
+        AudioManager.instance.SetSfxVolume(value);
+        SettingsManager.instance.SfxVolume = value;
+        if (sfxLabel) sfxLabel.text = Mathf.RoundToInt(value * 100) + "%";
 
-    public void FsfxButton()
-    {
-        if (!AudioManager.instance.sfxVolumeMute) // 음소거 상태 아닐때
-        {
-            //sfxVolumeImage.SetActive(false);
-            //sfxVolumeMuteImage.SetActive(true);
-        }
-        else // 음소거 상태
-        {
-            //sfxVolumeImage.SetActive(true);
-            //sfxVolumeMuteImage.SetActive(false);
-        }
-        AudioManager.instance.sfxVolumeMute = !AudioManager.instance.sfxVolumeMute;
-        SetSfxVolume(AudioManager.instance.sfxVolume);
-    }
-
-    public void SaveSet()
-    {
-        SettingsManager.instance.SaveSettings();
-    }
-
-    public void LoadSet()
-    {
-        SettingsManager.instance.LoadSettings();
-        ChangeResolution(SettingsManager.instance.ResolutionIndex);
-        ChangeScreenMode(SettingsManager.instance.IsFullScreen ? 0 : 1);
-        UpdateUI();
     }
 }
