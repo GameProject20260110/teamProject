@@ -54,6 +54,14 @@ public class MainOption : MonoBehaviour
         ShowTab(0);
     }
 
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleSettingsPanel();
+        } 
+    }
+
     private void InitSliderListeners()
     {
         if(masterSlider)

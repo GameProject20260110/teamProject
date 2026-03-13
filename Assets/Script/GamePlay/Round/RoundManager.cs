@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 public class RoundManager : MonoBehaviour
@@ -97,6 +96,7 @@ public class RoundManager : MonoBehaviour
             UiController.instance.HideAllPanels();
             UiController.instance.SetRollBtnInteractable(true);
             UiController.instance.SetConfirmBtnInteratable(false);
+            UiController.instance.SetRollButtonToRoll();
         }
 
         if(GameManager.instance != null && GameManager.instance.diceManager != null)

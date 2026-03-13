@@ -1,12 +1,7 @@
 using System;
-using NUnit.Framework;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.DebugUI;
-using UnityEngine.InputSystem.Controls;
-using NUnit.Framework.Constraints;
 
 public class GameManager : MonoBehaviour
 {
@@ -129,8 +124,6 @@ public class GameManager : MonoBehaviour
     public void StartRound()
     {
         if (UiController.instance == null) return;
-
-        UiController.instance.SetSurrenBtnInteractable(false);
         _isFirstRoll = true;
         _currentRerollCount = maxRerollCount;
         currentScore = 0;
@@ -171,8 +164,8 @@ public class GameManager : MonoBehaviour
         if (_isFirstRoll)
         {
             _isFirstRoll = false;
-            UiController.instance.SetSurrenBtnInteractable(true);
             diceManager.StartRolling();
+            UiController.instance.SetRollButtnonToReroll();
         }
         else if(!_isFirstRoll && _currentRerollCount > 0)
         {
