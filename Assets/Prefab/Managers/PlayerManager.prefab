@@ -51,4 +51,4 @@ MonoBehaviour:
   currentRound: 0
   heart: 0
   isGameOver: 0
-  defaultDice: {fileID: 0}
+  defaultDice: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}

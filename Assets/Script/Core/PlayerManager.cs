@@ -12,7 +12,8 @@ public class PlayerManager : MonoBehaviour
     public int heart;
     public bool isGameOver;
 
-    private int DiceSlotCount = 6;
+    private const int DiceSlotCount = 6;
+    private const int ItemSlotCount = 7;
 
     public DiceData defaultDice;
     private DiceData[] allDices;
@@ -39,6 +40,10 @@ public class PlayerManager : MonoBehaviour
 
     private void InitDefault()
     {
+        for (int i = 0; i < ItemSlotCount; i++)
+        {
+            items.Add(null);
+        }
         for(int i = 0; i < DiceSlotCount; i++)
         {
             dices.Add(defaultDice);
@@ -61,8 +66,8 @@ public class PlayerManager : MonoBehaviour
         foreach (var dice in dices)
             data.diceNames.Add(dice.name);
         foreach (var item in items)
-            data.itemNames.Add(item.name);
-        
+            data.itemNames.Add(item != null ? item.name : "");
+   
         string json = JsonUtility.ToJson(data, true);
         try
         {
@@ -112,6 +117,11 @@ public class PlayerManager : MonoBehaviour
          }
         foreach (var name in data.itemNames)
         {
+            if (string.IsNullOrEmpty(name))
+            {
+                items.Add(null);
+                continue;
+            }
             var item = System.Array.Find(allItems, s => s.name == name);
             if (item != null) items.Add(item);
         }
@@ -133,9 +143,7 @@ public class PlayerManager : MonoBehaviour
     {
         isGameOver = true;
         dices.Clear();
-        items.Clear();
-        SpecialSlots = new bool[6];
-        //DeleteSave();
+        items.Clear();    
         InitDefault();
         Save();
     }

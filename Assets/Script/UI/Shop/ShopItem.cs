@@ -103,11 +103,18 @@ public class ShopItem : MonoBehaviour
         Debug.Log(PlayerShopManager.instance.TempItems.Count);
         for(int i = 0; i < PlayerShopManager.instance.TempItems.Count; i++)
         {
-            var slotChildItem = Iventory.transform.GetChild(i);
-            var item = Instantiate(Item); 
-            item.transform.SetParent(slotChildItem);
-            item.GetComponent<RectTransform>().localPosition = Vector3.zero;
-            item.GetComponent<BuyItem>().UpdateInfo(PlayerShopManager.instance.TempItems[i], true);
+            var slotChildItem = Iventory.transform.GetChild(i).GetComponentInChildren<BuyItem>(true);
+            var item = PlayerShopManager.instance.TempItems[i];
+            if(item != null)
+            {
+                slotChildItem.gameObject.SetActive(true);
+                slotChildItem.UpdateInfo(item, true);
+            }
+            
+            //var item = Instantiate(Item);
+            //item.transform.SetParent(slotChildItem);
+            //item.GetComponent<RectTransform>().localPosition = Vector3.zero;
+            //item.GetComponent<BuyItem>().UpdateInfo(PlayerShopManager.instance.TempItems[i], true);
 
         }
     }

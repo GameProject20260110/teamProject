@@ -103,10 +103,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuyItem
   previousParent: {fileID: 0}
-  inPotiner: 0
+  inPointer: 0
   isDragged: 0
-  itemInfo: {fileID: 0}
-  DescPosition: {fileID: 0}
+  descPosition: {fileID: 7807215271424970938}
+  Slot: {fileID: 0}
 --- !u!1 &8352891947694479940
 GameObject:
   m_ObjectHideFlags: 0
