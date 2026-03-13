@@ -2,6 +2,8 @@
 
 public class BuyItem : BuyPurchasable<ItemSo>
 {
+    public ItemSlot Slot;
+
     protected override string DropTag => "BuyItem";
     protected override string SlotTag => "Inventory";
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
@@ -10,22 +12,35 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
+
     protected override bool IsInvaildDrop(GameObject other)
     {
-        if (other != null && other.CompareTag(DropTag)) return true;
+        var slot = other.GetComponent<ItemSlot>();
+        if (slot == null) return true;
 
-        return !transform.parent.CompareTag(SlotTag);
+        if (!slot.CompareTag(SlotTag)) return true; // SlotTag = "Inventory"
+
+        var existingItem = slot.GetComponentInChildren<BuyItem>(true);
+        if (existingItem != null && existingItem.gameObject.activeSelf)
+            return true;
+
+        return false;
     }
         
 
     public void UpdateInfo(ItemSo item, bool isBought)
     {
         bought = isBought;
+        Slot = GetComponentInParent<ItemSlot>();
         descPosition = GetComponentsInChildren<RectTransform>(true)[1];
         ApplyData(item);
-
-        if (transform.parent.CompareTag(SlotTag)) return;
+        if (Slot.GetComponentInParent<SlotUI>() == null) return;
         GetComponentInParent<SlotUI>().UpdateSlotUI(GetItemName(), GetCost());    
+    }
+
+    public void ChangeItemInfo(ItemSo item)
+    {
+        ApplyData(item);
     }
 
     protected override void ApplyData(ItemSo data)
@@ -34,9 +49,18 @@ public class BuyItem : BuyPurchasable<ItemSo>
         img.sprite = data.itemIcon;
     }
 
+    protected override void OnDropSuccess(GameObject other)
+    {
+        var slot = other.GetComponent<ItemSlot>();
+        var targetItem = slot.GetComponentInChildren<BuyItem>(true);
+        targetItem.gameObject.SetActive(true);
+        targetItem.ChangeItemInfo(Data);
+    }
+
     protected override bool OnBuy()
     {
-        return PlayerShopManager.instance.TryPurchaseItem(Data);       
+        Slot = GetComponentInParent<ItemSlot>();
+        return PlayerShopManager.instance.TryPurchaseItem(Data, Slot.slotIndex);
     }
 
     protected override bool OnSell()

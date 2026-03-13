@@ -724,7 +724,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  slotIndex: 5
+  slotIndex: 3
   specialSlotImage: {fileID: 998253234}
 --- !u!114 &91708368
 MonoBehaviour:
@@ -898,12 +898,12 @@ MonoBehaviour:
   levelText: {fileID: 1498036721}
   goldText: {fileID: 1134081317}
   DiceSlot:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   - {fileID: 1596938021}
+  - {fileID: 1315130194}
+  - {fileID: 1737058524}
+  - {fileID: 91708367}
+  - {fileID: 1749629492}
+  - {fileID: 888375382}
 --- !u!114 &114693877
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10502,7 +10502,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  slotIndex: 5
+  slotIndex: 1
   specialSlotImage: {fileID: 534881959}
 --- !u!114 &1315130195
 MonoBehaviour:
@@ -12785,7 +12785,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  slotIndex: 5
+  slotIndex: 0
   specialSlotImage: {fileID: 1841177917}
 --- !u!114 &1596938022
 MonoBehaviour:
@@ -13735,7 +13735,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  slotIndex: 5
+  slotIndex: 2
   specialSlotImage: {fileID: 1762625045}
 --- !u!114 &1737058525
 MonoBehaviour:
@@ -13997,7 +13997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  slotIndex: 5
+  slotIndex: 4
   specialSlotImage: {fileID: 2058370681}
 --- !u!114 &1749629493
 MonoBehaviour:

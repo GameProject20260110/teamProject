@@ -27,14 +27,12 @@ public class BuyDice : BuyPurchasable<DiceData>
         descPosition = GetComponentsInChildren<RectTransform>(true)[1];
         ApplyData(data);
         if (Slot.GetComponentInParent<SlotUI>() == null) return;
-        Slot.GetComponentInParent<SlotUI>().UpdateSlotUI(GetItemName(), GetCost());
-        
+        Slot.GetComponentInParent<SlotUI>().UpdateSlotUI(GetItemName(), GetCost());       
     }
 
     public void ChangeDiceInfo(DiceData data)
     {
         ApplyData(data);
-        PlayerShopManager.instance.TempDices[Slot.slotIndex] = data;
     }
 
     protected override void ApplyData(DiceData data)

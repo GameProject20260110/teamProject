@@ -9,8 +9,8 @@ public class PlayerShopManager : MonoBehaviour
     public int RerollCount { get; private set; }
     public int RerollCost => BaseRerollCost + RerollCount;
 
-    public List<DiceData> TempDices { get; private set; } = new();
-    public List<ItemSo> TempItems { get; private set; } = new();
+    public List<DiceData> TempDices /*{ get; private set; }*/ = new();
+    public List<ItemSo> TempItems /*{ get; private set; }*/ = new();
 
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
@@ -82,19 +82,13 @@ public class PlayerShopManager : MonoBehaviour
         return true;
     }
 
-    public bool TryPurchaseItem(ItemSo item)
+    public bool TryPurchaseItem(ItemSo item, int slotIndex)
     {
-        if (TempItems.Count >= 7)
-        {
-            Debug.Log("아이템 슬롯이 가득 찼습니다.");
-            return false;
-        }
-
         int cost = LuckyStone.CalcDiscount(item.gold);
         if (!HasEnoughGold(cost)) return false;
 
         SpendGold(cost);
-        TempItems.Add(item);
+        TempItems[slotIndex] = item;
         return true;
     }
 

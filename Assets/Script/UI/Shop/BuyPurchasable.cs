@@ -74,8 +74,9 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         {
             OnDropSuccess(other);
             bought = true;
+            Destroy(gameObject);
         }
-        if(Data.GetType() == typeof(DiceData))RevertToParent();
+        
     }
 
     private void HandleBoughtDrop(PointerEventData eventData)
