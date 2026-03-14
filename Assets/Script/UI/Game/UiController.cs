@@ -1,17 +1,17 @@
-using NUnit.Framework;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Experimental.GraphView;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UiController : MonoBehaviour
 {
-
     public static UiController instance = null;
 
-    public DiceSkin defaultDiceSkin;
+    [Header("모듈")]
+    public ItemInventoryUI inventoryUI;
+    public LifeUI lifeUI;
+    public ResultPanelUI resultUI;
+    public GameOverPanelUI gameOverUI;
 
     [Header("인게임 정보 UI (상시 표시)")]
     public TextMeshProUGUI roundInfoText;  
@@ -19,40 +19,15 @@ public class UiController : MonoBehaviour
     public TextMeshProUGUI myScoreInfoText;
     public TextMeshProUGUI goldText;
 
-    [Header("아이템 인벤토리")]
-    public List<Image> itemIcon;
-
-    [Header("라운드 결과 패널 (승리/패배)")]
-    public GameObject resultPanel;
-    public TextMeshProUGUI resultTitleText;  
-    public TextMeshProUGUI resultTargetScoreText;
-    public TextMeshProUGUI resultMyScoreText;
-    public Transform resultLifeContainer;
-    public Image resultHeartPrefab;
-
-    [Header("게임 오버 패널")]
-    public GameObject gameOverPanel;
-    public TextMeshProUGUI goRoundText; 
-    public TextMeshProUGUI goBestScoreText;
-    public Image[] lastDice;
-
-    [Header("다시 던지기")]
+    [Header("버튼")]
     public Button rollBtn;
     public TextMeshProUGUI rerollText;
-
-    [Header("확정 버튼")]
+    public Image rollBtnImage;
+    public Sprite rollSprite;
+    public Sprite rerollSprite;
     public Button confirmBtn;
 
-    [Header("라이프")]
-    public Transform lifeContainer;
-    public Image heartPrefab;
-
-    public Button surrenBtn;
-
     public GameObject settingPanel;
-
-    private List<Image> hearts = new List<Image>();
-    private List<Image> resultHearts = new List<Image>();
 
     private void Awake()
     {
@@ -75,9 +50,14 @@ public class UiController : MonoBehaviour
         {
             SubscribeToEvents();
         }
-
-        SetUpItemSlotEvents();
         RefreshInventory();
+    }
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            ToggleSettingPanel();
+        }
     }
 
     private void OnDisable()
@@ -121,25 +101,7 @@ public class UiController : MonoBehaviour
 
     private void UpdateLivesUi(int lives)
     {
-        
-        while (hearts.Count < lives)
-        {
-            Image newHeart = Instantiate(heartPrefab, lifeContainer);
-
-            hearts.Add(newHeart);
-        }
-
-        for(int i = 0; i < hearts.Count; i++)
-        {
-            if(i < lives)
-            {
-                hearts[i].gameObject.SetActive(true);
-            }
-            else
-            {
-                hearts[i].gameObject.SetActive(false);
-            }
-        }
+        lifeUI?.UpdateHearts(lives);
     }
 
     private void UpdateRoundAndGoalUi(int round, int targetScore)
@@ -156,120 +118,43 @@ public class UiController : MonoBehaviour
         }
     }
 
+    public void SetRollButtonToRoll()
+    {
+        if(rollBtnImage != null && rollSprite != null)
+        {
+            rollBtnImage.sprite = rollSprite;
+        }
+    }
+
+    public void SetRollButtnonToReroll()
+    {
+        if(rollBtnImage != null && rerollSprite != null)
+        {
+            rollBtnImage.sprite = rerollSprite;
+        }
+    }
+
     public void RefreshInventory()
     {
-        if (itemIcon == null) return;
-
-        List<ItemSo> items = GetCurrentItems() ?? new List<ItemSo>();
-        
-        for (int i = 0; i < itemIcon.Count; i++)
-        {
-            if (itemIcon[i] == null) return;
-            if(i < items.Count && items[i] != null)
-            {
-                itemIcon[i].gameObject.SetActive(true);
-                itemIcon[i].sprite = items[i].itemIcon;
-                itemIcon[i].color = Color.white;
-            }
-            else
-            {
-                itemIcon[i].gameObject.SetActive(false);
-            }
-        }
+        inventoryUI?.Refresh();
     }
 
     public void HideAllPanels()
     {
-        if (resultPanel) resultPanel.SetActive(false);
-        if (gameOverPanel) gameOverPanel.SetActive(false);
+        resultUI?.Hide();
+        gameOverUI?.Hide();
+
     }
 
     public void ShowResultPanel(bool isSuccess, int targetScore, int currentScore, int currentLife)
     {
-        if (resultPanel != null)
-        {
-            resultPanel.SetActive(true);
-        }
-
-        resultTitleText.text = isSuccess ? "Round Clear!" : "Round Failed";
-
-        if (resultTargetScoreText) 
-        {
-            resultTargetScoreText.text = $"Target Score: {targetScore}";
-        }
-
-        if (resultMyScoreText) 
-        {
-            resultMyScoreText.text = $"My Score: {currentScore}";
-        }
-
-        UpdateResultHearts(currentLife);
+        resultUI?.Show(isSuccess, targetScore, currentScore, currentLife);
         RefreshInventory();
     }
 
-    private void UpdateResultHearts(int currentLife)
+    public void ShowGameOverPanel(int round, int bestScore, List<DiceData> diceDatas, List<int> values)
     {
-        if (resultLifeContainer == null || resultHeartPrefab == null) return;
-
-        while(resultHearts.Count < currentLife)
-        {
-            resultHearts.Add(Instantiate(resultHeartPrefab, resultLifeContainer));
-        }
-
-        for(int i = 0; i < resultHearts.Count; i++) 
-        {
-            resultHearts[i].gameObject.SetActive(i < currentLife);
-        }
-    }
-
-    public void ShowGameOverPanel(int round, int bestScore, List<DiceData> datas, List<int> values)
-    {
-        if (gameOverPanel != null)
-        {
-            gameOverPanel.SetActive(true);
-        }
-
-        if (goRoundText)
-        {
-            goRoundText.text = $"You reached Round: {round}";
-        }
-
-        if (goBestScoreText)
-        {
-            goBestScoreText.text = $"Your Best Score: {bestScore}";
-        }
-
-        if(lastDice != null)
-        {
-            for (int i = 0; i < lastDice.Length; i++)
-            {
-                if(i < values.Count)
-                {
-                    lastDice[i].gameObject.SetActive(true);
-
-                    DiceData data = null;
-                    
-                    if(datas != null && i < datas.Count)
-                    {
-                        data = datas[i];
-                    }
-                    int index = values[i];
-
-                    if(data != null && data.skin != null)
-                    {
-                        lastDice[i].sprite = data.skin.GetSprite(index);
-                    }
-                    else if(defaultDiceSkin != null)
-                    {
-                        lastDice[i].sprite = defaultDiceSkin.GetSprite(index);
-                    }
-                }
-                else
-                {
-                    lastDice[i].gameObject.SetActive(false);
-                }
-            }
-        }
+        gameOverUI?.Show(round, bestScore, diceDatas, values);
     }
 
     public void UpdateRerollUi(int count)
@@ -296,67 +181,9 @@ public class UiController : MonoBehaviour
         }
     }
 
-    public void SetSurrenBtnInteractable(bool state)
-    {
-        if(surrenBtn != null)
-        {
-            surrenBtn.interactable = state;
-        }
-    }
-
     public void GotoLobby()
     {
         GameManager.instance.LoadHomeScreen();
-    }
-
-    private void SetUpItemSlotEvents()
-    {
-        if (itemIcon == null) return;
-
-        for (int i = 0; i < itemIcon.Count; i++)
-        {
-            if (itemIcon[i] == null) continue;
-
-            int index = i;
-            var trigger = itemIcon[i].gameObject.GetComponent<EventTrigger>() ?? itemIcon[i].gameObject.AddComponent<EventTrigger>();
-
-            var enterEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerEnter };
-            enterEntry.callback.AddListener(_ => OnItemSlotHover(index));
-            trigger.triggers.Add(enterEntry);
-
-            var exitEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerExit };
-            exitEntry.callback.AddListener(_ => OnItemSlotExit(index));
-            trigger.triggers.Add(exitEntry);
-        }
-    }
-
-    private void OnItemSlotHover(int index)
-    {
-        List<ItemSo> items = GetCurrentItems();
-        if (items == null || index >= items.Count || items[index] == null) return;
-
-        PopupManager.instance?.OpenPopup(items[index], itemIcon[index].GetComponent<RectTransform>());
-    }
-    private void OnItemSlotExit(int index)
-    {
-        PopupManager.instance?.ClosePopup();
-    }
-
-    private List<ItemSo> GetCurrentItems()
-    {
-        if(TestModeManager.instance != null && TestModeManager.instance.isTestModeActive)
-        {
-            return TestModeManager.instance.testItem;
-        }
-        return PlayerManager.instance?.items;
-    }
-
-    private void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            ToggleSettingPanel();
-        }
     }
 
     public void ToggleSettingPanel()
