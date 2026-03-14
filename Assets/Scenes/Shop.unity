@@ -832,6 +832,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 3
   specialSlotImage: {fileID: 998253234}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &91708368
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -852,7 +854,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 55593139339110719, guid: c5b2ff204cecc5d43b6f33271e925747, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -1004,11 +1006,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 052b5a715b56a924ea2bfe8a8075c842, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuySpecialSlot
-  gold: 8
-  level: 1
+  baseGold: 8
+  goldIncrement: 2
+  maxLevel: 6
+  currentLevel: 1
+  currentGold: 8
   levelText: {fileID: 1498036721}
   goldText: {fileID: 1134081317}
-  DiceSlot:
+  diceSlots:
   - {fileID: 1596938021}
   - {fileID: 1315130194}
   - {fileID: 1737058524}
@@ -1542,6 +1547,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &191550851
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1752,7 +1759,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 150, y: 166}
-  m_SizeDelta: {x: 800, y: 200}
+  m_SizeDelta: {x: 530, y: 200}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &250741350
 MonoBehaviour:
@@ -1821,6 +1828,81 @@ CanvasRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 250741348}
+  m_CullTransparentMesh: 1
+--- !u!1 &251386577
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 251386578}
+  - component: {fileID: 251386580}
+  - component: {fileID: 251386579}
+  m_Layer: 5
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &251386578
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251386577}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1218708885}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0}
+  m_AnchorMax: {x: 0.5, y: 0}
+  m_AnchoredPosition: {x: -66, y: -324}
+  m_SizeDelta: {x: 350, y: 200}
+  m_Pivot: {x: 0.5, y: 0}
+--- !u!114 &251386579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251386577}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 739905185230883310, guid: d4a26e6a262e8b9478a406679687eaa2, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &251386580
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 251386577}
   m_CullTransparentMesh: 1
 --- !u!1 &254471882
 GameObject:
@@ -3221,6 +3303,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &454402519
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3288,7 +3372,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db479a03fd51ea14a9eee92e647eb708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  hasShoes: 0
   diceGacha: {fileID: 11400000, guid: 3100cef10b54e704098fca9673883448, type: 2}
   itemGacha: {fileID: 11400000, guid: 16df8da84ea7e194a9e64da0343b0adf, type: 2}
   itemSlots:
@@ -3301,13 +3384,12 @@ MonoBehaviour:
   - {fileID: 1531701474}
   - {fileID: 454402518}
   - {fileID: 766582853}
-  DiceSlotNum: 6
-  itemSlotNum: 3
-  Dice: {fileID: 1295416271785748531, guid: 3c6a451ab96b23743a94293bb9b42ebe, type: 3}
-  Item: {fileID: 1295416271785748531, guid: 8d002cd219c3a5e4e827451da0117a13, type: 3}
-  SpecialSlot: {fileID: 1295416271785748531, guid: a79da7c4301fa214295a03c069716a81, type: 3}
+  diceSlotCount: 6
+  itemSlotCount: 3
+  dicePrefab: {fileID: 1295416271785748531, guid: 3c6a451ab96b23743a94293bb9b42ebe, type: 3}
+  itemPrefab: {fileID: 1295416271785748531, guid: 8d002cd219c3a5e4e827451da0117a13, type: 3}
   myDicePanel: {fileID: 1861546402}
-  Iventory: {fileID: 2091776668}
+  iventoryPanel: {fileID: 2091776668}
 --- !u!4 &461141163
 Transform:
   m_ObjectHideFlags: 0
@@ -4330,6 +4412,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &571913190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4822,6 +4906,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &627157799
 GameObject:
   m_ObjectHideFlags: 0
@@ -4988,6 +5074,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 3
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &644750259
 GameObject:
   m_ObjectHideFlags: 0
@@ -5267,6 +5355,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &652255510
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6202,6 +6292,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &766582854
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7011,7 +7103,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 30138163}
   m_Direction: 0
   m_Value: 0.5
-  m_Size: 0.6666667
+  m_Size: 0.44166666
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -7108,6 +7200,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 5
   specialSlotImage: {fileID: 1403070544}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &888375383
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7128,7 +7222,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 55593139339110719, guid: c5b2ff204cecc5d43b6f33271e925747, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -7351,6 +7445,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &907204725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7617,6 +7713,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 5
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!224 &941295516 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 4692271820977582194, guid: 3c6a451ab96b23743a94293bb9b42ebe, type: 3}
@@ -8033,6 +8131,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 1
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &975384537
 GameObject:
   m_ObjectHideFlags: 0
@@ -10359,6 +10459,7 @@ RectTransform:
   - {fileID: 653669542}
   - {fileID: 2147224336}
   - {fileID: 1336595031}
+  - {fileID: 251386578}
   m_Father: {fileID: 2111185344}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -10555,6 +10656,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1223880967
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11016,7 +11119,7 @@ GameObject:
   - component: {fileID: 1315130195}
   - component: {fileID: 1315130194}
   m_Layer: 5
-  m_Name: MySlot (6)
+  m_Name: MySlot 2
   m_TagString: MySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11057,6 +11160,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 1
   specialSlotImage: {fileID: 534881959}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1315130195
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11077,7 +11182,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 55593139339110719, guid: c5b2ff204cecc5d43b6f33271e925747, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11284,6 +11389,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1340349609
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11849,6 +11956,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 4
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1435924518
 GameObject:
   m_ObjectHideFlags: 0
@@ -13001,6 +13110,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1531701475
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13300,7 +13411,7 @@ GameObject:
   - component: {fileID: 1596938022}
   - component: {fileID: 1596938021}
   m_Layer: 5
-  m_Name: MySlot (6)
+  m_Name: MySlot 1
   m_TagString: MySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -13341,6 +13452,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 0
   specialSlotImage: {fileID: 1841177917}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1596938022
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13361,7 +13474,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 55593139339110719, guid: c5b2ff204cecc5d43b6f33271e925747, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -13470,6 +13583,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 2
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &1637596238
 GameObject:
   m_ObjectHideFlags: 0
@@ -14292,6 +14407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 2
   specialSlotImage: {fileID: 1762625045}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1737058525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14312,7 +14429,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 55593139339110719, guid: c5b2ff204cecc5d43b6f33271e925747, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -14554,6 +14671,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 4
   specialSlotImage: {fileID: 2058370681}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!114 &1749629493
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14574,7 +14693,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 55593139339110719, guid: c5b2ff204cecc5d43b6f33271e925747, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -15586,15 +15705,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
   m_Material: {fileID: 0}
-  m_Color: {r: 0.47058824, g: 0.47058824, b: 0.47058824, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
-  m_Type: 1
+  m_Sprite: {fileID: 3046817259674528574, guid: 203e2b02a8aa0e64d9a23a11c44e344c, type: 3}
+  m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -17288,6 +17407,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
   slotIndex: 6
   specialSlotImage: {fileID: 0}
+  highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  normalColor: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1 &2030226395
 GameObject:
   m_ObjectHideFlags: 0

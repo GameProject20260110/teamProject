@@ -135,12 +135,14 @@ public class MainOption : MonoBehaviour
 
     public void OnResetClick()
     {
+        Debug.Log("Reset Clicked");
         if (PlayerManager.instance != null && SceneController.instance != null)
         {
             PlayerManager.instance.ResetData();
             ToggleSettingsPanel();
             SceneController.instance.ReloadCurrentScene();
         }
+        else Debug.LogWarning($"PlayerManager: {PlayerManager.instance}, SceneController: {SceneController.instance}");
     }
 
     public void ScreenModePrev() => CycleScreenMode(-1);

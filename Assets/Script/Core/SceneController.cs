@@ -27,7 +27,7 @@ public class SceneController : MonoBehaviour
     private void Awake()
     {
         if(instance == null) instance = this;
-        else Destroy(instance);
+        else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
 
         if (fadeCanvasGroup != null) fadeCanvasGroup.alpha = 0f;

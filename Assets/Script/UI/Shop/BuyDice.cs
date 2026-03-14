@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class BuyDice : BuyPurchasable<DiceData>
 {
@@ -13,12 +14,8 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
-    protected override bool IsInvaildDrop(GameObject other)
-    {
-        if (!GetComponentInParent<ItemSlot>().hasSpecialSlot || !other.transform.parent.CompareTag(SlotTag)) return true;
-        return other.GetComponent<BuyDice>().Data.diceNum != 0;
-    }
-        
+
+    #region Initialization
 
     public void UpdateDiceInfo(DiceData data, bool isBought)
     {
@@ -26,20 +23,60 @@ public class BuyDice : BuyPurchasable<DiceData>
         Slot = GetComponentInParent<ItemSlot>();
         descPosition = GetComponentsInChildren<RectTransform>(true)[1];
         ApplyData(data);
-        if (Slot.GetComponentInParent<SlotUI>() == null) return;
-        Slot.GetComponentInParent<SlotUI>().UpdateSlotUI(GetItemName(), GetCost());       
+
+        var slotUI = Slot?.GetComponentInParent<SlotUI>();
+        if (slotUI != null)
+            slotUI.UpdateSlotUI(GetItemName(), GetCost());       
     }
 
-    public void ChangeDiceInfo(DiceData data)
-    {
-        ApplyData(data);
-    }
+    #endregion
+
+
+
+    #region Data Managment
+
+    public void ChangeDiceInfo(DiceData data) => ApplyData(data);
 
     protected override void ApplyData(DiceData data)
     {
+        if(data == null) return;
         Data = data;
         img.sprite = data.skin.GetSprite(1);
     }
+
+    #endregion
+
+
+
+    #region Drag & Drop
+
+    public override bool CanBeginDrag() => Data != null && Data.diceNum != 0;
+
+    protected override void OnDropSuccess(GameObject other)
+    {
+        other.GetComponent<BuyDice>().ChangeDiceInfo(Data);
+    }
+
+    #endregion
+
+
+
+    #region Validation
+
+    protected override bool IsInvaildDrop(GameObject other, bool isswap)
+    { 
+        if (!GetComponentInParent<ItemSlot>().hasSpecialSlot || !other.transform.parent.CompareTag(SlotTag)) return true;
+
+        return isswap 
+            ? other.GetComponent<BuyDice>().Data.diceNum == 0 
+            : other.GetComponent<BuyDice>().Data.diceNum != 0;
+    }
+
+    #endregion
+
+
+
+    #region Buy & Sell
 
     protected override bool OnBuy()
     {
@@ -47,11 +84,6 @@ public class BuyDice : BuyPurchasable<DiceData>
         if (Slot == null || !Slot.hasSpecialSlot) return false;
 
         return PlayerShopManager.instance.TryPurchaseDice(Data, Slot.slotIndex);
-    }
-
-    protected override void OnDropSuccess(GameObject other)
-    {
-        other.GetComponent<BuyDice>().ChangeDiceInfo(Data);
     }
 
     protected override bool OnSell()
@@ -63,9 +95,16 @@ public class BuyDice : BuyPurchasable<DiceData>
         return true;
     }
 
+    #endregion
+
+
+
+    #region Swap & Move
+
     protected override void OnSwap(BuyPurchasable<DiceData> other)
     {
         var otherDice = (BuyDice)other;
+
         DiceData tmp = otherDice.Data;
         otherDice.ApplyData(Data);
         ApplyData(tmp);
@@ -74,12 +113,14 @@ public class BuyDice : BuyPurchasable<DiceData>
         PlayerShopManager.instance.TempDices[otherDice.Slot.slotIndex] = otherDice.Data;
     }
 
-    protected override void OnSlotMove()
+    protected override void OnSlotMove(GameObject other)
     {
         int prevIndex = Slot.slotIndex;
         Slot = GetComponentInParent<ItemSlot>();
         PlayerShopManager.instance.TempDices[prevIndex] = PlayerManager.instance.defaultDice;
         PlayerShopManager.instance.TempDices[Slot.slotIndex] = Data;
     }
+
+    #endregion
 }
 

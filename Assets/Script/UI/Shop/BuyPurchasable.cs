@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -10,18 +11,28 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     protected abstract string DropTag { get; }
     protected abstract string SlotTag { get; }
     
-
+    // 데이터
     protected abstract int GetCost();
     protected abstract int GetSellPrice();
     protected abstract string GetItemName();
     protected abstract void ApplyData(T data);
+
+    //액션
     protected abstract void OpenPopup();
     protected abstract bool OnBuy();
     protected abstract bool OnSell();
     protected abstract void OnSwap(BuyPurchasable<T> other);
-    protected abstract void OnSlotMove();
+    protected abstract void OnSlotMove(GameObject other);
 
-    // 포인터
+    // 검증
+    public virtual bool CanBeginDrag() => true;
+    protected virtual bool IsInvaildDrop(GameObject other, bool swap) => false;
+    protected virtual void OnDropSuccess(GameObject other) { }
+
+
+
+    #region Pointer Events
+
     public override void OnPointerEnter(PointerEventData eventData)
     {
         base.OnPointerEnter(eventData);
@@ -34,56 +45,77 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         PopupManager.instance.ClosePopup();
     }
 
-    // 클릭
     public void OnPointerClick(PointerEventData eventData)
     {
         if(eventData.button == PointerEventData.InputButton.Right && bought)
         {
-            bool success = OnSell();
-            if(success) PopupManager.instance.ClosePopup();
+            if(OnSell()) PopupManager.instance.ClosePopup();
         }
     }
 
-    //드래그
-    public override void OnBeginDrag(PointerEventData eventData) => base.OnBeginDrag(eventData);
-    public override void OnDrag(PointerEventData eventData) => base.OnDrag(eventData);
+    #endregion
+
+
+
+    #region Drag Events
+
+    public override void OnBeginDrag(PointerEventData eventData)
+    {
+        if (!CanBeginDrag())
+        {
+            eventData.pointerDrag = null;
+            isDragged = false;
+            return;
+        }
+        base.OnBeginDrag(eventData);
+    }
+
+    public override void OnDrag(PointerEventData eventData)
+    {
+        if (!isDragged) return;
+        base.OnDrag(eventData);
+    }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (!bought) HandleUnboughtDrop(eventData);
-        else HandleBoughtDrop(eventData);
+        if (!bought) 
+            HandleUnboughtDrop(eventData);
+        else 
+            HandleBoughtDrop(eventData);
+
         ResetDragState();
     }
 
-    protected virtual bool IsInvaildDrop(GameObject other) => false;
+    #endregion
 
-    protected virtual void OnDropSuccess(GameObject other) { }
+
+
+    #region Drop Handling
 
     private void HandleUnboughtDrop(PointerEventData eventData)
     {
         var other = eventData.pointerCurrentRaycast.gameObject;
 
-        bool isInvalidDrop = transform.parent == canvas
-            || PlayerShopManager.instance.TempGold - GetCost() < 0
-            || IsInvaildDrop(other);
+        if (IsInvalidUnboughtDrop(other))
+        {
+            RevertToParent();
+            return;
+        }
 
-        if (isInvalidDrop) { RevertToParent(); Debug.Log("DropFail"); return; }
-
-        bool success = OnBuy();
-        if (success)
+        if (OnBuy())
         {
             OnDropSuccess(other);
             bought = true;
             Destroy(gameObject);
         }
-        
+
     }
 
     private void HandleBoughtDrop(PointerEventData eventData)
     {
         var other = eventData.pointerCurrentRaycast.gameObject;
 
-        if (other == null || transform.parent == canvas || !transform.parent.CompareTag(SlotTag))
+        if (IsInvalidBoughtDrop(other))
         {
             RevertToParent();
             return;
@@ -91,13 +123,46 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
         if (other.CompareTag(DropTag))
         {
+            if (IsInvaildDrop(other, true)) 
+            { 
+                RevertToParent(); 
+                return; 
+            }
             OnSwap(other.GetComponent<BuyPurchasable<T>>());
-            RevertToParent();
-            return;
         }
-
-        OnSlotMove();
+        else
+        {
+            OnSlotMove(other);
+        }
+            
+        RevertToParent();
     }
+
+    #endregion
+
+
+
+    #region Vaildation
+
+    private bool IsInvalidUnboughtDrop(GameObject dropTarget)
+    {
+        return transform.parent == canvas
+            || PlayerShopManager.instance.TempGold < GetCost()
+            || IsInvaildDrop(dropTarget, false);
+    }
+
+    private bool IsInvalidBoughtDrop(GameObject dropTarget)
+    {
+        return dropTarget == null
+            || transform.parent == canvas
+            || !transform.parent.CompareTag(SlotTag);
+    }
+
+    #endregion
+
+
+
+    #region Helpers
 
     protected void RevertToParent()
     {
@@ -111,4 +176,6 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         canvasGroup.blocksRaycasts = true;
         isDragged = false;
     }
+
+    #endregion
 }
