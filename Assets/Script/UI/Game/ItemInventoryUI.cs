@@ -28,6 +28,8 @@ public class ItemInventoryUI : MonoBehaviour
 
         List<ItemSo> items = GetItems();
         if (items == null || items.Count == 0) return;
+        items = items.FindAll(item => item != null);
+        if (items.Count == 0) return;
 
         int count = items.Count;
         bool isOverLap = count > maxSpreadCount;

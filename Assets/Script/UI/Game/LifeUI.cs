@@ -11,7 +11,7 @@ public class LifeUI : MonoBehaviour
 
     public void UpdateHearts(int lives) 
     {
-        while(_heart.Count > 0)
+        while(_heart.Count < lives)
         {
             Image newHeart = Instantiate(lifePrefab, lifeContainer);
             _heart.Add(newHeart);
