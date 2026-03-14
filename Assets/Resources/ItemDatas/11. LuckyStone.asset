@@ -18,6 +18,8 @@ MonoBehaviour:
   gold: 6
   sell: 0
   isConsumable: 0
-  itemDesc: "\uD589\uC6B4\uC758\uB3CC"
+  itemDesc: "[\uD589\uC6B4\uC758\uB3CC]\n\u2605\u2605\u2605\u2605\n\n20%\uC758 \uD655\uB960\uB85C
+    \uC0C1\uC810\uC758 (\uC2AC\uB86F, \uC544\uC774\uD15C, \uC8FC\uC0AC\uC704)\uC758
+    \uAC00\uACA9\uC774 2\uC6D0 \uD560\uC778\uB41C\uB2E4\n"
   discountChance: 0.2
   discountAmount: 2

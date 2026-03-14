@@ -18,6 +18,7 @@ MonoBehaviour:
   gold: 3
   sell: 0
   isConsumable: 1
-  itemDesc: "\uAD6C\uC2AC"
+  itemDesc: "[\uAD6C\uC2AC]\n\u2605\n\n\uAD6C\uB9E4 \uD6C4 \uB2E4\uC74C \uB77C\uC6B4\uB4DC\uC758
+    \uC810\uC218 +5 ~ +15\n\n"
   minBonus: 5
   mnxBonus: 15
