@@ -20,6 +20,12 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void SetUp(ItemSo item)
     {
+        if(item == null)
+        {
+            Debug.LogWarning("ItemCard:SetUp: item이 null입니다.");
+            return;
+        }
+
         _item = item;
 
         if(itemImage != null && item.itemIcon != null)

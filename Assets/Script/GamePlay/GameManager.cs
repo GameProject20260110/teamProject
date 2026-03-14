@@ -311,9 +311,11 @@ public class GameManager : MonoBehaviour
     {
         if (PlayerManager.instance == null) return;
 
+        var items = PlayerManager.instance.items;
         foreach (var item in itemsToRemove)
         {
-            PlayerManager.instance.items.Remove(item);
+            int index = items.IndexOf(item);
+            if (index >= 0) items[index] = null;
         }
         UiController.instance.RefreshInventory();
     }
