@@ -46,7 +46,7 @@ public class SettingsManager : MonoBehaviour
         MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
         MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.6f);
         SfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
-        //ApplySettings();
+        ApplySettings();
     }
 
     public void ApplySettings()

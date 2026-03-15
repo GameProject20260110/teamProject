@@ -66,10 +66,11 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override bool IsInvaildDrop(GameObject other, bool isswap)
     { 
         if (!GetComponentInParent<ItemSlot>().hasSpecialSlot || !other.transform.parent.CompareTag(SlotTag)) return true;
+        return false;
 
-        return isswap 
-            ? other.GetComponent<BuyDice>().Data.diceNum == 0 
-            : other.GetComponent<BuyDice>().Data.diceNum != 0;
+        //return isswap 
+        //    ? other.GetComponent<BuyDice>().Data.diceNum == 0 
+        //    : other.GetComponent<BuyDice>().Data.diceNum != 0;
     }
 
     #endregion
@@ -109,16 +110,17 @@ public class BuyDice : BuyPurchasable<DiceData>
         otherDice.ApplyData(Data);
         ApplyData(tmp);
 
-        PlayerShopManager.instance.TempDices[Slot.slotIndex] = Data;
-        PlayerShopManager.instance.TempDices[otherDice.Slot.slotIndex] = otherDice.Data;
+        PlayerShopManager.instance.SetDiceAtSlot(Slot.slotIndex, Data);
+        PlayerShopManager.instance.SetDiceAtSlot(otherDice.Slot.slotIndex, otherDice.Data);        
     }
 
     protected override void OnSlotMove(GameObject other)
     {
         int prevIndex = Slot.slotIndex;
         Slot = GetComponentInParent<ItemSlot>();
-        PlayerShopManager.instance.TempDices[prevIndex] = PlayerManager.instance.defaultDice;
-        PlayerShopManager.instance.TempDices[Slot.slotIndex] = Data;
+        PlayerShopManager.instance.SetDiceAtSlot(prevIndex, PlayerManager.instance.defaultDice);
+        PlayerShopManager.instance.SetDiceAtSlot(Slot.slotIndex, Data);
+        
     }
 
     #endregion

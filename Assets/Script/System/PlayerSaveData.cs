@@ -1,5 +1,3 @@
-using NUnit.Framework;
-using UnityEngine;
 using System.Collections.Generic;
 
 [System.Serializable]
@@ -11,4 +9,5 @@ public class PlayerSaveData
     public bool[] specialSlots;
     public List<string> diceNames = new List<string>();
     public List<string> itemNames = new List<string>();
+    public string extraDiceName;
 }

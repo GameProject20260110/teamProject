@@ -10,7 +10,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     [Header("Slot Info")]
     public int slotIndex;
-    public bool hasSpecialSlot { get; private set; } = false;
+    public bool hasSpecialSlot = false;
 
     [Header("Visual")]
     [SerializeField] private Image specialSlotImage;

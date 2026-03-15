@@ -128,13 +128,9 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
                 RevertToParent(); 
                 return; 
             }
+
             OnSwap(other.GetComponent<BuyPurchasable<T>>());
-        }
-        else
-        {
-            OnSlotMove(other);
-        }
-            
+        }          
         RevertToParent();
     }
 
@@ -148,7 +144,8 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     {
         return transform.parent == canvas
             || PlayerShopManager.instance.TempGold < GetCost()
-            || IsInvaildDrop(dropTarget, false);
+            || IsInvaildDrop(dropTarget, false)
+            || dropTarget.GetComponent<BuyDice>().Data.diceNum != 0;
     }
 
     private bool IsInvalidBoughtDrop(GameObject dropTarget)

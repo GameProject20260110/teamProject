@@ -5,12 +5,15 @@ public class PlayerShopManager : MonoBehaviour
 {
     public static PlayerShopManager instance;
 
+    private const int EXTRA_DICE_SLOT_INDEX = 6;
+
     public int TempGold { get; private set; }
     public int RerollCount { get; private set; }
     public int RerollCost => BaseRerollCost + RerollCount;
 
-    public List<DiceData> TempDices /*{ get; private set; }*/ = new();
-    public List<ItemSo> TempItems /*{ get; private set; }*/ = new();
+    public List<DiceData> TempDices = new();
+    public List<ItemSo> TempItems = new();
+    public DiceData ExtraDice;
 
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
@@ -37,6 +40,7 @@ public class PlayerShopManager : MonoBehaviour
 
         TempDices = new List<DiceData>(player.dices);
         TempItems = new List<ItemSo>(player.items);
+        ExtraDice = player.extraDice;
 
         IsOpen = true;
         OnGoldChanged?.Invoke(TempGold);
@@ -55,6 +59,7 @@ public class PlayerShopManager : MonoBehaviour
         player.gold = TempGold;
         player.dices = new List<DiceData>(TempDices);
         player.items = new List<ItemSo>(TempItems);
+        player.extraDice = ExtraDice;
 
         player.Save();
 
@@ -77,7 +82,9 @@ public class PlayerShopManager : MonoBehaviour
         if (!HasEnoughGold(cost)) return false;
 
         SpendGold(cost);
-        TempDices[slotIndex] = dice;
+
+        if(slotIndex == 6) ExtraDice = dice;
+        else TempDices[slotIndex] = dice;
 
         return true;
     }
@@ -104,8 +111,8 @@ public class PlayerShopManager : MonoBehaviour
 
     public void SellDice(DiceData dice, int slotIndex, int sellPrice)
     {
-
-        TempDices[slotIndex] = PlayerManager.instance.defaultDice;
+        if (slotIndex == 6) ExtraDice = PlayerManager.instance.defaultDice;
+        else TempDices[slotIndex] = PlayerManager.instance.defaultDice;
         GainGold(sellPrice);
     }
 
@@ -124,6 +131,13 @@ public class PlayerShopManager : MonoBehaviour
         return true;
     }
 
+    public void SetDiceAtSlot(int slotIndex, DiceData data)
+    {
+        if (slotIndex == EXTRA_DICE_SLOT_INDEX)
+            ExtraDice = data;
+        else 
+            TempDices[slotIndex] = data;
+    }
 
     //---------- Private -------------
 

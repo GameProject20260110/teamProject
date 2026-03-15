@@ -24,6 +24,7 @@ public class ShopItem : MonoBehaviour
     [Header("Panel")]
     public GameObject myDicePanel;
     public GameObject iventoryPanel;
+    public GameObject extraDiceSlot;
 
     private void Awake()
     {
@@ -81,6 +82,11 @@ public class ShopItem : MonoBehaviour
     private void InitializePlayerDices()
     {
         int childCount = myDicePanel.transform.childCount;
+
+        var extraSlot = extraDiceSlot.GetComponent<ItemSlot>();
+        extraSlot.SetSpecialSlot(true);
+        var extraDice = PlayerShopManager.instance.ExtraDice ?? PlayerManager.instance.defaultDice;
+        extraSlot.GetComponentInChildren<BuyDice>().UpdateDiceInfo(extraDice, true);
 
         for (int i = 0; i < childCount; i++)
         {
