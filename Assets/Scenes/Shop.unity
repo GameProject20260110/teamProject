@@ -2568,6 +2568,7 @@ MonoBehaviour:
   itemPrefab: {fileID: 1295416271785748531, guid: 8d002cd219c3a5e4e827451da0117a13, type: 3}
   myDicePanel: {fileID: 1861546402}
   iventoryPanel: {fileID: 2091776668}
+  extraDiceSlot: {fileID: 1516154474}
 --- !u!4 &461141163
 Transform:
   m_ObjectHideFlags: 0
@@ -5553,7 +5554,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &929448747
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9927,7 +9928,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  slotIndex: 0
+  slotIndex: 6
   hasSpecialSlot: 1
   specialSlotImage: {fileID: 929448748}
   highlightColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
