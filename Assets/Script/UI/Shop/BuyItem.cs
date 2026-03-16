@@ -13,20 +13,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
-    protected override bool IsInvaildDrop(GameObject other)
-    {
-        var slot = other.GetComponent<ItemSlot>();
-        if (slot == null) return true;
-
-        if (!slot.CompareTag(SlotTag)) return true; // SlotTag = "Inventory"
-
-        var existingItem = slot.GetComponentInChildren<BuyItem>(true);
-        if (existingItem != null && existingItem.gameObject.activeSelf)
-            return true;
-
-        return false;
-    }
-        
+    #region Initialization
 
     public void UpdateInfo(ItemSo item, bool isBought)
     {
@@ -34,28 +21,65 @@ public class BuyItem : BuyPurchasable<ItemSo>
         Slot = GetComponentInParent<ItemSlot>();
         descPosition = GetComponentsInChildren<RectTransform>(true)[1];
         ApplyData(item);
-        if (Slot.GetComponentInParent<SlotUI>() == null) return;
-        GetComponentInParent<SlotUI>().UpdateSlotUI(GetItemName(), GetCost());    
+
+        var slotUI = Slot?.GetComponentInParent<SlotUI>();
+        if (slotUI != null)
+            slotUI.UpdateSlotUI(GetItemName(), GetCost());
     }
 
-    public void ChangeItemInfo(ItemSo item)
-    {
-        ApplyData(item);
-    }
+    #endregion
+
+
+
+    #region Data Managment
+
+    public void ChangeItemInfo(ItemSo item) => ApplyData(item);
 
     protected override void ApplyData(ItemSo data)
     {
+        if(data == null) return;
         Data = data;
         img.sprite = data.itemIcon;
     }
+
+    #endregion
+
+
+
+    #region Validation
+
+    protected override bool IsInvaildDrop(GameObject other, bool isswap)
+    {
+        var slot = other?.GetComponent<ItemSlot>();
+        if (slot == null || !slot.CompareTag(SlotTag)) return true;
+
+        var existingItem = slot.GetComponentInChildren<BuyItem>(true);
+        return existingItem != null && existingItem.gameObject.activeSelf;
+    }
+
+    #endregion
+
+
+
+    #region Drop Success
 
     protected override void OnDropSuccess(GameObject other)
     {
         var slot = other.GetComponent<ItemSlot>();
         var targetItem = slot.GetComponentInChildren<BuyItem>(true);
-        targetItem.gameObject.SetActive(true);
-        targetItem.ChangeItemInfo(Data);
+
+        if (targetItem != null)
+        {
+            targetItem.gameObject.SetActive(true);
+            targetItem.UpdateInfo(Data, true);
+        }
     }
+
+    #endregion
+
+
+
+    #region Buy & Sell
 
     protected override bool OnBuy()
     {
@@ -70,14 +94,36 @@ public class BuyItem : BuyPurchasable<ItemSo>
         return true;
     }
 
+    #endregion
+
+
+
+    #region Swap & Move
+
     protected override void OnSwap(BuyPurchasable<ItemSo> other)
     {
-        // 아이템 슬롯 간 순서 교환 — 골드 변동 없음
         var otherItem = (BuyItem)other;
+
         ItemSo tmp = otherItem.Data;
         otherItem.ApplyData(Data);
         ApplyData(tmp);
+
+        PlayerShopManager.instance.TempItems[Slot.slotIndex] = Data;
+        PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = otherItem.Data;
     }
 
-    protected override void OnSlotMove() { }
+    protected override void OnSlotMove(GameObject other) 
+    {
+        var otherItem = other.GetComponentInChildren<BuyItem>(true);        
+        otherItem.gameObject.SetActive(true);
+        otherItem.ApplyData(Data);
+        otherItem.bought = true;
+
+        PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = Data;
+        PlayerShopManager.instance.TempItems[Slot.slotIndex] = null;
+        
+        gameObject.SetActive(false);
+    }
+
+    #endregion
 }

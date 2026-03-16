@@ -6,6 +6,7 @@ public class PlayerManager : MonoBehaviour
     public static PlayerManager instance;
     public List<DiceData> dices = new List<DiceData>();
     public List<ItemSo> items = new List<ItemSo>();
+    public DiceData extraDice;
     public bool[] SpecialSlots = new bool[6];
     public int gold;
     public int currentRound;
@@ -49,6 +50,7 @@ public class PlayerManager : MonoBehaviour
             dices.Add(defaultDice);
             SpecialSlots[i] = (i == 0);
         }
+        extraDice = defaultDice;
         gold = 999;
         currentRound = 1;
         heart = 3;
@@ -61,6 +63,7 @@ public class PlayerManager : MonoBehaviour
         data.currentRound = currentRound;
         data.heart = heart;
 
+        data.extraDiceName = extraDice.name;
         data.specialSlots = this.SpecialSlots;
 
         foreach (var dice in dices)
@@ -96,6 +99,7 @@ public class PlayerManager : MonoBehaviour
         gold = data.gold;
         heart = data.heart;
         currentRound = data.currentRound;
+        extraDice = System.Array.Find(allDices, s => s.name == name);
 
         dices.Clear();
         items.Clear();

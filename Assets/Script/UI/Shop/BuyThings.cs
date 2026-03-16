@@ -5,15 +5,21 @@ using UnityEngine.UI;
 public class BuyThings : MonoBehaviour, IBeginDragHandler, IDragHandler,
     IPointerEnterHandler, IPointerExitHandler
 {
-
+    [Header("Component")]
     protected Image img;
-    protected bool bought = false;
-    protected Transform canvas;
-    [SerializeField]protected Transform previousParent;
     protected RectTransform rect;
     protected CanvasGroup canvasGroup;
+
+    [Header("State")]
+    [SerializeField] protected bool bought = false;
     public bool inPointer = false;
     public bool isDragged = false;
+
+    [Header("Drag References")]
+    protected Transform canvas;
+    protected Transform previousParent;
+    
+    
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected virtual void Awake()
