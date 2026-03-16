@@ -51,6 +51,8 @@ public class SettingsManager : MonoBehaviour
 
     public void ApplySettings()
     {
+        if (AudioManager.instance == null) return;
+
         AudioManager.instance.SetMasterVolume(MasterVolume);
         AudioManager.instance.SetBgmVolume(MusicVolume);
         AudioManager.instance.SetSfxVolume(SfxVolume);

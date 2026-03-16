@@ -39,11 +39,13 @@ public class AudioManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        
     }
 
     void Init()
     {
+
+        
         // 배경음 플레이어 초기화
         GameObject bgmObject = new GameObject("BgmPlayer");
         bgmObject.transform.parent = transform;

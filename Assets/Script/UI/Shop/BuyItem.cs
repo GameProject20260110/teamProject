@@ -37,9 +37,9 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override void ApplyData(ItemSo data)
     {
-        if(data == null) return;
+        
         Data = data;
-        img.sprite = data.itemIcon;
+        if(Data != null) img.sprite = data.itemIcon;
     }
 
     #endregion
@@ -50,11 +50,22 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override bool IsInvaildDrop(GameObject other, bool isswap)
     {
-        var slot = other?.GetComponent<ItemSlot>();
-        if (slot == null || !slot.CompareTag(SlotTag)) return true;
-
-        var existingItem = slot.GetComponentInChildren<BuyItem>(true);
-        return existingItem != null && existingItem.gameObject.activeSelf;
+        if (other == null) return true;
+        if (other.CompareTag(DropTag))
+        {
+            var otherItem = other?.GetComponent<BuyItem>();
+            if (otherItem == null) return true;
+            return false;
+        }
+        else if (other.CompareTag(SlotTag))
+        {
+            var slot = other?.GetComponent<ItemSlot>();
+            if (slot == null || !slot.CompareTag(SlotTag)) return true;
+            var existingItem = slot.GetComponentInChildren<BuyItem>(true);
+            return existingItem != null && existingItem.gameObject.activeSelf;
+        }
+        return true;
+        
     }
 
     #endregion
@@ -105,24 +116,12 @@ public class BuyItem : BuyPurchasable<ItemSo>
         var otherItem = (BuyItem)other;
 
         ItemSo tmp = otherItem.Data;
-        otherItem.ApplyData(Data);
-        ApplyData(tmp);
-
-        PlayerShopManager.instance.TempItems[Slot.slotIndex] = Data;
-        PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = otherItem.Data;
-    }
-
-    protected override void OnSlotMove(GameObject other) 
-    {
-        var otherItem = other.GetComponentInChildren<BuyItem>(true);        
-        otherItem.gameObject.SetActive(true);
-        otherItem.ApplyData(Data);
-        otherItem.bought = true;
-
-        PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = Data;
-        PlayerShopManager.instance.TempItems[Slot.slotIndex] = null;
         
-        gameObject.SetActive(false);
+        PlayerShopManager.instance.TempItems[Slot.slotIndex] = tmp;
+        PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = Data;
+
+        otherItem.ApplyData(Data);
+        ApplyData(tmp);      
     }
 
     #endregion

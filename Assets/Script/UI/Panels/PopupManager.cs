@@ -21,7 +21,7 @@ public class PopupManager : MonoBehaviour
     [Header("기타")]
     public GameObject closePanel;
     public Button StartBtn;
-    private Canvas rootCanvas;
+    public Canvas rootCanvas;
 
 
     private void Awake()
@@ -34,7 +34,7 @@ public class PopupManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        rootCanvas = FindFirstObjectByType<Canvas>().rootCanvas;
+        //rootCanvas = FindFirstObjectByType<Canvas>().rootCanvas;
 
         if(dicePopup != null)
         {
