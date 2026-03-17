@@ -39,12 +39,12 @@ public class Dice : MonoBehaviour
         {
             if(targetScore < 0)
             {
-                diceScoreText.gameObject.SetActive(false);
+                diceScoreText.alpha = 0f;
                 _currentDiceScore = 0;
             }
             else
             {
-                diceScoreText.gameObject.SetActive(true);
+                diceScoreText.alpha = 255f;
                 if (anim && _currentDiceScore != targetScore)
                 {
                     int from = _currentDiceScore;
