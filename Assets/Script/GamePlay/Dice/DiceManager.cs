@@ -1,9 +1,4 @@
 using UnityEngine;
-using DG.Tweening;
-using UnityEngine.UI;
-using TMPro;
-using System.Collections;
-using System.Collections.Generic;
 
 public class DiceManager : MonoBehaviour
 {
@@ -16,14 +11,12 @@ public class DiceManager : MonoBehaviour
 
     [Header("기본 설정")]
     public DiceData defaultDice;
-   
-    public bool isRolling => _isRolling;
 
-    private bool UseTestMode => TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
+    [Header("모듈")]
+    public DiceSetup diceSetup;
+    public DiceRoller diceRoller;
 
-    private bool _isRolling = false;
-    private float padding = 100.0f;
-
+    public bool isRolling => diceRoller != null && diceRoller.isRolling;
     void Start()
     {
         if(GameManager.instance != null) GameManager.instance.diceManager = this;
@@ -33,161 +26,22 @@ public class DiceManager : MonoBehaviour
 
     public void SetupDiceBoard()
     {
-        if (panelDiceScript == null) return;
-
-        DiceData fallbackDice = defaultDice;
-
-        if(PlayerManager.instance != null && PlayerManager.instance.defaultDice != null)
-        {
-            fallbackDice = PlayerManager.instance.defaultDice;
-        }
-
-        DiceData dataToUse = null;
-
-        for(int i = 0; i < panelDiceScript.Length; i++)
-        {
-            if (panelDiceScript[i] == null) continue;
-
-            if (UseTestMode)
-            {
-                bool isSlotUnlocked = i < TestModeManager.instance.testDiceSlot.Length && TestModeManager.instance.testDiceSlot[i];
-
-                if(isSlotUnlocked 
-                && TestModeManager.instance.testAbilities[i] 
-                && i < TestModeManager.instance.testDiceSlot.Length 
-                && TestModeManager.instance.testAbilities[i] != null)
-                {
-                    dataToUse = TestModeManager.instance.testAbilities[i];
-                }
-                else
-                {
-                    dataToUse = fallbackDice;
-                }
-            }
-            else
-            {
-                bool isSpecialSlot = PlayerManager.instance != null && i < PlayerManager.instance.SpecialSlots.Length && PlayerManager.instance.SpecialSlots[i];
-
-                if(isSpecialSlot && PlayerManager.instance.dices != null && i < PlayerManager.instance.dices.Count && PlayerManager.instance.dices[i] != null)
-                {
-                    dataToUse = PlayerManager.instance.dices[i];
-                }
-                else
-                {
-                    dataToUse = fallbackDice;
-                }
-            }
-            panelDiceScript[i].transform.parent.gameObject.SetActive(true);
-            panelDiceScript[i].gameObject.SetActive(true);
-
-            if(dataToUse == null) dataToUse = fallbackDice;
-            panelDiceScript[i].Initialize(i, dataToUse);
-        }
+        diceSetup.Setup(panelDiceScript, defaultDice);
     }
-
     public void StartRolling()
     {
-        if (_isRolling) return;
-        StartCoroutine(RollRoutine());
+        Dice[] allDice = GetAllDice();
+        diceRoller.OnRollComplete = () => GameManager.instance.OnDiceRollComplete(allDice);
+        diceRoller.StartRoll(allDice, rollArea);
     }
 
-    IEnumerator RollRoutine()
+    public Dice[] GetAllDice()
     {
-        _isRolling = true;
-
-        UiController.instance.SetRollBtnInteractable(false);
-
-        float rollDuration = 1.5f;
-
-        DG.Tweening.Sequence rollSequence = DOTween.Sequence();
-
-        for(int i = 0; i < panelDiceScript.Length; i++)
-        {
-            if (panelDiceScript[i] == null || !panelDiceScript[i].gameObject.activeInHierarchy) continue;
-
-            Dice currentDice = panelDiceScript[i];
-            Transform diceTransform = currentDice.transform;
-
-            float currentDuration = rollDuration + Random.Range(-0.2f, 0.2f);
-
-            currentDice.StartRoll(rollDuration * 0.9f);
-
-            // 눈금 값 결정
-            int randomResult = Random.Range(1, 7);
-
-            // 테스트 모드(눈금 강제)
-            if (UseTestMode && TestModeManager.instance.testValues != null && i < TestModeManager.instance.testValues.Length)
-            {
-                if (TestModeManager.instance.testValues[i] > 0)
-                {
-                    randomResult = Mathf.Clamp(TestModeManager.instance.testValues[i], 1, 6);
-                }
-            }
-
-            int boundCount = Random.Range(2, 5);
-
-            float stopTime = currentDuration * 0.3f;
-            float boundTime = (currentDuration - stopTime) / boundCount;
-            
-            Vector3 StopPoint = GetRandomPointInRollArea();
-
-            // 이동
-            DG.Tweening.Sequence moveSeq = DOTween.Sequence();
-
-            for(int j = 0; j < boundCount; j++)
-            {
-                Vector3 randomPoint = GetRandomPointInRollArea();
-                moveSeq.Append(diceTransform.DOMove(randomPoint, boundTime).SetEase(Ease.InOutQuad));
-            }
-
-            moveSeq.Append(diceTransform.DOMove(StopPoint, stopTime).SetEase(Ease.OutCubic).OnComplete(()=>
-            {
-                currentDice.SetResult(randomResult);
-            }));
-
-            // 주사위 회전
-            Tween roateTween = diceTransform
-                .DORotate(new Vector3(0, 0, 365 * 5), rollDuration, RotateMode.FastBeyond360)
-                .SetEase(Ease.OutCubic);
-
-            rollSequence.Join(moveSeq);
-            rollSequence.Join(roateTween);
-        }
-
-        yield return rollSequence.WaitForCompletion();
-
-        yield return new WaitForSeconds(1.0f);
-
-        // 주사위가 다시 제자리로
-        DG.Tweening.Sequence returnSequence = DOTween.Sequence();
-
-        for(int i = 0; i < panelDiceScript.Length; i++)
-        {
-            if (panelDiceScript[i] == null || !panelDiceScript[i].transform.parent.gameObject.activeInHierarchy) continue;
-            Transform diceTransform = panelDiceScript[i].transform;
-
-            returnSequence.Join(diceTransform.DOLocalMove(Vector3.zero, 0.5f));
-            returnSequence.Join(diceTransform.DOLocalRotate(Vector3.zero, 0.5f));
-        }
-
-        yield return returnSequence.WaitForCompletion();
-
-
-        // 점수 계산
-        var result = ScoreManager.instance.CalculateScore(panelDiceScript, ScoreManager.DiceType.Roll);
-        int finalScore = result.finalScore;
-        List<ScoreEventData> events = result.events;
-        if(ScoreVisualizer.instance != null)
-        {
-            yield return StartCoroutine(ScoreVisualizer.instance.PlayScoreEventSequence(panelDiceScript, events));
-        }
-        if(GameManager.instance != null)
-        {
-            GameManager.instance.ProcessRollResult(result.finalScore, result.consumedItems);
-        }
-
-        _isRolling = false;
+        Dice[] allDice = new Dice[panelDiceScript.Length];
+        panelDiceScript.CopyTo(allDice, 0);
+        return allDice;
     }
+    
     public Sprite[] GetLastDiceSprites()
     {
         Sprite[] lastDiceSprite = new Sprite[panelDiceScript.Length];
@@ -196,23 +50,5 @@ public class DiceManager : MonoBehaviour
             if (panelDiceScript[i] != null && panelDiceScript[i].gameObject.activeSelf) lastDiceSprite[i] = panelDiceScript[i].GetCurrentSprite();
         }
         return lastDiceSprite;
-    }
-
-    // 화면 랜덤 좌표 
-    Vector3 GetRandomPointInRollArea()
-    {
-        if(rollArea == null)
-        {
-            return transform.position;
-        }
-
-        Rect rect = rollArea.rect;
-
-        float safePadX = Mathf.Min(padding, rect.width * 0.3f);
-        float safePadY = Mathf.Min(padding, rect.height * 0.3f);
-
-        float localX = Random.Range(rect.xMin + safePadX, rect.xMax - safePadX);
-        float localY = Random.Range(rect.yMin + safePadY, rect.yMax - safePadY);
-        return rollArea.TransformPoint(localX, localY, 0);
     }
 }
