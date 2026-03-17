@@ -25,7 +25,7 @@ public class BuyThings : MonoBehaviour, IBeginDragHandler, IDragHandler,
     protected virtual void Awake()
     {
         img = GetComponent<Image>();
-        canvas = FindFirstObjectByType<Canvas>().transform;
+        canvas = GameObject.FindGameObjectWithTag("ShopCanvas").transform;
         rect = GetComponent<RectTransform>();
         canvasGroup = GetComponent<CanvasGroup>();
 

@@ -22,7 +22,6 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     protected abstract bool OnBuy();
     protected abstract bool OnSell();
     protected abstract void OnSwap(BuyPurchasable<T> other);
-    protected abstract void OnSlotMove(GameObject other);
 
     // °ËÁõ
     public virtual bool CanBeginDrag() => true;
@@ -35,6 +34,10 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
     public override void OnPointerEnter(PointerEventData eventData)
     {
+        if (PopupManager.instance == null)
+            return;
+
+        Debug.Log(canvas);
         base.OnPointerEnter(eventData);
         OpenPopup();
     }
@@ -42,7 +45,8 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     public override void OnPointerExit(PointerEventData eventData)
     {
         base.OnPointerExit(eventData);
-        PopupManager.instance.ClosePopup();
+        if (PopupManager.instance != null)
+            PopupManager.instance.ClosePopup();
     }
 
     public void OnPointerClick(PointerEventData eventData)
@@ -117,20 +121,41 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
         if (IsInvalidBoughtDrop(other))
         {
+            
             RevertToParent();
             return;
         }
 
-        if (other.CompareTag(DropTag))
+        if (other.CompareTag(SlotTag))
         {
+            
             if (IsInvaildDrop(other, true)) 
-            { 
+            {
                 RevertToParent(); 
                 return; 
             }
 
+            if(this is BuyItem)
+            {
+                var otherItem = other.GetComponentInChildren<BuyItem>(true);
+                otherItem.gameObject.SetActive(true);
+                OnSwap(otherItem.GetComponent<BuyPurchasable<T>>());
+                gameObject.SetActive(false);
+            }
+            else if(this is BuyDice) 
+                OnSwap(other.GetComponent<BuyPurchasable<T>>());
+        }
+        else if (other.CompareTag(DropTag))
+        {
+            if (IsInvaildDrop(other, true))
+            {
+                RevertToParent();
+                return;
+            }
+            
             OnSwap(other.GetComponent<BuyPurchasable<T>>());
-        }          
+        }
+
         RevertToParent();
     }
 
@@ -144,8 +169,8 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
     {
         return transform.parent == canvas
             || PlayerShopManager.instance.TempGold < GetCost()
-            || IsInvaildDrop(dropTarget, false)
-            || dropTarget.GetComponent<BuyDice>().Data.diceNum != 0;
+            || IsInvaildDrop(dropTarget, false);
+           
     }
 
     private bool IsInvalidBoughtDrop(GameObject dropTarget)

@@ -12,6 +12,7 @@ TagManager:
   - BuyDice
   - BuyItem
   - BuySpecialSlot
+  - ShopCanvas
   layers:
   - Default
   - TransparentFX

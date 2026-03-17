@@ -1,3 +1,4 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
@@ -66,7 +67,7 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override bool IsInvaildDrop(GameObject other, bool isswap)
     { 
         if (!GetComponentInParent<ItemSlot>().hasSpecialSlot || !other.transform.parent.CompareTag(SlotTag)) return true;
-        return false;
+        return isswap ? false : other.GetComponent<BuyDice>().Data.diceNum != 0;
 
         //return isswap 
         //    ? other.GetComponent<BuyDice>().Data.diceNum == 0 
@@ -112,15 +113,6 @@ public class BuyDice : BuyPurchasable<DiceData>
 
         PlayerShopManager.instance.SetDiceAtSlot(Slot.slotIndex, Data);
         PlayerShopManager.instance.SetDiceAtSlot(otherDice.Slot.slotIndex, otherDice.Data);        
-    }
-
-    protected override void OnSlotMove(GameObject other)
-    {
-        int prevIndex = Slot.slotIndex;
-        Slot = GetComponentInParent<ItemSlot>();
-        PlayerShopManager.instance.SetDiceAtSlot(prevIndex, PlayerManager.instance.defaultDice);
-        PlayerShopManager.instance.SetDiceAtSlot(Slot.slotIndex, Data);
-        
     }
 
     #endregion
