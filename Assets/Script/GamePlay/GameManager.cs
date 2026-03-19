@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Collections;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -178,6 +179,22 @@ public class GameManager : MonoBehaviour
         {
             UiController.instance.SetRollBtnInteractable(false);
         }
+    }
+
+    public void OnDiceRollComplete(Dice[] allDice)
+    {
+        StartCoroutine(ProcessRollSequence(allDice));
+    }
+
+    private IEnumerator ProcessRollSequence(Dice[] allDice)
+    {
+        var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
+
+        if(ScoreVisualizer.instance != null)
+        {
+            yield return StartCoroutine(ScoreVisualizer.instance.PlayScoreEventSequence(allDice, result.events));
+        }
+        ProcessRollResult(result.finalScore, result.consumedItems);
     }
 
     public void ProcessRollResult(int finalScore, List<ItemSo> consumedItems)
