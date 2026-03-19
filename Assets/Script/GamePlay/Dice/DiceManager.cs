@@ -15,6 +15,7 @@ public class DiceManager : MonoBehaviour
     [Header("¸ðµâ")]
     public DiceSetup diceSetup;
     public DiceRoller diceRoller;
+    public WizardHandler wizardHandler;
 
     public bool isRolling => diceRoller != null && diceRoller.isRolling;
     void Start()
@@ -27,6 +28,7 @@ public class DiceManager : MonoBehaviour
     public void SetupDiceBoard()
     {
         diceSetup.Setup(panelDiceScript, defaultDice);
+        wizardHandler.Setup(panelDiceScript, rollArea);
     }
     public void StartRolling()
     {
@@ -37,8 +39,13 @@ public class DiceManager : MonoBehaviour
 
     public Dice[] GetAllDice()
     {
-        Dice[] allDice = new Dice[panelDiceScript.Length];
+        var wizardSlots = wizardHandler.GetWizardDice();
+        Dice[] allDice = new Dice[panelDiceScript.Length + wizardSlots.Count];
         panelDiceScript.CopyTo(allDice, 0);
+        for(int i = 0; i < wizardSlots.Count; i++)
+        {
+            allDice[panelDiceScript.Length + i] = wizardSlots[i];
+        }
         return allDice;
     }
     
