@@ -13,7 +13,11 @@ MonoBehaviour:
   m_Name: Gimmick_LoseHeartOrDice
   m_EditorClassIdentifier: Assembly-CSharp::Gimmick_LoseHeartOrDice
   gimmickName: "\uD558\uD2B8 \uC18C\uBAA8"
-  description: "\uD558\uD2B8 \uC18C\uBAA8 \uB610\uB294 \uC8FC\uC0AC\uC704 \uBCC0\uACBD"
+  description: " \uD50C\uB808\uC774\uC5B4\uC758 \uD558\uD2B8\uB97C \uD558\uB098 \uC18C\uBAA8\uC2DC\uD0A8\uB2E4.
+    \uD50C\uB808\uC774\uC5B4\uC758 \uB0A8\uC740 \uD558\uD2B8\uAC00 1\uAC1C\uC77C
+    \uC2DC \uBB34\uC791\uC704\uB85C \uD6A8\uACFC \uC8FC\uC0AC\uC704 \uD558\uB098\uC758
+    \uD6A8\uACFC\uB97C \uBB34\uD6A8\uD654 \uD55C\uB2E4."
   level: 3
   gimmickType: 8
   category: 2
+  gimmickIcon: {fileID: 21300000, guid: 46efff3b5a20ed142878a7b412b52865, type: 3}

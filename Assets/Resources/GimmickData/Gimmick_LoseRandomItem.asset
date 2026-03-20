@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Gimmick_LoseRandomItem
   m_EditorClassIdentifier: Assembly-CSharp::Gimmick_LoseRandomItem
   gimmickName: "\uC544\uC774\uD15C \uBC84\uB9AC\uAE30"
-  description: "\uB79C\uB364 \uC544\uC774\uD15C \uD558\uB098 \uBC84\uB9BC"
+  description: "\uBB34\uC791\uC704\uB85C \uC544\uC774\uD15C 1\uAC1C \uC601\uAD6C
+    \uC18C\uBAA8"
   level: 0
   gimmickType: 3
   category: 2
+  gimmickIcon: {fileID: 21300000, guid: 25424f45dbd016b489ff4ae67488e2f6, type: 3}

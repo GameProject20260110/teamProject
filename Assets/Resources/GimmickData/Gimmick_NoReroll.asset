@@ -17,3 +17,4 @@ MonoBehaviour:
   level: 1
   gimmickType: 2
   category: 1
+  gimmickIcon: {fileID: 21300000, guid: d63b6c5bccf8ddf4795b9f55ec1b9430, type: 3}

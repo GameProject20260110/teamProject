@@ -28,5 +28,6 @@ public abstract class GimmickSo : ScriptableObject
     public int level;
     public GimmickType gimmickType;
     public GimmickCategory category;
+    public Sprite gimmickIcon;
     public abstract void ExecuteGimmick();
 }

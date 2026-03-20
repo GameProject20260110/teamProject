@@ -29,12 +29,10 @@ public class WizardHandler : MonoBehaviour
         for(int i = 0; i < diceScript.Length; i++)
         {
             if (diceScript[i] == null || diceScript[i].MyState == null) continue;
-            Debug.Log($"슬롯 {i}: {diceScript[i].MyState.diceData.name}, is Wizard: {diceScript[i].MyState.diceData is WizardDiceAbility}");
             if (diceScript[i].MyState.diceData is WizardDiceAbility)
             {
                 wizardCount++;
             }
-            Debug.Log($"위자드 개수: {wizardCount}");
         }
         if (wizardCount == 0) return;
         for(int i = 0; i < wizardCount;i++)

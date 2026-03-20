@@ -47,6 +47,7 @@ public class GimmickManager : MonoBehaviour
             Debug.Log($"{gimmick.level}티어 {gimmick.gimmickName} 발동");
             gimmick.ExecuteGimmick();
         }
+        UiController.instance.RefreshGimmickIcons(currentActiveGimmick);
     }
 
     private GimmickSo DrawGimmick(int round)
@@ -93,5 +94,6 @@ public class GimmickManager : MonoBehaviour
     public void ClearGimmick()
     {
         currentActiveGimmick.Clear();
+        UiController.instance.ClearGimmickIcons();
     }
 }
