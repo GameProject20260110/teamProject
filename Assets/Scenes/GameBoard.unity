@@ -1483,7 +1483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944596117b820da459052f783c3a3a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestModeManager
-  isTestModeActive: 1
+  isTestModeActive: 0
   testGold: 9999
   testHeart: 3
   testAbilities:

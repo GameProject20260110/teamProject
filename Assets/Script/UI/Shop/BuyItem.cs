@@ -13,6 +13,9 @@ public class BuyItem : BuyPurchasable<ItemSo>
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
+    protected override void OpenDescPopup() =>
+        PopupManager.instance.DescOpenPopup(Data);
+
     #region Initialization
 
     public void UpdateInfo(ItemSo item, bool isBought)

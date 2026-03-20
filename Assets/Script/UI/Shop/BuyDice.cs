@@ -15,6 +15,9 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
+    protected override void OpenDescPopup() =>
+        PopupManager.instance.DescOpenPopup(Data);
+
 
     #region Initialization
 

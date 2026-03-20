@@ -51,7 +51,7 @@ public class PlayerManager : MonoBehaviour
             SpecialSlots[i] = (i == 0);
         }
         extraDice = defaultDice;
-        gold = 999;
+        gold = 10;
         currentRound = 1;
         heart = 3;
     }

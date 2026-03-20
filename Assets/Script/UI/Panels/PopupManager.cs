@@ -14,6 +14,10 @@ public class PopupManager : MonoBehaviour
     public RectTransform itemPopup;
     private TextMeshProUGUI itemDesc;
 
+    [Header("설명 팝업")]
+    public RectTransform DescPopup;
+    public DescPopupContent Content;
+
     [Header("플레이어 정보")]
     public TextMeshProUGUI playerGold;
     public TextMeshProUGUI playerRound;
@@ -34,7 +38,6 @@ public class PopupManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        //rootCanvas = FindFirstObjectByType<Canvas>().rootCanvas;
 
         if(dicePopup != null)
         {
@@ -78,6 +81,16 @@ public class PopupManager : MonoBehaviour
         playerRound.text = PlayerManager.instance.currentRound.ToString();
     }
 
+    public void DescOpenPopup(DiceData data)
+    {
+        DescPopup.gameObject.SetActive(true);
+        Content.UpdataInfo(data);
+    }
+    public void DescOpenPopup(ItemSo data)
+    {
+        DescPopup.gameObject.SetActive(true);
+        Content.UpdataInfo(data);
+    }
 
     public void OpenPopup(DiceData data, RectTransform targetRect)
     {
