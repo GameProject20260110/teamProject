@@ -137,9 +137,11 @@ public class ShopItem : MonoBehaviour
     {
         for (int i = 0; i < diceSlotCount; i++)
         {
+            
+
             if (itemSlots[i].transform.childCount > 0)
             {
-                buyDice[i] = itemSlots[i].transform.GetComponentInChildren<BuyDice>();                    
+                buyDice[i] = itemSlots[i].transform.GetComponentInChildren<BuyDice>();                  
             }
             else
             {
@@ -165,6 +167,8 @@ public class ShopItem : MonoBehaviour
                 buyItem[i].transform.SetParent(itemSlots[i + diceSlotCount].transform);
                 buyItem[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
+
+            buyItem[i].GetComponentsInChildren<RectTransform>()[1].localPosition = new Vector2(0, 200);
             buyItem[i].UpdateInfo(itemGacha.Roll(), false);
         }
 

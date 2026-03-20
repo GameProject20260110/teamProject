@@ -19,6 +19,7 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
     //¾×¼Ç
     protected abstract void OpenPopup();
+    protected abstract void OpenDescPopup();
     protected abstract bool OnBuy();
     protected abstract bool OnSell();
     protected abstract void OnSwap(BuyPurchasable<T> other);
@@ -37,7 +38,6 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
         if (PopupManager.instance == null)
             return;
 
-        Debug.Log(canvas);
         base.OnPointerEnter(eventData);
         OpenPopup();
     }
@@ -51,9 +51,15 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.button == PointerEventData.InputButton.Right && bought)
+        if(eventData.button == PointerEventData.InputButton.Middle)
+        {
+            OpenDescPopup();
+        }
+
+        if (eventData.button == PointerEventData.InputButton.Right && bought)
         {
             if(OnSell()) PopupManager.instance.ClosePopup();
+ 
         }
     }
 
