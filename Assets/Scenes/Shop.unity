@@ -2866,6 +2866,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PopupManager
   dicePopup: {fileID: 237663261}
   itemPopup: {fileID: 237663261}
+  gimmickPopup: {fileID: 0}
   DescPopup: {fileID: 1985327038}
   Content: {fileID: 1265450089}
   playerGold: {fileID: 1690221382}
