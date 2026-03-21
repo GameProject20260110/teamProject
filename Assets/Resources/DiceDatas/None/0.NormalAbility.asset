@@ -19,6 +19,5 @@ MonoBehaviour:
   abilityName: "\uB178\uBA40 \uB2E4\uC774\uC2A4"
   gold: 1
   sell: 2
-  Desc: "[\uAE30\uBCF8 \uC8FC\uC0AC\uC704]\n\u2605\n\uAE30\uBCF8 \uC8FC\uC0AC\uC704
-    \uC774\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561: 1\uACE8\uB4DC"
+  Desc: "\u2605\n\uAE30\uBCF8 \uC8FC\uC0AC\uC704 \uC774\uB2E4."
   skin: {fileID: 11400000, guid: a2a0f760336f6a2479154757fbdc27b7, type: 2}

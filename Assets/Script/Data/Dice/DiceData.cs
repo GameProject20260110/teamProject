@@ -4,12 +4,14 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DiceData", menuName = "Scriptable Objects/DiceData")]
 public class DiceData : ScriptableObject
 {
-    
+    public enum DiceTiming { Rule, Roll, Calculate, After}
+
     public int multiBonusScore = 1;
     public int plusBonusScore = 0;
 
     [Header("주사위 기본 정보")]
     public ScoreManager.DiceType type;
+    public DiceTiming timing;
     public int diceNum;
     public string abilityName;
     public int gold;

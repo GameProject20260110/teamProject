@@ -19,8 +19,7 @@ public class PopupManager : MonoBehaviour
     private TextMeshProUGUI gimmickDesc;
 
     [Header("설명 팝업")]
-    public RectTransform DescPopup;
-    public DescPopupContent Content;
+    public ShopDescPopup DescPopup;
 
     [Header("플레이어 정보")]
     public TextMeshProUGUI playerGold;
@@ -93,12 +92,12 @@ public class PopupManager : MonoBehaviour
     public void DescOpenPopup(DiceData data)
     {
         DescPopup.gameObject.SetActive(true);
-        Content.UpdataInfo(data);
+        DescPopup.UpdateUI(data);
     }
     public void DescOpenPopup(ItemSo data)
     {
         DescPopup.gameObject.SetActive(true);
-        Content.UpdataInfo(data);
+        DescPopup.UpdateUI(data);
     }
 
     public void OpenPopup(DiceData data, RectTransform targetRect)
