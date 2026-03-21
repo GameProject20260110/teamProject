@@ -19,8 +19,7 @@ public class PopupManager : MonoBehaviour
     private TextMeshProUGUI gimmickDesc;
 
     [Header("설명 팝업")]
-    public RectTransform DescPopup;
-    public DescPopupContent Content;
+    public ShopDescPopup DescPopup;
 
     [Header("플레이어 정보")]
     public TextMeshProUGUI playerGold;
@@ -29,6 +28,7 @@ public class PopupManager : MonoBehaviour
     [Header("기타")]
     public GameObject closePanel;
     public Button StartBtn;
+    public Button SettingsBtn;
     public Canvas rootCanvas;
 
 
@@ -62,6 +62,11 @@ public class PopupManager : MonoBehaviour
         {
             StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
         }
+
+        if(SettingsBtn != null)
+        {
+            SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
+        }
     }
 
     private void Start()
@@ -93,12 +98,12 @@ public class PopupManager : MonoBehaviour
     public void DescOpenPopup(DiceData data)
     {
         DescPopup.gameObject.SetActive(true);
-        Content.UpdataInfo(data);
+        DescPopup.UpdateUI(data);
     }
     public void DescOpenPopup(ItemSo data)
     {
         DescPopup.gameObject.SetActive(true);
-        Content.UpdataInfo(data);
+        DescPopup.UpdateUI(data);
     }
 
     public void OpenPopup(DiceData data, RectTransform targetRect)

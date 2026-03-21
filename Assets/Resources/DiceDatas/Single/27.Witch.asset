@@ -15,13 +15,13 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 3
+  timing: 2
   diceNum: 27
-  abilityName: "\uC704\uCE58 \uC8FC\uC0AC\uC704"
+  abilityName: "\uC704\uCE58"
   gold: 9
   sell: 6
-  Desc: "[\uC704\uCE58 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\n\n\uB77C\uC6B4\uB4DC
-    \uC810\uC218\uB97C 3\uBC30\uB85C \uD55C\uB2E4. \uC774 \uD6A8\uACFC \uC774\uD6C4
-    \uBC1C\uB3D9\uD55C \uD6A8\uACFC \uD558\uB098\uB294 \uBB34\uD6A8\uD654\uB41C\uB2E4.\n\n\uAD6C\uB9E4
-    \uAE08\uC561: 3Gold"
+  Desc: "\u2605\u2605\u2605\n\n\uB77C\uC6B4\uB4DC \uC810\uC218\uB97C 3\uBC30\uB85C
+    \uD55C\uB2E4. \uC774 \uD6A8\uACFC \uC774\uD6C4 \uBC1C\uB3D9\uD55C \uD6A8\uACFC
+    \uD558\uB098\uB294 \uBB34\uD6A8\uD654\uB41C\uB2E4."
   skin: {fileID: 11400000, guid: 6311c462aec03fe45ad4eae8f393f68e, type: 2}
   bonusScore: 3

@@ -15,11 +15,11 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 3
+  timing: 3
   diceNum: 31
-  abilityName: "\uCEE4\uD130 \uC8FC\uC0AC\uC704"
+  abilityName: "\uCEE4\uD130"
   gold: 13
   sell: 8
-  Desc: "[\uCEE4\uD130 \uC8FC\uC0AC\uC704]\n\u2605\u2605\u2605\u2605\u2605\n\n\uC790\uC2E0\uC758
-    \uC8FC\uC0AC\uC704 \uB208\uAE08\uC744 2\uAC1C\uB9CC \uB354\uD558\uC9C0 \uC54A\uACE0
-    \uACF1\uD55C\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561: 5Gold"
+  Desc: "\u2605\u2605\u2605\u2605\u2605\n\n\uC790\uC2E0\uC758 \uC8FC\uC0AC\uC704
+    \uB208\uAE08\uC744 2\uAC1C\uB9CC \uB354\uD558\uC9C0 \uC54A\uACE0 \uACF1\uD55C\uB2E4."
   skin: {fileID: 11400000, guid: 6fad35c769128dc43b28326c52434779, type: 2}

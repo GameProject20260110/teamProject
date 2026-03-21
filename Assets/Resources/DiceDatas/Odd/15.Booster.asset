@@ -15,14 +15,14 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 1
+  timing: 3
   diceNum: 15
-  abilityName: "\uBD80\uC2A4\uD130 \uC8FC\uC0AC\uC704"
+  abilityName: "\uBD80\uC2A4\uD130"
   gold: 7
   sell: 5
-  Desc: "[\uBD80\uC2A4\uD130 \uC8FC\uC0AC\uC704]\n\u2605\u2605\n\n\uC774\uBC88 \uB77C\uC6B4\uB4DC
-    \uD640\uC218 \uB208\uAE08\uC774 3\uAC1C \uC774\uC0C1\uC77C \uB54C \uBAA8\uB4E0
-    \uC8FC\uC0AC\uC704 \uC810\uC218 +3, \uC7AC\uAD74\uB9BC \uAE30\uD68C +1 (\uC7AC\uAD74\uB9BC
-    \uCD94\uAC00\uB294 \uB77C\uC6B4\uB4DC 1\uD68C)\n\n\uAD6C\uB9E4 \uAE08\uC561:
-    2Gold"
+  Desc: "\u2605\u2605\n\n\uC774\uBC88 \uB77C\uC6B4\uB4DC \uD640\uC218 \uB208\uAE08\uC774
+    3\uAC1C \uC774\uC0C1\uC77C \uB54C \uBAA8\uB4E0 \uC8FC\uC0AC\uC704 \uC810\uC218
+    +3, \uC7AC\uAD74\uB9BC \uAE30\uD68C +1 (\uC7AC\uAD74\uB9BC \uCD94\uAC00\uB294
+    \uB77C\uC6B4\uB4DC 1\uD68C)"
   skin: {fileID: 11400000, guid: c2408c9b6800ab142b0182c2001c680b, type: 2}
   bonusScore: 3

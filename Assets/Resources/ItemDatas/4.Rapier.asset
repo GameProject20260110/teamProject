@@ -18,6 +18,5 @@ MonoBehaviour:
   gold: 3
   sell: 0
   isConsumable: 0
-  itemDesc: "[\uB808\uC774\uD53C\uC5B4]\n\u2605\u2605\u2605\n\n\uB77C\uC6B4\uB4DC
-    \uC810\uC218 + 5\n\n\uAD6C\uB9E4 \uAE08\uC561: 5Gold"
+  itemDesc: "\u2605\u2605\u2605\n\n\uB77C\uC6B4\uB4DC \uC810\uC218 + 5"
   bonusScore: 5

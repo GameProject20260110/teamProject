@@ -1,5 +1,5 @@
-using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class SettingsManager : MonoBehaviour
 {
@@ -8,10 +8,13 @@ public class SettingsManager : MonoBehaviour
     public int ResolutionIndex;
     public bool IsFullScreen;
 
-
     public float MasterVolume = 1f;
     public float MusicVolume = 0.6f;
     public float SfxVolume = 0.75f;
+
+    [Header("UI")]
+    [SerializeField] private GameObject SettingsContent;
+    [SerializeField] private Button homeBtn;
 
     private void Awake()
     {
@@ -27,6 +30,18 @@ public class SettingsManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
+    }
+
+    public void InitializeUI()
+    {
+        if (SceneController.instance != null)
+            homeBtn.onClick.AddListener(() => SceneController.instance.LoadHomeScene());
+    }
+
+    public void ToggleSettings()
+    {
+        if (SettingsContent != null)
+            SettingsContent.SetActive(true);
     }
 
     public void SaveSettings()
