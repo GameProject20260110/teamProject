@@ -4,6 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "itemSo",menuName = "Scriptable Object/ItemData")]
 public class ItemSo : ScriptableObject
 {
+    public enum ItemTiming { Consumable, Reusable }
     
     public Sprite itemIcon;
     public int itemNum;
@@ -11,6 +12,7 @@ public class ItemSo : ScriptableObject
     public int gold;
     public int sell;
     public bool isConsumable;
+    public ItemTiming timing;
     [TextArea]
     public string itemDesc;
 

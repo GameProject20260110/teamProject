@@ -19,8 +19,7 @@ MonoBehaviour:
   abilityName: "\uBB34\uD2B8 \uC8FC\uC0AC\uC704"
   gold: 6
   sell: 4
-  Desc: "[\uBB34\uD2B8 \uC8FC\uC0AC\uC704]\n\u2605\n\n\uC0C1\uC810\uC758 \uBB34\uC791\uC704
-    \uC8FC\uC0AC\uC704 \uD6A8\uACFC\uB85C \uC774 \uC8FC\uC0AC\uC704\uC758 \uD6A8\uACFC\uB97C
-    \uBCC0\uACBD\uD55C\uB2E4.\n\n\uAD6C\uB9E4 \uAE08\uC561: 1Gold"
+  Desc: "\u2605\n\n\uC0C1\uC810\uC758 \uBB34\uC791\uC704 \uC8FC\uC0AC\uC704 \uD6A8\uACFC\uB85C
+    \uC774 \uC8FC\uC0AC\uC704\uC758 \uD6A8\uACFC\uB97C \uBCC0\uACBD\uD55C\uB2E4."
   skin: {fileID: 11400000, guid: ce5bcf68c9f9e1544b1789167b164fec, type: 2}
   gacha: {fileID: 11400000, guid: 3100cef10b54e704098fca9673883448, type: 2}
