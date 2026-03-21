@@ -205,13 +205,14 @@ GameObject:
   - component: {fileID: 8233412}
   - component: {fileID: 8233414}
   - component: {fileID: 8233413}
+  - component: {fileID: 8233415}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8233412
 RectTransform:
   m_ObjectHideFlags: 0
@@ -274,6 +275,25 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8233411}
   m_CullTransparentMesh: 1
+--- !u!114 &8233415
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8233411}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dc0dfd598e257b44b40d430dc759fac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ShopDescPopup
+  icon: {fileID: 1842707551}
+  typeIcon: {fileID: 1141125307}
+  typeText: {fileID: 677647376}
+  timingText: {fileID: 1617786819}
+  Desc: {fileID: 991063286}
+  itemTypeSprite: {fileID: 8766740682603709380, guid: eea0d07227eda134eaa0d51be9522748, type: 3}
+  diceTypeSprite: {fileID: 8824582965669751061, guid: 1c7b5899711b25c47b9005a47996dafc, type: 3}
 --- !u!1 &11047874
 GameObject:
   m_ObjectHideFlags: 0
@@ -3098,8 +3118,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PopupManager
   dicePopup: {fileID: 237663261}
   itemPopup: {fileID: 237663261}
-  DescPopup: {fileID: 1985327038}
-  Content: {fileID: 1265450089}
+  DescPopup: {fileID: 8233415}
   playerGold: {fileID: 1690221382}
   playerRound: {fileID: 756947799}
   closePanel: {fileID: 751906686}
@@ -4913,7 +4932,7 @@ GameObject:
   - component: {fileID: 591179199}
   - component: {fileID: 591179198}
   m_Layer: 5
-  m_Name: Dicetype (1)
+  m_Name: Type
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4938,7 +4957,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 50, y: -50}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &591179198
 MonoBehaviour:
@@ -6020,7 +6039,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &677647376
 MonoBehaviour:
@@ -6272,7 +6291,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8824582965669751061, guid: 1c7b5899711b25c47b9005a47996dafc, type: 3}
+  m_Sprite: {fileID: 6325397865789782373, guid: 0aa4cbd63bc647b46a86508531476359, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -11637,7 +11656,7 @@ GameObject:
   - component: {fileID: 1211159287}
   - component: {fileID: 1211159286}
   m_Layer: 5
-  m_Name: Dicetype (2)
+  m_Name: Timing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11662,7 +11681,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
   m_AnchoredPosition: {x: 50, y: -160}
-  m_SizeDelta: {x: 300, y: 100}
+  m_SizeDelta: {x: 350, y: 100}
   m_Pivot: {x: 0.5, y: 1}
 --- !u!114 &1211159286
 MonoBehaviour:
@@ -15503,7 +15522,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0.5}
   m_AnchorMax: {x: 1, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 100}
+  m_SizeDelta: {x: 250, y: 100}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1617786819
 MonoBehaviour:
@@ -16385,7 +16404,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1706374032}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8233411}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1706374032
 MonoBehaviour:
   m_ObjectHideFlags: 0

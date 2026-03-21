@@ -15,8 +15,9 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 0
+  timing: 2
   diceNum: 5
-  abilityName: "\uB370\uBE4C \uC8FC\uC0AC\uC704"
+  abilityName: "\uB370\uBE4C"
   gold: 6
   sell: 4
   Desc: "\u2605\n\n\uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758 \uC810\uC218 +5\uC810
