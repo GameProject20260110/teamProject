@@ -12,6 +12,7 @@ public class UiController : MonoBehaviour
     public LifeUI lifeUI;
     public ResultPanelUI resultUI;
     public GameOverPanelUI gameOverUI;
+    public GimmickUI gimmickUI;
 
     [Header("인게임 정보 UI (상시 표시)")]
     public TextMeshProUGUI roundInfoText;  
@@ -114,8 +115,13 @@ public class UiController : MonoBehaviour
 
         if (targetScoreInfoText != null)
         {
-            targetScoreInfoText.SetText("target score : {0}", targetScore);
+            targetScoreInfoText.SetText("{0}", targetScore);
         }
+    }
+
+    public void RefreshGimmickIcons(List<GimmickSo> gimmick)
+    {
+        gimmickUI?.RefreshIcons(gimmick);
     }
 
     public void SetRollButtonToRoll()
@@ -179,6 +185,11 @@ public class UiController : MonoBehaviour
         {
             confirmBtn.interactable = state;
         }
+    }
+
+    public void ClearGimmickIcons()
+    {
+        gimmickUI?.ClearIcons();
     }
 
     public void GotoLobby()

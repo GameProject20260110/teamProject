@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Gimmick_LoseGold
   m_EditorClassIdentifier: Assembly-CSharp::Gimmick_LoseGold
   gimmickName: "\uACE8\uB4DC \uC0AD\uC81C"
-  description: "\uACE8\uB4DC \uC0AD\uC81C"
+  description: "\uB77C\uC6B4\uB4DC \uC885\uB8CC \uC2DC \uBCF4\uC720\uD55C \uACE8\uB4DC\uAC00
+    \uC77C\uC815\uD655\uB960\uB85C \uC808\uBC18 \uB610\uB294 \uC804\uBD80 \uC0AC\uB77C\uC9C4\uB2E4"
   level: 3
   gimmickType: 0
   category: 2
+  gimmickIcon: {fileID: 21300000, guid: 6cd0d7ac8dcd18a4e9f4091d778e7db6, type: 3}

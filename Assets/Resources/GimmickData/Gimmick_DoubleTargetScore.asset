@@ -13,7 +13,8 @@ MonoBehaviour:
   m_Name: Gimmick_DoubleTargetScore
   m_EditorClassIdentifier: Assembly-CSharp::Gimmick_DoubleTargetScore
   gimmickName: "\uBAA9\uD45C \uC810\uC218 2\uBC30"
-  description: "\uC694\uAD6C\uD558\uB294 \uCD5C\uC18C \uC810\uC218"
+  description: "\uC694\uAD6C\uD558\uB294 \uCD5C\uC18C \uC810\uC218 2\uBC30 \uC99D\uAC00"
   level: 3
   gimmickType: 7
   category: 1
+  gimmickIcon: {fileID: 21300000, guid: b39dafa640d9475418a0752e6ab72998, type: 3}

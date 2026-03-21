@@ -3,8 +3,9 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.EventSystems;
 
-public class Dice : MonoBehaviour
+public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image diceImage;
 
@@ -35,9 +36,9 @@ public class Dice : MonoBehaviour
 
     public void UpdateDiceScoreUi(int targetScore, bool anim = false)
     {
-        if(diceScoreText != null)
+        if (diceScoreText != null)
         {
-            if(targetScore < 0)
+            if (targetScore < 0)
             {
                 diceScoreText.alpha = 0f;
                 _currentDiceScore = 0;
@@ -74,7 +75,7 @@ public class Dice : MonoBehaviour
         float timer = 0f;
         float switchinterval = 0.1f;
 
-        while(timer < duration)
+        while (timer < duration)
         {
             int randomValue = Random.Range(1, 7);
             UpdateDiceImage(randomValue);
@@ -83,7 +84,7 @@ public class Dice : MonoBehaviour
             timer += switchinterval;
         }
     }
-    
+
     public void SetResult(int resultValue)
     {
         StopAllCoroutines();
@@ -97,5 +98,17 @@ public class Dice : MonoBehaviour
     public Sprite GetCurrentSprite()
     {
         return diceImage.sprite;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (PopupManager.instance == null || MyState.diceData == null) return;
+        PopupManager.instance.OpenPopup(MyState.diceData, GetComponent<RectTransform>());
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (PopupManager.instance == null) return;
+        PopupManager.instance.ClosePopup();
     }
 }

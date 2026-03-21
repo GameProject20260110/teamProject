@@ -13,7 +13,9 @@ MonoBehaviour:
   m_Name: Gimmick_RandomItemNegation
   m_EditorClassIdentifier: Assembly-CSharp::Gimmick_RandomItemNegation
   gimmickName: "\uB79C\uB364 \uC544\uC774\uD15C \uD6A8\uACFC \uBB34\uD6A8\uD654"
-  description: "\uB79C\uB364 \uC544\uC774\uD15C \uD6A8\uACFC \uBB34\uD6A8\uD654"
+  description: "\uC544\uC774\uD15C\uC758 \uD6A8\uACFC\uB97C 25%\uD655\uB960\uB85C
+    \uBB34\uD6A8\uD654 "
   level: 2
   gimmickType: 4
   category: 2
+  gimmickIcon: {fileID: 21300000, guid: 00dc17c599bc958488744b67b936292a, type: 3}

@@ -48,6 +48,7 @@ public class RoundManager : MonoBehaviour
                     gimmick.ExecuteGimmick();
                     Debug.Log("테스트 모드 기믹 강제 활성화");
                 }
+                UiController.instance?.RefreshGimmickIcons(GimmickManager.instance.currentActiveGimmick);
             }
             else if(tm.noGimmick)
             {

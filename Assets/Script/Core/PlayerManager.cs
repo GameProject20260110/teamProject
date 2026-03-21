@@ -63,11 +63,11 @@ public class PlayerManager : MonoBehaviour
         data.currentRound = currentRound;
         data.heart = heart;
 
-        data.extraDiceName = extraDice.name;
+        data.extraDiceName = extraDice != null ? extraDice.name : "";
         data.specialSlots = this.SpecialSlots;
 
         foreach (var dice in dices)
-            data.diceNames.Add(dice.name);
+            data.diceNames.Add(dice != null ? dice.name : "");
         foreach (var item in items)
             data.itemNames.Add(item != null ? item.name : "");
    
