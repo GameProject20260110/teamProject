@@ -24,6 +24,7 @@ public class PopupManager : MonoBehaviour
     [Header("기타")]
     public GameObject closePanel;
     public Button StartBtn;
+    public Button SettingsBtn;
     public Canvas rootCanvas;
 
 
@@ -51,6 +52,11 @@ public class PopupManager : MonoBehaviour
         if(StartBtn != null)
         {
             StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
+        }
+
+        if(SettingsBtn != null)
+        {
+            SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
         }
     }
 

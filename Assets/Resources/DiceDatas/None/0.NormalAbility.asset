@@ -15,6 +15,7 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 4
+  timing: 2
   diceNum: 0
   abilityName: "\uB178\uBA40 \uB2E4\uC774\uC2A4"
   gold: 1
