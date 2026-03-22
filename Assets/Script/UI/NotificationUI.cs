@@ -5,27 +5,18 @@ using NUnit.Framework.Internal.Filters;
 using Cysharp.Threading.Tasks.Triggers;
 public class NotificationUI : MonoBehaviour
 {
-    public static NotificationUI instance;
     public TextMeshProUGUI notificationText;
-
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-        }
-    }
-
-    private void Start()
-    {
-       gameObject.SetActive(false);
-    }
+    private CanvasGroup _cg;
+    private Tween _currentTween;
 
     public void Show(string message, float duration = 1.5f)
     {
+        _currentTween?.Kill();
+        gameObject.SetActive(true);
+        _cg = GetComponent<CanvasGroup>();
         notificationText.text = message;
         notificationText.alpha = 1.0f;
-        gameObject.SetActive(true);
+        _cg.blocksRaycasts = true;
 
         CanvasGroup cg = GetComponent<CanvasGroup>();
         cg.alpha = 1.0f;
