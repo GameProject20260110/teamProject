@@ -26,6 +26,8 @@ public class ShopItem : MonoBehaviour
     public GameObject iventoryPanel;
     public GameObject extraDiceSlot;
 
+    public NotificationUI notificationUI;
+
     private void Awake()
     {
         if(instance == null) instance = this;
@@ -38,6 +40,7 @@ public class ShopItem : MonoBehaviour
         InitializeShop();
         ReRoll();
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
+        if (notificationUI != null) notificationUI.gameObject.SetActive(false);
     }
 
     #region Shop Managment
