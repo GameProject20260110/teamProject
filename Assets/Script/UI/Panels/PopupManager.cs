@@ -28,6 +28,7 @@ public class PopupManager : MonoBehaviour
     [Header("기타")]
     public GameObject closePanel;
     public Button StartBtn;
+    public Button SettingsBtn;
     public Canvas rootCanvas;
 
 
@@ -57,10 +58,7 @@ public class PopupManager : MonoBehaviour
             gimmickDesc = gimmickPopup.GetComponentInChildren<TextMeshProUGUI>();
         }
 
-        if (StartBtn != null)
-        {
-            StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());
-        }
+        
     }
 
     private void Start()
@@ -73,8 +71,22 @@ public class PopupManager : MonoBehaviour
             playerGold.text = gold.ToString();
             playerRound.text = PlayerManager.instance.currentRound.ToString();
         }
+
         if (PlayerShopManager.instance != null)
+        {
             PlayerShopManager.instance.OnGoldChanged += UpdateGold;
+            var text = StartBtn.GetComponentInChildren<TextMeshProUGUI>();
+            if (PlayerShopManager.instance.ClearRound) text.text = "◆ 다음 라운드 ◆";
+            else text.text = "◆ 돌아가기 ◆";
+        }
+
+        if (StartBtn != null) 
+            StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());           
+
+        if(SettingsBtn != null)
+            SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
+
+            
     }
 
     private void OnDestroy()

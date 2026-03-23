@@ -29,8 +29,6 @@ public class GameBootstrap : MonoBehaviour
         Instantiate(sceneControlPrefab);
         await UniTask.NextFrame();
 
-
-
         if (!VaildateManagers()) return;
 
         Debug.Log("모든 매니저 초기화 완료");

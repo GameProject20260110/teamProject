@@ -19,6 +19,8 @@ public class PlayerShopManager : MonoBehaviour
     [SerializeField] private int baseRerollCost = 1;
     public int BaseRerollCost => baseRerollCost;
 
+    public bool ClearRound = false;
+
     public event System.Action<int> OnGoldChanged;
     public event System.Action OnShopCommitted; // 씬 전환용
 

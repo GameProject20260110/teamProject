@@ -15,8 +15,9 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 2
+  timing: 1
   diceNum: 20
-  abilityName: "\uBC24 \uC8FC\uC0AC\uC704"
+  abilityName: "\uBC24"
   gold: 6
   sell: 4
   Desc: "\u2605\n\n\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uB97C \uD604\uC7AC \uAC00\uC7A5

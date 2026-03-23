@@ -32,6 +32,8 @@ public class SceneController : MonoBehaviour
 
         if (fadeCanvasGroup != null) fadeCanvasGroup.alpha = 0f;
         if (loadingPanel != null) loadingPanel.SetActive(false);
+        if (SettingsManager.instance != null)
+            SettingsManager.instance.InitializeUI();
     }
 
     private void OnEnable()
