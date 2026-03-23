@@ -5,8 +5,10 @@ using UnityEngine.UI;
 public class HomeScreenUI : MonoBehaviour
 {
     public static HomeScreenUI instance;
+
     [Header("Button")]
-    public Button StartBtn;
+    [SerializeField] private Button StartBtn;
+    [SerializeField] private Button optionBtn;
 
   
     private void Awake()
@@ -25,6 +27,7 @@ public class HomeScreenUI : MonoBehaviour
     {
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Home, true);
         StartBtn.onClick.AddListener(() => SceneController.instance.LoadShopScene());
+        optionBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
     }
 
 }

@@ -42,6 +42,7 @@ public class SettingsManager : MonoBehaviour
     {
         if (SettingsContent != null)
             SettingsContent.SetActive(true);
+            
     }
 
     public void SaveSettings()
