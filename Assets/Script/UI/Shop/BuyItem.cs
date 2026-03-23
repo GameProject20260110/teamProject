@@ -86,6 +86,10 @@ public class BuyItem : BuyPurchasable<ItemSo>
         {
             targetItem.gameObject.SetActive(true);
             targetItem.UpdateInfo(Data, true);
+            if(Data is Ring)
+            {
+                targetItem.gameObject.SetActive(false);
+            }
         }
     }
 
@@ -98,7 +102,17 @@ public class BuyItem : BuyPurchasable<ItemSo>
     protected override bool OnBuy()
     {
         Slot = GetComponentInParent<ItemSlot>();
-        return PlayerShopManager.instance.TryPurchaseItem(Data, Slot.slotIndex);
+        if (Data is Ring ring && !ring.CanUse())
+        {
+            return false;
+        }
+        bool success = PlayerShopManager.instance.TryPurchaseItem(Data, Slot.slotIndex);
+        if (success && Data.isConsumable) 
+        {
+            Data.Consumable();
+            PlayerShopManager.instance.TempItems[Slot.slotIndex] = null;
+        }
+        return success;
     }
 
     protected override bool OnSell()

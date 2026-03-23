@@ -60,6 +60,14 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
         var buyThings = dragObj.GetComponent<BuyThings>();
         if (buyThings == null || !buyThings.isDragged) return;
+        
+        var buyItem = dragObj.GetComponent<BuyItem>();
+        if (buyItem != null && buyItem.Data is Ring ring && !ring.CanUse())
+        {
+            Debug.Log("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
+            ShopItem.instance.notificationUI.Show("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
+            return;
+        }
 
         eventData.pointerDrag.transform.SetParent(transform);
         eventData.pointerDrag.GetComponent<RectTransform>().position = rect.position;
