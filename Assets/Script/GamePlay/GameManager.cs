@@ -306,22 +306,12 @@ public class GameManager : MonoBehaviour
         {
             PlayerManager.instance.Save();
         }
+        if(PlayerStatsManager.instance != null)
+        {
+            PlayerStatsManager.instance.RecordGameEnd(RoundManager.instance.currentRound, currentScore, false);
+        }
+
         SceneManager.LoadScene("HomeScreen");
-    }
-
-    public void LoadShopScreen()    
-    {
-        SceneManager.LoadScene("Shop");
-    }
-
-    public void LoadGameScreen()
-    {
-        SceneManager.LoadScene("GameBoard");
-    }
-
-    public void LoadSelectScreen()
-    {
-        SceneManager.LoadScene("DiceSelect");
     }
 
     private void RemoveUsedItems(List<ItemSo> itemsToRemove)

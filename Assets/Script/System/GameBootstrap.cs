@@ -9,13 +9,15 @@ public class GameBootstrap : MonoBehaviour
     [SerializeField] private GameObject playerShopManagerPrefab;
     [SerializeField] private GameObject audioManagerPrefab;
     [SerializeField] private GameObject settingsManagerPrefab;
+    [SerializeField] private GameObject playerStatsManagerPrefab;
 
     private async UniTask Start()
     {
-        Instantiate(settingsManagerPrefab);
-        await UniTask.NextFrame(); // 다음 프레임까지 확실히 대기
+        Instantiate(playerStatsManagerPrefab);
+        await UniTask.NextFrame();
 
-        Debug.Log($"SettingsManager: {SettingsManager.instance}"); // null인지 확인
+        Instantiate(settingsManagerPrefab);
+        await UniTask.NextFrame();
 
         Instantiate(playerManagerPrefab);
         await UniTask.NextFrame();
@@ -38,6 +40,11 @@ public class GameBootstrap : MonoBehaviour
 
     private bool VaildateManagers()
     {
+        if (PlayerStatsManager.instance == null)
+        {
+            Debug.LogError("PlayerStatsManager 초기화 실패");
+            return false;
+        }
         if (SettingsManager.instance == null)
         {
             Debug.LogError("SettingsManager 초기화 실패");

@@ -1,66 +1,104 @@
-using UnityEditor.Experimental.GraphView;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndDragHandler
+public abstract class BuyPurchasable<T> : MonoBehaviour, IBeginDragHandler, 
+    IDragHandler, IPointerEnterHandler, IPointerExitHandler, 
+    IPointerDownHandler, IPointerClickHandler, IEndDragHandler
     where T : class
 {
+    // === Components ===
+    protected Image img;
+    protected RectTransform rect;
+    protected CanvasGroup canvasGroup;
+    protected Tween scaleTween;
+
+    // === State ===
+    [SerializeField] protected bool bought = false;
+    public bool inPointer = false;
+    public bool isDragged = false;
+
+    // === Drag ===
+    protected Transform canvas;
+    protected Transform previousParent;
+
+    // === Data ===
     public T Data { get; protected set; }
     public RectTransform descPosition;
 
+    // === Abstract ===
     protected abstract string DropTag { get; }
     protected abstract string SlotTag { get; }
-    
-    // 데이터
     protected abstract int GetCost();
     protected abstract int GetSellPrice();
     protected abstract string GetItemName();
-    protected abstract void ApplyData(T data);
-
-    //액션
     protected abstract void OpenPopup();
     protected abstract void OpenDescPopup();
     protected abstract bool OnBuy();
     protected abstract bool OnSell();
     protected abstract void OnSwap(BuyPurchasable<T> other);
 
-    // 검증
+    // === virtual===
     public virtual bool CanBeginDrag() => true;
     protected virtual bool IsInvaildDrop(GameObject other, bool swap) => false;
     protected virtual void OnDropSuccess(GameObject other) { }
 
+    protected virtual void ApplyData(T data)
+    {
+        scaleTween?.Kill();
+        transform.localScale = Vector3.one * 0.8f;
+        scaleTween = transform.DOScale(1f, 1f)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(true);
+    }
 
+    protected void Awake()
+    {
+        img = GetComponent<Image>();
+        canvas = GameObject.FindGameObjectWithTag("ShopCanvas").transform;
+        rect = GetComponent<RectTransform>();
+        canvasGroup = GetComponent<CanvasGroup>();
+
+    }
 
     #region Pointer Events
 
-    public override void OnPointerEnter(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        AudioManager.instance.PlaySfx(AudioManager.Sfx.Click);
+    }
+        
+    public void OnPointerEnter(PointerEventData eventData)
     {
         if (PopupManager.instance == null)
             return;
 
-        base.OnPointerEnter(eventData);
+        inPointer = true;
         OpenPopup();
     }
 
-    public override void OnPointerExit(PointerEventData eventData)
+    public void OnPointerExit(PointerEventData eventData)
     {
-        base.OnPointerExit(eventData);
-        if (PopupManager.instance != null)
-            PopupManager.instance.ClosePopup();
+        if (PopupManager.instance == null)
+            return;
+
+        inPointer = false;
+        PopupManager.instance.ClosePopup();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
+        if (eventData.button == PointerEventData.InputButton.Right && bought)
+        {
+            if(OnSell()) PopupManager.instance.ClosePopup();
+            return;
+        }
         if(eventData.button == PointerEventData.InputButton.Middle)
         {
             OpenDescPopup();
         }
-
-        if (eventData.button == PointerEventData.InputButton.Right && bought)
-        {
-            if(OnSell()) PopupManager.instance.ClosePopup();
- 
-        }
+        
     }
 
     #endregion
@@ -69,7 +107,7 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
 
     #region Drag Events
 
-    public override void OnBeginDrag(PointerEventData eventData)
+    public void OnBeginDrag(PointerEventData eventData)
     {
         if (!CanBeginDrag())
         {
@@ -77,17 +115,36 @@ public abstract class BuyPurchasable<T> : BuyThings, IPointerClickHandler, IEndD
             isDragged = false;
             return;
         }
-        base.OnBeginDrag(eventData);
+        isDragged = true;
+        previousParent = transform.parent;
+
+        transform.SetParent(canvas);
+        transform.SetAsLastSibling();
+
+        canvasGroup.alpha = 0.6f;
+        canvasGroup.blocksRaycasts = false;
+
+        scaleTween?.Kill();
+
+        scaleTween = transform.DOScale(0.8f, 0.15f)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(true);
     }
 
-    public override void OnDrag(PointerEventData eventData)
+    public void OnDrag(PointerEventData eventData)
     {
         if (!isDragged) return;
-        base.OnDrag(eventData);
+        rect.position = eventData.position;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        scaleTween?.Kill();
+        scaleTween = transform.DOScale(1f,1f)
+            .SetEase(Ease.OutBack)
+            .SetUpdate(true);
+
+
         if (!bought) 
             HandleUnboughtDrop(eventData);
         else 

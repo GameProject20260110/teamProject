@@ -17,7 +17,9 @@ MonoBehaviour:
   itemName: "\uC2DC\uACC4"
   gold: 5
   sell: 0
+  tier: 2
   isConsumable: 1
+  timing: 0
   itemDesc: "\u2605\u2605\n\n\uAD6C\uB9E4 \uD6C4 \uB2E4\uC74C \uB77C\uC6B4\uB4DC
     \uC7AC\uAD74\uB9BC \uAE30\uD68C +1"
   bonusRerollCount: 1

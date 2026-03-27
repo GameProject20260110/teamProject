@@ -9,12 +9,15 @@ public class BuyItem : BuyPurchasable<ItemSo>
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
     protected override int GetSellPrice() => Data.sell;
     protected override string GetItemName() => Data.itemName;
+    
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
     protected override void OpenDescPopup() =>
         PopupManager.instance.DescOpenPopup(Data);
+    
+    public int GetTier() => Data.tier;
 
     #region Initialization
 
@@ -39,10 +42,10 @@ public class BuyItem : BuyPurchasable<ItemSo>
     public void ChangeItemInfo(ItemSo item) => ApplyData(item);
 
     protected override void ApplyData(ItemSo data)
-    {
-        
+    {      
         Data = data;
         if(Data != null) img.sprite = data.itemIcon;
+        base.ApplyData(data);
     }
 
     #endregion

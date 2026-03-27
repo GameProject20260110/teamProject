@@ -58,8 +58,11 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         var dragObj = eventData.pointerDrag;
         if (dragObj == null) return;
 
-        var buyThings = dragObj.GetComponent<BuyThings>();
-        if (buyThings == null || !buyThings.isDragged) return;
+        var checkDice = dragObj.GetComponent<BuyPurchasable<DiceData>>();
+        var checkItem = dragObj.GetComponent<BuyPurchasable<ItemSo>>();
+
+        if (checkDice != null && !checkDice.isDragged) return;
+        if (checkItem != null && !checkItem.isDragged) return;
         
         var buyItem = dragObj.GetComponent<BuyItem>();
         if (buyItem != null && buyItem.Data is Ring ring && !ring.CanUse())

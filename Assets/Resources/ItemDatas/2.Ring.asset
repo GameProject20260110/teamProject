@@ -17,7 +17,9 @@ MonoBehaviour:
   itemName: "\uBC18\uC9C0"
   gold: 5
   sell: 0
+  tier: 5
   isConsumable: 1
+  timing: 0
   itemDesc: "\u2605\u2605\u2605\u2605\u2605\n\n\uBB34\uC791\uC704 \uC8FC\uC0AC\uC704
     1\uAC1C\uB97C \uC5BB\uB294\uB2E4."
   gacha: {fileID: 11400000, guid: 4c7a43e541224e04caa76486788b1548, type: 2}

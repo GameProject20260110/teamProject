@@ -14,6 +14,10 @@ public class DiceData : ScriptableObject
     public DiceTiming timing;
     public int diceNum;
     public string abilityName;
+
+    [Range(1, 5)]
+    public int tier = 1;
+
     public int gold;
     public int sell;
     

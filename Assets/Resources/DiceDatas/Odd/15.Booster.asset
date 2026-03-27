@@ -18,6 +18,7 @@ MonoBehaviour:
   timing: 3
   diceNum: 15
   abilityName: "\uBD80\uC2A4\uD130"
+  tier: 2
   gold: 7
   sell: 5
   Desc: "\u2605\u2605\n\n\uC774\uBC88 \uB77C\uC6B4\uB4DC \uD640\uC218 \uB208\uAE08\uC774
