@@ -19,17 +19,16 @@ public class PlayerManager : MonoBehaviour
     public DiceData defaultDice;
     private DiceData[] allDices;
     private ItemSo[] allItems;
-    
 
     private void Awake()
     {
-        allDices = Resources.LoadAll<DiceData>("DiceDatas");
-        allItems = Resources.LoadAll<ItemSo>("ItemDatas");
-
+        
         if(instance == null)
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
+            allDices = Resources.LoadAll<DiceData>("DiceDatas");
+            allItems = Resources.LoadAll<ItemSo>("ItemDatas");
             Load();
         }
         else
@@ -41,6 +40,9 @@ public class PlayerManager : MonoBehaviour
 
     private void InitDefault()
     {
+        dices.Clear();
+        items.Clear();
+
         for (int i = 0; i < ItemSlotCount; i++)
         {
             items.Add(null);
@@ -58,13 +60,14 @@ public class PlayerManager : MonoBehaviour
 
     public void Save()
     {
-        PlayerSaveData data = new PlayerSaveData();
-        data.gold = gold;      
-        data.currentRound = currentRound;
-        data.heart = heart;
-
-        data.extraDiceName = extraDice != null ? extraDice.name : "";
-        data.specialSlots = this.SpecialSlots;
+        PlayerSaveData data = new PlayerSaveData
+        {
+            gold = gold,
+            currentRound = currentRound,
+            heart = heart,
+            extraDiceName = extraDice != null ? extraDice.name : "",
+            specialSlots = this.SpecialSlots
+        };
 
         foreach (var dice in dices)
             data.diceNames.Add(dice != null ? dice.name : "");
@@ -80,8 +83,6 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.LogError($" 저장 실패 : {ex.Message} (PlayerManager)");
         }
-
-        
     }
 
     public void Load()
@@ -145,9 +146,7 @@ public class PlayerManager : MonoBehaviour
 
     public void ResetData()
     {
-        isGameOver = true;
-        dices.Clear();
-        items.Clear();    
+        isGameOver = true;   
         InitDefault();
         Save();
     }

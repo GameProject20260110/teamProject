@@ -15,8 +15,10 @@ MonoBehaviour:
   multiBonusScore: 1
   plusBonusScore: 0
   type: 0
+  timing: 0
   diceNum: 6
   abilityName: "\uD2B8\uB9AC\uAC70 \uC8FC\uC0AC\uC704"
+  tier: 3
   gold: 9
   sell: 6
   Desc: "\u2605\u2605\u2605\n\n\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uC758 \uB208\uAE08\uC774

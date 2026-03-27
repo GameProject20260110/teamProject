@@ -17,7 +17,9 @@ MonoBehaviour:
   itemName: "\uC2E0\uBC1C"
   gold: 1
   sell: 0
+  tier: 1
   isConsumable: 0
+  timing: 0
   itemDesc: "\u2605\n\n\uC790\uC2E0\uC774 \uC8FC\uC0AC\uC704\uB97C \uD310\uB9E4\uD560
     \uB54C \uAD6C\uB9E4\uD55C \uAC00\uACA9\uC73C\uB85C \uACE8\uB4DC\uB97C \uBC1B\uC744
     \uC218 \uC788\uB2E4."

@@ -1422,7 +1422,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944596117b820da459052f783c3a3a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestModeManager
-  isTestModeActive: 0
+  isTestModeActive: 1
   testGold: 9999
   testHeart: 3
   testAbilities:
@@ -7879,11 +7879,11 @@ MonoBehaviour:
   itemPopup: {fileID: 0}
   gimmickPopup: {fileID: 1807097829}
   DescPopup: {fileID: 0}
-  Content: {fileID: 0}
   playerGold: {fileID: 0}
   playerRound: {fileID: 0}
   closePanel: {fileID: 0}
   StartBtn: {fileID: 0}
+  SettingsBtn: {fileID: 0}
   rootCanvas: {fileID: 1361143423}
 --- !u!4 &1116332878
 Transform:

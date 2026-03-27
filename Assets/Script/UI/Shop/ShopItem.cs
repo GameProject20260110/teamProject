@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopItem : MonoBehaviour
 {
@@ -25,8 +26,10 @@ public class ShopItem : MonoBehaviour
     public GameObject myDicePanel;
     public GameObject iventoryPanel;
     public GameObject extraDiceSlot;
-
     public NotificationUI notificationUI;
+
+    [Header("Sprite")]
+    [SerializeField] private Sprite[] tierSlotImages = new Sprite[5];
 
     private void Awake()
     {
@@ -141,7 +144,6 @@ public class ShopItem : MonoBehaviour
         for (int i = 0; i < diceSlotCount; i++)
         {
             
-
             if (itemSlots[i].transform.childCount > 0)
             {
                 buyDice[i] = itemSlots[i].transform.GetComponentInChildren<BuyDice>();                  
@@ -153,7 +155,9 @@ public class ShopItem : MonoBehaviour
                 buyDice[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
 
+            
             buyDice[i].UpdateDiceInfo(diceGacha.Roll(), false);
+            itemSlots[i].GetComponent<Image>().sprite = tierSlotImages[buyDice[i].GetTier() - 1];
 
         }
     }
@@ -173,6 +177,8 @@ public class ShopItem : MonoBehaviour
 
             buyItem[i].GetComponentsInChildren<RectTransform>()[1].localPosition = new Vector2(0, 200);
             buyItem[i].UpdateInfo(itemGacha.Roll(), false);
+            Debug.Log(tierSlotImages[buyItem[i].GetTier() - 1]);
+            itemSlots[i + diceSlotCount].GetComponent<Image>().sprite = tierSlotImages[buyItem[i].GetTier() - 1];
         }
 
     }

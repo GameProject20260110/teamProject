@@ -1,6 +1,6 @@
-using UnityEditor.Experimental.GraphView;
+using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 
 public class BuyDice : BuyPurchasable<DiceData>
 {
@@ -11,6 +11,7 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
     protected override int GetSellPrice() => Data.sell;
     protected override string GetItemName() => Data.abilityName;
+    
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
@@ -18,6 +19,7 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override void OpenDescPopup() =>
         PopupManager.instance.DescOpenPopup(Data);
 
+    public int GetTier() => Data.tier;
 
     #region Initialization
 
@@ -30,7 +32,7 @@ public class BuyDice : BuyPurchasable<DiceData>
 
         var slotUI = Slot?.GetComponentInParent<SlotUI>();
         if (slotUI != null)
-            slotUI.UpdateSlotUI(GetItemName(), GetCost());       
+            slotUI.UpdateSlotUI(GetItemName(), GetCost());      
     }
 
     #endregion
@@ -46,6 +48,7 @@ public class BuyDice : BuyPurchasable<DiceData>
         if(data == null) return;
         Data = data;
         img.sprite = data.skin.GetSprite(1);
+        base.ApplyData(data);
     }
 
     #endregion
@@ -71,10 +74,6 @@ public class BuyDice : BuyPurchasable<DiceData>
     { 
         if (!GetComponentInParent<ItemSlot>().hasSpecialSlot || !other.transform.parent.CompareTag(SlotTag)) return true;
         return isswap ? false : other.GetComponent<BuyDice>().Data.diceNum != 0;
-
-        //return isswap 
-        //    ? other.GetComponent<BuyDice>().Data.diceNum == 0 
-        //    : other.GetComponent<BuyDice>().Data.diceNum != 0;
     }
 
     #endregion

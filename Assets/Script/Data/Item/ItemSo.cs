@@ -11,6 +11,9 @@ public class ItemSo : ScriptableObject
     public string itemName;
     public int gold;
     public int sell;
+
+    [Range(1,5)]
+    public int tier;
     public bool isConsumable;
     public ItemTiming timing;
     [TextArea]
