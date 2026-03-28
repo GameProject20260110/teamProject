@@ -1426,22 +1426,22 @@ MonoBehaviour:
   testGold: 9999
   testHeart: 3
   testAbilities:
-  - {fileID: 11400000, guid: 4631ccee23ae1e64091fdfc453de8228, type: 2}
+  - {fileID: 11400000, guid: 97e69c32f976aa341b1024253a86f99d, type: 2}
+  - {fileID: 11400000, guid: 8dcb4edc20f036148871b7035949c76b, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  testValues: 000000000000000000000000000000000000000000000000
+  testValues: 
   testDiceSlot: 010101010000
   testItem:
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
-  - {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
+  - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
+  - {fileID: 11400000, guid: 84e43cd9f611fe2489c160a94710b508, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   noGimmick: 0
   testGimmick:
   - {fileID: 11400000, guid: 779b4ad412f0e084d8a0712311e149f9, type: 2}
@@ -3183,6 +3183,7 @@ MonoBehaviour:
   resultUI: {fileID: 1978101105}
   gameOverUI: {fileID: 174890769}
   gimmickUI: {fileID: 445650706}
+  notificationUI: {fileID: 1228813983}
   roundInfoText: {fileID: 1779552945}
   targetScoreInfoText: {fileID: 370001214}
   myScoreInfoText: {fileID: 365483011}
@@ -6855,7 +6856,6 @@ MonoBehaviour:
   effectCanvas: {fileID: 1361143424}
   goldUiTarget: {fileID: 1014774053}
   goldIconPrefab: {fileID: 5953546548394792309, guid: 6edd2ad041381cf428377a369d8d05f4, type: 3}
-  effectMessage: {fileID: 1228813983}
   negateOverlayPrefab: {fileID: 5107177833586284739, guid: 878ad27cb85b218429c0d25aa8d8864b, type: 3}
 --- !u!4 &951155805
 Transform:
@@ -8673,7 +8673,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1228813981
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8691,8 +8691,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 147}
-  m_SizeDelta: {x: 1200, y: 200}
+  m_AnchoredPosition: {x: 0, y: 260}
+  m_SizeDelta: {x: 1200, y: 250}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!225 &1228813982
 CanvasGroup:
