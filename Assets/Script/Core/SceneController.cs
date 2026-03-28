@@ -8,10 +8,10 @@ public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
 
-    private const string SceneTitle = "Title";
-    private const string SceneHome = "HomeScreen";
-    private const string SceneBattle = "GameBoard";
-    private const string SceneShop = "Shop";
+    public const string SceneTitle = "Title";
+    public const string SceneHome = "HomeScreen";
+    public const string SceneBattle = "GameBoard";
+    public const string SceneShop = "Shop";
 
     [Header("로딩 패널")]
     [SerializeField] private GameObject loadingPanel;

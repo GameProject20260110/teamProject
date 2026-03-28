@@ -27,6 +27,8 @@ public class UiController : MonoBehaviour
     public Sprite rollSprite;
     public Sprite rerollSprite;
     public Button confirmBtn;
+    public Button nextRoundBtn;
+    public Button ShopBtn;
 
     public GameObject settingPanel;
 
@@ -52,7 +54,20 @@ public class UiController : MonoBehaviour
             SubscribeToEvents();
         }
         RefreshInventory();
+
+        ShopBtn.onClick.AddListener(() => 
+        {
+            PlayerShopManager.instance.ClearRound = false;
+            SceneController.instance.LoadShopScene();
+        });
+
+        nextRoundBtn.onClick.AddListener(() =>
+        {
+            PlayerShopManager.instance.ClearRound = true;
+            SceneController.instance.LoadShopScene();
+        });
     }
+    
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -184,6 +199,14 @@ public class UiController : MonoBehaviour
         if (confirmBtn != null)
         {
             confirmBtn.interactable = state;
+        }
+    }
+
+    public void SetShopBtnInteratable(bool state)
+    {
+        if(ShopBtn != null)
+        {
+            ShopBtn.interactable = state;
         }
     }
 

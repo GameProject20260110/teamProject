@@ -1,6 +1,7 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class PopupManager : MonoBehaviour
 {
@@ -72,7 +73,8 @@ public class PopupManager : MonoBehaviour
             playerRound.text = PlayerManager.instance.currentRound.ToString();
         }
 
-        if (PlayerShopManager.instance != null)
+        if (PlayerShopManager.instance != null && 
+            SceneManager.GetActiveScene().name == SceneController.SceneShop)
         {
             PlayerShopManager.instance.OnGoldChanged += UpdateGold;
             var text = StartBtn.GetComponentInChildren<TextMeshProUGUI>();
