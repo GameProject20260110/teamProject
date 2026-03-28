@@ -20,10 +20,18 @@ public class TurboDiceAbility : DiceData
                     int add = dice.scoreValue * (currentBonusScore - 1);
                     dice.scoreValue *= currentBonusScore;
                     totalScore += add;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Turbo +{add}", dice.scoreValue));
+                    events.Add(new ScoreEventData(
+                        ScoreEventData.Type.AddScore, 
+                        dice.diceIndex, 
+                        totalScore,
+                        $"+{add}", dice.scoreValue)
+                        {
+                            effectName = abilityName,
+                            effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö * 3"
+                        }
+                    );
                 }
             }
         }
     }
-
 }

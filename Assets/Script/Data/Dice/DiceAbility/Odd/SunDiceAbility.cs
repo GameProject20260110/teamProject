@@ -20,6 +20,6 @@ public class SunDiceAbility : DiceData
                 localUseData.Add(dice.diceData);
             }   
         }
-        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, 0, $"Sun! x{bonusScore}"));
+        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, 0, $"Sun! x{bonusScore}"));
     }
 }

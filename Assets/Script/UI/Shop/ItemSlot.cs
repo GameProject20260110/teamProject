@@ -65,7 +65,7 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         if (checkItem != null && !checkItem.isDragged) return;
         
         var buyItem = dragObj.GetComponent<BuyItem>();
-        if (buyItem != null && buyItem.Data is Ring ring && !ring.CanUse())
+        if (buyItem != null && buyItem.Data != null && buyItem.Data is Ring ring && !ring.CanUse())
         {
             Debug.Log("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
             ShopItem.instance.notificationUI.Show("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");

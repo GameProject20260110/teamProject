@@ -22,7 +22,7 @@ public class TriggerDiceAbility : DiceData
         if (isConditionMet)
         {
             totalScore *= bonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, totalScore, $"Trigger! x{bonusScore}"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"Trigger! x{bonusScore}"));
         }
     }
 }

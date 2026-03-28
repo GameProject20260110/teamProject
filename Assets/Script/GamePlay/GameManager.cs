@@ -172,6 +172,11 @@ public class GameManager : MonoBehaviour
         else if(!_isFirstRoll && _currentRerollCount > 0)
         {
             _currentRerollCount--;
+            currentScore = 0;
+            ScoreVisualizer.instance?.UpdateScoreBoard(0);
+            ScoreVisualizer.instance?.ClearNegateOverlays();
+            ScoreVisualizer.instance?.ResetDiceColors(diceManager.GetAllDice());
+            UiController.instance?.ResetItemCards();
             diceManager.StartRolling();
         }
 

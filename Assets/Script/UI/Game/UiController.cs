@@ -13,6 +13,7 @@ public class UiController : MonoBehaviour
     public ResultPanelUI resultUI;
     public GameOverPanelUI gameOverUI;
     public GimmickUI gimmickUI;
+    public NotificationUI notificationUI;
 
     [Header("인게임 정보 UI (상시 표시)")]
     public TextMeshProUGUI roundInfoText;  
@@ -52,6 +53,10 @@ public class UiController : MonoBehaviour
         if(GameManager.instance != null)
         {
             SubscribeToEvents();
+        }
+        if(notificationUI != null)
+        {
+            notificationUI.gameObject.SetActive(false);
         }
         RefreshInventory();
 
@@ -224,5 +229,15 @@ public class UiController : MonoBehaviour
     {
         if (settingPanel == null) return;
         settingPanel.SetActive(!settingPanel.activeSelf);
+    }
+
+    public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)
+    {
+        var card = inventoryUI?.FindCardByName(itemName);
+        if (card != null) card.PlayNegateEffect(negateOverlayPrefab);
+    }
+    public void ResetItemCards()
+    {
+        inventoryUI?.ResetCards();
     }
 }

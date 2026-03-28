@@ -48,6 +48,27 @@ public class ItemInventoryUI : MonoBehaviour
         }
     }
 
+    public ItemCard FindCardByName(string itemName)
+    {
+        foreach (var cardObj in _cardObject)
+        {
+            if (cardObj == null) continue;
+            ItemCard card = cardObj.GetComponent<ItemCard>();
+            if(card != null && card.GetItemName() == itemName) return card; 
+        }
+        return null;
+    }
+
+    public void ResetCards()
+    {
+        foreach(var cardObj in _cardObject)
+        {
+            if (cardObj == null) continue;
+            ItemCard card = cardObj.GetComponent<ItemCard>();
+            if (card != null) card.ResetNegateEffect();
+        }
+    }
+
     private float CalcPosition(int index, int total, bool isOverlap)
     {
         if(!isOverlap)

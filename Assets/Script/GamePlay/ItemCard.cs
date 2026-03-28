@@ -65,4 +65,35 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         RectTransform rect = GetComponent<RectTransform>();
         rect.DOAnchorPosY(0, ANIM_DURATION).SetEase(Ease.OutQuad);
     }
+
+    public string GetItemName()
+    {
+        return _item != null ? _item.itemName : "";
+    }
+
+    public void PlayNegateEffect(GameObject negateOverlayPrefab)
+    {
+        CanvasGroup cg = GetComponent<CanvasGroup>();
+        if (cg == null) cg = gameObject.AddComponent<CanvasGroup>();
+        DOTween.To(() => cg.alpha, x => cg.alpha = x, 0.5f, 0.3f);
+
+        transform.DOScale(transform.localScale * 0.8f, 0.3f);
+
+        if(negateOverlayPrefab != null)
+        {
+            GameObject overlay = Instantiate(negateOverlayPrefab, transform);
+            overlay.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
+            overlay.name = "NegateOverlay";
+        }
+    }
+
+    public void ResetNegateEffect()
+    {
+        CanvasGroup cg = GetComponent<CanvasGroup>();
+        if (cg != null) if (cg != null) DOTween.To(() => cg.alpha, x => cg.alpha = x, 1f, 0.3f);
+        transform.DOScale(transform.localScale, 0.3f);
+
+        Transform overlay = transform.Find("NegateOverlay");
+        if (overlay != null) Destroy(overlay.gameObject);
+    }
 }
