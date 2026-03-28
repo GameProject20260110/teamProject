@@ -7,6 +7,7 @@ public class ShopDescPopup : MonoBehaviour
     public Image icon;
     public Image typeIcon;
     public TextMeshProUGUI typeText;
+    public TextMeshProUGUI nameText;
     public TextMeshProUGUI timingText;
     public TextMeshProUGUI Desc;
 
@@ -19,6 +20,7 @@ public class ShopDescPopup : MonoBehaviour
         icon.sprite = data.skin.GetSprite(1);
         typeIcon.sprite = diceTypeSprite;
         typeText.text = data.type.ToString();
+        nameText.text = data.abilityName;
         timingText.text = data.timing.ToString();
         Desc.text = data.Desc.ToString();
     }
@@ -27,6 +29,7 @@ public class ShopDescPopup : MonoBehaviour
     {    
         icon.sprite = data.itemIcon;
         typeIcon.sprite = itemTypeSprite;
+        nameText.text = data.itemName;
         typeText.text = "Item";
         timingText.text = data.timing.ToString();
         Desc.text = data.itemDesc.ToString();

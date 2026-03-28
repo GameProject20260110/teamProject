@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
 
         UiController.instance.HideAllPanels();
         UiController.instance.UpdateRerollUi(_currentRerollCount);
+        UiController.instance.SetShopBtnInteratable(true);
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
 
@@ -160,7 +161,7 @@ public class GameManager : MonoBehaviour
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Roll);
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.rollBtn.interactable = false;
-
+        UiController.instance.SetShopBtnInteratable(false);
 
         if (_isFirstRoll)
         {
@@ -225,11 +226,13 @@ public class GameManager : MonoBehaviour
 
         if (_currentRerollCount <= 0)
         {
+            UiController.instance.SetShopBtnInteratable(false);
             UiController.instance.SetRollBtnInteractable(false);
             UiController.instance.SetConfirmBtnInteratable(true);
         }
         else
         {
+            UiController.instance.SetShopBtnInteratable(true);
             UiController.instance.SetRollBtnInteractable(true);
             UiController.instance.SetConfirmBtnInteratable(true);
         }
@@ -263,6 +266,7 @@ public class GameManager : MonoBehaviour
     {
         if (diceManager.isRolling) return;
 
+        UiController.instance.SetShopBtnInteratable(false);
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.SetRollBtnInteractable(false);
 
