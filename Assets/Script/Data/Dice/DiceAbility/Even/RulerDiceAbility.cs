@@ -19,7 +19,7 @@ public class RulerDiceAbility : DiceData
 
             dice.diceData.CalculateEffect(dice, allDice, ref totalScore, events);
             dice.diceData.AfterCalculateEffect(dice, allDice, ref totalScore, events);
-            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, dice.diceIndex, totalScore, $"Ruler: {dice.diceData.name} 재발동"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, dice.diceIndex, totalScore, $"Ruler: {dice.diceData.name} 재발동"));
         }
     }
 }

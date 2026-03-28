@@ -10,23 +10,21 @@ public class CaptainDiceAbility : DiceData
         if (myState.diceData != this) return;
         int count = 0;
 
+        List<int> matchInDices = new List<int>();
         foreach (var dice in allDice)
         {
             if(dice.modifiedValue == myState.modifiedValue)
             {
-                count++;
+                matchInDices.Add(dice.diceIndex);
             }
         }
-        if (count <= 1) return;
+        if (matchInDices.Count <= 1) return;
 
-        totalScore *= count;
+        totalScore *= matchInDices.Count;
         foreach(var dice in allDice)
         {
-            if(dice.modifiedValue == myState.modifiedValue)
-            {
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Captain!"));  
-            }
+            
+            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, matchInDices.ToArray(), totalScore, $"x{matchInDices.Count}") { effectName = abilityName, effectDesc = "눈금이 같은 주사위 수 * 라운드 점수" });
         }
-        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuffs, -1, totalScore, $"Captain! x{count}"));
     }
 }

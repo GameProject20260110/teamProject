@@ -17,10 +17,8 @@ public class BamDiceAbility : DiceData
             dice.modifiedValue = localMaxValue;
             dice.scoreValue = localMaxValue;
             dice.change = true;
-            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, "Change Bam!"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, $"Change {localMaxValue}") { effectName = abilityName, effectDesc = "모두 가장 높은 눈금으로 변경" });
         }
-
         ChangeModi(myState, allDice, events);
     }
-
 }

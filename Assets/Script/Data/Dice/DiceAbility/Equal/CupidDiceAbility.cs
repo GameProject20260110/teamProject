@@ -17,16 +17,20 @@ public class CupidDiceAbility : DiceData
             localBonus[dice.modifiedValue]++;
         }
 
-        foreach (var dice in allDice)
+        List<int> targetInDices = new List<int>();
+        foreach(var dice in allDice)
         {
-            if(localBonus[dice.modifiedValue] >= 2)
+            if (localBonus[dice.modifiedValue] >= 2)
             {
                 int add = dice.scoreValue * (currentBonusScore - 1);
                 dice.scoreValue *= currentBonusScore;
                 totalScore += add;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Cupid +{add}", dice.scoreValue));
+                targetInDices.Add(dice.diceIndex);
             }
         }
+        if(targetInDices.Count > 0)
+        {
+            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, targetInDices.ToArray(), totalScore, $"x{currentBonusScore}") { effectName = abilityName, effectDesc = "동일 눈금 주사위 점수 *2", targetIndex = myState.diceIndex});
+        }
     }
-
 }
