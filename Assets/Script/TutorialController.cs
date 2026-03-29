@@ -11,8 +11,8 @@ public class TutorialController : MonoBehaviour
     [SerializeField] private GameObject messageBox;
     [SerializeField] private TextMeshProUGUI messageText;
 
-    [Header("튜토리얼 진행 상황")]
-    [SerializeField] private List<TutorialStep> steps = new List<TutorialStep>();
+    [Header("튜토리얼 데이터")]
+    [SerializeField] private TutorialStepData tutorialData;
 
     private int currentStepIndex = -1;
     private Button currentTargetButton = null;
@@ -41,39 +41,60 @@ public class TutorialController : MonoBehaviour
 
         currentStepIndex++;
 
-        if (currentStepIndex >= steps.Count)
+        if (currentStepIndex >= tutorialData.steps.Count)
         {
             CompleteTutorial();
             return;
         }
 
-        ShowStep(steps[currentStepIndex]);
+        ShowStep(tutorialData.steps[currentStepIndex]);
     }
 
-    void ShowStep(TutorialStep step)
+    void ShowStep(TutorialStepData.Step step)
     {
         messageText.text = step.message;
         messageBox.SetActive(true);
 
         // 누르는 형식의 튜토리얼 진행
-        if (step.targetUI != null)
+        if (!string.IsNullOrEmpty(step.targetUIName))
         {
-            if(step.autoNextDelay > 0)
+            GameObject targetObj = GameObject.Find(step.targetUIName);
+            if (targetObj != null)
             {
-                Debug.Log(step.stepName);
-                tutorialMask.FocusOnTarget(step.targetUI);
-                StartCoroutine(AutoNextCoroutine(step.autoNextDelay));
-            }
-            else
-            {
-                tutorialMask.FocusOnTarget(step.targetUI);
-
-                currentTargetButton = step.targetUI.GetComponent<Button>();
-                if (currentTargetButton != null)
-                { 
-                    currentTargetButton.onClick.AddListener(NextStep);   
+                RectTransform targetRect = targetObj.GetComponent<RectTransform>();
+                tutorialMask.FocusOnTarget(targetRect);
+                if(step.autoNextDelay > 0)
+                {
+                    StartCoroutine(AutoNextCoroutine(step.autoNextDelay));
                 }
-            }    
+                else
+                {
+                    currentTargetButton = targetObj.GetComponent<Button>();
+                    if (currentTargetButton != null)
+                    {
+                        currentTargetButton.onClick.AddListener(NextStep);
+                    }
+                }
+
+            }
+
+
+            //if (step.autoNextDelay > 0)
+            //{
+            //    Debug.Log(step.stepName);
+            //    tutorialMask.FocusOnTarget(step.targetUI);
+            //    StartCoroutine(AutoNextCoroutine(step.autoNextDelay));
+            //}
+            //else
+            //{
+            //    tutorialMask.FocusOnTarget(step.targetUI);
+
+            //    currentTargetButton = step.targetUI.GetComponent<Button>();
+            //    if (currentTargetButton != null)
+            //    { 
+            //        currentTargetButton.onClick.AddListener(NextStep);   
+            //    }
+            //}    
         }
     }
 
