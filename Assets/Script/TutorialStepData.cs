@@ -14,8 +14,6 @@ public class TutorialStepData : ScriptableObject
         public string message;
 
         public string targetUIName;
-
-        public float autoNextDelay = 0f;
     }
 
     public List<Step> steps = new List<Step>();

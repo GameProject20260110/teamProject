@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class TutorialController : MonoBehaviour
 {
@@ -16,6 +15,8 @@ public class TutorialController : MonoBehaviour
 
     private int currentStepIndex = -1;
     private Button currentTargetButton = null;
+    private EventTrigger currentTargetTrigger = null;
+    private GameObject currentTargetObject = null;
 
     void Start()
     {
@@ -31,13 +32,9 @@ public class TutorialController : MonoBehaviour
         NextStep();
     }
 
-    void NextStep()
+    public void NextStep()
     {
-        if (currentTargetButton != null)
-        {
-            currentTargetButton.onClick.RemoveListener(NextStep);
-            currentTargetButton = null;
-        }
+        RemoveTargetListener();
 
         currentStepIndex++;
 
@@ -55,7 +52,6 @@ public class TutorialController : MonoBehaviour
         messageText.text = step.message;
         messageBox.SetActive(true);
 
-        // 누르는 형식의 튜토리얼 진행
         if (!string.IsNullOrEmpty(step.targetUIName))
         {
             GameObject targetObj = GameObject.Find(step.targetUIName);
@@ -63,48 +59,47 @@ public class TutorialController : MonoBehaviour
             {
                 RectTransform targetRect = targetObj.GetComponent<RectTransform>();
                 tutorialMask.FocusOnTarget(targetRect);
-                if(step.autoNextDelay > 0)
+
+                currentTargetObject = targetObj;
+
+                currentTargetButton = targetObj.GetComponent<Button>();
+                if (currentTargetButton != null)
                 {
-                    StartCoroutine(AutoNextCoroutine(step.autoNextDelay));
+                    currentTargetButton.onClick.AddListener(NextStep);
                 }
                 else
                 {
-                    currentTargetButton = targetObj.GetComponent<Button>();
-                    if (currentTargetButton != null)
-                    {
-                        currentTargetButton.onClick.AddListener(NextStep);
-                    }
+                    AddClickListener(targetObj);
                 }
-
             }
-
-
-            //if (step.autoNextDelay > 0)
-            //{
-            //    Debug.Log(step.stepName);
-            //    tutorialMask.FocusOnTarget(step.targetUI);
-            //    StartCoroutine(AutoNextCoroutine(step.autoNextDelay));
-            //}
-            //else
-            //{
-            //    tutorialMask.FocusOnTarget(step.targetUI);
-
-            //    currentTargetButton = step.targetUI.GetComponent<Button>();
-            //    if (currentTargetButton != null)
-            //    { 
-            //        currentTargetButton.onClick.AddListener(NextStep);   
-            //    }
-            //}    
         }
     }
 
-    IEnumerator AutoNextCoroutine(float delay)
+    void AddClickListener(GameObject target)
     {
-        yield return new WaitForSeconds(delay);
-        NextStep();
+        currentTargetTrigger = target.GetComponent<EventTrigger>();
+        if (currentTargetTrigger == null)
+        {
+            currentTargetTrigger = target.AddComponent<EventTrigger>();
+        }
+
+        currentTargetTrigger.triggers.Clear();
+
+        EventTrigger.Entry entry = new EventTrigger.Entry();
+        entry.eventID = EventTriggerType.PointerClick;
+        entry.callback.AddListener((data) => NextStep());
+        currentTargetTrigger.triggers.Add(entry);
+
+        Image image = target.GetComponent<Image>();
+        if (image == null)
+        {
+            image = target.AddComponent<Image>();
+            image.color = new Color(1, 1, 1, 0.01f);
+        }
+        image.raycastTarget = true;
     }
 
-    void CompleteTutorial()
+    void RemoveTargetListener()
     {
         if (currentTargetButton != null)
         {
@@ -112,18 +107,28 @@ public class TutorialController : MonoBehaviour
             currentTargetButton = null;
         }
 
-        // 튜토리얼 완료 저장
-        PlayerPrefs.SetInt("ShopTutorialCompleted", 1); 
+        if (currentTargetTrigger != null)
+        {
+            currentTargetTrigger.triggers.Clear();
+            Destroy(currentTargetTrigger);
+            currentTargetTrigger = null;
+        }
+
+        currentTargetObject = null;
+    }
+
+    void CompleteTutorial()
+    {
+        RemoveTargetListener();
+
+        PlayerPrefs.SetInt("ShopTutorialCompleted", 1);
         PlayerPrefs.Save();
 
         Destroy(gameObject);
     }
 
-    void OnDestroy() // 방어 코드
+    void OnDestroy()
     {
-        if (currentTargetButton != null)
-        {
-            currentTargetButton.onClick.RemoveListener(NextStep);
-        }
+        RemoveTargetListener();
     }
 }
