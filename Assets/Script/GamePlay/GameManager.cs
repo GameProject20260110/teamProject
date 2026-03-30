@@ -160,6 +160,7 @@ public class GameManager : MonoBehaviour
         if(AudioManager.instance != null)
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Roll);
         UiController.instance.SetRollBtnInteractable(false);
+        UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.rollBtn.interactable = false;
         UiController.instance.SetShopBtnInteratable(false);
 
