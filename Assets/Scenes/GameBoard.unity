@@ -1543,12 +1543,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944596117b820da459052f783c3a3a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestModeManager
-  isTestModeActive: 0
+  isTestModeActive: 1
   testGold: 9999
   testHeart: 3
   testAbilities:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: 97e69c32f976aa341b1024253a86f99d, type: 2}
+  - {fileID: 11400000, guid: e2721754ac60f2d4fa1d9578e790ca94, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -14800,6 +14800,10 @@ PrefabInstance:
     - target: {fileID: 3950625818853155414, guid: 24440269e5e9e0740aa5719a0ffedbd5, type: 3}
       propertyPath: m_Name
       value: TutorialController
+      objectReference: {fileID: 0}
+    - target: {fileID: 3950625818853155414, guid: 24440269e5e9e0740aa5719a0ffedbd5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

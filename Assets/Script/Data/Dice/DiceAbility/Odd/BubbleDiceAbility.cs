@@ -6,7 +6,7 @@ public class BubbleDiceAbility : DiceData
 {
     public int bonusScore = 3;
 
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
+    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         int finalScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 

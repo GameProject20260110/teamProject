@@ -4,27 +4,27 @@ public class ScoreEventData
 {
     public enum Type
     {
-        AddScore,      // Á¡¼ö Ãß°¡
-        Multiplier,    // Á¡¼ö ¹èÀ²
-        TargetBuff,    // ´ë»ó ÁöÁ¤
-        ChangeFace,    // ´«±Ý º¯°æ
-        GlobalBuff,   // ÀüÃ¼ È¿°ú
-        Negate,         // ¹«È¿È­
-        ItemEffect,     // ¾ÆÀÌÅÛ
-        FinalScore,     // ÃÖÁ¾ Á¡¼ö
+        AddScore,      // ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+        Multiplier,    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        TargetBuff,    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        ChangeFace,    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        GlobalBuff,   // ï¿½ï¿½Ã¼ È¿ï¿½ï¿½
+        Negate,         // ï¿½ï¿½È¿È­
+        ItemEffect,     // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+        FinalScore,     // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         GainGold
     }
 
     public Type type; 
-    public int targetIndex; // ¿¬Ãâ ´ë»ó
+    public int targetIndex; // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
     public int[] targetIndices;
-    public int value;          // º¯µ¿µÈ °ª
-    public string desc;        // floatingMessage ¿ë
+    public int value;          // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public string desc;        // floatingMessage ï¿½ï¿½
     public string effectName;
-    public string effectDesc;  // È¿°ú Àû¿ë ¸Þ¼¼Áö¿ë
+    public string effectDesc;  // È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Þ¼ï¿½ï¿½ï¿½ï¿½ï¿½
     public int currentDiceScore;
 
-    public ScoreEventData(Type type, int targetIndex, int value, string desc, int currentDiceScore = -1)
+    public ScoreEventData(Type type, int targetIndex, int value, string desc, int currentDiceScore = int.MinValue)
     {
         this.type = type;
         this.targetIndex = targetIndex;
@@ -33,7 +33,7 @@ public class ScoreEventData
         this.currentDiceScore = currentDiceScore;
     }
 
-    public ScoreEventData(Type type, int[] targetIndices, int value, string desc, int currentDiceScore = -1)
+    public ScoreEventData(Type type, int[] targetIndices, int value, string desc, int currentDiceScore = int.MinValue)
     {
         this.type = type;
         this.targetIndices = targetIndices;

@@ -5,7 +5,7 @@ using UnityEngine;
 public class MutDiceAbility : DiceData
 {
     public DiceGachaTable gacha;
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvnet)
+    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> scoreEvnet)
     {
         myState.diceData = gacha.Roll();
     }

@@ -9,7 +9,7 @@ public class DiceData : ScriptableObject
     public int multiBonusScore = 1;
     public int plusBonusScore = 0;
 
-    [Header("ÁÖ»çÀ§ ±âº» Á¤º¸")]
+    [Header("ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½")]
     public ScoreManager.DiceType type;
     public DiceTiming timing;
     public int diceNum;
@@ -24,10 +24,10 @@ public class DiceData : ScriptableObject
     [TextArea]
     public string Desc;
 
-    [Header("ÁÖ»çÀ§ ½ºÅ²")]
+    [Header("ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½Å²")]
     public DiceSkin skin;
 
-    // myState: ³» ÁÖ»çÀ§ »óÅÂ, allDice: ¸ðµç ÁÖ»çÀ§ »óÅÂ ¸®½ºÆ®
+    // myState: ï¿½ï¿½ ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½, allDice: ï¿½ï¿½ï¿½ ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
     public void ChangeModi(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) {
         if (myState.changeValue == 0) return;
         foreach (var dice in allDice)
@@ -40,7 +40,7 @@ public class DiceData : ScriptableObject
 
     public virtual void OnRuleEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) { }
 
-    public virtual void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) { }
+    public virtual void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int score, List<ScoreEventData> scoreEvent) { }
 
     public virtual void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int score, List<ScoreEventData> scoreEvent) { }
 

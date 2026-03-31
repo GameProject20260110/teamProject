@@ -8,10 +8,10 @@ public class DiceState
 {
     public DiceData diceData;
 
-    public int diceIndex;      // ÁÖ»çÀ§ ¼ø¼­
-    public int originalValue; // ÃÖÃÊ ÁÖ»çÀ§ °ª
-    public int modifiedValue;  // È¿°ú Àû¿ë ÈÄ ÁÖ»çÀ§ °ª
-    public int scoreValue;    // Á¡¼ö °è»ê¿ë ÁÖ»çÀ§ °ª
+    public int diceIndex;      // ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public int originalValue; // ï¿½ï¿½ï¿½ï¿½ ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public int modifiedValue;  // È¿ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public int scoreValue;    // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ö»ï¿½ï¿½ï¿½ ï¿½ï¿½
     public int changeValue;     
     public bool change;
 
@@ -19,6 +19,8 @@ public class DiceState
     public bool isMulti = false;
     public int multiBonusScore;
     public int plusBonusScore;
+
+    public int appliedScoreValue;
 
     public ScoreManager.DiceType currentType;
     public bool isForceOdd = false;
@@ -45,6 +47,7 @@ public class DiceState
         change = false;
         isMulti = false;
         isIgnored = false;
+        appliedScoreValue = 0;
 
         if(data != null)
         {
@@ -63,4 +66,11 @@ public class DiceState
         this.isForceEven = false;
     }
 
+    public int ApplyDiceScoreChange(int diceScore)
+    {
+        int diff = diceScore - appliedScoreValue;
+        scoreValue = diceScore;
+        appliedScoreValue = diceScore;
+        return diff;
+    }
 }

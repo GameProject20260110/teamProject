@@ -85,7 +85,7 @@ public class ScoreVisualizer : MonoBehaviour
             }
             PlayDotweenEffect(targetDice, "Punch");
             ShowFloatingText(targetDice.transform.position, evt.desc);
-            if(evt.currentDiceScore > 0)
+            if(evt.currentDiceScore != int.MinValue)
             {
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
@@ -101,7 +101,7 @@ public class ScoreVisualizer : MonoBehaviour
             yield return PlayScale(targetDice);
             PlayDotweenEffect(targetDice, "Punch");
             ShowFloatingText(targetDice.transform.position, evt.desc);
-            if(evt.currentDiceScore > 0)
+            if(evt.currentDiceScore != int.MinValue)
             {
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
@@ -127,7 +127,7 @@ public class ScoreVisualizer : MonoBehaviour
                 if (uiDice[idx] == null || !uiDice[idx].gameObject.activeSelf) continue;
 
                 PlayDotweenEffect(uiDice[idx], "Bounce");
-                if (evt.currentDiceScore > 0) uiDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
+                if (evt.currentDiceScore != int.MinValue) uiDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
         }
         UpdateScoreBoard(evt.value);
@@ -279,9 +279,9 @@ public class ScoreVisualizer : MonoBehaviour
         if (string.IsNullOrEmpty(effectName) || effectName == _lastEffectName) return false;
         _lastEffectName = effectName;
         
-         string message = string.IsNullOrEmpty(effectDesc) ? effectName : $"{effectName}\n{effectDesc}";
-         UiController.instance.notificationUI.Show(message, 0.7f);
-         return true;
+        string message = string.IsNullOrEmpty(effectDesc) ? effectName : $"{effectName}\n{effectDesc}";
+        UiController.instance.notificationUI.Show(message, 0.7f);
+        return true;
     }
 
     public void UpdateScoreBoard(int targetValue)

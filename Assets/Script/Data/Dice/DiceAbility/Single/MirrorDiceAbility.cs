@@ -15,12 +15,12 @@ public class MirrorDiceAbility : DiceData
         }
     }
 
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
+    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         if(myState.diceIndex > 0)
         {
             var targetDice = allDice[myState.diceIndex - 1];
-            targetDice.diceData.OnRollEffect(targetDice, allDice, events);
+            targetDice.diceData.OnRollEffect(targetDice, allDice, ref totalScore, events);
         }
     }
 

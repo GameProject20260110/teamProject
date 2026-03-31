@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/bam")]
 public class BamDiceAbility : DiceData
 {
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
+    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         int localMaxValue = 0;       
         foreach (var dice in allDice)
@@ -15,9 +15,15 @@ public class BamDiceAbility : DiceData
         foreach(var dice in allDice)
         {
             dice.modifiedValue = localMaxValue;
-            dice.scoreValue = localMaxValue;
             dice.change = true;
-            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, $"Change {localMaxValue}") { effectName = abilityName, effectDesc = "¸ðµÎ °¡Àå ³ôÀº ´«±ÝÀ¸·Î º¯°æ" });
+            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, $"Change {localMaxValue}") { effectName = abilityName, effectDesc = "ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½" });
+
+            int diff = dice.ApplyDiceScoreChange(localMaxValue);
+            if(diff != 0)
+            {
+                totalScore += diff;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue));
+            }
         }
         ChangeModi(myState, allDice, events);
     }

@@ -9,7 +9,7 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image diceImage;
 
-    [Header("»ç¿îµå ¹× ÀÌÆåÆ®")]
+    [Header("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®")]
     public GameObject effectPrefab;
     public AudioClip rollSound;
 
@@ -23,7 +23,7 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     {
         MyState = new DiceState(data, index, 1);
         UpdateDiceImage(1);
-        UpdateDiceScoreUi(-1);
+        UpdateDiceScoreUi(0, hide: true);
     }
 
     public void UpdateDiceImage(int value)
@@ -34,11 +34,11 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         }
     }
 
-    public void UpdateDiceScoreUi(int targetScore, bool anim = false)
+    public void UpdateDiceScoreUi(int targetScore, bool anim = false, bool hide = false)
     {
         if (diceScoreText != null)
         {
-            if (targetScore < 0)
+            if (hide)
             {
                 diceScoreText.alpha = 0f;
                 _currentDiceScore = 0;
@@ -50,14 +50,14 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
                 {
                     int from = _currentDiceScore;
                     _currentDiceScore = targetScore;
-                    DOVirtual.Int(_currentDiceScore, targetScore, 0.5f, (x) =>
+                    DOVirtual.Int(from, targetScore, 0.5f, (x) =>
                     {
                         diceScoreText.text = x.ToString();
                     });
                 }
                 else
                 {
-                    _currentDiceScore += targetScore;
+                    _currentDiceScore = targetScore;
                     diceScoreText.text = targetScore.ToString();
                 }
             }
@@ -66,7 +66,7 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void StartRoll(float duration)
     {
-        UpdateDiceScoreUi(-1);
+        UpdateDiceScoreUi(0, hide: true);
         StartCoroutine(ChangeImageDuringRoll(duration));
     }
 

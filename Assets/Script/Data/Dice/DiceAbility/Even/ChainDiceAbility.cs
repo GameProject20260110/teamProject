@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 [CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/chain")]
 public class ChainDiceAbility : DiceData
@@ -7,7 +8,7 @@ public class ChainDiceAbility : DiceData
     public int bonusScore = 6;
     public int count = 3;
 
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
+    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         List<DiceState> targets = new List<DiceState>(allDice);
         int loopCount = Mathf.Min(count, targets.Count);
@@ -21,10 +22,19 @@ public class ChainDiceAbility : DiceData
 
             target.modifiedValue = 6;
             target.scoreValue = bonusScore;
+            // ï¿½ï¿½ï¿½ï¿½
+            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, target.diceIndex, 6, "Chain!")
+            {
+                effectName = abilityName,
+                effectDesc = ""
+            });
 
-            // ¿¬Ãâ
-            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, target.diceIndex, 6, "Chain!"));
-
+            int diff = target.ApplyDiceScoreChange(bonusScore);
+            if(diff != 0)
+            {
+                totalScore += diff;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, target.diceIndex, totalScore, $"+{diff}", target.scoreValue));
+            }
         }
     }
 

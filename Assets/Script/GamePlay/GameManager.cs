@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         {
             if(dice != null && dice.gameObject.activeSelf)
             {
-                dice.UpdateDiceScoreUi(-1, false);
+                dice.UpdateDiceScoreUi(0, hide: true);
             }
         }
 
