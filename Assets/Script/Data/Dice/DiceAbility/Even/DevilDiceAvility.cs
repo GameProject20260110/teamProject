@@ -21,7 +21,7 @@ public class DevilDiceAbility : DiceData
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, dice.IsCurrentEven ? $"+{currentPlus}" : $"-{panelty}", dice.scoreValue)
                 {
                     effectName = abilityName,
-                    effectDesc = ""
+                    effectDesc = "Â¦¼ö ´«±ÝÀº +5 È¦¼ö ´«±ÝÀº -3"
                 });
             }
         }

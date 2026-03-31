@@ -12,7 +12,11 @@ public class VultureDiceAbility : DiceData
         if (!myState.IsCurrentEven)
         {
             totalScore *= currentBonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, myState.diceIndex, totalScore, $"Vulture! x{currentBonusScore}"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}")
+            {
+                effectName = abilityName,
+                effectDesc = "라운드 점수 x2"
+            });
         }
     }
 }

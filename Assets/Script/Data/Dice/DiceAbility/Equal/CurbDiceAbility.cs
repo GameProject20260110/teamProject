@@ -23,10 +23,10 @@ public class CurbDiceAbility : DiceData
             if(diff != 0)
             {
                 totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"{diff}" : "", dice.scoreValue)
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue)
                 {
                     effectName = abilityName,
-                    effectDesc = ""
+                    effectDesc = "눈금이 같은 주사위 수 x 동일 눈금 점수"
                 });
             }
         }

@@ -8,27 +8,23 @@ public class DeadDiceAbility : DiceData
 
     public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        int deadCount = 0;
-
+        List<int> oddInDice = new List<int>();
         foreach (var dice in allDice)
         {
             if (dice != null && !dice.IsCurrentEven)
             {
-                deadCount++;        
+                oddInDice.Add(dice.diceIndex);
             }
         }
-        if (deadCount == 0) return;
+        if (oddInDice.Count == 0) return;
 
-        foreach(var dice in allDice)
+        int multiplier = oddInDice.Count * myState.multiBonusScore + myState.plusBonusScore;
+        totalScore *= multiplier;
+
+        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, oddInDice.ToArray(), totalScore, "Dead")
         {
-            if(dice != null && !dice.IsCurrentEven)
-            {
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, "Dead bonus"));
-            }
-        }
-
-        int finalMultiplier = deadCount * myState.multiBonusScore + myState.plusBonusScore;
-        totalScore *= finalMultiplier;
-        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"Dead x {finalMultiplier}"));
+            effectName = abilityName,
+            effectDesc = "홀수 주사위 수 x 라운드 점수"
+        });
     }
 }

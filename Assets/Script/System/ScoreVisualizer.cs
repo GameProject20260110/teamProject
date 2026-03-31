@@ -71,6 +71,9 @@ public class ScoreVisualizer : MonoBehaviour
                 case ScoreEventData.Type.GainGold:
                     yield return new WaitForSeconds(0.3f);
                     break;
+                case ScoreEventData.Type.GainReroll:
+                    yield return PlayGainReroll(evt);
+                    break;
             }
         }
     }
@@ -347,5 +350,13 @@ public class ScoreVisualizer : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         dice.transform.DOScale(Vector3.one * baseScale, 0.3f);
         yield return new WaitForSeconds(0.7f);
+    }
+
+    private IEnumerator PlayGainReroll(ScoreEventData evt)
+    {
+        GameManager.instance.CurrentRerollCount++;
+        Vector3 pos = UiController.instance.rerollText.transform.position;
+        ShowFloatingText(pos, evt.desc);
+        yield return new WaitForSeconds(0.5f);
     }
 }

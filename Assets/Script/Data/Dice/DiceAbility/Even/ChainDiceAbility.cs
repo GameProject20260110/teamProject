@@ -26,7 +26,7 @@ public class ChainDiceAbility : DiceData
             events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, target.diceIndex, 6, "Chain!")
             {
                 effectName = abilityName,
-                effectDesc = ""
+                effectDesc = "3개의 주사위를 눈금 6으로 한다."
             });
 
             int diff = target.ApplyDiceScoreChange(bonusScore);

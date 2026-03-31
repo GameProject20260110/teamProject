@@ -49,20 +49,20 @@ public class ScoreManager : MonoBehaviour
             {
                 DiceState target = candidates[UnityEngine.Random.Range(0, candidates.Count)];
                 target.isIgnored = true;
-                // ��� ���� �̺�Ʈ �߰� �ʿ�
-                Debug.Log($"{target.diceIndex} ȿ�� ��ȿȭ!");
+                // 기믹 연출 이벤트 추가 필요
+                Debug.Log($"{target.diceIndex} 효과 무효화!");
             }
         }
 
-        // 0�ܰ�
+        // 0단계
         foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;
 
             if(gimmickNoScoreNormal && state.diceData.type == DiceType.None)
             {
-                // ��� ���� �̺�Ʈ �߰� �ʿ�
-                Debug.Log("ȿ�� ���� �ֻ��� ���� ȹ�� �Ұ�!");
+                // 기믹 연출 이벤트 추가 필요
+                Debug.Log("효과 없는 주사위 점수 획득 불가!");
                 continue;
             }
 
@@ -72,7 +72,7 @@ public class ScoreManager : MonoBehaviour
         }
 
 
-        // ������ ȿ��
+        // 아이템 효과
         List<ItemSo> playerInventory = GetPlayerInventory();
         if(playerInventory != null /*&& PlayerManager.instance != null*/)
         {
@@ -95,14 +95,14 @@ public class ScoreManager : MonoBehaviour
 
         }
 
-         // ���� ����
-         // 1. ��� ȿ��
+        // 점수 로직
+        // 1. 룰상 효과
         foreach (var state in simulationStates)
         {
             state.diceData.OnRuleEffect(state, simulationStates, scoreEvents);
         }
 
-        // 2. ���� ȿ��
+        // 2. 굴림 효과
         foreach (var state in simulationStates)
         {
 
@@ -110,8 +110,8 @@ public class ScoreManager : MonoBehaviour
             state.diceData.OnRollEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 
-        // 3. ��� ��/�� ȿ��
-        
+        // 3. 계산 시/중 효과
+
         foreach (var state in simulationStates)
         {
             if(state == null || state.isIgnored)
@@ -122,7 +122,7 @@ public class ScoreManager : MonoBehaviour
             state.diceData.CalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 
-        // 4. ���� ��� �� ȿ��
+        // 4. 점수 계산 후 효과
         foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;

@@ -4,24 +4,25 @@ public class ScoreEventData
 {
     public enum Type
     {
-        AddScore,      // ���� �߰�
-        Multiplier,    // ���� ����
-        TargetBuff,    // ��� ����
-        ChangeFace,    // ���� ����
-        GlobalBuff,   // ��ü ȿ��
-        Negate,         // ��ȿȭ
-        ItemEffect,     // ������
-        FinalScore,     // ���� ����
-        GainGold
+        AddScore,      
+        Multiplier,    
+        TargetBuff,    
+        ChangeFace,    
+        GlobalBuff,   
+        Negate,         
+        ItemEffect,     
+        FinalScore,     
+        GainGold,
+        GainReroll
     }
 
     public Type type; 
-    public int targetIndex; // ���� ���
+    public int targetIndex; 
     public int[] targetIndices;
-    public int value;          // ������ ��
-    public string desc;        // floatingMessage ��
+    public int value;          
+    public string desc;        
     public string effectName;
-    public string effectDesc;  // ȿ�� ���� �޼�����
+    public string effectDesc;  
     public int currentDiceScore;
 
     public ScoreEventData(Type type, int targetIndex, int value, string desc, int currentDiceScore = int.MinValue)

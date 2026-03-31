@@ -1547,7 +1547,7 @@ MonoBehaviour:
   testGold: 9999
   testHeart: 3
   testAbilities:
-  - {fileID: 11400000, guid: 4631ccee23ae1e64091fdfc453de8228, type: 2}
+  - {fileID: 11400000, guid: e6774d81cf6263048b83f5121a55f098, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -13384,6 +13384,7 @@ MonoBehaviour:
   defaultDice: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
   diceSetup: {fileID: 1948593659}
   diceRoller: {fileID: 1948593660}
+  wizardHandler: {fileID: 1948593663}
 --- !u!4 &1948593662
 Transform:
   m_ObjectHideFlags: 0
@@ -13415,8 +13416,6 @@ MonoBehaviour:
   scoreTextPrefab: {fileID: 968451065354198622, guid: 2cbdddc2eb113b84c814741f38c859eb, type: 3}
   scoreTextContainer: {fileID: 1125536305}
   wizardSummonDiceData: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-  _wizardDiceSlots: []
-  _scoreText: []
 --- !u!1 &1949212449
 GameObject:
   m_ObjectHideFlags: 0

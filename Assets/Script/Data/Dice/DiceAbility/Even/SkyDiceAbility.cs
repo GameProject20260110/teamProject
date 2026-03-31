@@ -21,7 +21,7 @@ public class SkyDiceAbility : DiceData
                     events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
                     {
                         effectName = abilityName,
-                        effectDesc = ""
+                        effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö x2"
                     });
                 }
             }

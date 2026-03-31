@@ -36,7 +36,7 @@ public class CupidDiceAbility : DiceData
         }
         if(targetInDices.Count > 0)
         {
-            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, targetInDices.ToArray(), totalScore, $"x{currentBonusScore}") { effectName = abilityName, effectDesc = "���� ���� �ֻ��� ���� *2", targetIndex = myState.diceIndex});
+            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, targetInDices.ToArray(), totalScore, $"x{currentBonusScore}") { effectName = abilityName, effectDesc = "동일 눈금 주사위 점수 x2", targetIndex = myState.diceIndex});
 
             foreach(var (diceIndex, scoreValue) in addScoreList)
             {

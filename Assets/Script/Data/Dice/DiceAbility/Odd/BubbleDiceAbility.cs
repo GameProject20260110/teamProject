@@ -8,17 +8,23 @@ public class BubbleDiceAbility : DiceData
 
     public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        int finalScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+        int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
         if(myState.IsCurrentEven)
         {
             myState.isForceOdd = true;
-            myState.scoreValue += finalScore;
+            int score = myState.scoreValue + currentBonusScore;
+            int diff = myState.ApplyDiceScoreChange(score);
 
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, 0, "Bubble", myState.scoreValue));
+            if(diff != 0)
+            {
+                totalScore += diff;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, "Bubble", myState.scoreValue)
+                {
+                    effectName = abilityName,
+                    effectDesc = "모두 홀수 취급하고 이 주사위 눈금 +3"
+                });
+            }
         }
-
-        
     }
-
 }

@@ -9,7 +9,7 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public Image diceImage;
 
-    [Header("���� �� ����Ʈ")]
+    [Header("모듈")]
     public GameObject effectPrefab;
     public AudioClip rollSound;
 

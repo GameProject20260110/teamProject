@@ -9,7 +9,7 @@ public class DiceData : ScriptableObject
     public int multiBonusScore = 1;
     public int plusBonusScore = 0;
 
-    [Header("�ֻ��� �⺻ ����")]
+    [Header("주사위 기본 정보")]
     public ScoreManager.DiceType type;
     public DiceTiming timing;
     public int diceNum;
@@ -24,10 +24,10 @@ public class DiceData : ScriptableObject
     [TextArea]
     public string Desc;
 
-    [Header("�ֻ��� ��Ų")]
+    [Header("주사위 스킨")]
     public DiceSkin skin;
 
-    // myState: �� �ֻ��� ����, allDice: ��� �ֻ��� ���� ����Ʈ
+    // myState: 내 주사위 상태, allDice: 모든 주사위 상태 리스트
     public void ChangeModi(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) {
         if (myState.changeValue == 0) return;
         foreach (var dice in allDice)

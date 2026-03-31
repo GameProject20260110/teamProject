@@ -240,4 +240,6 @@ public class UiController : MonoBehaviour
     {
         inventoryUI?.ResetCards();
     }
+
+
 }
