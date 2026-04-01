@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7340f6d2a6df2924f9fef7da0410efa7, type: 3}
   m_Name: 2.Ring
   m_EditorClassIdentifier: Assembly-CSharp::Rapier
-  itemIcon: {fileID: -2532087816333192471, guid: 60bbb386820b4d34fb9cd56430f9a8a6, type: 3}
+  itemIcon: {fileID: -2532087816333192471, guid: 77b4cde22c93abf43aac17befa5b2595, type: 3}
   itemNum: 2
   itemName: "\uBC18\uC9C0"
   gold: 5

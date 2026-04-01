@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a29ee036c55f70a45b1e9c73a8980a62, type: 3}
   m_Name: 7.Shoes
   m_EditorClassIdentifier: Assembly-CSharp::Shoes
-  itemIcon: {fileID: -4609764937589784581, guid: 96aa9d1db8027764cba680bd0a7651fd, type: 3}
+  itemIcon: {fileID: -4609764937589784581, guid: 298a30f06647df346bd24f77428ef17d, type: 3}
   itemNum: 7
   itemName: "\uC2E0\uBC1C"
   gold: 1

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: adc0988e6714fab4cb4633d34c968549, type: 3}
   m_Name: 14. Bow
   m_EditorClassIdentifier: Assembly-CSharp::Bow
-  itemIcon: {fileID: -434252183827366392, guid: 149c88797480e1b4c918a27de5ab4f31, type: 3}
+  itemIcon: {fileID: -415446080585258355, guid: 424ddc5b058329e43a296399c3aba15c, type: 3}
   itemNum: 0
   itemName: "\uD65C"
   gold: 6

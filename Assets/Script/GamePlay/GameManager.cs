@@ -308,6 +308,14 @@ public class GameManager : MonoBehaviour
         {
             RoundManager.instance.GoNextRound();
         }
+        if(SceneController.instance != null) 
+            SceneController.instance.LoadShopScene();
+    }
+
+    public void OnClickRetryRound()
+    {
+        if (SceneController.instance != null)
+            SceneController.instance.LoadShopScene();
     }
 
     public void LoadHomeScreen()

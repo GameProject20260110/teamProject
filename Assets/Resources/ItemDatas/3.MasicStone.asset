@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a2dc91a319a7df45a49039e53c0725b, type: 3}
   m_Name: 3.MasicStone
   m_EditorClassIdentifier: Assembly-CSharp::Shield
-  itemIcon: {fileID: -1636590158752819987, guid: fa64293432b2e5b4db01cf4c76550cc7, type: 3}
+  itemIcon: {fileID: -1636590158752819987, guid: da3ca4ff68b987f46a3b68386ef880cf, type: 3}
   itemNum: 3
   itemName: "\uB9C8\uC11D"
   gold: 5
