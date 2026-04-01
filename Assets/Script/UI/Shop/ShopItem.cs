@@ -42,6 +42,10 @@ public class ShopItem : MonoBehaviour
         PlayerShopManager.instance.Open();
         InitializeShop();
         ReRoll();
+
+        
+        //if (PlayerPrefs.GetInt("ShopTutorialCompleted", 0) == 0)
+        //    SetUpTutorial();        
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
         if (notificationUI != null) notificationUI.gameObject.SetActive(false);
     }
@@ -177,7 +181,6 @@ public class ShopItem : MonoBehaviour
 
             buyItem[i].GetComponentsInChildren<RectTransform>()[1].localPosition = new Vector2(0, 200);
             buyItem[i].UpdateInfo(itemGacha.Roll(), false);
-            Debug.Log(tierSlotImages[buyItem[i].GetTier() - 1]);
             itemSlots[i + diceSlotCount].GetComponent<Image>().sprite = tierSlotImages[buyItem[i].GetTier() - 1];
         }
 
@@ -198,6 +201,30 @@ public class ShopItem : MonoBehaviour
         if (itemPrefab == null) Debug.LogWarning("Item 프리팹이 비어있습니다.(ShopItem)");
         if (diceGacha == null) Debug.LogWarning("DiceGacha 프리팹이 비어있습니다.(ShopItem)");
         if (itemGacha == null) Debug.LogWarning("ItemGacha 프리팹이 비어있습니다.(ShopItem)");
+    }
+
+    #endregion
+
+
+
+    #region Tutorial
+
+    private void SetUpTutorial()
+    {
+        for (int i = 0; i < diceSlotCount; i++)
+        {
+            buyDice[i] = itemSlots[i].transform.GetComponentInChildren<BuyDice>();
+            buyDice[i].UpdateDiceInfo(diceGacha.diceWeights[24].dice, false);
+            itemSlots[i].GetComponent<Image>().sprite = tierSlotImages[buyDice[i].GetTier() - 1];
+        }
+
+        for (int i = 0; i < itemSlotCount; i++)
+        {
+            buyItem[i] = itemSlots[i + diceSlotCount].transform.GetComponentInChildren<BuyItem>();
+            buyItem[i].GetComponentsInChildren<RectTransform>()[1].localPosition = new Vector2(0, 200);
+            buyItem[i].UpdateInfo(itemGacha.items[2]._item, false);
+            itemSlots[i + diceSlotCount].GetComponent<Image>().sprite = tierSlotImages[buyItem[i].GetTier() - 1];
+        }
     }
 
     #endregion

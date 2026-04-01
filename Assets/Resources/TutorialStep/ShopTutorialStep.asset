@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9155b91700972c544a642bc4be20923d, type: 3}
   m_Name: ShopTutorialStep
   m_EditorClassIdentifier: Assembly-CSharp::TutorialStepData
+  tutorialCompleteName: ShopTutorialCompleted
   steps:
   - stepName: "\uC0C1\uC810\uCC3D\uC5D0\uC11C \uBCF4\uC720 \uACE8\uB4DC\uB97C \uAC00\uB9AC\uD0A4\uBA70
       \uC124\uBA85"
@@ -20,21 +21,34 @@ MonoBehaviour:
       \uC804\uB9C8\uB2E4 9+(\uB77C\uC6B4\uB4DC \uC218) \uB9CC\uD07C\uC758 \uACE8\uB4DC\uB97C
       \uC90D\uB2C8\uB2E4.\u201D"
     targetUIName: GoldStatus
-    autoNextDelay: 4
   - stepName: "\uC0C1\uC810\uCC3D\uC5D0\uC11C \uBCF4\uC720 \uACE8\uB4DC\uB97C \uAC00\uB9AC\uD0A4\uBA70
       \uC124\uBA852"
     message: "\u201C\uC774\uC678\uC5D0\uB3C4 \uC544\uC774\uD15C\uC758 \uD6A8\uACFC\uB098
       \uD310\uB9E4\uB97C \uD1B5\uD574 \uACE8\uB4DC\uB97C \uCD94\uAC00\uD560 \uC218
       \uC788\uC2B5\uB2C8\uB2E4.\u201D\r\n"
     targetUIName: GoldStatus
-    autoNextDelay: 4
   - stepName: "\uC0C1\uC810\uCC3D\uC5D0\uC11C \uC8FC\uC0AC\uC704/ \uC2AC\uB86F \uC124\uBA85"
     message: "\u201C\uD2B9\uC218 \uC8FC\uC0AC\uC704\uC758 \uD6A8\uACFC\uC640 \uC544\uC774\uD15C\uC744
       \uC0AC\uC6A9\uD574\uC11C \uC810\uC218\uB97C \uC62C\uB9B4 \uC218 \uC788\uC2B5\uB2C8\uB2E4.\u201D"
     targetUIName: BuyDicePanel
-    autoNextDelay: 4
   - stepName: "\uC0C1\uC810\uCC3D\uC5D0\uC11C \uC8FC\uC0AC\uC704/ \uC2AC\uB86F \uC124\uBA85"
     message: "\u201C\uC8FC\uC0AC\uC704\uB97C \uAD6C\uB9E4\uD574\uC11C \uC0AC\uC6A9\uD558\uAE30
       \uC704\uD574\uC120 \uC2AC\uB86F\uC774 \uD544\uC694\uD569\uB2C8\uB2E4.\u201D"
-    targetUIName: SpecialSlotLevelUp
-    autoNextDelay: 4
+    targetUIName: MyDicePanel
+  - stepName: "\uC8FC\uC0AC\uC704 \uAD6C\uB9E4"
+    message: "26\uBC88 \uD37C\uC9C0 \uC8FC\uC0AC\uC704\uB97C \uAD6C\uB9E4\uD55C \uB4A4
+      \uC2AC\uB86F\uC5D0 \uB123\uB294\uB2E4.\r\n"
+    targetUIName: MySlot 1
+  - stepName: "\uC544\uC774\uD15C \uAD6C\uB9E4"
+    message: "\u201C\uC544\uC774\uD15C\uC740 \uC2AC\uB86F \uC5C6\uC774\uB3C4 \uAD6C\uB9E4\uD560
+      \uC218 \uC788\uC2B5\uB2C8\uB2E4.\u201D\r\n\uC544\uC774\uD15C\uC744 \uB04C\uC5B4\uB2F9\uACA8
+      \uC778\uBCA4\uD1A0\uB9AC\uC5D0 \uB193\uC74C\r\n"
+    targetUIName: BuySlot6
+  - stepName: "\uC544\uC774\uD15C \uAD6C\uB9E4"
+    message: "\uC778\uBCA4\uD1A0\uB9AC\uC758 1\uBC88 \uC2AC\uB86F\uC5D0 \uB808\uC774\uD53C\uC5B4\uB97C
+      \uC62E\uACA8\uBCF4\uC138\uC694"
+    targetUIName: Inven1
+  - stepName: "\uB77C\uC6B4\uB4DC \uC2DC\uC791"
+    message: "\uB2E4\uC74C \uB77C\uC6B4\uB4DC\uB85C \uAC00\uAE30 \uC704\uD574\uC11C
+      \uB2E4\uC74C \uB77C\uC6B4\uB4DC \uBC84\uD2BC\uC744 \uB204\uB985\uB2C8\uB2E4."
+    targetUIName: GameStart

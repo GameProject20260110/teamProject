@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bfe86e771cc06b544b554040b2f899db, type: 3}
   m_Name: 13.Sword
   m_EditorClassIdentifier: Assembly-CSharp::Sword
-  itemIcon: {fileID: -3753825769889500098, guid: ec8f7de9c56c4364bad9ce3e2238dad5, type: 3}
+  itemIcon: {fileID: -3753825769889500098, guid: 02037669cf1730f43b4fa930578922d3, type: 3}
   itemNum: 13
   itemName: "\uC18C\uB4DC"
   gold: 4

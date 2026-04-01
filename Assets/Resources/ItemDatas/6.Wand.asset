@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30bf2f6262fae834e9d1dec4d5c985c6, type: 3}
   m_Name: 6.Wand
   m_EditorClassIdentifier: Assembly-CSharp::Wand
-  itemIcon: {fileID: 8979405933268748967, guid: cd88c7dffac75d040b25e5ea53dc98c0, type: 3}
+  itemIcon: {fileID: 21300000, guid: 6ec8759dc1e854b4eb84134f47e917e9, type: 3}
   itemNum: 6
   itemName: "\uC644\uB4DC"
   gold: 3

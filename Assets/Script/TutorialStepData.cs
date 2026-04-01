@@ -5,6 +5,9 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "TutorialStepData", menuName = "Tutorial/Step Data")]
 public class TutorialStepData : ScriptableObject
 {
+    [Header("튜토리얼 이름")]
+    public string tutorialCompleteName;
+
     [System.Serializable]
     public class Step
     {

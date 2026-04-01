@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 332ade2e8a52f3c42858ef5f07270f4c, type: 3}
   m_Name: 10. Hammer
   m_EditorClassIdentifier: Assembly-CSharp::Hammer
-  itemIcon: {fileID: 4301844918096825189, guid: 22111fe154325a447b61499b353fc56f, type: 3}
+  itemIcon: {fileID: 4301844918096825189, guid: 7f8b59116b0e5b947a3d60f98d436492, type: 3}
   itemNum: 10
   itemName: "\uD574\uBA38"
   gold: 6

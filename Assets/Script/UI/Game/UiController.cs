@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -16,7 +18,7 @@ public class UiController : MonoBehaviour
     public NotificationUI notificationUI;
 
     [Header("인게임 정보 UI (상시 표시)")]
-    public TextMeshProUGUI roundInfoText;  
+    public TextMeshProUGUI roundInfoText;
     public TextMeshProUGUI targetScoreInfoText;
     public TextMeshProUGUI myScoreInfoText;
     public TextMeshProUGUI goldText;
@@ -32,6 +34,9 @@ public class UiController : MonoBehaviour
     public Button ShopBtn;
 
     public GameObject settingPanel;
+
+    [Header("GameEndPanels")]
+    public GameObject backGround;
 
     private void Awake()
     {
@@ -71,6 +76,8 @@ public class UiController : MonoBehaviour
             PlayerShopManager.instance.ClearRound = true;
             SceneController.instance.LoadShopScene();
         });
+
+        
     }
     
     private void Update()
@@ -180,7 +187,7 @@ public class UiController : MonoBehaviour
 
     public void ShowGameOverPanel(int round, int bestScore, List<DiceData> diceDatas, List<int> values)
     {
-        gameOverUI?.Show(round, bestScore, diceDatas, values);
+        gameOverUI?.Show(round, bestScore);
     }
 
     public void UpdateRerollUi(int count)
@@ -222,7 +229,7 @@ public class UiController : MonoBehaviour
 
     public void GotoLobby()
     {
-        GameManager.instance.LoadHomeScreen();
+        SceneController.instance.LoadHomeScene();
     }
 
     public void ToggleSettingPanel()
@@ -240,4 +247,44 @@ public class UiController : MonoBehaviour
     {
         inventoryUI?.ResetCards();
     }
+
+
+    #region GameEndEvent
+
+    public void RevealCardHelper(Image image)
+    {
+        RevealCard(image);
+    }
+
+    async UniTask RevealCard(Image image)
+    {
+        backGround.SetActive(true);
+
+        var cardImage = image;
+        Debug.Log(cardImage);
+        cardImage.GetComponent<CanvasGroup>().alpha = 1f;
+
+        cardImage.fillAmount = 0f;
+        await cardImage.DOFillAmount(1f, 0.8f).SetEase(Ease.OutQuad)
+                       .AsyncWaitForCompletion();
+
+        var textGroup = cardImage.GetComponentInChildren<RectMask2D>(true).gameObject;
+        textGroup.SetActive(true);
+        RectTransform maskRect = textGroup.GetComponent<RectTransform>();
+        float targetHeight = maskRect.sizeDelta.y; // 원본 높이 저장
+
+        maskRect.sizeDelta = new Vector2(maskRect.sizeDelta.x, 0f); // 높이 0으로 시작
+        await maskRect.DOSizeDelta(new Vector2(maskRect.sizeDelta.x, targetHeight), 2f)
+                .SetEase(Ease.OutQuad).AsyncWaitForCompletion();
+
+        var buttons = cardImage.GetComponentsInChildren<Button>();
+        foreach (var btn in buttons)
+        {
+            await UniTask.Delay(500);
+            btn.GetComponent<CanvasGroup>().DOFade(1f, 1f);
+        }
+
+    }
+
+    #endregion
 }
