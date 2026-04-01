@@ -10,20 +10,22 @@ public class BubbleDiceAbility : DiceData
     {
         int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
-        if(myState.IsCurrentEven)
+        foreach(var dice in allDice)
         {
-            myState.isForceOdd = true;
-            int score = myState.scoreValue + currentBonusScore;
-            int diff = myState.ApplyDiceScoreChange(score);
-
-            if(diff != 0)
+            if(dice.IsCurrentEven)
             {
-                totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, "Bubble", myState.scoreValue)
+                dice.isForceOdd = true;
+                int score = dice.scoreValue + currentBonusScore;
+                int diff = dice.ApplyDiceScoreChange(score);
+                if(diff != 0)
                 {
-                    effectName = abilityName,
-                    effectDesc = "모두 홀수 취급하고 이 주사위 눈금 +3"
-                });
+                    totalScore += diff;
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
+                    {
+                        effectName = abilityName,
+                        effectDesc = "모든 짝수 취급하고 이 주사위 눈금 +3"
+                    });
+                }
             }
         }
     }

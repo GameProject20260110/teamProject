@@ -74,6 +74,9 @@ public class ScoreVisualizer : MonoBehaviour
                 case ScoreEventData.Type.GainReroll:
                     yield return PlayGainReroll(evt);
                     break;
+                case ScoreEventData.Type.Notice:
+                    yield return PlayNotice(evt);
+                    break;
             }
         }
     }
@@ -93,7 +96,10 @@ public class ScoreVisualizer : MonoBehaviour
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
         }
-        UpdateScoreBoard(evt.value);
+        if(evt.value != 0)
+        {
+            UpdateScoreBoard(evt.value);
+        }
         yield return new WaitForSeconds(0.7f);
     }
 
@@ -247,6 +253,11 @@ public class ScoreVisualizer : MonoBehaviour
         UpdateScoreBoard(evt.value);
         finalScoreText.transform.DOPunchScale(Vector3.one * 0.35f, 0.3f);
         yield return new WaitForSeconds(0.35f);
+    }
+
+    private IEnumerator PlayNotice(ScoreEventData evt)
+    {
+        yield return new WaitForSeconds(0.7f);
     }
 
     public void ClearNegateOverlays()

@@ -11,8 +11,12 @@ public class GoblinDiceAbility : DiceData
         if(myState == null) return;
         if (PlayerManager.instance == null) return;
 
-        int gold = myState.modifiedValue;
+        int gold = RoundManager.instance.currentRound;
         PlayerManager.instance.gold += gold;
-        events.Add(new ScoreEventData(ScoreEventData.Type.GainGold, myState.diceIndex, gold, $"Gold +{gold}"));
+        events.Add(new ScoreEventData(ScoreEventData.Type.GainGold, myState.diceIndex, gold, $"Gold +{gold}")
+        {
+            effectName = abilityName,
+            effectDesc = "¶ó¿îµå ¼ö¸¸Å­ °ñµå È¹µæ"
+        });
     }
 }

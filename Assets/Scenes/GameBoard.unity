@@ -1547,8 +1547,8 @@ MonoBehaviour:
   testGold: 9999
   testHeart: 3
   testAbilities:
-  - {fileID: 11400000, guid: 4631ccee23ae1e64091fdfc453de8228, type: 2}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: f7ec291ccf9702e4ebe290f116ed57b8, type: 2}
+  - {fileID: 11400000, guid: 540d775e0fee14549969b39e61428852, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
@@ -13411,12 +13411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2314b265046c89849a8bf93d41149c8d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::WizardHandler
-  diceSlotPrefab: {fileID: 7070004183523616055, guid: 1375cb69063a0054fb4dd69fc8959918, type: 3}
-  scoreTextPrefab: {fileID: 968451065354198622, guid: 2cbdddc2eb113b84c814741f38c859eb, type: 3}
-  scoreTextContainer: {fileID: 1125536305}
-  wizardSummonDiceData: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-  _wizardDiceSlots: []
-  _scoreText: []
 --- !u!1 &1949212449
 GameObject:
   m_ObjectHideFlags: 0

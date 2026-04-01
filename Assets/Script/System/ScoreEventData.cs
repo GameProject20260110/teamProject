@@ -13,7 +13,8 @@ public class ScoreEventData
         ItemEffect,     
         FinalScore,     
         GainGold,
-        GainReroll
+        GainReroll,
+        Notice
     }
 
     public Type type; 

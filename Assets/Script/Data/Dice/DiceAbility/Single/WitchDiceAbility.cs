@@ -9,7 +9,11 @@ public class WitchDiceAbility : DiceData
     {
         if (myState == null) return;
         totalScore *= bonusScore;
-        events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, myState.diceIndex, totalScore, $"Witch! Round x {bonusScore}"));
+        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{bonusScore}")
+        {
+            effectName = abilityName,
+            effectDesc = $"라운드 점수 x{bonusScore} 이후 하나 무효"
+        });
 
         int startIndex = myState.diceIndex + 1;
 
@@ -17,7 +21,7 @@ public class WitchDiceAbility : DiceData
         {
             int randomTargetIndex = Random.Range(startIndex, allDice.Count);
             allDice[randomTargetIndex].isIgnored = true;
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, randomTargetIndex, totalScore, "Slience"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.Negate, randomTargetIndex, totalScore, "무효화"));
         }
     }
 
