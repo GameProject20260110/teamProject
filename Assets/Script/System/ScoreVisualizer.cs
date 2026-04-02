@@ -32,7 +32,7 @@ public class ScoreVisualizer : MonoBehaviour
     public IEnumerator PlayScoreEventSequence(Dice[] uiDice, List<ScoreEventData> scoreEvent)
     {
         _lastEffectName = "";
-
+   
         foreach(var evt in scoreEvent)
         {
             Dice targetDice = GetTargetDice(uiDice, evt.targetIndex);
@@ -230,15 +230,15 @@ public class ScoreVisualizer : MonoBehaviour
     private IEnumerator PlayItemEffect(ScoreEventData evt)
     {
         ShowEffectMessage(evt.effectName, evt.effectDesc);
-        var card = UiController.instance?.inventoryUI?.FindCardByName(evt.effectName);
+        var card = evt.targetIndex >= 0 ? UiController.instance.inventoryUI.FindCardByIndex(evt.targetIndex) : UiController.instance.inventoryUI.FindCardByName(evt.effectName);
+
         if (card != null)
         {
             Vector3 originalScale = card.transform.localScale;
             card.transform.DOScale(originalScale * 1.3f, 0.3f).SetEase(Ease.OutBack);
-
             yield return new WaitForSeconds(0.7f);
-
             card.transform.DOScale(originalScale, 0.3f);
+            yield return new WaitForSeconds(0.7f);
         }
         else
         {

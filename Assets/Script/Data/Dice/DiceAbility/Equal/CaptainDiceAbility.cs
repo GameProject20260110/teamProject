@@ -21,5 +21,6 @@ public class CaptainDiceAbility : DiceData
 
         totalScore *= matchInDices.Count;
         events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, matchInDices.ToArray(), totalScore, $"x{matchInDices.Count}") { effectName = abilityName, effectDesc = "눈금이 같은 주사위 수 x 라운드 점수" });
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

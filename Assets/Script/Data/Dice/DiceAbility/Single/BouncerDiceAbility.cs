@@ -18,5 +18,6 @@ public class BouncerDiceAbility : DiceData
         });
         totalScore *= bonusScore;
         events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"x{bonusScore}"));
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

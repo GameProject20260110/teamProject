@@ -10,8 +10,6 @@ public class MonoDiceAbility : DiceData
         foreach (var dice in allDice)
         {
             dice.changeValue += 3;
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, 0, "Mono"));
         }
     }
-
 }

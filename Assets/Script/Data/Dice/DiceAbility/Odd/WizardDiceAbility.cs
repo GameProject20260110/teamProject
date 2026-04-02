@@ -27,6 +27,7 @@ public class WizardDiceAbility : DiceData
                     effectName = abilityName,
                     effectDesc = "모든 주사위 점수 + 홀수 주사위 수"
                 });
+                Bow.TryTrigger(ref totalScore, events);
             }
         }
     }

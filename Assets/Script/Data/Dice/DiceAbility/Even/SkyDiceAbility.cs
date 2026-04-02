@@ -23,6 +23,7 @@ public class SkyDiceAbility : DiceData
                         effectName = abilityName,
                         effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö x2"
                     });
+                    Bow.TryTrigger(ref totalScore, events);
                 }
             }
         }

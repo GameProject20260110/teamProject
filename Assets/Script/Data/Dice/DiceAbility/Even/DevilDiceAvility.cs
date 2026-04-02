@@ -23,6 +23,7 @@ public class DevilDiceAbility : DiceData
                     effectName = abilityName,
                     effectDesc = "Â¦¼ö ´«±ÝÀº +5 È¦¼ö ´«±ÝÀº -3"
                 });
+                Bow.TryTrigger(ref totalScore, events);
             }
         }
     }

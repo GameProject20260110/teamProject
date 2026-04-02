@@ -41,6 +41,7 @@ public class CupidDiceAbility : DiceData
             foreach(var (diceIndex, scoreValue) in addScoreList)
             {
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, diceIndex, totalScore, $"x{currentBonusScore}", scoreValue));
+                Bow.TryTrigger(ref totalScore, events);
             }   
         }
     }

@@ -119,7 +119,29 @@ public class RoundManager : MonoBehaviour
 
         bool isSuccess = finalScore >= targetScore;
 
-        
+        if(PlayerManager.instance != null)
+        {
+            foreach(var item in PlayerManager.instance.items)
+            {
+                if (item == null) continue;
+                item.RoundEnd();
+            }
+        }
+        if(PlayerManager.instance.tempExtraSlotsCount > 0)
+        {
+            bool[] slots = PlayerManager.instance.SpecialSlots;
+            int remove = 0;
+            for(int i = slots.Length - 1; i >= 0 && remove < PlayerManager.instance.tempExtraSlotsCount; i--)
+            {
+                if (slots[i])
+                {
+                    slots[i] = false;
+                    remove++;
+                }
+            }
+            PlayerManager.instance.tempExtraSlotsCount = 0;
+        }
+
         if(isSuccess)
         {
             if(currentStageData != null && GameManager.instance != null)

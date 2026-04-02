@@ -27,6 +27,7 @@ public class RainbowDiceAbility : DiceData
                 effectName = abilityName,
                 effectDesc = "라운드 점수 x3"
             });
+            Bow.TryTrigger(ref totalScore, events);
         }
     }
 

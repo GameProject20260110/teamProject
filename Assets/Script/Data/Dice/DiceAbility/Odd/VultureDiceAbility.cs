@@ -17,6 +17,7 @@ public class VultureDiceAbility : DiceData
                 effectName = abilityName,
                 effectDesc = "라운드 점수 x2"
             });
+            Bow.TryTrigger(ref totalScore, events);
         }
     }
 }

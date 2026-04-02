@@ -28,13 +28,14 @@ public class DiceData : ScriptableObject
     public DiceSkin skin;
 
     // myState: 내 주사위 상태, allDice: 모든 주사위 상태 리스트
-    public void ChangeModi(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) {
+    public void ChangeModi(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> scoreEvent) {
         if (myState.changeValue == 0) return;
         foreach (var dice in allDice)
         {
             if (!dice.change) continue;
             dice.scoreValue += dice.changeValue;
-            scoreEvent.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, 0, $"Mono +{dice.changeValue}"));
+            scoreEvent.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{dice.changeValue}"));
+            Bow.TryTrigger(ref totalScore, scoreEvent);
         }
     }
 

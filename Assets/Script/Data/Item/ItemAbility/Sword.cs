@@ -10,10 +10,14 @@ public class Sword : ItemSo
     {
         isConsumable = true;
     }
-    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
+    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events, int itemIndex = - 1)
     {
         totalScore += bonusScore;
 
-        // 연출 추가
+        events.Add(new ScoreEventData(ScoreEventData.Type.ItemEffect, itemIndex, totalScore)
+        {
+            effectName = itemName,
+            effectDesc = $"라운드 점수 + {bonusScore}"
+        });
     }
 }

@@ -18,5 +18,6 @@ public class GoblinDiceAbility : DiceData
             effectName = abilityName,
             effectDesc = "¶ó¿îµå ¼ö¸¸Å­ °ñµå È¹µæ"
         });
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

@@ -23,8 +23,9 @@ public class BamDiceAbility : DiceData
             {
                 totalScore += diff;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue));
+                Bow.TryTrigger(ref totalScore, events);
             }
         }
-        ChangeModi(myState, allDice, events);
+        ChangeModi(myState, allDice, ref totalScore, events);
     }
 }

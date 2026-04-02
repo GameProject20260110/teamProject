@@ -1,9 +1,5 @@
 
-using JetBrains.Annotations;
-using System.Data;
-using UnityEditor;
-using UnityEngine;
-
+using System.Collections.Generic;
 public class DiceState
 {
     public DiceData diceData;

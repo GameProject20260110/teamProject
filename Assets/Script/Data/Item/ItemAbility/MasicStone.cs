@@ -5,10 +5,10 @@ using System.Collections.Generic;
 public class MasicStone : ItemSo
 {
     public int bonusScore = 2;
-    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
+    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events, int itemIndex = -1)
     {
         totalScore *= bonusScore;
-        events.Add(new ScoreEventData(ScoreEventData.Type.ItemEffect, -1, totalScore, $"x{bonusScore}") { effectName = "마석", effectDesc = "라운드 점수 x2\n이후 발동한 효과"});
+        events.Add(new ScoreEventData(ScoreEventData.Type.ItemEffect, itemIndex, totalScore) { effectName = "마석", effectDesc = "라운드 점수 x2\n이후 발동한 효과"});
         var candidate = allDice.FindAll(d => d != null && !d.isIgnored && d.diceData.type != ScoreManager.DiceType.None);
         if(candidate.Count > 0)
         {

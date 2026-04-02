@@ -34,8 +34,10 @@ public class ChainDiceAbility : DiceData
             {
                 totalScore += diff;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, target.diceIndex, totalScore, $"+{diff}", target.scoreValue));
+                Bow.TryTrigger(ref totalScore, events);
             }
         }
+        ChangeModi(myState, allDice, ref totalScore, events);
     }
 
 }

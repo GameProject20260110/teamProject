@@ -25,6 +25,7 @@ public class BubbleDiceAbility : DiceData
                         effectName = abilityName,
                         effectDesc = "모든 짝수 취급하고 이 주사위 눈금 +3"
                     });
+                    Bow.TryTrigger(ref totalScore, events);
                 }
             }
         }

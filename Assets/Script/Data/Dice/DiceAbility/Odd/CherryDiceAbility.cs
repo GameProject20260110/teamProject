@@ -26,8 +26,8 @@ public class CherryDiceAbility : DiceData
                             effectName = abilityName,
                             effectDesc = $"¸ðµç È¦¼ö ´«±Ý Á¡¼ö +{currentBonusScore}"
                         });
+                        Bow.TryTrigger(ref totalScore, events);
                     }
-                    
                 }
             }
         }

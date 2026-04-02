@@ -23,6 +23,7 @@ public class PurgeDiceAbility : DiceData
                     effectName = abilityName,
                     effectDesc = $"모든 주사위 점수 + {bonusScore}"
                 });
+                Bow.TryTrigger(ref totalScore, events);
             }
         }       
     }

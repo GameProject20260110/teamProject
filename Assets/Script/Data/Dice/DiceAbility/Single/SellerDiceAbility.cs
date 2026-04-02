@@ -14,5 +14,6 @@ public class SellerDiceAbility : DiceData
             effectName = abilityName,
             effectDesc = $"라운드 점수 + 보유한 골드 수"
         });
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

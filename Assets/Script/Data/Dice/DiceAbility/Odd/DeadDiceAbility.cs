@@ -26,5 +26,6 @@ public class DeadDiceAbility : DiceData
             effectName = abilityName,
             effectDesc = "홀수 주사위 수 x 라운드 점수"
         });
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

@@ -28,6 +28,7 @@ public class CurbDiceAbility : DiceData
                     effectName = abilityName,
                     effectDesc = "눈금이 같은 주사위 수 x 동일 눈금 점수"
                 });
+                Bow.TryTrigger(ref totalScore, events);
             }
         }
     }

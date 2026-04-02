@@ -26,7 +26,7 @@ public class ScoreEventData
     public string effectDesc;  
     public int currentDiceScore;
 
-    public ScoreEventData(Type type, int targetIndex, int value, string desc, int currentDiceScore = int.MinValue)
+    public ScoreEventData(Type type, int targetIndex, int value, string desc = "", int currentDiceScore = int.MinValue)
     {
         this.type = type;
         this.targetIndex = targetIndex;
@@ -35,7 +35,7 @@ public class ScoreEventData
         this.currentDiceScore = currentDiceScore;
     }
 
-    public ScoreEventData(Type type, int[] targetIndices, int value, string desc, int currentDiceScore = int.MinValue)
+    public ScoreEventData(Type type, int[] targetIndices, int value, string desc = "", int currentDiceScore = int.MinValue)
     {
         this.type = type;
         this.targetIndices = targetIndices;

@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void StartRound()
     {
+        _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
         _isFirstRoll = true;
         _currentRerollCount = maxRerollCount;

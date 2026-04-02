@@ -23,6 +23,7 @@ public class WitchDiceAbility : DiceData
             allDice[randomTargetIndex].isIgnored = true;
             events.Add(new ScoreEventData(ScoreEventData.Type.Negate, randomTargetIndex, totalScore, "¹«È¿È­"));
         }
+        Bow.TryTrigger(ref totalScore, events);
     }
 
 }

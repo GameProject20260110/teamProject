@@ -25,6 +25,7 @@ public class LandDiceAbility : DiceData
                         effectName = abilityName,
                         effectDesc = $"¸ðµç È¦¼ö ´«±ÝÀÇ Á¡¼ö x{currentBonusScore}"
                     });
+                    Bow.TryTrigger(ref totalScore, events);
                 }
             }
         }

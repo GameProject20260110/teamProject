@@ -9,7 +9,15 @@ public class BuyDice : BuyPurchasable<DiceData>
     protected override string DropTag => "BuyDice";
     protected override string SlotTag => "MySlot";
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
-    protected override int GetSellPrice() => Data.sell;
+    protected override int GetSellPrice()
+    {
+        var shoes = GetShoes();
+        if(shoes != null && shoes.On)
+        {
+            return Data.gold;
+        }
+        return Data.sell;
+    }
     protected override string GetItemName() => Data.abilityName;
     
 
@@ -101,7 +109,7 @@ public class BuyDice : BuyPurchasable<DiceData>
 
     #endregion
 
-
+    
 
     #region Swap & Move
 
@@ -118,5 +126,16 @@ public class BuyDice : BuyPurchasable<DiceData>
     }
 
     #endregion
+
+    private Shoes GetShoes()
+    {
+        if (PlayerManager.instance == null) return null;
+        foreach(var item in PlayerManager.instance.items)
+        {
+            if (item is Shoes shoes) return shoes;
+        }
+        return null;
+        
+    }
 }
 

@@ -76,16 +76,17 @@ public class ScoreManager : MonoBehaviour
         List<ItemSo> playerInventory = GetPlayerInventory();
         if(playerInventory != null /*&& PlayerManager.instance != null*/)
         {
-            foreach (var item in playerInventory)
+            for (int i = 0; i < playerInventory.Count; i++)
             {
+                var item = playerInventory[i];  
                 if (item == null) continue;
 
                 if (gimmickNegateItem && Random.value < 0.25f)
-                {
-                    Debug.Log($"{item.itemName} ��ȿȭ");
+                { 
                     continue;
                 }
-                item.RoundStart(simulationStates, ref finalScore, scoreEvents);
+                if (itemsToComsume.Contains(item)) continue;
+                item.RoundStart(simulationStates, ref finalScore, scoreEvents, i);
 
                 if(item.isConsumable)
                 {

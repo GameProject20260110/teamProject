@@ -24,6 +24,7 @@ public class ShotDiceAbility : DiceData
                         effectName = abilityName,
                         effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö +3"
                     });
+                    Bow.TryTrigger(ref totalScore, events);
                 }
             }
         }
