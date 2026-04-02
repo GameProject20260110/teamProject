@@ -140,6 +140,7 @@ public class RoundManager : MonoBehaviour
                 {
                     int reward = currentStageData.GetGoldReward(currentRound);
                     GameManager.instance.AddGold(reward);
+                    PlayerManager.instance.heart--;
                     Debug.Log($"¶ó¿îµå ½ÇÆÐ °ñµå {reward} È¹µæ");
                 }
                 UiController.instance.ShowResultPanel(false, targetScore, finalScore, GameManager.instance.CurrentHearts);
@@ -161,6 +162,7 @@ public class RoundManager : MonoBehaviour
             PlayerManager.instance.currentRound = currentRound;
             PlayerManager.instance.Save();
         }
+
         Debug.Log($"{currentRound}¶ó¿îµå·Î ÁøÀÔ");
         StartRound();
     }

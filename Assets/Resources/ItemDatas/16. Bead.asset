@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: daf485540b1f2054697acf794fbcaf68, type: 3}
   m_Name: 16. Bead
   m_EditorClassIdentifier: Assembly-CSharp::Bead
-  itemIcon: {fileID: -5691002597895537966, guid: 76992e26eb472374dad7e864bce521b7, type: 3}
+  itemIcon: {fileID: -5691002597895537966, guid: 35cf3b5309ae0714b8b5227d468712ba, type: 3}
   itemNum: 16
   itemName: "\uAD6C\uC2AC"
   gold: 3

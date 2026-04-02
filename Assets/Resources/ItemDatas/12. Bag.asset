@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 61ed097fdd170d1418d91c4ff1ce87b8, type: 3}
   m_Name: 12. Bag
   m_EditorClassIdentifier: Assembly-CSharp::Bag
-  itemIcon: {fileID: 8766740682603709380, guid: eea0d07227eda134eaa0d51be9522748, type: 3}
+  itemIcon: {fileID: 8766740682603709380, guid: 9e13da297a08bc04dbd9bdd666cd8b26, type: 3}
   itemNum: 12
   itemName: "\uAC00\uBC29"
   gold: 4

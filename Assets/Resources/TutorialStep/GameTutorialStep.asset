@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9155b91700972c544a642bc4be20923d, type: 3}
   m_Name: GameTutorialStep
   m_EditorClassIdentifier: Assembly-CSharp::TutorialStepData
+  tutorialCompleteName: GameTutorialCompleted
   steps:
   - stepName: "\uC8FC\uC0AC\uC704 \uAD74\uB9AC\uAE30"
     message: "\uC8FC\uC0AC\uC704\uB97C \uAD74\uB824\uC8FC\uC138\uC694"

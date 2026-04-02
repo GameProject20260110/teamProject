@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081c325189bec2f458fe82827bd09fe5, type: 3}
   m_Name: 5.GoldenEgg
   m_EditorClassIdentifier: Assembly-CSharp::GoldenEgg
-  itemIcon: {fileID: -5079978604105338203, guid: 8ee9f5d16ccccf4429f713d4ff74efae, type: 3}
+  itemIcon: {fileID: -5079978604105338203, guid: 7f702d1d4ae691644821ff35d01d1ad3, type: 3}
   itemNum: 5
   itemName: "\uD669\uAE08 \uC54C"
   gold: 2
