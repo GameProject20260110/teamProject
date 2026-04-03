@@ -22,7 +22,12 @@ public class RainbowDiceAbility : DiceData
         if (isAllSame)
         {
             totalScore *= bonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, "Rainbow"));
+            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, "Rainbow")
+            {
+                effectName = abilityName,
+                effectDesc = "라운드 점수 x3"
+            });
+            Bow.TryTrigger(ref totalScore, events);
         }
     }
 

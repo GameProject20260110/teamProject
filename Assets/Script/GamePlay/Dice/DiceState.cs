@@ -1,17 +1,13 @@
 
-using JetBrains.Annotations;
-using System.Data;
-using UnityEditor;
-using UnityEngine;
-
+using System.Collections.Generic;
 public class DiceState
 {
     public DiceData diceData;
 
-    public int diceIndex;      // ÁÖ»çÀ§ ¼ø¼­
-    public int originalValue; // ÃÖÃÊ ÁÖ»çÀ§ °ª
-    public int modifiedValue;  // È¿°ú Àû¿ë ÈÄ ÁÖ»çÀ§ °ª
-    public int scoreValue;    // Á¡¼ö °è»ê¿ë ÁÖ»çÀ§ °ª
+    public int diceIndex;      // ì£¼ì‚¬ìœ„ ìˆœì„œ
+    public int originalValue;  // ìµœì´ˆ ì£¼ì‚¬ìœ„ ê°’
+    public int modifiedValue;  // íš¨ê³¼ ì ìš© í›„ ì£¼ì‚¬ìœ„ ê°’
+    public int scoreValue;     // ì ìˆ˜ ê³„ì‚°ìš© ì£¼ì‚¬ìœ„ ê°’
     public int changeValue;     
     public bool change;
 
@@ -19,6 +15,8 @@ public class DiceState
     public bool isMulti = false;
     public int multiBonusScore;
     public int plusBonusScore;
+
+    public int appliedScoreValue;
 
     public ScoreManager.DiceType currentType;
     public bool isForceOdd = false;
@@ -45,6 +43,7 @@ public class DiceState
         change = false;
         isMulti = false;
         isIgnored = false;
+        appliedScoreValue = 0;
 
         if(data != null)
         {
@@ -63,4 +62,11 @@ public class DiceState
         this.isForceEven = false;
     }
 
+    public int ApplyDiceScoreChange(int diceScore)
+    {
+        int diff = diceScore - appliedScoreValue;
+        scoreValue = diceScore;
+        appliedScoreValue = diceScore;
+        return diff;
+    }
 }

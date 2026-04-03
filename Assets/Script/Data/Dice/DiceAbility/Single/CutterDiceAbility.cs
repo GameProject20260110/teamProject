@@ -7,15 +7,25 @@ public class CutterDiceAbility : DiceData
 
     public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        List<DiceState> others = allDice.FindAll(d => d != myState);
+        List<DiceState> targets = new List<DiceState>(allDice);
+        int rand1 = Random.Range(0, targets.Count);
+        DiceState dice1 = targets[rand1];
+        targets.RemoveAt(rand1);
+        int rand2 = Random.Range(0, targets.Count);
+        DiceState dice2 = targets[rand2];
 
-        if (others.Count == 0) return;
+        int removedScore = dice1.scoreValue + dice2.scoreValue;
+        int multiScore = dice1.scoreValue * dice2.scoreValue;
+        int diff = multiScore - removedScore;
 
-        int randNum = Random.Range(0, others.Count);
-        int add = myState.scoreValue * others[randNum].modifiedValue;
-        totalScore += add;
-        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, others[randNum].diceIndex, totalScore, $"Cutter"));
-        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, totalScore, $"Cutter +{add}", myState.scoreValue));
+        totalScore += diff;
+
+        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, new int[] {dice1.diceIndex, dice2.diceIndex}, totalScore)
+        {
+            effectName = abilityName,
+            effectDesc = $"주사위 눈금 2개는 곱해진다."
+        });
+        Bow.TryTrigger(ref totalScore, events);
     }
 
 }

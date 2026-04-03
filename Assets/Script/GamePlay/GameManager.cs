@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void StartRound()
     {
+        _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
         _isFirstRoll = true;
         _currentRerollCount = maxRerollCount;
@@ -147,7 +148,7 @@ public class GameManager : MonoBehaviour
         {
             if(dice != null && dice.gameObject.activeSelf)
             {
-                dice.UpdateDiceScoreUi(-1, false);
+                dice.UpdateDiceScoreUi(0, hide: true);
             }
         }
 

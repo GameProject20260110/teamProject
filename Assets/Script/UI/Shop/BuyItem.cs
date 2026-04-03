@@ -109,6 +109,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
         {
             return false;
         }
+        if (Data is Bag bag && !bag.CanUse()) return false;
         bool success = PlayerShopManager.instance.TryPurchaseItem(Data, Slot.slotIndex);
         if (success && Data.isConsumable) 
         {

@@ -9,7 +9,7 @@ public class DiceData : ScriptableObject
     public int multiBonusScore = 1;
     public int plusBonusScore = 0;
 
-    [Header("ÁÖ»çÀ§ ±âº» Á¤º¸")]
+    [Header("ì£¼ì‚¬ìœ„ ê¸°ë³¸ ì •ë³´")]
     public ScoreManager.DiceType type;
     public DiceTiming timing;
     public int diceNum;
@@ -24,23 +24,24 @@ public class DiceData : ScriptableObject
     [TextArea]
     public string Desc;
 
-    [Header("ÁÖ»çÀ§ ½ºÅ²")]
+    [Header("ì£¼ì‚¬ìœ„ ìŠ¤í‚¨")]
     public DiceSkin skin;
 
-    // myState: ³» ÁÖ»çÀ§ »óÅÂ, allDice: ¸ğµç ÁÖ»çÀ§ »óÅÂ ¸®½ºÆ®
-    public void ChangeModi(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) {
+    // myState: ë‚´ ì£¼ì‚¬ìœ„ ìƒíƒœ, allDice: ëª¨ë“  ì£¼ì‚¬ìœ„ ìƒíƒœ ë¦¬ìŠ¤íŠ¸
+    public void ChangeModi(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> scoreEvent) {
         if (myState.changeValue == 0) return;
         foreach (var dice in allDice)
         {
             if (!dice.change) continue;
             dice.scoreValue += dice.changeValue;
-            scoreEvent.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, 0, $"Mono +{dice.changeValue}"));
+            scoreEvent.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{dice.changeValue}"));
+            Bow.TryTrigger(ref totalScore, scoreEvent);
         }
     }
 
     public virtual void OnRuleEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) { }
 
-    public virtual void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> scoreEvent) { }
+    public virtual void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int score, List<ScoreEventData> scoreEvent) { }
 
     public virtual void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int score, List<ScoreEventData> scoreEvent) { }
 

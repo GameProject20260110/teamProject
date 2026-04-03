@@ -16,9 +16,18 @@ public class CherryDiceAbility : DiceData
             {
                 if (dice != null && !dice.IsCurrentEven)
                 {
-                    dice.scoreValue += currentBonusScore;
-                    totalScore += currentBonusScore;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Cherry! +{currentBonusScore}", dice.scoreValue));
+                    int score = dice.scoreValue + currentBonusScore;
+                    int diff = dice.ApplyDiceScoreChange(score);
+                    if(diff != 0)
+                    {
+                        totalScore += diff;
+                        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
+                        {
+                            effectName = abilityName,
+                            effectDesc = $"¸ðµç È¦¼ö ´«±Ý Á¡¼ö +{currentBonusScore}"
+                        });
+                        Bow.TryTrigger(ref totalScore, events);
+                    }
                 }
             }
         }

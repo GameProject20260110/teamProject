@@ -13,9 +13,18 @@ public class PurgeDiceAbility : DiceData
         foreach (var dice in allDice)
         {
             if (dice == null) continue;
-            dice.scoreValue += currentBonusScore;
-            totalScore += currentBonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Purge +{bonusScore}", dice.scoreValue));
+            int score = dice.scoreValue + currentBonusScore;
+            int diff = dice.ApplyDiceScoreChange(score);
+            if (diff != 0)
+            {
+                totalScore += diff;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{bonusScore}", dice.scoreValue)
+                {
+                    effectName = abilityName,
+                    effectDesc = $"모든 주사위 점수 + {bonusScore}"
+                });
+                Bow.TryTrigger(ref totalScore, events);
+            }
         }       
     }
 }

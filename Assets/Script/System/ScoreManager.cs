@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using Unity.VisualScripting;
+using UnityEngine.SocialPlatforms.Impl;
 
 public class ScoreManager : MonoBehaviour
 {
@@ -47,42 +49,44 @@ public class ScoreManager : MonoBehaviour
             {
                 DiceState target = candidates[UnityEngine.Random.Range(0, candidates.Count)];
                 target.isIgnored = true;
-                // ±â¹Í ¿¬Ãâ ÀÌº¥Æ® Ãß°¡ ÇÊ¿ä
-                Debug.Log($"{target.diceIndex} È¿°ú ¹«È¿È­!");
+                // ê¸°ë¯¹ ì—°ì¶œ ì´ë²¤íŠ¸ ì¶”ê°€ í•„ìš”
+                Debug.Log($"{target.diceIndex} íš¨ê³¼ ë¬´íš¨í™”!");
             }
         }
 
-        // 0´Ü°è
+        // 0ë‹¨ê³„
         foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;
 
             if(gimmickNoScoreNormal && state.diceData.type == DiceType.None)
             {
-                // ±â¹Í ¿¬Ãâ ÀÌº¥Æ® Ãß°¡ ÇÊ¿ä
-                Debug.Log("È¿°ú ¾ø´Â ÁÖ»çÀ§ Á¡¼ö È¹µæ ºÒ°¡!");
+                // ê¸°ë¯¹ ì—°ì¶œ ì´ë²¤íŠ¸ ì¶”ê°€ í•„ìš”
+                Debug.Log("íš¨ê³¼ ì—†ëŠ” ì£¼ì‚¬ìœ„ ì ìˆ˜ íšë“ ë¶ˆê°€!");
                 continue;
             }
 
             finalScore += state.originalValue;
+            state.appliedScoreValue = state.originalValue;
             scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
         }
 
 
-        // ¾ÆÀÌÅÛ È¿°ú
+        // ì•„ì´í…œ íš¨ê³¼
         List<ItemSo> playerInventory = GetPlayerInventory();
         if(playerInventory != null /*&& PlayerManager.instance != null*/)
         {
-            foreach (var item in playerInventory)
+            for (int i = 0; i < playerInventory.Count; i++)
             {
+                var item = playerInventory[i];  
                 if (item == null) continue;
 
                 if (gimmickNegateItem && Random.value < 0.25f)
-                {
-                    Debug.Log($"{item.itemName} ¹«È¿È­");
+                { 
                     continue;
                 }
-                item.RoundStart(simulationStates, ref finalScore, scoreEvents);
+                if (itemsToComsume.Contains(item)) continue;
+                item.RoundStart(simulationStates, ref finalScore, scoreEvents, i);
 
                 if(item.isConsumable)
                 {
@@ -92,23 +96,23 @@ public class ScoreManager : MonoBehaviour
 
         }
 
-         // Á¡¼ö ·ÎÁ÷
-         // 1. ·ê»ó È¿°ú
-         foreach (var state in simulationStates)
-         {
+        // ì ìˆ˜ ë¡œì§
+        // 1. ë£°ìƒ íš¨ê³¼
+        foreach (var state in simulationStates)
+        {
             state.diceData.OnRuleEffect(state, simulationStates, scoreEvents);
-         }
+        }
 
-        // 2. ±¼¸² È¿°ú
+        // 2. êµ´ë¦¼ íš¨ê³¼
         foreach (var state in simulationStates)
         {
 
             if (state == null || state.isIgnored) continue;
-            state.diceData.OnRollEffect(state, simulationStates, scoreEvents);
+            state.diceData.OnRollEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 
-        // 3. °è»ê ½Ã/Áß È¿°ú
-        
+        // 3. ê³„ì‚° ì‹œ/ì¤‘ íš¨ê³¼
+
         foreach (var state in simulationStates)
         {
             if(state == null || state.isIgnored)
@@ -119,7 +123,7 @@ public class ScoreManager : MonoBehaviour
             state.diceData.CalculateEffect(state, simulationStates, ref finalScore, scoreEvents);
         }
 
-        // 4. Á¡¼ö °è»ê ÈÄ È¿°ú
+        // 4. ì ìˆ˜ ê³„ì‚° í›„ íš¨ê³¼
         foreach (var state in simulationStates)
         {
             if (state == null || state.isIgnored) continue;

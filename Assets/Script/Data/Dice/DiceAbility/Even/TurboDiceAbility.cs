@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 
 [CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/turbo")]
 public class TurboDiceAbility : DiceData
@@ -17,19 +18,18 @@ public class TurboDiceAbility : DiceData
             {
                 if(dice != null && dice.IsCurrentEven)
                 {
-                    int add = dice.scoreValue * (currentBonusScore - 1);
-                    dice.scoreValue *= currentBonusScore;
-                    totalScore += add;
-                    events.Add(new ScoreEventData(
-                        ScoreEventData.Type.AddScore, 
-                        dice.diceIndex, 
-                        totalScore,
-                        $"+{add}", dice.scoreValue)
+                    int score = dice.scoreValue * currentBonusScore;
+                    int diff = dice.ApplyDiceScoreChange(score);
+                    if(diff != 0)
+                    {
+                        totalScore += diff;
+                        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
                         {
                             effectName = abilityName,
-                            effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö * 3"
-                        }
-                    );
+                            effectDesc = $"¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö x{bonusScore}"
+                        });
+                        Bow.TryTrigger(ref totalScore, events);
+                    }
                 }
             }
         }

@@ -14,9 +14,18 @@ public class ShotDiceAbility : DiceData
         {
             if(dice != null && dice.IsCurrentEven)
             {
-                dice.scoreValue += currentBonusScore;
-                totalScore += currentBonusScore;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Shot +{currentBonusScore}", dice.scoreValue));
+                int score = dice.scoreValue + currentBonusScore;
+                int diff = dice.ApplyDiceScoreChange(score);
+                if(diff != 0)
+                {
+                    totalScore += diff;
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
+                    {
+                        effectName = abilityName,
+                        effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö +3"
+                    });
+                    Bow.TryTrigger(ref totalScore, events);
+                }
             }
         }
     }

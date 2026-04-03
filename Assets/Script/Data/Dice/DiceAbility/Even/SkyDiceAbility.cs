@@ -13,10 +13,18 @@ public class SkyDiceAbility : DiceData
         {
             if (dice != null && dice.IsCurrentEven)
             {
-                int add = dice.scoreValue * (currentBonusScore - 1);
-                dice.scoreValue *= currentBonusScore;
-                totalScore += add;
-                events.Add(new ScoreEventData(ScoreEventData.Type.Multiplier, dice.diceIndex, totalScore, $"Sky x{currentBonusScore}", dice.scoreValue));
+                int score = dice.scoreValue * currentBonusScore;
+                int diff = dice.ApplyDiceScoreChange(score);
+                if(diff != 0)
+                {
+                    totalScore += diff;
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
+                    {
+                        effectName = abilityName,
+                        effectDesc = "¸ðµç Â¦¼ö ´«±ÝÀÇ Á¡¼ö x2"
+                    });
+                    Bow.TryTrigger(ref totalScore, events);
+                }
             }
         }
     }

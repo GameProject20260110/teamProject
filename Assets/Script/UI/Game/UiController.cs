@@ -285,6 +285,5 @@ public class UiController : MonoBehaviour
         }
 
     }
-
     #endregion
 }

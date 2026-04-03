@@ -8,21 +8,18 @@ public class TriggerDiceAbility : DiceData
 
     public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        bool isConditionMet = true;
-
         foreach(var dice in allDice)
         {
-            if(dice != null && !dice.IsCurrentEven)
-            {
-                isConditionMet = false;
-                break;
-            }
+            if(dice != null && !dice.IsCurrentEven) return;
         }
 
-        if (isConditionMet)
+        int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+        totalScore *= currentBonusScore;
+        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}" )
         {
-            totalScore *= bonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"Trigger! x{bonusScore}"));
-        }
+            effectName = abilityName,
+            effectDesc = "라운드 점수 x2"
+        });
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

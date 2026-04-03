@@ -8,7 +8,6 @@ public class CaptainDiceAbility : DiceData
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         if (myState.diceData != this) return;
-        int count = 0;
 
         List<int> matchInDices = new List<int>();
         foreach (var dice in allDice)
@@ -21,10 +20,7 @@ public class CaptainDiceAbility : DiceData
         if (matchInDices.Count <= 1) return;
 
         totalScore *= matchInDices.Count;
-        foreach(var dice in allDice)
-        {
-            
-            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, matchInDices.ToArray(), totalScore, $"x{matchInDices.Count}") { effectName = abilityName, effectDesc = "´«±ÝÀÌ °°Àº ÁÖ»çÀ§ ¼ö * ¶ó¿îµå Á¡¼ö" });
-        }
+        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, matchInDices.ToArray(), totalScore, $"x{matchInDices.Count}") { effectName = abilityName, effectDesc = "ëˆˆê¸ˆì´ ê°™ì€ ì£¼ì‚¬ìœ„ ìˆ˜ x ë¼ìš´ë“œ ì ìˆ˜" });
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

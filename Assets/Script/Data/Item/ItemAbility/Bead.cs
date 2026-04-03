@@ -12,9 +12,14 @@ public class Bead : ItemSo
     {
         isConsumable = true;
     }
-    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
+    public override void RoundStart(List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events, int itemIndex = -1)
     {
         int randomBonusScore = Random.Range(minBonus, mnxBonus + 1);
         totalScore += randomBonusScore;
+        events.Add(new ScoreEventData(ScoreEventData.Type.ItemEffect, itemIndex, totalScore, $"+{randomBonusScore}")
+        {
+            effectName = itemName,
+            effectDesc = $"라운드 점수 +{randomBonusScore}"
+        });
     }
 }

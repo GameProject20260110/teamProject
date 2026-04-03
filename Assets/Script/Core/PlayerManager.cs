@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     public List<ItemSo> items = new List<ItemSo>();
     public DiceData extraDice;
     public bool[] SpecialSlots = new bool[6];
+    public int tempExtraSlotsCount = 0;
     public int gold;
     public int currentRound;
     public int heart;

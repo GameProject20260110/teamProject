@@ -6,19 +6,28 @@ public class BubbleDiceAbility : DiceData
 {
     public int bonusScore = 3;
 
-    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, List<ScoreEventData> events)
+    public override void OnRollEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
-        int finalScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+        int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
-        if(myState.IsCurrentEven)
+        foreach(var dice in allDice)
         {
-            myState.isForceOdd = true;
-            myState.scoreValue += finalScore;
-
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, myState.diceIndex, 0, "Bubble", myState.scoreValue));
+            if(dice.IsCurrentEven)
+            {
+                dice.isForceOdd = true;
+                int score = dice.scoreValue + currentBonusScore;
+                int diff = dice.ApplyDiceScoreChange(score);
+                if(diff != 0)
+                {
+                    totalScore += diff;
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
+                    {
+                        effectName = abilityName,
+                        effectDesc = "모든 짝수 취급하고 이 주사위 눈금 +3"
+                    });
+                    Bow.TryTrigger(ref totalScore, events);
+                }
+            }
         }
-
-        
     }
-
 }

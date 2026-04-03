@@ -18,8 +18,18 @@ public class CurbDiceAbility : DiceData
         foreach(var dice in allDice)
         {
             int score = localBonus[dice.modifiedValue] * dice.modifiedValue;
-            totalScore += score;
-            events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"curb +{score}", dice.scoreValue));
+            int diff = dice.ApplyDiceScoreChange(score);
+
+            if(diff != 0)
+            {
+                totalScore += diff;
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue)
+                {
+                    effectName = abilityName,
+                    effectDesc = "눈금이 같은 주사위 수 x 동일 눈금 점수"
+                });
+                Bow.TryTrigger(ref totalScore, events);
+            }
         }
     }
 

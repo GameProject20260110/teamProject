@@ -32,7 +32,7 @@ public class ScoreVisualizer : MonoBehaviour
     public IEnumerator PlayScoreEventSequence(Dice[] uiDice, List<ScoreEventData> scoreEvent)
     {
         _lastEffectName = "";
-
+   
         foreach(var evt in scoreEvent)
         {
             Dice targetDice = GetTargetDice(uiDice, evt.targetIndex);
@@ -71,6 +71,12 @@ public class ScoreVisualizer : MonoBehaviour
                 case ScoreEventData.Type.GainGold:
                     yield return new WaitForSeconds(0.3f);
                     break;
+                case ScoreEventData.Type.GainReroll:
+                    yield return PlayGainReroll(evt);
+                    break;
+                case ScoreEventData.Type.Notice:
+                    yield return PlayNotice(evt);
+                    break;
             }
         }
     }
@@ -85,12 +91,15 @@ public class ScoreVisualizer : MonoBehaviour
             }
             PlayDotweenEffect(targetDice, "Punch");
             ShowFloatingText(targetDice.transform.position, evt.desc);
-            if(evt.currentDiceScore > 0)
+            if(evt.currentDiceScore != int.MinValue)
             {
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
         }
-        UpdateScoreBoard(evt.value);
+        if(evt.value != 0)
+        {
+            UpdateScoreBoard(evt.value);
+        }
         yield return new WaitForSeconds(0.7f);
     }
 
@@ -101,7 +110,7 @@ public class ScoreVisualizer : MonoBehaviour
             yield return PlayScale(targetDice);
             PlayDotweenEffect(targetDice, "Punch");
             ShowFloatingText(targetDice.transform.position, evt.desc);
-            if(evt.currentDiceScore > 0)
+            if(evt.currentDiceScore != int.MinValue)
             {
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
@@ -127,7 +136,7 @@ public class ScoreVisualizer : MonoBehaviour
                 if (uiDice[idx] == null || !uiDice[idx].gameObject.activeSelf) continue;
 
                 PlayDotweenEffect(uiDice[idx], "Bounce");
-                if (evt.currentDiceScore > 0) uiDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
+                if (evt.currentDiceScore != int.MinValue) uiDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
         }
         UpdateScoreBoard(evt.value);
@@ -221,15 +230,15 @@ public class ScoreVisualizer : MonoBehaviour
     private IEnumerator PlayItemEffect(ScoreEventData evt)
     {
         ShowEffectMessage(evt.effectName, evt.effectDesc);
-        var card = UiController.instance?.inventoryUI?.FindCardByName(evt.effectName);
+        var card = evt.targetIndex >= 0 ? UiController.instance.inventoryUI.FindCardByIndex(evt.targetIndex) : UiController.instance.inventoryUI.FindCardByName(evt.effectName);
+
         if (card != null)
         {
             Vector3 originalScale = card.transform.localScale;
             card.transform.DOScale(originalScale * 1.3f, 0.3f).SetEase(Ease.OutBack);
-
             yield return new WaitForSeconds(0.7f);
-
             card.transform.DOScale(originalScale, 0.3f);
+            yield return new WaitForSeconds(0.7f);
         }
         else
         {
@@ -244,6 +253,11 @@ public class ScoreVisualizer : MonoBehaviour
         UpdateScoreBoard(evt.value);
         finalScoreText.transform.DOPunchScale(Vector3.one * 0.35f, 0.3f);
         yield return new WaitForSeconds(0.35f);
+    }
+
+    private IEnumerator PlayNotice(ScoreEventData evt)
+    {
+        yield return new WaitForSeconds(0.7f);
     }
 
     public void ClearNegateOverlays()
@@ -279,9 +293,9 @@ public class ScoreVisualizer : MonoBehaviour
         if (string.IsNullOrEmpty(effectName) || effectName == _lastEffectName) return false;
         _lastEffectName = effectName;
         
-         string message = string.IsNullOrEmpty(effectDesc) ? effectName : $"{effectName}\n{effectDesc}";
-         UiController.instance.notificationUI.Show(message, 0.7f);
-         return true;
+        string message = string.IsNullOrEmpty(effectDesc) ? effectName : $"{effectName}\n{effectDesc}";
+        UiController.instance.notificationUI.Show(message, 0.7f);
+        return true;
     }
 
     public void UpdateScoreBoard(int targetValue)
@@ -347,5 +361,13 @@ public class ScoreVisualizer : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         dice.transform.DOScale(Vector3.one * baseScale, 0.3f);
         yield return new WaitForSeconds(0.7f);
+    }
+
+    private IEnumerator PlayGainReroll(ScoreEventData evt)
+    {
+        GameManager.instance.CurrentRerollCount++;
+        Vector3 pos = UiController.instance.rerollText.transform.position;
+        ShowFloatingText(pos, evt.desc);
+        yield return new WaitForSeconds(0.5f);
     }
 }

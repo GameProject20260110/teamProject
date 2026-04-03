@@ -21,19 +21,29 @@ public class BoosterDiceAbility : DiceData
 
         if (count >= 3)
         {
-            foreach (var dice in allDice)
-            {
-                dice.scoreValue += currentBonusScore;
-                totalScore += currentBonusScore;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"Booster +{currentBonusScore}", dice.scoreValue));
-            }
-
             if (!GameManager.instance.hasUsedPlusReroll)
             {
                 GameManager.instance.hasUsedPlusReroll = true;
-                GameManager.instance.CurrentRerollCount++;
-                events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, "Booster +1 Reroll"));
+                events.Add(new ScoreEventData(ScoreEventData.Type.GainReroll, -1, totalScore, "Reroll +1"));
             }
+
+            foreach (var dice in allDice)
+            {
+                int score = dice.scoreValue + currentBonusScore;
+                int diff = dice.ApplyDiceScoreChange(score);
+                if(diff != 0)
+                {
+                    totalScore += diff;
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
+                    {
+                        effectName = abilityName,
+                        effectDesc = $"모든 주사위 점수 +{currentBonusScore} 재굴림 +1"
+                    });
+                    Bow.TryTrigger(ref totalScore, events);
+                }
+            }
+
+            
         }
     }
 }
