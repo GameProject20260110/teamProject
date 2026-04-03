@@ -38,6 +38,7 @@ public class UiController : MonoBehaviour
     [Header("GameEndPanels")]
     public GameObject backGround;
 
+    [SerializeField] private Image _playerImage;
     private void Awake()
     {
         if (instance == null)
@@ -77,7 +78,10 @@ public class UiController : MonoBehaviour
             SceneController.instance.LoadShopScene();
         });
 
-        
+        if(PlayerManager.instance != null && _playerImage != null)
+        {
+            _playerImage.sprite = PlayerManager.instance.playerImage;
+        }
     }
     
     private void Update()

@@ -18,6 +18,7 @@ public class RoundData
 public class StageDataSo : ScriptableObject
 {
     public List<RoundData> allRounds = new List<RoundData>();
+    public List<Sprite> enemyImages = new List<Sprite>();
 
     public RoundData GetRoundData(int round)
     {
@@ -29,6 +30,14 @@ public class StageDataSo : ScriptableObject
         RoundData data = GetRoundData(round);
         if (data != null && data.goldReward > 0) return data.goldReward;
         return round + 9;
+    }
+
+    public Sprite GetEnemyImage(int round)
+    {
+        if (enemyImages == null && enemyImages.Count == 0) return null;
+        int seed = (round - 1) / 5;
+        Random.InitState(seed);
+        return enemyImages[Random.Range(0, enemyImages.Count)];
     }
 
     [ContextMenu("라운드 기본값 생성")]

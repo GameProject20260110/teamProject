@@ -118,3 +118,8 @@ MonoBehaviour:
     bossStage: 1
     hasGimmick: 1
     gimmickName: 
+  enemyImages:
+  - {fileID: 4801227835787818748, guid: fcc2587eedde71f45baef9b8eeb215ba, type: 3}
+  - {fileID: 1344780287051860636, guid: 2495037256b105540968cd57f9ab1788, type: 3}
+  - {fileID: 2302870733942359475, guid: d8cd5ea10e451c84c81bdd186539749b, type: 3}
+  - {fileID: 1550767983955354101, guid: ed94d9de732edc44e8e8770326b27918, type: 3}

@@ -72,7 +72,7 @@ public class RoundManager : MonoBehaviour
 
                     if(enemyImage != null)
                     {
-                        enemyImage.sprite = roundData.enemyImage;
+                        enemyImage.sprite = currentStageData.GetEnemyImage(currentRound);
                     }
 
                     if(roundData.hasGimmick)

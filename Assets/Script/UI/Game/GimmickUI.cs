@@ -4,24 +4,27 @@ using UnityEngine.UI;
 
 public class GimmickUI : MonoBehaviour
 {
-    public Transform gimmickFrame;
+    public Transform gimmickFrame1;
+    public Transform gimmickFrame2;
     public GameObject gimmickIconPrefab;
     private List<GameObject> _gimmickIcon = new List<GameObject>();
 
     public void RefreshIcons(List<GimmickSo> gimmicks)
     {
         ClearIcons();
-        foreach (var gimmick in gimmicks)
+        
+        for(int i = 0; i < Mathf.Min(gimmicks.Count, 2); i++)
         {
-            if (gimmick.gimmickIcon == null) continue;
-            GameObject iconObj = Instantiate(gimmickIconPrefab, gimmickFrame);
-            iconObj.GetComponent<Image>().sprite = gimmick.gimmickIcon;
+            if (gimmicks[i].gimmickIcon == null) continue;
 
-            GimmickIconHover hover = iconObj.AddComponent<GimmickIconHover>();
-            hover.gimmick = gimmick;
-
+            Transform frame = i == 0 ? gimmickFrame1 : gimmickFrame2;
+            GameObject iconObj = Instantiate(gimmickIconPrefab, frame);
+            iconObj.GetComponent<Image>().sprite = gimmicks[i].gimmickIcon;
+            GimmickIconHover hover= iconObj.AddComponent<GimmickIconHover>();
+            hover.gimmick = gimmicks[i];
             _gimmickIcon.Add(iconObj);
         }
+
     }
     public void ClearIcons()
     {
@@ -29,7 +32,7 @@ public class GimmickUI : MonoBehaviour
         {
             if(icon != null)
             {
-                Destroy(icon);
+                DestroyImmediate(icon);
             }
         }
         _gimmickIcon.Clear();
