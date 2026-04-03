@@ -46,9 +46,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerManager
   dices: []
   items: []
+  extraDice: {fileID: 0}
   SpecialSlots: 000000000000
+  tempExtraSlotsCount: 0
   gold: 0
   currentRound: 0
   heart: 0
   isGameOver: 0
+  playerImage: {fileID: 6188049676748693579, guid: 1d11d1b94b9a1aa4f855249a96106491, type: 3}
   defaultDice: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}

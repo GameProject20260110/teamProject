@@ -15,6 +15,7 @@ public class HomeScreenUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI bestScore;
     [SerializeField] private TextMeshProUGUI GameClear;
     [SerializeField] private TextMeshProUGUI totalGamePlayed;
+    [SerializeField] private Image playerImage;
 
     private void Awake()
     {
@@ -38,6 +39,11 @@ public class HomeScreenUI : MonoBehaviour
         bestScore.text = "최고 점수: " + PlayerStatsManager.instance.bestScore.ToString();
         GameClear.text = "게임 클리어 수: " + PlayerStatsManager.instance.totalClears.ToString();
         totalGamePlayed.text = "게임 플레이 수: " + PlayerStatsManager.instance.totalGamePlayed.ToString();
+
+        if (PlayerManager.instance != null && playerImage != null)
+        {
+            playerImage.sprite = PlayerManager.instance.playerImage;
+        }
     }
 
 }
