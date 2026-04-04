@@ -86,14 +86,26 @@ public class ScoreManager : MonoBehaviour
                     continue;
                 }
                 if (itemsToComsume.Contains(item)) continue;
-                item.RoundStart(simulationStates, ref finalScore, scoreEvents, i);
+                item.RoundStart(simulationStates, ref finalScore, scoreEvents, i); 
+                Debug.Log($"RoundStart 호출: {item.itemName}");
 
-                if(item.isConsumable)
+                if (item.isConsumable)
                 {
                     itemsToComsume.Add(item);
                 }
             }
 
+        }
+
+        if(PlayerShopManager.instance != null)
+        {
+            var pending = PlayerShopManager.instance.pendingConsumables;
+            for(int i = 0; i < pending.Count; i++)
+            {
+                var item = pending[i];
+                if (item == null) continue;
+                item.RoundStart(simulationStates, ref finalScore, scoreEvents, -1);
+            }
         }
 
         // 점수 로직

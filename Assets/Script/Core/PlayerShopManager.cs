@@ -13,6 +13,7 @@ public class PlayerShopManager : MonoBehaviour
 
     public List<DiceData> TempDices = new();
     public List<ItemSo> TempItems = new();
+    public List<ItemSo> pendingConsumables = new List<ItemSo>();
     public DiceData ExtraDice;
 
     [Header("Settings")]

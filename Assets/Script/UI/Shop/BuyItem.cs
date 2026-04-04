@@ -115,6 +115,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
         {
             Data.Consumable();
             PlayerShopManager.instance.TempItems[Slot.slotIndex] = null;
+            PlayerShopManager.instance.pendingConsumables.Add(Data);
         }
         return success;
     }

@@ -124,6 +124,7 @@ public class GameManager : MonoBehaviour
 
     public void StartRound()
     {
+        Debug.Log($"{_usedConsumableItems.Count}");
         _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
         _isFirstRoll = true;
@@ -280,6 +281,10 @@ public class GameManager : MonoBehaviour
         if(_usedConsumableItems != null && _usedConsumableItems.Count > 0)
         {
             RemoveUsedItems(_usedConsumableItems);
+        }
+        if(PlayerShopManager.instance != null)
+        {
+            PlayerShopManager.instance.pendingConsumables.Clear();
         }
 
         if (RoundManager.instance != null) RoundManager.instance.CompleteRound(currentScore);

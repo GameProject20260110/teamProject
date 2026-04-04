@@ -36,7 +36,7 @@ public class StageDataSo : ScriptableObject
     {
         if (enemyImages == null && enemyImages.Count == 0) return null;
         int seed = (round - 1) / 5;
-        Random.InitState(seed);
+        //Random.InitState(seed);
         return enemyImages[Random.Range(0, enemyImages.Count)];
     }
 
