@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MutDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -7840611543066647516, guid: 6103cec8f9554a04382c1102ba0b7c4a, type: 3}
-  - {fileID: -1577856841625314910, guid: fb91b06e4ee4ae24f94377c5b4da0f18, type: 3}
-  - {fileID: -6017797333463101079, guid: bc417aaa04b986642a1c6a11551d3de4, type: 3}
-  - {fileID: 5887380686267211356, guid: 1bd227da50d5f6b44af57cd603242d1f, type: 3}
-  - {fileID: -4364814966852183487, guid: f62978a4280c9a943b743053d84515f9, type: 3}
-  - {fileID: -7509711404856337652, guid: d288f5757d8617c4ea8f687b841b702f, type: 3}
+  - {fileID: 21300000, guid: 6103cec8f9554a04382c1102ba0b7c4a, type: 3}
+  - {fileID: 21300000, guid: fb91b06e4ee4ae24f94377c5b4da0f18, type: 3}
+  - {fileID: 21300000, guid: bc417aaa04b986642a1c6a11551d3de4, type: 3}
+  - {fileID: 21300000, guid: 1bd227da50d5f6b44af57cd603242d1f, type: 3}
+  - {fileID: 21300000, guid: f62978a4280c9a943b743053d84515f9, type: 3}
+  - {fileID: 21300000, guid: d288f5757d8617c4ea8f687b841b702f, type: 3}

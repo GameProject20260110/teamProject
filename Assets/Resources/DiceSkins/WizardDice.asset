@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: WizardDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -1800638986411720039, guid: a941cb3081fa23541b9f8dc8a94b6a7d, type: 3}
-  - {fileID: -3461294352752959036, guid: 19b893c45feef7e43aa04cb8e844f917, type: 3}
-  - {fileID: 4571079491867999956, guid: 201354933c2250846a82c14cef7fd288, type: 3}
-  - {fileID: 4064046466154683174, guid: b32243848f379664e9670b6e3575fb51, type: 3}
-  - {fileID: -7836189420797819258, guid: c43dd44836dc8a34ea24c3e14c1effa8, type: 3}
-  - {fileID: -8451183101933957291, guid: 199981f524a58894ead33624472b7350, type: 3}
+  - {fileID: 21300000, guid: a941cb3081fa23541b9f8dc8a94b6a7d, type: 3}
+  - {fileID: 21300000, guid: 19b893c45feef7e43aa04cb8e844f917, type: 3}
+  - {fileID: 21300000, guid: 201354933c2250846a82c14cef7fd288, type: 3}
+  - {fileID: 21300000, guid: b32243848f379664e9670b6e3575fb51, type: 3}
+  - {fileID: 21300000, guid: c43dd44836dc8a34ea24c3e14c1effa8, type: 3}
+  - {fileID: 21300000, guid: 199981f524a58894ead33624472b7350, type: 3}

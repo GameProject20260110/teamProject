@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TurboDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 5651309669669938361, guid: da470a2097282b14daa7288825b4f60e, type: 3}
-  - {fileID: 2302539629304553109, guid: d301076f09a947b4a95e3445ba2af1c0, type: 3}
-  - {fileID: 3772418388393255906, guid: b6b8e1119c2f55642912a9725e1b3a9f, type: 3}
-  - {fileID: -2851857659931430438, guid: 72557cf337caa3b4ebf235652dcf9f86, type: 3}
-  - {fileID: -797669592926544250, guid: b6c26556b218d0a41b94f7ee9a672c50, type: 3}
-  - {fileID: -7407940862055490009, guid: 511f29905fcdada4989dbe122d0d0678, type: 3}
+  - {fileID: 21300000, guid: da470a2097282b14daa7288825b4f60e, type: 3}
+  - {fileID: 21300000, guid: d301076f09a947b4a95e3445ba2af1c0, type: 3}
+  - {fileID: 21300000, guid: b6b8e1119c2f55642912a9725e1b3a9f, type: 3}
+  - {fileID: 21300000, guid: 72557cf337caa3b4ebf235652dcf9f86, type: 3}
+  - {fileID: 21300000, guid: b6c26556b218d0a41b94f7ee9a672c50, type: 3}
+  - {fileID: 21300000, guid: 511f29905fcdada4989dbe122d0d0678, type: 3}

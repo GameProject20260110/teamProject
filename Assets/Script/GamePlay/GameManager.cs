@@ -75,8 +75,10 @@ public class GameManager : MonoBehaviour
 
     public void InitializeRoundData()
     {
-        _isFirstRoll = true;
-        _currentRerollCount = maxRerollCount;
+        //_isFirstRoll = true;
+        //_currentRerollCount = maxRerollCount;
+        _isFirstRoll = PlayerManager.instance.isFirstRoll;
+        _currentRerollCount = PlayerManager.instance.gameRerollCount;
         currentScore = 0;
         if (UiController.instance != null) UiController.instance.UpdateRerollUi(_currentRerollCount);
         NotifyAllUI();
@@ -127,8 +129,10 @@ public class GameManager : MonoBehaviour
         Debug.Log($"{_usedConsumableItems.Count}");
         _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
-        _isFirstRoll = true;
-        _currentRerollCount = maxRerollCount;
+        //_isFirstRoll = true;
+        //_currentRerollCount = maxRerollCount;
+        _isFirstRoll = PlayerManager.instance.isFirstRoll;
+        _currentRerollCount = PlayerManager.instance.gameRerollCount;
         currentScore = 0;
         hasUsedPlusReroll = false;
 
@@ -169,12 +173,14 @@ public class GameManager : MonoBehaviour
         if (_isFirstRoll)
         {
             _isFirstRoll = false;
+            PlayerManager.instance.isFirstRoll = false;
             diceManager.StartRolling();
             UiController.instance.SetRollButtnonToReroll();
         }
         else if(!_isFirstRoll && _currentRerollCount > 0)
         {
             _currentRerollCount--;
+            PlayerManager.instance.gameRerollCount = _currentRerollCount;
             currentScore = 0;
             ScoreVisualizer.instance?.UpdateScoreBoard(0);
             ScoreVisualizer.instance?.ClearNegateOverlays();
@@ -314,12 +320,14 @@ public class GameManager : MonoBehaviour
         {
             RoundManager.instance.GoNextRound();
         }
+        PlayerManager.instance.gameRerollCount = 1;
         if(SceneController.instance != null) 
             SceneController.instance.LoadShopScene();
     }
 
     public void OnClickRetryRound()
     {
+        PlayerManager.instance.gameRerollCount = 1;
         if (SceneController.instance != null)
             SceneController.instance.LoadShopScene();
     }

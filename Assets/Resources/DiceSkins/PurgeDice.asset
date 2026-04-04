@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: PurgeDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 554171150256949879, guid: e1d6b2deef51cf54cb99b100d23a4554, type: 3}
-  - {fileID: 1748933751394831437, guid: a3b6296833d87d04e82291ca240969a1, type: 3}
-  - {fileID: 8267402469142270380, guid: c6c15dd6b3fe7924c8a711288894bc7c, type: 3}
-  - {fileID: 8039127274615310187, guid: 1ee22a69f2ba8bc44bfe22015abd2d7f, type: 3}
-  - {fileID: 9088731365656558342, guid: 6caa75e53085d3d45aa2646d82318595, type: 3}
-  - {fileID: 8920062273099256953, guid: c54f07e34ef78de4b85478d4d10a38b2, type: 3}
+  - {fileID: 21300000, guid: e1d6b2deef51cf54cb99b100d23a4554, type: 3}
+  - {fileID: 21300000, guid: a3b6296833d87d04e82291ca240969a1, type: 3}
+  - {fileID: 21300000, guid: c6c15dd6b3fe7924c8a711288894bc7c, type: 3}
+  - {fileID: 21300000, guid: 1ee22a69f2ba8bc44bfe22015abd2d7f, type: 3}
+  - {fileID: 21300000, guid: 6caa75e53085d3d45aa2646d82318595, type: 3}
+  - {fileID: 21300000, guid: c54f07e34ef78de4b85478d4d10a38b2, type: 3}

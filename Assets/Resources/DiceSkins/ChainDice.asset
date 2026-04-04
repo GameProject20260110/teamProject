@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: ChainDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 6125859572690548931, guid: 22a58a1332aef0b479e6bec4e1123c1e, type: 3}
-  - {fileID: 6634654852622082309, guid: 3ab9e5d6b2fbdc14ba5cecfe0bbbe599, type: 3}
-  - {fileID: -3167150594806527555, guid: b6b96d48d4bef884e990556f2ec754ce, type: 3}
-  - {fileID: -2146299131187406198, guid: d774e6976f6adde42be8e0ca45716da2, type: 3}
-  - {fileID: 8030816654694806445, guid: 1eb4aa62c7c5a5847904eb0fe9cd0d27, type: 3}
-  - {fileID: 3984829270441019704, guid: 00ddcd8cec37d424e8a6d52336472dd5, type: 3}
+  - {fileID: 21300000, guid: 22a58a1332aef0b479e6bec4e1123c1e, type: 3}
+  - {fileID: 21300000, guid: 3ab9e5d6b2fbdc14ba5cecfe0bbbe599, type: 3}
+  - {fileID: 21300000, guid: b6b96d48d4bef884e990556f2ec754ce, type: 3}
+  - {fileID: 21300000, guid: d774e6976f6adde42be8e0ca45716da2, type: 3}
+  - {fileID: 21300000, guid: 1eb4aa62c7c5a5847904eb0fe9cd0d27, type: 3}
+  - {fileID: 21300000, guid: 00ddcd8cec37d424e8a6d52336472dd5, type: 3}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CupidDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -1192839545221375420, guid: 3791a52e5ff28c540a406d57c07e346f, type: 3}
-  - {fileID: 9154718028581927591, guid: f0f5990f6ec05784b9a4cd02d50fe77f, type: 3}
-  - {fileID: -4376173696245729153, guid: 2286420c1f60bef478aeef1aa723d7c9, type: 3}
-  - {fileID: -7960510649742581951, guid: ff59aa64cbcb47146bb1a43562446a9f, type: 3}
-  - {fileID: 1906859551788033355, guid: 293d926143d6d15408189463f7b312c8, type: 3}
-  - {fileID: 1376051354026355744, guid: 48c5e375fb1ddaf4fa593cb5e4ccca27, type: 3}
+  - {fileID: 21300000, guid: 3791a52e5ff28c540a406d57c07e346f, type: 3}
+  - {fileID: 21300000, guid: f0f5990f6ec05784b9a4cd02d50fe77f, type: 3}
+  - {fileID: 21300000, guid: 2286420c1f60bef478aeef1aa723d7c9, type: 3}
+  - {fileID: 21300000, guid: ff59aa64cbcb47146bb1a43562446a9f, type: 3}
+  - {fileID: 21300000, guid: 293d926143d6d15408189463f7b312c8, type: 3}
+  - {fileID: 21300000, guid: 48c5e375fb1ddaf4fa593cb5e4ccca27, type: 3}

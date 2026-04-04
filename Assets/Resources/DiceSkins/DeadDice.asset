@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DeadDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -2845092884550872695, guid: 6e5048ae6505d004791022c517d04f46, type: 3}
-  - {fileID: 5167943779732456223, guid: 75d8e5cd86a592046a33316fcb0506bc, type: 3}
-  - {fileID: -8496661248088100039, guid: 5c2185a83a7e4f04886e707c1fecb5a4, type: 3}
-  - {fileID: -7317939089858395317, guid: 44cc395e251e46b4bbd5d3bf5ea603b9, type: 3}
-  - {fileID: -9208166762078810905, guid: b49bd7f6312dbd24a8737c936c72bf40, type: 3}
-  - {fileID: 5065088033404304620, guid: 3ce921c0aa9b61e498565ec844a3ea58, type: 3}
+  - {fileID: 21300000, guid: 6e5048ae6505d004791022c517d04f46, type: 3}
+  - {fileID: 21300000, guid: 75d8e5cd86a592046a33316fcb0506bc, type: 3}
+  - {fileID: 21300000, guid: 5c2185a83a7e4f04886e707c1fecb5a4, type: 3}
+  - {fileID: 21300000, guid: 44cc395e251e46b4bbd5d3bf5ea603b9, type: 3}
+  - {fileID: 21300000, guid: b49bd7f6312dbd24a8737c936c72bf40, type: 3}
+  - {fileID: 21300000, guid: 3ce921c0aa9b61e498565ec844a3ea58, type: 3}
