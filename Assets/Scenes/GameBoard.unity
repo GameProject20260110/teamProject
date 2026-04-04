@@ -1989,16 +1989,16 @@ MonoBehaviour:
   testGold: 9999
   testHeart: 3
   testAbilities:
-  - {fileID: 11400000, guid: 97e69c32f976aa341b1024253a86f99d, type: 2}
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 11400000, guid: ac9cd7bf69b0c8f4aab28de7bd99ff21, type: 2}
+  - {fileID: 11400000, guid: 400681737b4eb6e4789a6af1059401cd, type: 2}
+  - {fileID: 11400000, guid: e6774d81cf6263048b83f5121a55f098, type: 2}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   testValues: 
   testDiceSlot: 010101010000
   testItem:
-  - {fileID: 11400000, guid: bdcb035bf233d4a47bdf322a02e3685a, type: 2}
+  - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
   - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
   - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
   - {fileID: 0}
