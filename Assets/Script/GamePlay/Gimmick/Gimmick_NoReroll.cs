@@ -7,7 +7,7 @@ public class Gimmick_NoReroll : GimmickSo
     {
         if(GameManager.instance != null)
         {
-            GameManager.instance.maxRerollCount = 0;
+            PlayerManager.instance.gameRerollCount = 0;
             GameManager.instance.InitializeRoundData();
         }
         Debug.Log("리롤 불가");

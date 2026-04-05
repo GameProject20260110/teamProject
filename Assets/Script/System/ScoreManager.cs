@@ -1,8 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
-using Unity.VisualScripting;
-using UnityEngine.SocialPlatforms.Impl;
+
 
 public class ScoreManager : MonoBehaviour
 {
@@ -20,6 +18,7 @@ public class ScoreManager : MonoBehaviour
         List<DiceState> simulationStates = new List<DiceState>();
         List<ScoreEventData> scoreEvents = new List<ScoreEventData>();
         List<ItemSo> itemsToComsume = new List<ItemSo>();
+        List<ItemSo> toRemove = new List<ItemSo>();
         int finalScore = 0;
 
         for(int i = 0; i < uiDice.Length; i++)
@@ -40,20 +39,7 @@ public class ScoreManager : MonoBehaviour
         bool gimmickNoScoreNormal = IsGimmickActive(GimmickType.NoScoreFromNormalDice);
         bool gimmickNegateItem = IsGimmickActive(GimmickType.NegateRandomItem);
         bool gimmickNegateDiceEffect = IsGimmickActive(GimmickType.NegateRandomDiceEffect);
-
-        if(gimmickNegateDiceEffect)
-        {
-            var candidates = simulationStates.FindAll(s => s != null && !s.isIgnored && s.diceData.type != DiceType.None);
-
-            if(candidates.Count > 0)
-            {
-                DiceState target = candidates[UnityEngine.Random.Range(0, candidates.Count)];
-                target.isIgnored = true;
-                // 기믹 연출 이벤트 추가 필요
-                Debug.Log($"{target.diceIndex} 효과 무효화!");
-            }
-        }
-
+ 
         // 0단계
         foreach (var state in simulationStates)
         {
@@ -61,7 +47,7 @@ public class ScoreManager : MonoBehaviour
 
             if(gimmickNoScoreNormal && state.diceData.type == DiceType.None)
             {
-                // 기믹 연출 이벤트 추가 필요
+                state.isScoreUnLocked = true;
                 Debug.Log("효과 없는 주사위 점수 획득 불가!");
                 continue;
             }
@@ -69,6 +55,18 @@ public class ScoreManager : MonoBehaviour
             finalScore += state.originalValue;
             state.appliedScoreValue = state.originalValue;
             scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
+        }
+
+        if (gimmickNegateDiceEffect)
+        {
+            var candidates = simulationStates.FindAll(s => s != null && !s.isIgnored && s.diceData.type != DiceType.None);
+
+            if (candidates.Count > 0)
+            {
+                DiceState target = candidates[Random.Range(0, candidates.Count)];
+                target.isIgnored = true;
+                Debug.Log($"{target.diceIndex} 효과 무효화!");
+            }
         }
 
 
@@ -105,6 +103,15 @@ public class ScoreManager : MonoBehaviour
                 var item = pending[i];
                 if (item == null) continue;
                 item.RoundStart(simulationStates, ref finalScore, scoreEvents, -1);
+
+                if(item is Clock)
+                {
+                    toRemove.Add(item);
+                }
+            }
+            foreach(var item in toRemove)
+            {
+                pending.Remove(item);
             }
         }
 
