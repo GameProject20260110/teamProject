@@ -1,6 +1,9 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
+using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.UI;
 using TMPro;
 
@@ -21,6 +24,8 @@ public class SceneController : MonoBehaviour
     [Header("페이드 패널")]
     [SerializeField] private CanvasGroup fadeCanvasGroup;
     [SerializeField] private float fadeDuration = 0.4f;
+
+    private SceneInstance? currentAddressableScene;
 
     public bool IsTransitioning { get; private set; }
 
@@ -79,20 +84,14 @@ public class SceneController : MonoBehaviour
 
             SetLoadingUI(true, 0f);
 
-            AsyncOperation op = SceneManager.LoadSceneAsync(sceneName); // 로드만
-            op.allowSceneActivation = false; // 100% -> 0.9f
-
-            while (op.progress < 0.9f)
+            if (sceneName == SceneShop || sceneName == SceneBattle)
             {
-                SetLoadingUI(true, Mathf.Clamp01(op.progress / 0.9f));
-                await UniTask.Yield();
+                await LoadAddressableSceneAsync(sceneName);
             }
-
-            SetLoadingUI(true, 1f);
-            await UniTask.Delay(300);
-
-            op.allowSceneActivation = true;
-            await UniTask.WaitUntil(() => op.isDone);
+            else
+            {
+                await LoadNormalSceneAsync(sceneName);
+            }
 
             SetLoadingUI(false, 0f);
             await FadeAsync(1f, 0f);
@@ -106,6 +105,64 @@ public class SceneController : MonoBehaviour
         {
             IsTransitioning = false;
         }
+    }
+
+    private async UniTask LoadAddressableSceneAsync(string sceneName)
+    {
+        // 이전 Addressable 씬 언로드
+        if (currentAddressableScene.HasValue)
+        {
+            await Addressables.UnloadSceneAsync(currentAddressableScene.Value);
+            currentAddressableScene = null;
+        }
+
+        AsyncOperationHandle<SceneInstance> handle =
+            Addressables.LoadSceneAsync(sceneName, LoadSceneMode.Single, false);
+
+        while (!handle.IsDone)
+        {
+            SetLoadingUI(true, Mathf.Clamp01(handle.PercentComplete));
+            await UniTask.Yield();
+        }
+
+        if (handle.Status == AsyncOperationStatus.Succeeded)
+        {
+            SetLoadingUI(true, 1f);
+            await UniTask.Delay(300);
+
+            await handle.Result.ActivateAsync();
+            currentAddressableScene = handle.Result;
+        }
+        else
+        {
+            Debug.LogError($"Addressable 씬 로드 실패: {sceneName}");
+            Addressables.Release(handle);
+        }
+    }
+
+    private async UniTask LoadNormalSceneAsync(string sceneName)
+    {
+        // 기존 Addressable 씬 언로드
+        if (currentAddressableScene.HasValue)
+        {
+            await Addressables.UnloadSceneAsync(currentAddressableScene.Value);
+            currentAddressableScene = null;
+        }
+
+        AsyncOperation op = SceneManager.LoadSceneAsync(sceneName); // 로드만
+        op.allowSceneActivation = false; // 100% -> 0.9f
+
+        while (op.progress < 0.9f)
+        {
+            SetLoadingUI(true, Mathf.Clamp01(op.progress / 0.9f));
+            await UniTask.Yield();
+        }
+
+        SetLoadingUI(true, 1f);
+        await UniTask.Delay(300);
+
+        op.allowSceneActivation = true;
+        await UniTask.WaitUntil(() => op.isDone);
     }
 
     private void SetLoadingUI(bool visible, float progress)

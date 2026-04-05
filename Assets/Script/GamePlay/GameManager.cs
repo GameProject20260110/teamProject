@@ -70,11 +70,13 @@ public class GameManager : MonoBehaviour
         if(AudioManager.instance != null)
         {
             AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
-        };
+        }
     }
+
     public void InitializeRoundData()
     {
-        Debug.Log($"gameRerollCount: {PlayerManager.instance.gameRerollCount}");
+        //_isFirstRoll = true;
+        //_currentRerollCount = maxRerollCount;
         _isFirstRoll = PlayerManager.instance.isFirstRoll;
         _currentRerollCount = PlayerManager.instance.gameRerollCount;
         currentScore = 0;
@@ -127,6 +129,8 @@ public class GameManager : MonoBehaviour
         Debug.Log($"{_usedConsumableItems.Count}");
         _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
+        //_isFirstRoll = true;
+        //_currentRerollCount = maxRerollCount;
         _isFirstRoll = PlayerManager.instance.isFirstRoll;
         _currentRerollCount = PlayerManager.instance.gameRerollCount;
         currentScore = 0;
@@ -317,14 +321,15 @@ public class GameManager : MonoBehaviour
             RoundManager.instance.GoNextRound();
         }
         PlayerManager.instance.gameRerollCount = 1;
-        Debug.Log($"NextRound gameRerollCount: {PlayerManager.instance.gameRerollCount}");
-        if (SceneController.instance != null) 
+        PlayerManager.instance.isFirstRoll = true;
+        if(SceneController.instance != null) 
             SceneController.instance.LoadShopScene();
     }
 
     public void OnClickRetryRound()
     {
         PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.isFirstRoll = true;
         if (SceneController.instance != null)
             SceneController.instance.LoadShopScene();
     }

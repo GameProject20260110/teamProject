@@ -548,7 +548,7 @@ GameObject:
   - component: {fileID: 91708368}
   - component: {fileID: 91708367}
   m_Layer: 5
-  m_Name: MySlot (6)
+  m_Name: MySlot 4
   m_TagString: MySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3706,7 +3706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &534881958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -6260,7 +6260,7 @@ GameObject:
   - component: {fileID: 888375383}
   - component: {fileID: 888375382}
   m_Layer: 5
-  m_Name: MySlot (6)
+  m_Name: MySlot 6
   m_TagString: MySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12402,7 +12402,7 @@ GameObject:
   - component: {fileID: 1737058525}
   - component: {fileID: 1737058524}
   m_Layer: 5
-  m_Name: MySlot (6)
+  m_Name: MySlot 3
   m_TagString: MySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -12497,7 +12497,7 @@ GameObject:
   - component: {fileID: 1749629493}
   - component: {fileID: 1749629492}
   m_Layer: 5
-  m_Name: MySlot (6)
+  m_Name: MySlot 5
   m_TagString: MySlot
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
