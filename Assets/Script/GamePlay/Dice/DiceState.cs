@@ -21,7 +21,8 @@ public class DiceState
     public ScoreManager.DiceType currentType;
     public bool isForceOdd = false;
     public bool isForceEven = false;
-
+    public bool isScoreUnLocked = false;
+    
     public bool IsCurrentEven
     {
         get
@@ -43,6 +44,7 @@ public class DiceState
         change = false;
         isMulti = false;
         isIgnored = false;
+        isScoreUnLocked = false;
         appliedScoreValue = 0;
 
         if(data != null)
@@ -64,6 +66,7 @@ public class DiceState
 
     public int ApplyDiceScoreChange(int diceScore)
     {
+        if (isScoreUnLocked) return 0;
         int diff = diceScore - appliedScoreValue;
         scoreValue = diceScore;
         appliedScoreValue = diceScore;
