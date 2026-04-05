@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DevilDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -8744707640536975709, guid: d73d69530742e294581dd28b32c85b6b, type: 3}
-  - {fileID: 118206792675527250, guid: ffc4b25b22cf4ec4ca62d04303dd7b26, type: 3}
-  - {fileID: 3078208043634217088, guid: dd37837c6bc957f4f82435fe73915fd2, type: 3}
-  - {fileID: -7875890135622235751, guid: 518dfbff41643514e87e1da5b37f501a, type: 3}
-  - {fileID: -7740031732936179180, guid: d635c84ad988b2f439258bc4b6c562d0, type: 3}
-  - {fileID: -1341308612194851506, guid: 2094f9b92bbd3e94da2afadbcf44e741, type: 3}
+  - {fileID: 21300000, guid: d73d69530742e294581dd28b32c85b6b, type: 3}
+  - {fileID: 21300000, guid: ffc4b25b22cf4ec4ca62d04303dd7b26, type: 3}
+  - {fileID: 21300000, guid: dd37837c6bc957f4f82435fe73915fd2, type: 3}
+  - {fileID: 21300000, guid: 518dfbff41643514e87e1da5b37f501a, type: 3}
+  - {fileID: 21300000, guid: d635c84ad988b2f439258bc4b6c562d0, type: 3}
+  - {fileID: 21300000, guid: 2094f9b92bbd3e94da2afadbcf44e741, type: 3}

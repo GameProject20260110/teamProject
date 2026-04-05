@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: TriggerDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -5446561438299721211, guid: 9db06219706dc334ead35f79c1c01c54, type: 3}
-  - {fileID: 4974448533734885240, guid: 2a8debcc9c4c7604192c129e9bbff056, type: 3}
-  - {fileID: 7176837345783973617, guid: 84a8d8e761882c04ba4db5a1ead1537d, type: 3}
-  - {fileID: 8282280411632249563, guid: c516a0c52a124df46a04287fe44485a4, type: 3}
-  - {fileID: 8589797334680971434, guid: 4349939482a6f0b499a3e48eb34e73d5, type: 3}
-  - {fileID: -6105560148828307415, guid: 212c5c1b9d945f5479a2d4dc12682716, type: 3}
+  - {fileID: 21300000, guid: 9db06219706dc334ead35f79c1c01c54, type: 3}
+  - {fileID: 21300000, guid: 2a8debcc9c4c7604192c129e9bbff056, type: 3}
+  - {fileID: 21300000, guid: 84a8d8e761882c04ba4db5a1ead1537d, type: 3}
+  - {fileID: 21300000, guid: c516a0c52a124df46a04287fe44485a4, type: 3}
+  - {fileID: 21300000, guid: 4349939482a6f0b499a3e48eb34e73d5, type: 3}
+  - {fileID: 21300000, guid: 212c5c1b9d945f5479a2d4dc12682716, type: 3}

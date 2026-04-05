@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MirrorDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 72692083200816068, guid: ddfd3942d5e26e54280e138ccfce6470, type: 3}
-  - {fileID: 6672461691079595418, guid: 8da5005f75cde204298c70060564ebde, type: 3}
-  - {fileID: 8799482182863857348, guid: 3a570046878d2fb408b2ec87e95e2185, type: 3}
-  - {fileID: 3439586939354745226, guid: 61ca6da71a96e654dbe69cbdc73da529, type: 3}
-  - {fileID: -6834653536699515156, guid: 88a3d4cc5e18882458a4d8c39579b890, type: 3}
-  - {fileID: -8478729689445697501, guid: b8d7010c7094d314ab79c32c5b6794e7, type: 3}
+  - {fileID: 21300000, guid: ddfd3942d5e26e54280e138ccfce6470, type: 3}
+  - {fileID: 21300000, guid: 8da5005f75cde204298c70060564ebde, type: 3}
+  - {fileID: 21300000, guid: 3a570046878d2fb408b2ec87e95e2185, type: 3}
+  - {fileID: 21300000, guid: 61ca6da71a96e654dbe69cbdc73da529, type: 3}
+  - {fileID: 21300000, guid: 88a3d4cc5e18882458a4d8c39579b890, type: 3}
+  - {fileID: 21300000, guid: b8d7010c7094d314ab79c32c5b6794e7, type: 3}

@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: MonoDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -6728775648502522704, guid: c27d7cb66f97b7f4691c2ed50634314a, type: 3}
-  - {fileID: -1113768413280469179, guid: 4730bf38ba8c25148961b69e2b1d681b, type: 3}
-  - {fileID: -948762779750004947, guid: a79223921552d0541ac1908eea317033, type: 3}
-  - {fileID: -2348909598356786539, guid: fccc678f36df23045b0d4381aee57c4d, type: 3}
-  - {fileID: -5237509278669055430, guid: 01eb115838b01e04db8eae24a8378ea7, type: 3}
-  - {fileID: 8805323462761352010, guid: 2fc718f06c818a34292d976a212e71d5, type: 3}
+  - {fileID: 21300000, guid: c27d7cb66f97b7f4691c2ed50634314a, type: 3}
+  - {fileID: 21300000, guid: 4730bf38ba8c25148961b69e2b1d681b, type: 3}
+  - {fileID: 21300000, guid: a79223921552d0541ac1908eea317033, type: 3}
+  - {fileID: 21300000, guid: fccc678f36df23045b0d4381aee57c4d, type: 3}
+  - {fileID: 21300000, guid: 01eb115838b01e04db8eae24a8378ea7, type: 3}
+  - {fileID: 21300000, guid: 2fc718f06c818a34292d976a212e71d5, type: 3}

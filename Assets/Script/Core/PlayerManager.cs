@@ -12,6 +12,8 @@ public class PlayerManager : MonoBehaviour
     public int gold;
     public int currentRound;
     public int heart;
+    public int gameRerollCount;
+    public bool isFirstRoll;
     public bool isGameOver;
     public Sprite playerImage;
 
@@ -31,6 +33,8 @@ public class PlayerManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             allDices = Resources.LoadAll<DiceData>("DiceDatas");
             allItems = Resources.LoadAll<ItemSo>("ItemDatas");
+            gameRerollCount = 1;
+            isFirstRoll = true;
             Load();
         }
         else
@@ -55,7 +59,8 @@ public class PlayerManager : MonoBehaviour
             SpecialSlots[i] = (i == 0);
         }
         extraDice = defaultDice;
-        gold = 10;
+        gold = 100;
+        gameRerollCount = 1;
         currentRound = 1;
         heart = 3;
     }

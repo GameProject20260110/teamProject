@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: CaptainDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 7808937854475564482, guid: 4572eb6f89cbf4544a9348ae3ece9869, type: 3}
-  - {fileID: -4648113270414329034, guid: 116f36fbdb7f39543b2ce86651eb39c2, type: 3}
-  - {fileID: 2415500190973329194, guid: 235804a89eab2a444821220e2763f0a7, type: 3}
-  - {fileID: 5228691565965163019, guid: a01cb0f234847af4080ef35ff9b42cff, type: 3}
-  - {fileID: -5177697525132002732, guid: a182a7392eae18d4b9f0dda5db0bdf10, type: 3}
-  - {fileID: 8321280337380728828, guid: 0b05987d01453e544b5db205e4b2ab32, type: 3}
+  - {fileID: 21300000, guid: 4572eb6f89cbf4544a9348ae3ece9869, type: 3}
+  - {fileID: 21300000, guid: 116f36fbdb7f39543b2ce86651eb39c2, type: 3}
+  - {fileID: 21300000, guid: 235804a89eab2a444821220e2763f0a7, type: 3}
+  - {fileID: 21300000, guid: a01cb0f234847af4080ef35ff9b42cff, type: 3}
+  - {fileID: 21300000, guid: a182a7392eae18d4b9f0dda5db0bdf10, type: 3}
+  - {fileID: 21300000, guid: 0b05987d01453e544b5db205e4b2ab32, type: 3}

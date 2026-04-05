@@ -3706,7 +3706,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &534881958
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3723,8 +3723,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &534881959
 MonoBehaviour:
@@ -6529,8 +6529,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &929448748
 MonoBehaviour:
@@ -7047,8 +7047,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &998253234
 MonoBehaviour:
@@ -9543,8 +9543,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1403070544
 MonoBehaviour:
@@ -10932,7 +10932,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 89, y: 85}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1516154476
 MonoBehaviour:
@@ -12688,8 +12688,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1762625045
 MonoBehaviour:
@@ -13141,7 +13141,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1841177916
 RectTransform:
   m_ObjectHideFlags: 0
@@ -13158,8 +13158,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1841177917
 MonoBehaviour:
@@ -13606,8 +13606,8 @@ MonoBehaviour:
   m_ChildAlignment: 0
   m_StartCorner: 0
   m_StartAxis: 0
-  m_CellSize: {x: 100, y: 100}
-  m_Spacing: {x: 140, y: 100}
+  m_CellSize: {x: 89, y: 85}
+  m_Spacing: {x: 159, y: 120}
   m_Constraint: 0
   m_ConstraintCount: 2
 --- !u!1001 &1882218230
@@ -14997,8 +14997,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.1542, y: 1.3882}
-  m_SizeDelta: {x: 117.5321, y: 114.7558}
+  m_AnchoredPosition: {x: 0, y: 1}
+  m_SizeDelta: {x: 105, y: 99}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2058370681
 MonoBehaviour:
@@ -15444,6 +15444,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1596938020}
     m_Modifications:
+    - target: {fileID: 1045828607218996241, guid: 3c6a451ab96b23743a94293bb9b42ebe, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 32cec6b74f22fb443926269231625060, type: 3}
     - target: {fileID: 1295416271785748531, guid: 3c6a451ab96b23743a94293bb9b42ebe, type: 3}
       propertyPath: m_Name
       value: buyDice1

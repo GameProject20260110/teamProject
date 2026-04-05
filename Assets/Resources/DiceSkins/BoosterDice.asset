@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: BoosterDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: -3838872651087377694, guid: f3b9ab9a225bd824f91fd6aaa394b469, type: 3}
-  - {fileID: 511895092273072963, guid: 07d5f8a09e2fa5349ab69cfd85b7a646, type: 3}
-  - {fileID: -2755791315306370890, guid: c1ab030d411d1234287cf0c519423b81, type: 3}
-  - {fileID: -8190987264080653300, guid: e70b6503b6f87684eaf54d2f2cf3563d, type: 3}
-  - {fileID: -8122200272424534979, guid: ea056ad5df0c964409570e4ef27120e4, type: 3}
-  - {fileID: 2904117306961723034, guid: bf6a81eeca63fa449b602d8c035bcfd9, type: 3}
+  - {fileID: 21300000, guid: f3b9ab9a225bd824f91fd6aaa394b469, type: 3}
+  - {fileID: 21300000, guid: 07d5f8a09e2fa5349ab69cfd85b7a646, type: 3}
+  - {fileID: 21300000, guid: c1ab030d411d1234287cf0c519423b81, type: 3}
+  - {fileID: 21300000, guid: e70b6503b6f87684eaf54d2f2cf3563d, type: 3}
+  - {fileID: 21300000, guid: ea056ad5df0c964409570e4ef27120e4, type: 3}
+  - {fileID: 21300000, guid: bf6a81eeca63fa449b602d8c035bcfd9, type: 3}
