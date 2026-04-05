@@ -32,7 +32,7 @@ public class BuySpecialSlot : MonoBehaviour
             if (PlayerManager.instance.SpecialSlots[i])
             {
                 LevelUp();
-                nextSlotIndex = i;
+                nextSlotIndex = i+1;
             }
                 
         }
@@ -58,8 +58,10 @@ public class BuySpecialSlot : MonoBehaviour
         }
 
         // 슬롯 활성화 및 레벨업
-        diceSlots[nextSlotIndex].SetSpecialSlot(true);
+        
+        diceSlots[nextSlotIndex].SetSpecialSlot(true);      
         nextSlotIndex++;
+        Debug.Log(nextSlotIndex);
         LevelUp();
         UpdateUI();
     }

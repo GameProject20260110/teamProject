@@ -321,6 +321,7 @@ public class GameManager : MonoBehaviour
             RoundManager.instance.GoNextRound();
         }
         PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.isFirstRoll = true;
         if(SceneController.instance != null) 
             SceneController.instance.LoadShopScene();
     }
@@ -328,6 +329,7 @@ public class GameManager : MonoBehaviour
     public void OnClickRetryRound()
     {
         PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.isFirstRoll = true;
         if (SceneController.instance != null)
             SceneController.instance.LoadShopScene();
     }
