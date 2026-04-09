@@ -317,6 +317,7 @@ public class GameManager : MonoBehaviour
             RoundManager.instance.GoNextRound();
         }
         PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.isFirstRoll = true;
         Debug.Log($"NextRound gameRerollCount: {PlayerManager.instance.gameRerollCount}");
         if (SceneController.instance != null) 
             SceneController.instance.LoadShopScene();
