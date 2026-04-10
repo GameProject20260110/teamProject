@@ -9,7 +9,7 @@ public class GimmickManager : MonoBehaviour
     public static GimmickManager instance;
 
     public List<GimmickSo> allGimmicks = new List<GimmickSo>();
-
+    public List<GimmickSo> pendingGimmicks => PlayerManager.instance.pendingGimmicks; // 상점 패널 형식으로 바꿀 시에 프로퍼티 형식이 아닌 new List<GimmickSo>()로 바꿔야 함
     public List<GimmickSo> currentActiveGimmick = new List<GimmickSo>();
 
     private void Awake()
@@ -18,35 +18,43 @@ public class GimmickManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void ApplyGimmick(int round)
+    public void PreparePendingGimmick(int round)
     {
-        ClearGimmick();
-
-        if(round == 15)
+        pendingGimmicks.Clear();
+        if(round == 11)
         {
-            GimmickSo firstGimmick = DrawGimmick(15);
-            currentActiveGimmick.Add(firstGimmick);
+            GimmickSo first = DrawGimmick(15);
+            pendingGimmicks.Add(first);
 
-            GimmickSo secondGimmick;
+            GimmickSo second;
             int safety = 0;
             do
             {
-                secondGimmick = DrawGimmick(15);
+                second = DrawGimmick(15);
                 safety++;
-            } while (secondGimmick == firstGimmick && safety < 50);
-
-            currentActiveGimmick.Add(secondGimmick);
+            } while (first == second && safety < 50);
+            pendingGimmicks.Add(second);
         }
         else
         {
-             currentActiveGimmick.Add(DrawGimmick(round));
+            int targetRound = round + 4;
+            pendingGimmicks.Add(DrawGimmick(targetRound));
         }
 
-        foreach(var gimmick in currentActiveGimmick)
+        foreach(var gimmick in pendingGimmicks)
         {
+            Debug.Log($"[기믹 예정] {gimmick.name} 레벨 : {gimmick.level} 타입 : {gimmick.gimmickType}");
+        }
+    }
+    public void ApplyPendingGimmick(int round)
+    {
+        foreach(var gimmick in pendingGimmicks)
+        {
+            currentActiveGimmick.Add(gimmick);
             Debug.Log($"{gimmick.level}티어 {gimmick.gimmickName} 발동");
             gimmick.ExecuteGimmick();
         }
+        //pendingGimmicks.Clear();
         UiController.instance.RefreshGimmickIcons(currentActiveGimmick);
     }
 
@@ -84,6 +92,13 @@ public class GimmickManager : MonoBehaviour
         if(availableGimmick.Count == 0) return allGimmicks[Random.Range(0, allGimmicks.Count)];
 
         return availableGimmick[Random.Range(0, availableGimmick.Count)];
+    }
+
+    public GimmickType GetPendingMainGimmickType()
+    {
+        if (pendingGimmicks == null || pendingGimmicks.Count == 0) return GimmickType.None;
+        return pendingGimmicks.OrderByDescending(g => g.level).First().gimmickType;
+
     }
 
     public bool IsGimmickActive(GimmickType type)
