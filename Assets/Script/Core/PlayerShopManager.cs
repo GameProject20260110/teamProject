@@ -1,7 +1,8 @@
-﻿using DG.Tweening;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShopManager : MonoBehaviour
 {
@@ -29,6 +30,8 @@ public class PlayerShopManager : MonoBehaviour
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private ShopUIController shopUIController;
 
+    [SerializeField] private ShopPanelAnimator shopPanelAnimator;
+
     public event System.Action<int> OnGoldChanged;
 
     public bool IsOpen { get; private set; }
@@ -54,20 +57,12 @@ public class PlayerShopManager : MonoBehaviour
         IsOpen = true;
         OnGoldChanged?.Invoke(TempGold);
 
-        ShowShopUI();
     }
 
-    public void ShowShopUI()
+    public async void OpenWithAnimation()
     {
-        if (shopCanvas == null) return;
-        if(!UiController.instance.backGround.activeSelf) 
-            UiController.instance.backGround.SetActive(true);
-
-        shopCanvas.SetActive(true);
-        shopUIController.Initialize();
-
-        shopPanel.anchoredPosition = new Vector2(0, 1500f);
-        shopPanel.DOAnchorPosY(0, 0.6f).SetEase(Ease.OutBack);
+        Open();
+        await shopPanelAnimator.Show();
     }
 
     public void Commit()
@@ -88,29 +83,18 @@ public class PlayerShopManager : MonoBehaviour
         player.Save();
 
         IsOpen = false;
-
-       
-        HideShopUI();
     }
 
-    private void HideShopUI()
+    public async void CommitWithAnimation()
     {
-        if (shopCanvas == null) return;
-
-        GameManager.instance.diceManager.SetupDiceBoard();
-        UiController.instance.RefreshInventory(); 
-        UiController.instance.backGround.SetActive(false);
-        AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle,true);
-
-        shopPanel.DOAnchorPosY(1500f, 0.4f)
-            .SetEase(Ease.InBack)
-            .OnComplete(() => shopCanvas.SetActive(false));
+        Commit();
+        await shopPanelAnimator.Hide();
     }
 
     public void Discard()
     {
         IsOpen = false;
-        HideShopUI();
+        shopPanelAnimator.Hide().Forget();
         Debug.Log("상점 변경사항 폐기");
     }
 

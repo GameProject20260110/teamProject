@@ -82,7 +82,7 @@ public class PopupManager : MonoBehaviour
         }
 
         if (StartBtn != null) 
-            StartBtn.onClick.AddListener(() => PlayerShopManager.instance.Commit());           
+            StartBtn.onClick.AddListener(() => PlayerShopManager.instance.CommitWithAnimation());           
 
         if(SettingsBtn != null)
             SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());

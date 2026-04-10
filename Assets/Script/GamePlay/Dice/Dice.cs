@@ -103,7 +103,7 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (PopupManager.instance == null || MyState.diceData == null) return;
-        PopupManager.instance.OpenPopup(MyState.diceData, GetComponent<RectTransform>());
+        //PopupManager.instance.OpenPopup(MyState.diceData, GetComponent<RectTransform>());
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -239,42 +239,4 @@ public class UiController : MonoBehaviour
         inventoryUI?.ResetCards();
     }
 
-
-    #region GameEndEvent
-
-    public void RevealCardHelper(Image image)
-    {
-        RevealCard(image);
-    }
-
-    async UniTask RevealCard(Image image)
-    {
-        backGround.SetActive(true);
-
-        var cardImage = image;
-        Debug.Log(cardImage);
-        cardImage.GetComponent<CanvasGroup>().alpha = 1f;
-
-        cardImage.fillAmount = 0f;
-        await cardImage.DOFillAmount(1f, 0.8f).SetEase(Ease.OutQuad)
-                       .AsyncWaitForCompletion();
-
-        var textGroup = cardImage.GetComponentInChildren<RectMask2D>(true).gameObject;
-        textGroup.SetActive(true);
-        RectTransform maskRect = textGroup.GetComponent<RectTransform>();
-        float targetHeight = maskRect.sizeDelta.y; // 원본 높이 저장
-
-        maskRect.sizeDelta = new Vector2(maskRect.sizeDelta.x, 0f); // 높이 0으로 시작
-        await maskRect.DOSizeDelta(new Vector2(maskRect.sizeDelta.x, targetHeight), 2f)
-                .SetEase(Ease.OutQuad).AsyncWaitForCompletion();
-
-        var buttons = cardImage.GetComponentsInChildren<Button>();
-        foreach (var btn in buttons)
-        {
-            await UniTask.Delay(500);
-            btn.GetComponent<CanvasGroup>().DOFade(1f, 1f);
-        }
-
-    }
-    #endregion
 }

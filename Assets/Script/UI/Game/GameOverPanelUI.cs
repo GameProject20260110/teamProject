@@ -1,7 +1,7 @@
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
 
 
 public class GameOverPanelUI : MonoBehaviour
@@ -49,6 +49,7 @@ public class GameOverPanelUI : MonoBehaviour
     //}
 
     public GameObject gameOverPanel;
+    public CardRevealAnimator anim;
     public GameObject textGroup;
     public TextMeshProUGUI targetScoreText;
     public TextMeshProUGUI myScoreText;
@@ -72,7 +73,7 @@ public class GameOverPanelUI : MonoBehaviour
         }
 
         textGroup.SetActive(false);
-        UiController.instance.RevealCardHelper(gameOverPanel.GetComponent<Image>());
+        anim.Reveal().Forget();
     }
 
     public void Hide()

@@ -40,8 +40,8 @@ public class ShopUIController : MonoBehaviour
     public void Initialize()
     {
         InitializeShop();
-        ReRoll();
-       
+        ReRoll();        
+
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
         if (notificationUI != null) notificationUI.gameObject.SetActive(false);
     }
