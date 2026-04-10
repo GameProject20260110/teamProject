@@ -33,7 +33,6 @@ public class PlayerManager : MonoBehaviour
         if(instance == null)
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
             allDices = Resources.LoadAll<DiceData>("DiceDatas");
             allItems = Resources.LoadAll<ItemSo>("ItemDatas");
             gameRerollCount = 1;
