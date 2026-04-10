@@ -73,8 +73,7 @@ public class PopupManager : MonoBehaviour
             playerRound.text = PlayerManager.instance.currentRound.ToString();
         }
 
-        if (PlayerShopManager.instance != null && 
-            SceneManager.GetActiveScene().name == SceneController.SceneShop)
+        if (PlayerShopManager.instance != null)
         {
             PlayerShopManager.instance.OnGoldChanged += UpdateGold;
             var text = StartBtn.GetComponentInChildren<TextMeshProUGUI>();
@@ -83,7 +82,7 @@ public class PopupManager : MonoBehaviour
         }
 
         if (StartBtn != null) 
-            StartBtn.onClick.AddListener(() => SceneController.instance.LoadGameScene());           
+            StartBtn.onClick.AddListener(() => PlayerShopManager.instance.Commit());           
 
         if(SettingsBtn != null)
             SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());

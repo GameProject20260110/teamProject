@@ -14,7 +14,6 @@ public class SceneController : MonoBehaviour
     public const string SceneTitle = "Title";
     public const string SceneHome = "HomeScreen";
     public const string SceneBattle = "GameBoard";
-    public const string SceneShop = "Shop";
 
     [Header("로딩 패널")]
     [SerializeField] private GameObject loadingPanel;
@@ -40,18 +39,6 @@ public class SceneController : MonoBehaviour
         if (SettingsManager.instance != null)
             SettingsManager.instance.InitializeUI();
     }
-
-    private void OnEnable()
-    {
-        if (PlayerShopManager.instance != null)
-            PlayerShopManager.instance.OnShopCommitted += LoadGameScene;
-    }
-
-    private void OnDisable()
-    {
-        if (PlayerShopManager.instance != null)
-            PlayerShopManager.instance.OnShopCommitted -= LoadGameScene;
-    }
     
     private void OnValidate()
     {
@@ -65,12 +52,6 @@ public class SceneController : MonoBehaviour
     public void LoadGameScene() => LoadAsync(SceneBattle).Forget(); 
     public void LoadHomeScene() => LoadAsync(SceneHome).Forget();
     public void LoadTitleScene() => LoadAsync(SceneTitle).Forget();
-    public void LoadShopScene()
-    {
-        PlayerShopManager.instance.Open();
-        LoadAsync(SceneShop).Forget();
-    }
-
 
     private async UniTask LoadAsync(string sceneName)
     {
@@ -84,14 +65,11 @@ public class SceneController : MonoBehaviour
 
             SetLoadingUI(true, 0f);
 
-            if (sceneName == SceneShop || sceneName == SceneBattle)
-            {
-                await LoadAddressableSceneAsync(sceneName);
-            }
-            else
-            {
-                await LoadNormalSceneAsync(sceneName);
-            }
+
+
+            
+            await LoadNormalSceneAsync(sceneName);
+            
 
             SetLoadingUI(false, 0f);
             await FadeAsync(1f, 0f);

@@ -53,7 +53,6 @@ public class UiController : MonoBehaviour
 
     private void Start()
     {
-        //AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
         if(settingPanel != null) settingPanel.SetActive(false);
 
         if(GameManager.instance != null)
@@ -65,18 +64,6 @@ public class UiController : MonoBehaviour
             notificationUI.gameObject.SetActive(false);
         }
         RefreshInventory();
-
-        ShopBtn.onClick.AddListener(() => 
-        {
-            PlayerShopManager.instance.ClearRound = false;
-            SceneController.instance.LoadShopScene();
-        });
-
-        nextRoundBtn.onClick.AddListener(() =>
-        {
-            PlayerShopManager.instance.ClearRound = true;
-            SceneController.instance.LoadShopScene();
-        });
 
         if(PlayerManager.instance != null && _playerImage != null)
         {

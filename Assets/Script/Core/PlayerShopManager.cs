@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using DG.Tweening;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerShopManager : MonoBehaviour
@@ -22,8 +24,12 @@ public class PlayerShopManager : MonoBehaviour
 
     public bool ClearRound = false;
 
+    [Header("UI References")]
+    [SerializeField] private GameObject shopCanvas;
+    [SerializeField] private RectTransform shopPanel;
+    [SerializeField] private ShopUIController shopUIController;
+
     public event System.Action<int> OnGoldChanged;
-    public event System.Action OnShopCommitted; // 씬 전환용
 
     public bool IsOpen { get; private set; }
 
@@ -47,6 +53,21 @@ public class PlayerShopManager : MonoBehaviour
 
         IsOpen = true;
         OnGoldChanged?.Invoke(TempGold);
+
+        ShowShopUI();
+    }
+
+    public void ShowShopUI()
+    {
+        if (shopCanvas == null) return;
+        if(!UiController.instance.backGround.activeSelf) 
+            UiController.instance.backGround.SetActive(true);
+
+        shopCanvas.SetActive(true);
+        shopUIController.Initialize();
+
+        shopPanel.anchoredPosition = new Vector2(0, 1500f);
+        shopPanel.DOAnchorPosY(0, 0.6f).SetEase(Ease.OutBack);
     }
 
     public void Commit()
@@ -67,12 +88,29 @@ public class PlayerShopManager : MonoBehaviour
         player.Save();
 
         IsOpen = false;
-        OnShopCommitted?.Invoke();
+
+       
+        HideShopUI();
+    }
+
+    private void HideShopUI()
+    {
+        if (shopCanvas == null) return;
+
+        GameManager.instance.diceManager.SetupDiceBoard();
+        UiController.instance.RefreshInventory(); 
+        UiController.instance.backGround.SetActive(false);
+        AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle,true);
+
+        shopPanel.DOAnchorPosY(1500f, 0.4f)
+            .SetEase(Ease.InBack)
+            .OnComplete(() => shopCanvas.SetActive(false));
     }
 
     public void Discard()
     {
         IsOpen = false;
+        HideShopUI();
         Debug.Log("상점 변경사항 폐기");
     }
 
@@ -119,9 +157,9 @@ public class PlayerShopManager : MonoBehaviour
         GainGold(sellPrice);
     }
 
-    public void SellItem(ItemSo item, int sellPrice)
+    public void SellItem(ItemSo item, int slotIndex, int sellPrice)
     {
-        TempItems.Remove(item);
+        TempItems[slotIndex] = null;
         GainGold(sellPrice);
     }
 

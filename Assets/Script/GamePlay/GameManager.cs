@@ -314,6 +314,12 @@ public class GameManager : MonoBehaviour
         RoundManager.instance.StartRound();
     }
 
+    public void OnClickShopBtn()
+    {
+        PlayerShopManager.instance.ClearRound = false;
+        PlayerShopManager.instance.Open();
+    }
+
     public void OnClickNextRound()
     {
         if(RoundManager.instance != null)
@@ -322,16 +328,14 @@ public class GameManager : MonoBehaviour
         }
         PlayerManager.instance.gameRerollCount = 1;
         PlayerManager.instance.isFirstRoll = true;
-        if(SceneController.instance != null) 
-            SceneController.instance.LoadShopScene();
+        PlayerShopManager.instance.Open();
     }
 
     public void OnClickRetryRound()
     {
         PlayerManager.instance.gameRerollCount = 1;
         PlayerManager.instance.isFirstRoll = true;
-        if (SceneController.instance != null)
-            SceneController.instance.LoadShopScene();
+        PlayerShopManager.instance.Open();
     }
 
     public void LoadHomeScreen()

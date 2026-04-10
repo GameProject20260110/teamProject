@@ -34,12 +34,12 @@ public class Ring : ItemSo
             if (isSpecial && isEmpty)
             {
                 psm.TempDices[i] = dice;
-                Transform slots = ShopItem.instance.myDicePanel.transform.GetChild(i);
+                Transform slots = ShopUIController.instance.myDicePanel.transform.GetChild(i);
                 slots.GetComponentInChildren<BuyDice>().ChangeDiceInfo(dice);
                 return;
             }
         }
         pm.extraDice = dice;
-        ShopItem.instance.extraDiceSlot.GetComponentInChildren<BuyDice>().ChangeDiceInfo(dice);
+        ShopUIController.instance.extraDiceSlot.GetComponentInChildren<BuyDice>().ChangeDiceInfo(dice);
     }
 }
