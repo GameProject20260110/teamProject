@@ -24,6 +24,9 @@ public class PlayerManager : MonoBehaviour
     private DiceData[] allDices;
     private ItemSo[] allItems;
 
+    // юс╫ц
+    public List<GimmickSo> pendingGimmicks = new List<GimmickSo>();
+
     private void Awake()
     {
         

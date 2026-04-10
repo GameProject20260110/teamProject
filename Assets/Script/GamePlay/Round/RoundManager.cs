@@ -32,7 +32,7 @@ public class RoundManager : MonoBehaviour
 
     public void StartRound()
     {
-        if(UseTestMode)
+        if (UseTestMode)
         {
             targetScore = 9999;
 
@@ -70,14 +70,20 @@ public class RoundManager : MonoBehaviour
                 {
                     targetScore = roundData.targetScore;
 
-                    if(enemyImage != null)
+                    if(currentRound % 5 == 1)
                     {
-                        enemyImage.sprite = currentStageData.GetEnemyImage(currentRound);
+                        GimmickManager.instance?.PreparePendingGimmick(currentRound);
+                        UpdateEnemyImage();
+                    }
+                    else if(currentRound % 5 != 0)
+                    {
+                        UpdateEnemyImage();
                     }
 
-                    if(roundData.hasGimmick)
+                    if (roundData.hasGimmick)
                     {
-                        GimmickManager.instance.ApplyGimmick(currentRound);
+                        UpdateEnemyImage();
+                        GimmickManager.instance.ApplyPendingGimmick(currentRound);
                     }
                 }
             }
@@ -110,6 +116,20 @@ public class RoundManager : MonoBehaviour
         if(GameManager.instance != null && GameManager.instance.diceManager != null)
         {
             GameManager.instance.diceManager.SetupDiceBoard();
+        }
+    }
+
+    private void UpdateEnemyImage()
+    {
+        if (enemyImage == null || currentStageData == null) return;
+        if (GimmickManager.instance == null) return;
+
+        GimmickType type = GimmickManager.instance.GetPendingMainGimmickType();
+        Sprite sprite = currentStageData.GetEnemyImageByGimmick(type);
+        Debug.Log($"적 이미지 - 기믹타입: {type}, 스프라이트 : {sprite}");
+        if (sprite != null)
+        {
+            enemyImage.sprite = sprite;
         }
     }
 
@@ -162,7 +182,6 @@ public class RoundManager : MonoBehaviour
                 {
                     int reward = currentStageData.GetGoldReward(currentRound);
                     GameManager.instance.AddGold(reward);
-                    PlayerManager.instance.heart--;
                     Debug.Log($"라운드 실패 골드 {reward} 획득");
                 }
                 UiController.instance.ShowResultPanel(false, targetScore, finalScore, GameManager.instance.CurrentHearts);
@@ -186,7 +205,6 @@ public class RoundManager : MonoBehaviour
         }
 
         Debug.Log($"{currentRound}라운드로 진입");
-        StartRound();
     }
 }
 

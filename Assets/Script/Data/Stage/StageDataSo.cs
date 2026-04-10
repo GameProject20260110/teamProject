@@ -1,6 +1,8 @@
 using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
+using JetBrains.Annotations;
+using System.Linq;
 
 [System.Serializable]
 public class RoundData
@@ -14,11 +16,20 @@ public class RoundData
     public bool hasGimmick;
     public string gimmickName;
 }
+
+[System.Serializable]
+public class GimmickEnemyImage
+{
+    public string groupName;
+    public GimmickType[] gimmickTypes;
+    public Sprite enemyImage;
+}
+
 [CreateAssetMenu(fileName = "NewStageData", menuName = "Stage/StageData")]
 public class StageDataSo : ScriptableObject
 {
     public List<RoundData> allRounds = new List<RoundData>();
-    public List<Sprite> enemyImages = new List<Sprite>();
+    public List<GimmickEnemyImage> gimmickEnemyImages = new List<GimmickEnemyImage>();
 
     public RoundData GetRoundData(int round)
     {
@@ -32,12 +43,16 @@ public class StageDataSo : ScriptableObject
         return round + 9;
     }
 
-    public Sprite GetEnemyImage(int round)
+    public Sprite GetEnemyImageByGimmick(GimmickType type)
     {
-        if (enemyImages == null && enemyImages.Count == 0) return null;
-        int seed = (round - 1) / 5;
-        //Random.InitState(seed);
-        return enemyImages[Random.Range(0, enemyImages.Count)];
+        foreach(var group in gimmickEnemyImages)
+        {
+            if(group.gimmickTypes != null && group.gimmickTypes.Contains(type))
+            {
+                return group.enemyImage;
+            }
+        }
+        return null;
     }
 
     [ContextMenu("라운드 기본값 생성")]
