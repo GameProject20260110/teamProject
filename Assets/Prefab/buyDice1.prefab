@@ -102,12 +102,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 538bc99cac9433746b5c85f68cc670cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BuyDice
-  previousParent: {fileID: 0}
-  inPotiner: 0
+  bought: 0
+  inPointer: 0
   isDragged: 0
-  DiceInfo: {fileID: 0}
-  DescPosition: {fileID: 0}
-  index: 0
+  descPosition: {fileID: 0}
+  Slot: {fileID: 0}
 --- !u!1 &2711592119478958504
 GameObject:
   m_ObjectHideFlags: 0
@@ -140,6 +139,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: -200}
+  m_AnchoredPosition: {x: 0, y: -250}
   m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0.5, y: 1}

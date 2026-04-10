@@ -122,7 +122,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override bool OnSell()
     {
-        PlayerShopManager.instance.SellItem(Data, GetSellPrice());
+        PlayerShopManager.instance.SellItem(Data, Slot.slotIndex, GetSellPrice());
         Destroy(gameObject);
         return true;
     }

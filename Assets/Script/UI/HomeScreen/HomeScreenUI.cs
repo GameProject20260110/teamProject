@@ -1,5 +1,6 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HomeScreenUI : MonoBehaviour
@@ -32,7 +33,12 @@ public class HomeScreenUI : MonoBehaviour
     void Start()
     {
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Home, true);
-        StartBtn.onClick.AddListener(() => SceneController.instance.LoadShopScene());
+        StartBtn.onClick.AddListener(() =>
+        {
+            SceneController.instance.LoadGameScene();
+            PlayerShopManager.instance.Open();
+        });
+
         optionBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
 
         bestRound.text = "최고 라운드: " + PlayerStatsManager.instance.bestRound.ToString();

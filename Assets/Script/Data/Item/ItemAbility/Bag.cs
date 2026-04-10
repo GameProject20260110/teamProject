@@ -28,9 +28,9 @@ public class Bag : ItemSo
             {
                 slots[i] = true;
                 PlayerManager.instance.tempExtraSlotsCount++;
-                if (ShopItem.instance != null)
+                if (ShopUIController.instance != null)
                 {
-                    var diceSlot = ShopItem.instance.myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
+                    var diceSlot = ShopUIController.instance.myDicePanel.transform.GetChild(i).GetComponent<ItemSlot>();
                     diceSlot.SetSpecialSlot(true);
                 }
                 return;

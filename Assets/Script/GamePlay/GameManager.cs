@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnRerollCountChanged;
 
     public DiceManager diceManager;
+    public UIFlowController UFC;
     public int maxRerollCount = 1;
     public int currentScore = 0;
     public int bestScore = 0;
@@ -314,29 +315,30 @@ public class GameManager : MonoBehaviour
         RoundManager.instance.StartRound();
     }
 
+    public void OnClickShopBtn()
+    {
+        PlayerShopManager.instance.ClearRound = false;
+        PlayerShopManager.instance.OpenWithAnimation();
+    }
+
     public void OnClickNextRound()
     {
-        if(RoundManager.instance != null)
+        if (RoundManager.instance != null)
         {
             RoundManager.instance.GoNextRound();
         }
+        PlayerShopManager.instance.ClearRound = true;
         PlayerManager.instance.gameRerollCount = 1;
         PlayerManager.instance.isFirstRoll = true;
 
-        Debug.Log($"NextRound gameRerollCount: {PlayerManager.instance.gameRerollCount}");
-        if (SceneController.instance != null) 
-
-        if(SceneController.instance != null) 
-
-            SceneController.instance.LoadShopScene();
+        UFC.OnNextRoundButton();
     }
 
     public void OnClickRetryRound()
     {
         PlayerManager.instance.gameRerollCount = 1;
         PlayerManager.instance.isFirstRoll = true;
-        if (SceneController.instance != null)
-            SceneController.instance.LoadShopScene();
+        PlayerShopManager.instance.OpenWithAnimation();
     }
 
     public void LoadHomeScreen()

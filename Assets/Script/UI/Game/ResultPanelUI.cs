@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,6 +6,7 @@ using UnityEngine.UI;
 public class ResultPanelUI : MonoBehaviour
 {
     public GameObject resultPanel;
+    public CardRevealAnimator anim;
     public TextMeshProUGUI resultTitleText;
     public TextMeshProUGUI resultTargetScoreText;
     public TextMeshProUGUI resultScoreText;
@@ -67,7 +69,7 @@ public class ResultPanelUI : MonoBehaviour
         }
 
         TextGroup.SetActive(false);
-        UiController.instance.RevealCardHelper(resultPanel.GetComponent<Image>());
+        anim.Reveal().Forget();
     }
 
     public void Hide()

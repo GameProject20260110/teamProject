@@ -1,5 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using Cysharp.Threading.Tasks;
+using DG.Tweening;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerShopManager : MonoBehaviour
 {
@@ -22,8 +25,14 @@ public class PlayerShopManager : MonoBehaviour
 
     public bool ClearRound = false;
 
+    [Header("UI References")]
+    [SerializeField] private GameObject shopCanvas;
+    [SerializeField] private RectTransform shopPanel;
+    [SerializeField] private ShopUIController shopUIController;
+
+    [SerializeField] private ShopPanelAnimator shopPanelAnimator;
+
     public event System.Action<int> OnGoldChanged;
-    public event System.Action OnShopCommitted; // 씬 전환용
 
     public bool IsOpen { get; private set; }
 
@@ -47,6 +56,13 @@ public class PlayerShopManager : MonoBehaviour
 
         IsOpen = true;
         OnGoldChanged?.Invoke(TempGold);
+
+    }
+
+    public async void OpenWithAnimation()
+    {
+        Open();
+        await shopPanelAnimator.Show();
     }
 
     public void Commit()
@@ -65,14 +81,20 @@ public class PlayerShopManager : MonoBehaviour
         player.extraDice = ExtraDice;
 
         player.Save();
-
+        RoundManager.instance.StartRound();
         IsOpen = false;
-        OnShopCommitted?.Invoke();
+    }
+
+    public async void CommitWithAnimation()
+    {
+        Commit();
+        await shopPanelAnimator.Hide();
     }
 
     public void Discard()
     {
         IsOpen = false;
+        shopPanelAnimator.Hide().Forget();
         Debug.Log("상점 변경사항 폐기");
     }
 
@@ -119,9 +141,9 @@ public class PlayerShopManager : MonoBehaviour
         GainGold(sellPrice);
     }
 
-    public void SellItem(ItemSo item, int sellPrice)
+    public void SellItem(ItemSo item, int slotIndex, int sellPrice)
     {
-        TempItems.Remove(item);
+        TempItems[slotIndex] = null;
         GainGold(sellPrice);
     }
 

@@ -1,9 +1,9 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ShopItem : MonoBehaviour
+public class ShopUIController : MonoBehaviour
 {
-    public static ShopItem instance;
+    public static ShopUIController instance;
 
     [Header("Shop Items")]
     private BuyDice[] buyDice;
@@ -37,15 +37,11 @@ public class ShopItem : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    private void Start()
+    public void Initialize()
     {
-        PlayerShopManager.instance.Open();
         InitializeShop();
-        ReRoll();
+        ReRoll();        
 
-        
-        //if (PlayerPrefs.GetInt("ShopTutorialCompleted", 0) == 0)
-        //    SetUpTutorial();        
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
         if (notificationUI != null) notificationUI.gameObject.SetActive(false);
     }
@@ -121,7 +117,7 @@ public class ShopItem : MonoBehaviour
         for (int i = 0; i < tempItems.Count; i++)
         {
             var slotChildItem = iventoryPanel.transform.GetChild(i).GetComponentInChildren<BuyItem>(true);
-
+            Debug.Log(slotChildItem);
             var item = tempItems[i];
 
             slotChildItem.gameObject.SetActive(true);
