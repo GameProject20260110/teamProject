@@ -8,7 +8,7 @@ public class CardRevealAnimator : MonoBehaviour
     [Header("References")]
     [SerializeField] private Image cardImage;
     [SerializeField] private RectMask2D contentMask;
-    [SerializeField] private Button[] buttons;
+    [SerializeField] private CanvasGroup[] buttons;
 
     [Header("Settings")]
     [SerializeField] private float fillDuration = 0.8f;
@@ -38,12 +38,17 @@ public class CardRevealAnimator : MonoBehaviour
         foreach (var btn in buttons)
         {
             await UniTask.Delay(buttonDelayMs);
-            btn.GetComponent<CanvasGroup>().DOFade(1f, 1f);
+            btn.DOFade(1f, 1f);
         }
     }
 
     public async UniTask UnReveal()
     {
+        foreach (var btn in buttons)
+        {
+            btn.alpha = 0f;
+        }
+
         await UniTask.Delay(1000);
         gameObject.SetActive(false);
     }

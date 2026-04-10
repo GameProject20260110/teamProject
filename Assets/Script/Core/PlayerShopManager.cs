@@ -81,7 +81,7 @@ public class PlayerShopManager : MonoBehaviour
         player.extraDice = ExtraDice;
 
         player.Save();
-
+        RoundManager.instance.StartRound();
         IsOpen = false;
     }
 

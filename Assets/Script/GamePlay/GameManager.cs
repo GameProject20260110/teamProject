@@ -323,6 +323,14 @@ public class GameManager : MonoBehaviour
 
     public void OnClickNextRound()
     {
+        if (RoundManager.instance != null)
+        {
+            RoundManager.instance.GoNextRound();
+        }
+        PlayerShopManager.instance.ClearRound = true;
+        PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.isFirstRoll = true;
+
         UFC.OnNextRoundButton();
     }
 

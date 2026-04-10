@@ -5508,8 +5508,8 @@ MonoBehaviour:
   cardImage: {fileID: 329430534}
   contentMask: {fileID: 1216429100}
   buttons:
-  - {fileID: 675130107}
-  - {fileID: 1974601332}
+  - {fileID: 675130106}
+  - {fileID: 1974601331}
   fillDuration: 0.8
   maskDuration: 2
   buttonDelayMs: 500
@@ -11989,8 +11989,8 @@ MonoBehaviour:
   cardImage: {fileID: 712548585}
   contentMask: {fileID: 1859505004}
   buttons:
-  - {fileID: 354874717}
-  - {fileID: 1007028285}
+  - {fileID: 354874720}
+  - {fileID: 1007028288}
   fillDuration: 0.8
   maskDuration: 2
   buttonDelayMs: 500
