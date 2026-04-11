@@ -30,7 +30,7 @@ public class PlayerShopManager : MonoBehaviour
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private ShopUIController shopUIController;
 
-    [SerializeField] private ShopPanelAnimator shopPanelAnimator;
+    [SerializeField] private ShopPanelAnimator shopAnimator;
 
     public event System.Action<int> OnGoldChanged;
 
@@ -40,7 +40,6 @@ public class PlayerShopManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
     }
 
     public void Open()
@@ -62,7 +61,15 @@ public class PlayerShopManager : MonoBehaviour
     public async void OpenWithAnimation()
     {
         Open();
-        await shopPanelAnimator.Show();
+        shopCanvas.SetActive(true);
+        if (shopAnimator != null && shopAnimator.gameObject != null)
+        {
+            await shopAnimator.Show();
+        }
+        else
+        {
+            Debug.LogError("shopAnimator 또는 gameObject가 null입니다!");
+        }
     }
 
     public void Commit()
@@ -88,13 +95,13 @@ public class PlayerShopManager : MonoBehaviour
     public async void CommitWithAnimation()
     {
         Commit();
-        await shopPanelAnimator.Hide();
+        await shopAnimator.Hide();
     }
 
     public void Discard()
     {
         IsOpen = false;
-        shopPanelAnimator.Hide().Forget();
+        shopAnimator.Hide().Forget();
         Debug.Log("상점 변경사항 폐기");
     }
 
@@ -130,6 +137,7 @@ public class PlayerShopManager : MonoBehaviour
 
         SpendGold(cost);
         PlayerManager.instance.SpecialSlots[slotIndex] = true;
+        PlayerManager.instance.ShopLevel++;
 
         return true;
     }

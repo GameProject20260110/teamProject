@@ -5,8 +5,6 @@ public class GameBootstrap : MonoBehaviour
 {
     [Header("매니저 프리팹")]
     [SerializeField] private GameObject sceneControlPrefab;
-    [SerializeField] private GameObject playerManagerPrefab;
-    [SerializeField] private GameObject playerShopManagerPrefab;
     [SerializeField] private GameObject audioManagerPrefab;
     [SerializeField] private GameObject settingsManagerPrefab;
     [SerializeField] private GameObject playerStatsManagerPrefab;
@@ -17,12 +15,6 @@ public class GameBootstrap : MonoBehaviour
         await UniTask.NextFrame();
 
         Instantiate(settingsManagerPrefab);
-        await UniTask.NextFrame();
-
-        Instantiate(playerManagerPrefab);
-        await UniTask.NextFrame();
-
-        Instantiate(playerShopManagerPrefab);
         await UniTask.NextFrame();
 
         Instantiate(audioManagerPrefab);
@@ -53,16 +45,6 @@ public class GameBootstrap : MonoBehaviour
         if (SceneController.instance == null)
         {
             Debug.LogError("SceneControl 초기화 실패");
-            return false;
-        }
-        if (PlayerManager.instance == null)
-        {
-            Debug.LogError("PlayerManager 초기화 실패");
-            return false;
-        }
-        if (PlayerShopManager.instance == null)
-        {
-            Debug.LogError("PlayerShopManager 초기화 실패");
             return false;
         }
         if (AudioManager.instance == null)

@@ -49,7 +49,7 @@ public class CardRevealAnimator : MonoBehaviour
             btn.alpha = 0f;
         }
 
-        await UniTask.Delay(1000);
+        await UniTask.Delay(100);
         gameObject.SetActive(false);
     }
 }
