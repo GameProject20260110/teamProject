@@ -166,7 +166,7 @@ public class RoundManager : MonoBehaviour
         {
             if(currentStageData != null && GameManager.instance != null)
             {
-                int reward = currentStageData.GetGoldReward(currentRound);
+                int reward = currentStageData.GetGoldRewardForSuccess(currentRound);
                 GameManager.instance.AddGold(reward);
                 Debug.Log($"¶ó¿îµå ¼º°ø! °ñµå {reward} È¹µæ");
             }
@@ -180,7 +180,7 @@ public class RoundManager : MonoBehaviour
             {
                 if (currentStageData != null && GameManager.instance != null)
                 {
-                    int reward = currentStageData.GetGoldReward(currentRound);
+                    int reward = currentStageData.GetGoldRewardForFailure(currentRound);
                     GameManager.instance.AddGold(reward);
                     Debug.Log($"¶ó¿îµå ½ÇÆÐ °ñµå {reward} È¹µæ");
                 }

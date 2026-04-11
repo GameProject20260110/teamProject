@@ -19,8 +19,8 @@ MonoBehaviour:
   diceNum: 14
   abilityName: "\uBC8C\uCCD0"
   tier: 3
-  gold: 9
-  sell: 6
+  gold: 12
+  sell: 12
   Desc: "\u2605\u2605\u2605\n\n\uC774 \uC8FC\uC0AC\uC704\uC758 \uB208\uAE08\uC774
     \uD640\uC218\uC77C \uB54C \uB77C\uC6B4\uB4DC \uC810\uC218 *2"
   skin: {fileID: 11400000, guid: d4d1f76ef74732146b6ba004cf2691f0, type: 2}

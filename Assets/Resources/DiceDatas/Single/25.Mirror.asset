@@ -18,9 +18,9 @@ MonoBehaviour:
   timing: 2
   diceNum: 25
   abilityName: "\uBBF8\uB7EC"
-  tier: 3
-  gold: 9
-  sell: 6
-  Desc: "\u2605\u2605\u2605\n\n\uBC1C\uB3D9\uD55C \uC774\uC804 \uD6A8\uACFC\uB85C
+  tier: 5
+  gold: 22
+  sell: 22
+  Desc: "\u2605\u2605\u2605\u2605\u2605\n\n\uBC1C\uB3D9\uD55C \uC774\uC804 \uD6A8\uACFC\uB85C
     \uC774 \uC8FC\uC0AC\uC704\uC758 \uD6A8\uACFC\uB97C \uBCC0\uACBD\uD55C\uB2E4."
   skin: {fileID: 11400000, guid: 3729abecb8ecf554f80bd466c7dbf574, type: 2}

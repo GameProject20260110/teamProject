@@ -18,8 +18,10 @@ MonoBehaviour:
   timing: 2
   diceNum: 16
   abilityName: "\uC704\uC800\uB4DC"
-  gold: 6
-  sell: 4
-  Desc: "\u2605\n\n\uB8F0\uC0C1 \uB208\uAE08\uC774 \uD640\uC218\uC778 \uC8FC\uC0AC\uC704\uB97C
-    \uC0DD\uC131\uD55C\uB2E4."
+  tier: 2
+  gold: 9
+  sell: 9
+  Desc: "\u2605\u2605\n\n\uBAA8\uB4E0 \uC8FC\uC0AC\uC704 \uB208\uAE08\uC758 \uC810\uC218\uB97C
+    \uB208\uAE08\uC774 \uD640\uC218\uC778 \uC8FC\uC0AC\uC704 \uC218 \uB9CC\uD07C
+    \uB354\uD55C\uB2E4. "
   skin: {fileID: 11400000, guid: 856b2499537cf9b459166bfcb141ca9e, type: 2}

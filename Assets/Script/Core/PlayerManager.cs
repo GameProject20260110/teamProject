@@ -23,8 +23,7 @@ public class PlayerManager : MonoBehaviour
     public DiceData defaultDice;
     private DiceData[] allDices;
     private ItemSo[] allItems;
-
-    // юс╫ц
+    private GimmickSo[] allGimmicks;
     public List<GimmickSo> pendingGimmicks = new List<GimmickSo>();
 
     private void Awake()
@@ -36,6 +35,7 @@ public class PlayerManager : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             allDices = Resources.LoadAll<DiceData>("DiceDatas");
             allItems = Resources.LoadAll<ItemSo>("ItemDatas");
+            allGimmicks = Resources.LoadAll<GimmickSo>("GimmickData");
             gameRerollCount = 1;
             isFirstRoll = true;
             Load();
@@ -51,6 +51,7 @@ public class PlayerManager : MonoBehaviour
     {
         dices.Clear();
         items.Clear();
+        pendingGimmicks.Clear();
 
         for (int i = 0; i < ItemSlotCount; i++)
         {
@@ -64,6 +65,7 @@ public class PlayerManager : MonoBehaviour
         extraDice = defaultDice;
         gold = 100;
         gameRerollCount = 1;
+        isFirstRoll = true;
         currentRound = 1;
         heart = 3;
     }
@@ -76,13 +78,16 @@ public class PlayerManager : MonoBehaviour
             currentRound = currentRound,
             heart = heart,
             extraDiceName = extraDice != null ? extraDice.name : "",
-            specialSlots = this.SpecialSlots
+            specialSlots = this.SpecialSlots,
+            isFirstRoll = isFirstRoll
         };
 
         foreach (var dice in dices)
             data.diceNames.Add(dice != null ? dice.name : "");
         foreach (var item in items)
             data.itemNames.Add(item != null ? item.name : "");
+        foreach (var gimmick in pendingGimmicks)
+            data.pendingGimmickNames.Add(gimmick != null ? gimmick.name : "");
    
         string json = JsonUtility.ToJson(data, true);
         try
@@ -111,6 +116,7 @@ public class PlayerManager : MonoBehaviour
         heart = data.heart;
         currentRound = data.currentRound;
         extraDice = System.Array.Find(allDices, s => s.name == name);
+        isFirstRoll = data.isFirstRoll;
 
         dices.Clear();
         items.Clear();
@@ -139,6 +145,15 @@ public class PlayerManager : MonoBehaviour
             }
             var item = System.Array.Find(allItems, s => s.name == name);
             if (item != null) items.Add(item);
+        }
+        if(data.pendingGimmickNames != null)
+        {
+            foreach(var name in data.pendingGimmickNames)
+            {
+                if (string.IsNullOrEmpty(name)) continue;
+                var gimmick = System.Array.Find(allGimmicks, g => g.name == name);
+                if (gimmick != null) pendingGimmicks.Add(gimmick);
+            }
         }
         if (dices.Count == 0) InitDefault();
 

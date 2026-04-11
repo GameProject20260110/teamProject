@@ -4052,7 +4052,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 944596117b820da459052f783c3a3a76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TestModeManager
-  isTestModeActive: 0
+  isTestModeActive: 1
   testGold: 9999
   testHeart: 3
   testAbilities:
@@ -4065,9 +4065,9 @@ MonoBehaviour:
   testValues: 
   testDiceSlot: 010101010000
   testItem:
-  - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
-  - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
-  - {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
+  - {fileID: 11400000, guid: d2cb733461870c44bb770a3e802063f1, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

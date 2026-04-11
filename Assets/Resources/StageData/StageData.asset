@@ -14,110 +14,95 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageDataSo
   allRounds:
   - roundNum: 1
-    targetScore: 1
-    goldReward: 10
+    targetScore: 23
+    successGoldReward: 10
+    failGoldReward: 3
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 2
-    targetScore: 2
-    goldReward: 11
+    targetScore: 26
+    successGoldReward: 10
+    failGoldReward: 3
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 3
-    targetScore: 3
-    goldReward: 12
+    targetScore: 32
+    successGoldReward: 10
+    failGoldReward: 3
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 4
-    targetScore: 4
-    goldReward: 13
+    targetScore: 35
+    successGoldReward: 10
+    failGoldReward: 3
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 5
-    targetScore: 5
-    goldReward: 14
+    targetScore: 50
+    successGoldReward: 10
+    failGoldReward: 4
     enemyImage: {fileID: 0}
-    bossStage: 1
     hasGimmick: 1
-    gimmickName: 
   - roundNum: 6
-    targetScore: 6
-    goldReward: 15
+    targetScore: 55
+    successGoldReward: 12
+    failGoldReward: 4
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 7
-    targetScore: 7
-    goldReward: 16
+    targetScore: 60
+    successGoldReward: 12
+    failGoldReward: 4
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 8
-    targetScore: 8
-    goldReward: 17
+    targetScore: 90
+    successGoldReward: 12
+    failGoldReward: 4
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 9
-    targetScore: 9
-    goldReward: 18
+    targetScore: 105
+    successGoldReward: 12
+    failGoldReward: 4
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 10
-    targetScore: 10
-    goldReward: 19
+    targetScore: 120
+    successGoldReward: 12
+    failGoldReward: 5
     enemyImage: {fileID: 0}
-    bossStage: 1
     hasGimmick: 1
-    gimmickName: 
   - roundNum: 11
-    targetScore: 11
-    goldReward: 20
+    targetScore: 150
+    successGoldReward: 14
+    failGoldReward: 5
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 12
-    targetScore: 12
-    goldReward: 21
+    targetScore: 300
+    successGoldReward: 14
+    failGoldReward: 5
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 13
-    targetScore: 13
-    goldReward: 22
+    targetScore: 350
+    successGoldReward: 14
+    failGoldReward: 5
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 14
-    targetScore: 14
-    goldReward: 23
+    targetScore: 400
+    successGoldReward: 14
+    failGoldReward: 5
     enemyImage: {fileID: 0}
-    bossStage: 0
     hasGimmick: 0
-    gimmickName: 
   - roundNum: 15
-    targetScore: 15
-    goldReward: 24
+    targetScore: 500
+    successGoldReward: 14
+    failGoldReward: 5
     enemyImage: {fileID: 0}
-    bossStage: 1
     hasGimmick: 1
-    gimmickName: 
   gimmickEnemyImages:
   - groupName: "\uCC45"
     gimmickTypes: 0100000002000000

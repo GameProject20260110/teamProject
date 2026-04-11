@@ -19,8 +19,8 @@ MonoBehaviour:
   diceNum: 17
   abilityName: "\uC36C"
   tier: 2
-  gold: 7
-  sell: 5
+  gold: 9
+  sell: 9
   Desc: "\u2605\u2605\n\n\uC774 \uC8FC\uC0AC\uC704\uAC00 \"\uD640\uC218\"\uBA85\uC774
     \uC4F0\uC5EC\uC9C4 \uC8FC\uC0AC\uC704\uC758 \uD6A8\uACFC\uB97C \uBC1B\uC544\uC11C
     \uC810\uC218\uAC00 \uC62C\uB77C\uAC08 \uB54C \uC62C\uB77C\uAC08 \uC810\uC218\uC758
