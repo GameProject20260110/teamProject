@@ -1,7 +1,6 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 
 public class PopupManager : MonoBehaviour
 {
@@ -14,10 +13,6 @@ public class PopupManager : MonoBehaviour
     [Header("아이템 팝업")]
     public RectTransform itemPopup;
     private TextMeshProUGUI itemDesc;
-
-    [Header("기믹 팝업")]
-    public RectTransform gimmickPopup;
-    private TextMeshProUGUI gimmickDesc;
 
     [Header("설명 팝업")]
     public ShopDescPopup DescPopup;
@@ -52,14 +47,7 @@ public class PopupManager : MonoBehaviour
         if(itemPopup != null)
         {
             itemDesc = itemPopup.GetComponentInChildren<TextMeshProUGUI>();
-        }
-
-        if (gimmickPopup != null)
-        {
-            gimmickDesc = gimmickPopup.GetComponentInChildren<TextMeshProUGUI>();
-        }
-
-        
+        }      
     }
 
     private void Start()
@@ -127,29 +115,12 @@ public class PopupManager : MonoBehaviour
         this.itemDesc.text = data.itemDesc;
         itemPopup.localPosition = CalcLocalPosPopup(targetRect);
         itemPopup.gameObject.SetActive(true);
-    }
-
-    public void OpenGimmickPopup(GimmickSo data, RectTransform targetRect)
-    {
-        if (gimmickDesc == null) return;
-        gimmickDesc.text = $"[{data.gimmickName}]\n\n{data.description}";
-
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rootCanvas.GetComponent<RectTransform>(),
-            screenPos,
-            rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out Vector2 localPos
-        );
-        gimmickPopup.localPosition = localPos + new Vector2(gimmickPopup.sizeDelta.x * -0.7f, targetRect.sizeDelta.y * 0.2f);
-        gimmickPopup.gameObject.SetActive(true);
-    }
+    }   
 
     public void ClosePopup()
     {
         if(diceDesc != null) dicePopup.gameObject.SetActive(false);
         if(itemDesc != null) itemPopup.gameObject.SetActive(false);
-        if(gimmickDesc != null) gimmickPopup.gameObject.SetActive(false);
     }
 
     private void UpdateGold(int gold) => playerGold.text = $"{gold}";

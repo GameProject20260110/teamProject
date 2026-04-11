@@ -10,6 +10,7 @@ public class ShopUIController : MonoBehaviour
     private BuyItem[] buyItem;
 
     [Header("Gacha Tables")]
+    [SerializeField] private DiceGachaDatabase ShopDiceDatabase;
     [SerializeField] private DiceGachaTable diceGacha;
     [SerializeField] private ItemGachaTable itemGacha;
     
@@ -66,7 +67,10 @@ public class ShopUIController : MonoBehaviour
             bool success = PlayerShopManager.instance.TryReroll();
             if (!success) return;
         }
-        RerollDice();
+
+        if (PlayerManager.instance.ShopLevel <= 6 && PlayerManager.instance.ShopLevel >= 1)
+            RerollDice();
+
         ReRollItem();
     }
 
@@ -154,9 +158,8 @@ public class ShopUIController : MonoBehaviour
                 buyDice[i].transform.SetParent(itemSlots[i].transform);
                 buyDice[i].transform.GetComponent<RectTransform>().localPosition = Vector3.zero;
             }
-
-            
-            buyDice[i].UpdateDiceInfo(diceGacha.Roll(), false);
+            var dicega = ShopDiceDatabase.diceGachaList[PlayerManager.instance.ShopLevel - 1];
+            buyDice[i].UpdateDiceInfo(dicega.Roll(), false);
             itemSlots[i].GetComponent<Image>().sprite = tierSlotImages[buyDice[i].GetTier() - 1];
 
         }

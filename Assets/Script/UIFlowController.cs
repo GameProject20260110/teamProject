@@ -13,4 +13,6 @@ public class UIFlowController : MonoBehaviour
 
         shopManager.OpenWithAnimation();
     }
+
+   
 }

@@ -61,7 +61,6 @@ public class BuySpecialSlot : MonoBehaviour
         
         diceSlots[nextSlotIndex].SetSpecialSlot(true);      
         nextSlotIndex++;
-        Debug.Log(nextSlotIndex);
         LevelUp();
         UpdateUI();
     }

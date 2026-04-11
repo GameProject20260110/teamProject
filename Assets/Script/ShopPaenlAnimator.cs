@@ -21,8 +21,6 @@ public class ShopPanelAnimator : MonoBehaviour
 
     public async UniTask Show()
     {
-        shopCanvas.SetActive(true);
-
         if (shopCanvasGroup != null)
         {
             shopCanvasGroup.interactable = false;

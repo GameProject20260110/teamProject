@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class HomeScreenUI : MonoBehaviour
@@ -36,7 +35,6 @@ public class HomeScreenUI : MonoBehaviour
         StartBtn.onClick.AddListener(() =>
         {
             SceneController.instance.LoadGameScene();
-            PlayerShopManager.instance.Open();
         });
 
         optionBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());

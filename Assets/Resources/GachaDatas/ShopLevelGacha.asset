@@ -1,0 +1,21 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82991c1314904b240b9f1cee6665a9d2, type: 3}
+  m_Name: ShopLevelGacha
+  m_EditorClassIdentifier: Assembly-CSharp::DiceGachaDatabase
+  diceGachaList:
+  - {fileID: 11400000, guid: 3100cef10b54e704098fca9673883448, type: 2}
+  - {fileID: 11400000, guid: 3100cef10b54e704098fca9673883448, type: 2}
+  - {fileID: 11400000, guid: 22dec4c55aa1a174aa8f6e0e186e47b5, type: 2}
+  - {fileID: 11400000, guid: 310f967967b235a47b706a280e9779ff, type: 2}
+  - {fileID: 11400000, guid: 1a09a9cafe4571b4e8112f210380dfb2, type: 2}
+  - {fileID: 11400000, guid: ab8573eef50ef3f4d86922edc9fcfbce, type: 2}
