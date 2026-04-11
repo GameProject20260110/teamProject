@@ -1,0 +1,76 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7551f8115b3c61f459005ee850a2a501, type: 3}
+  m_Name: ShopDiceLevel2
+  m_EditorClassIdentifier: Assembly-CSharp::DiceGachaTable
+  level: 2
+  diceWeights:
+  - dice: {fileID: 11400000, guid: 97e69c32f976aa341b1024253a86f99d, type: 2}
+    weight: 25
+  - dice: {fileID: 11400000, guid: 7b07223adff4417428b47855ffa49c43, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: b5b2511032e3c874cb2d61de0ec40d8b, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: e2721754ac60f2d4fa1d9578e790ca94, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: b6417d61e70a22549bd850140d1077be, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 70dffd7eebf09b34bb37cebb2e26bfc2, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: 7900d26ed7d8ca9408a88a4a1a922bd5, type: 2}
+    weight: 4
+  - dice: {fileID: 11400000, guid: 08924c7a29ebe5c48801c3938658b104, type: 2}
+    weight: 25
+  - dice: {fileID: 11400000, guid: 48b326322fc776648bd1b4b20cf74aa3, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 6610bcaaa6ff98e4aae69d24438119f6, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: e6774d81cf6263048b83f5121a55f098, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: d250a3eeee1a75149b0a0ff1e6abfc35, type: 2}
+    weight: 4
+  - dice: {fileID: 11400000, guid: b0b3ba6370eaa1047bb9949383fbc685, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 57b0acf668c5f784e90c7c369e6992fe, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: 4631ccee23ae1e64091fdfc453de8228, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: ac9cd7bf69b0c8f4aab28de7bd99ff21, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: 8dcb4edc20f036148871b7035949c76b, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: 7c6c74dd064520a4394e83f8cccea5fc, type: 2}
+    weight: 25
+  - dice: {fileID: 11400000, guid: 8ee6cd5a84eb9334dade88d300659cbd, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: ae40276d5a6ebdc438cc4e6193d7e201, type: 2}
+    weight: 25
+  - dice: {fileID: 11400000, guid: aea833e83bb60cd4dad911da27a28e00, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: 0e00367e51abb3c4bbcd566cbeef72bc, type: 2}
+    weight: 25
+  - dice: {fileID: 11400000, guid: d8b5a3b2a79e125408d4727cba4a89ca, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 540d775e0fee14549969b39e61428852, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 6e6a9defc106b2b4ebae7e42d90a35fa, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: f7ec291ccf9702e4ebe290f116ed57b8, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 793849121a8ba924484d94c068bddcad, type: 2}
+    weight: 40
+  - dice: {fileID: 11400000, guid: 9330287f23ac85a4686afebfdbc5875e, type: 2}
+    weight: 55
+  - dice: {fileID: 11400000, guid: f0f8c4d42dd1f4141bd04a7990ab8b45, type: 2}
+    weight: 25
+  - dice: {fileID: 11400000, guid: 400681737b4eb6e4789a6af1059401cd, type: 2}
+    weight: 4

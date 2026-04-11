@@ -8,6 +8,7 @@ public class PlayerManager : MonoBehaviour
     public List<ItemSo> items = new List<ItemSo>();
     public DiceData extraDice;
     public bool[] SpecialSlots = new bool[6];
+    public int ShopLevel;
     public int tempExtraSlotsCount = 0;
     public int gold;
     public int currentRound;
@@ -65,6 +66,7 @@ public class PlayerManager : MonoBehaviour
         gameRerollCount = 1;
         currentRound = 1;
         heart = 3;
+        ShopLevel = 1;
     }
 
     public void Save()
@@ -74,6 +76,7 @@ public class PlayerManager : MonoBehaviour
             gold = gold,
             currentRound = currentRound,
             heart = heart,
+            ShopLevel = ShopLevel,
             extraDiceName = extraDice != null ? extraDice.name : "",
             specialSlots = this.SpecialSlots
         };
@@ -109,6 +112,7 @@ public class PlayerManager : MonoBehaviour
         gold = data.gold;
         heart = data.heart;
         currentRound = data.currentRound;
+        ShopLevel = data.ShopLevel;
         extraDice = System.Array.Find(allDices, s => s.name == name);
 
         dices.Clear();

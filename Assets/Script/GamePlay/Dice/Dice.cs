@@ -102,13 +102,13 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (PopupManager.instance == null || MyState.diceData == null) return;
-        //PopupManager.instance.OpenPopup(MyState.diceData, GetComponent<RectTransform>());
+        if (GamePopupManager.instance == null || MyState.diceData == null) return;
+        GamePopupManager.instance.OpenPopup(MyState.diceData, GetComponent<RectTransform>());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (PopupManager.instance == null) return;
-        PopupManager.instance.ClosePopup();
+        if (GamePopupManager.instance == null) return;
+        GamePopupManager.instance.ClosePopup();
     }
 }

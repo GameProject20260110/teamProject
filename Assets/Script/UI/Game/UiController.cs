@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -211,6 +212,11 @@ public class UiController : MonoBehaviour
         {
             ShopBtn.interactable = state;
         }
+    }
+
+    public void OnClickGameEndBtn()
+    {
+        gameOverUI?.Show(12, 123);
     }
 
     public void ClearGimmickIcons()

@@ -7,13 +7,13 @@ public class GimmickIconHover : MonoBehaviour, IPointerEnterHandler, IPointerExi
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (PopupManager.instance == null || gimmick == null) return;
-        PopupManager.instance.OpenGimmickPopup(gimmick, GetComponent<RectTransform>());
+        if (GamePopupManager.instance == null || gimmick == null) return;
+        GamePopupManager.instance.OpenGimmickPopup(gimmick, GetComponent<RectTransform>());
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (PopupManager.instance == null) return;
-        PopupManager.instance.ClosePopup();
+        if (GamePopupManager.instance == null) return;
+        GamePopupManager.instance.ClosePopup();
     }
 }

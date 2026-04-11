@@ -137,6 +137,7 @@ public class PlayerShopManager : MonoBehaviour
 
         SpendGold(cost);
         PlayerManager.instance.SpecialSlots[slotIndex] = true;
+        PlayerManager.instance.ShopLevel++;
 
         return true;
     }

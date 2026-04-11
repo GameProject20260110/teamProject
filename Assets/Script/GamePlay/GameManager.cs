@@ -72,12 +72,11 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
         }
+
     }
 
     public void InitializeRoundData()
     {
-        //_isFirstRoll = true;
-        //_currentRerollCount = maxRerollCount;
         _isFirstRoll = PlayerManager.instance.isFirstRoll;
         _currentRerollCount = PlayerManager.instance.gameRerollCount;
         currentScore = 0;
@@ -130,8 +129,6 @@ public class GameManager : MonoBehaviour
         Debug.Log($"{_usedConsumableItems.Count}");
         _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
-        //_isFirstRoll = true;
-        //_currentRerollCount = maxRerollCount;
         _isFirstRoll = PlayerManager.instance.isFirstRoll;
         _currentRerollCount = PlayerManager.instance.gameRerollCount;
         currentScore = 0;
@@ -332,6 +329,11 @@ public class GameManager : MonoBehaviour
         PlayerManager.instance.isFirstRoll = true;
 
         UFC.OnNextRoundButton();
+    }
+
+    public void OnClickGameEnd()
+    {
+
     }
 
     public void OnClickRetryRound()
