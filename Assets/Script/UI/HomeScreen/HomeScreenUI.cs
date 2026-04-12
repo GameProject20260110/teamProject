@@ -8,7 +8,6 @@ public class HomeScreenUI : MonoBehaviour
 
     [Header("Button")]
     [SerializeField] private Button StartBtn;
-    [SerializeField] private Button optionBtn;
 
     [Header("Text")]
     [SerializeField] private TextMeshProUGUI bestRound;
@@ -37,17 +36,10 @@ public class HomeScreenUI : MonoBehaviour
             SceneController.instance.LoadGameScene();
         });
 
-        optionBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
-
         bestRound.text = "최고 라운드: " + PlayerStatsManager.instance.bestRound.ToString();
         bestScore.text = "최고 점수: " + PlayerStatsManager.instance.bestScore.ToString();
         GameClear.text = "게임 클리어 수: " + PlayerStatsManager.instance.totalClears.ToString();
         totalGamePlayed.text = "게임 플레이 수: " + PlayerStatsManager.instance.totalGamePlayed.ToString();
-
-        if (PlayerManager.instance != null && playerImage != null)
-        {
-            playerImage.sprite = PlayerManager.instance.playerImage;
-        }
     }
 
 }

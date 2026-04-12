@@ -31,10 +31,7 @@ public class UiController : MonoBehaviour
     public Sprite rollSprite;
     public Sprite rerollSprite;
     public Button confirmBtn;
-    public Button nextRoundBtn;
     public Button ShopBtn;
-
-    public GameObject settingPanel;
 
     [Header("GameEndPanels")]
     public GameObject backGround;
@@ -54,7 +51,6 @@ public class UiController : MonoBehaviour
 
     private void Start()
     {
-        if(settingPanel != null) settingPanel.SetActive(false);
 
         if(GameManager.instance != null)
         {
@@ -76,7 +72,7 @@ public class UiController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            ToggleSettingPanel();
+            
         }
     }
 
@@ -227,12 +223,6 @@ public class UiController : MonoBehaviour
     public void GotoLobby()
     {
         SceneController.instance.LoadHomeScene();
-    }
-
-    public void ToggleSettingPanel()
-    {
-        if (settingPanel == null) return;
-        settingPanel.SetActive(!settingPanel.activeSelf);
     }
 
     public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)

@@ -82,6 +82,12 @@ public class PlayerStatsManager : MonoBehaviour
         Save();
     }
 
+    public void ResetStatus()
+    {
+        InitDefault();
+        Save();
+    }
+
     private void InitDefault()
     {
         bestRound = 0;
