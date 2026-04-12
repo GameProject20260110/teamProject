@@ -24,5 +24,6 @@ MonoBehaviour:
   Desc: "\u2605\u2605\u2605\u2605\n\n\uC774 \uC8FC\uC0AC\uC704\uC758 \uB208\uAE08\uC774
     \uC9DD\uC218\uC77C \uB54C \uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758 \uC810\uC218
     *3 "
+  effectDesc: "\uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758 \uC810\uC218 x3"
   skin: {fileID: 11400000, guid: 1c514226aff5ff849a527a2e18d651da, type: 2}
   bonusScore: 3

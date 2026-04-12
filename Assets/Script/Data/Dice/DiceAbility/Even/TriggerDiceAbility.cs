@@ -18,7 +18,7 @@ public class TriggerDiceAbility : DiceData
         events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}" )
         {
             effectName = abilityName,
-            effectDesc = "라운드 점수 x2"
+            effectDesc = this.effectDesc
         });
         Bow.TryTrigger(ref totalScore, events);
     }

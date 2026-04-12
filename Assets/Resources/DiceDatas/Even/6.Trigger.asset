@@ -23,5 +23,6 @@ MonoBehaviour:
   sell: 12
   Desc: "\u2605\u2605\u2605\n\n\uBAA8\uB4E0 \uC8FC\uC0AC\uC704\uC758 \uB208\uAE08\uC774
     \uC9DD\uC218\uC77C \uACBD\uC6B0 \uB77C\uC6B4\uB4DC \uC810\uC218*2"
+  effectDesc: "\uB77C\uC6B4\uB4DC \uC810\uC218 x2"
   skin: {fileID: 11400000, guid: b515cb962012891499a36d213672556e, type: 2}
   bonusScore: 2

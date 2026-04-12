@@ -4063,9 +4063,9 @@ MonoBehaviour:
   testGold: 9999
   testHeart: 3
   testAbilities:
-  - {fileID: 11400000, guid: ac9cd7bf69b0c8f4aab28de7bd99ff21, type: 2}
-  - {fileID: 11400000, guid: 400681737b4eb6e4789a6af1059401cd, type: 2}
-  - {fileID: 11400000, guid: e6774d81cf6263048b83f5121a55f098, type: 2}
+  - {fileID: 11400000, guid: 8ee6cd5a84eb9334dade88d300659cbd, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}

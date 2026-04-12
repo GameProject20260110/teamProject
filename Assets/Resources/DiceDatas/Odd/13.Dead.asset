@@ -22,6 +22,7 @@ MonoBehaviour:
   gold: 22
   sell: 22
   Desc: "\u2605\u2605\u2605\u2605\u2605\n\n\uD640\uC218 \uB208\uAE08\uC758 \uC8FC\uC0AC\uC704
-    \uC218 * \uB77C\uC6B4\uB4DC \uC810\uC218"
+    \uC218 x \uB77C\uC6B4\uB4DC \uC810\uC218"
+  effectDesc: "\uD640\uC218 \uC8FC\uC0AC\uC704 \uC218 x \uB77C\uC6B4\uB4DC \uC810\uC218"
   skin: {fileID: 11400000, guid: 7654f31561e92c94fab9cfea239fcd9d, type: 2}
   bonusScore: 10

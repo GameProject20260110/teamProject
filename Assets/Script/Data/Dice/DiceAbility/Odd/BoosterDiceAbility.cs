@@ -37,13 +37,11 @@ public class BoosterDiceAbility : DiceData
                     events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
                     {
                         effectName = abilityName,
-                        effectDesc = $"모든 주사위 점수 +{currentBonusScore} 재굴림 +1"
+                        effectDesc = this.effectDesc
                     });
-                    Bow.TryTrigger(ref totalScore, events);
                 }
             }
-
-            
         }
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

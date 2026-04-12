@@ -25,10 +25,10 @@ public class WizardDiceAbility : DiceData
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{oddCount}", dice.scoreValue)
                 {
                     effectName = abilityName,
-                    effectDesc = "모든 주사위 점수 + 홀수 주사위 수"
+                    effectDesc = this.effectDesc
                 });
-                Bow.TryTrigger(ref totalScore, events);
             }
         }
+        Bow.TryTrigger(ref totalScore, events);
     }
 }
