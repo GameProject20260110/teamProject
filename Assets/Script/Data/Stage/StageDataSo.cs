@@ -9,12 +9,10 @@ public class RoundData
 {
     public int roundNum;
     public int targetScore;
-    public int goldReward;
+    public int successGoldReward;
+    public int failGoldReward;
     public Sprite enemyImage;
-    public bool bossStage;
-
     public bool hasGimmick;
-    public string gimmickName;
 }
 
 [System.Serializable]
@@ -36,11 +34,24 @@ public class StageDataSo : ScriptableObject
         return allRounds.Find(x => x.roundNum == round);
     }
 
-    public int GetGoldReward(int round)
+    public int GetGoldRewardForSuccess(int round)
     {
         RoundData data = GetRoundData(round);
-        if (data != null && data.goldReward > 0) return data.goldReward;
-        return round + 9;
+        if (data != null && data.successGoldReward > 0) return data.successGoldReward;
+
+        if (round <= 5) return 10;
+        else if (round <= 10) return 12;
+        else return 14;
+    }
+
+    public int GetGoldRewardForFailure(int round)
+    {
+        RoundData data = GetRoundData(round);
+        if (data != null && data.failGoldReward > 0) return data.failGoldReward;
+
+        if (round <= 4) return 3;
+        else if (round <= 9) return 4;
+        else return 5;
     }
 
     public Sprite GetEnemyImageByGimmick(GimmickType type)
@@ -62,11 +73,19 @@ public class StageDataSo : ScriptableObject
 
         int[] targetScores = new int[]
         {
-            1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15
+            23, 26, 32, 35, 50, 55, 60, 90, 105, 120, 150, 300, 350, 400, 500
         };
-        int[] goldReward = new int[]
+        int[] successGoldReward = new int[]
         {
-            10, 11, 12, 13, 14, 15, 16, 17, 18 ,19, 20, 21, 22, 23, 24
+            10, 10, 10, 10, 10,
+            12, 12, 12, 12, 12,
+            14, 14, 14, 14, 14
+        };
+        int[] failGoldReward = new int[]
+        {
+            3, 3, 3, 3,
+            4, 4, 4 ,4, 4,
+            5, 5, 5, 5, 5, 5
         };
 
         for(int i = 0; i < 15; i++)
@@ -78,8 +97,8 @@ public class StageDataSo : ScriptableObject
             {
                 roundNum = roundNum,
                 targetScore = targetScores[i],
-                goldReward = goldReward[i],
-                bossStage = isBoss,
+                successGoldReward = successGoldReward[i],
+                failGoldReward = failGoldReward[i],
                 hasGimmick = isBoss
             });
         }

@@ -11,4 +11,6 @@ public class PlayerSaveData
     public List<string> diceNames = new List<string>();
     public List<string> itemNames = new List<string>();
     public string extraDiceName;
+    public List<string> pendingGimmickNames = new List<string>();
+    public bool isFirstRoll;
 }

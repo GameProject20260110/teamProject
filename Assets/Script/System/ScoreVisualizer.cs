@@ -21,7 +21,7 @@ public class ScoreVisualizer : MonoBehaviour
     public GameObject negateOverlayPrefab;
 
     private int _currentDisplayScore = 0;
-    //private string _lastEffectName;
+    private string _lastEffectName;
     private List<GameObject> _negateOverlays = new List<GameObject>();
 
     private void Awake()
@@ -290,8 +290,8 @@ public class ScoreVisualizer : MonoBehaviour
 
     private bool ShowEffectMessage(string effectName, string effectDesc)
     {
-        if (string.IsNullOrEmpty(effectName) /*|| effectName == _lastEffectName*/) return false;
-        //_lastEffectName = effectName;
+        if (string.IsNullOrEmpty(effectName) || effectName == _lastEffectName) return false;
+        _lastEffectName = effectName;
         
         string message = string.IsNullOrEmpty(effectDesc) ? effectName : $"{effectName}\n{effectDesc}";
         UiController.instance.notificationUI.Show(message, 0.7f);

@@ -18,11 +18,11 @@ MonoBehaviour:
   timing: 2
   diceNum: 30
   abilityName: "\uBC14\uC6B4\uC11C"
-  tier: 4
-  gold: 11
-  sell: 7
-  Desc: "\u2605\u2605\u2605\u2605\n\n\uB77C\uC6B4\uB4DC \uC810\uC218 +10 \uC774\uD6C4
-    \uB77C\uC6B4\uB4DC \uC810\uC218\uB97C 2\uBC30\uB85C \uD55C\uB2E4."
+  tier: 3
+  gold: 12
+  sell: 12
+  Desc: "\u2605\u2605\u2605\n\n\uB77C\uC6B4\uB4DC \uC810\uC218 +10 \uC774\uD6C4 \uB77C\uC6B4\uB4DC
+    \uC810\uC218\uB97C 2\uBC30\uB85C \uD55C\uB2E4."
   skin: {fileID: 11400000, guid: 1c52e1d099c1887408ce045401319418, type: 2}
   plusScore: 10
   bonusScore: 2
