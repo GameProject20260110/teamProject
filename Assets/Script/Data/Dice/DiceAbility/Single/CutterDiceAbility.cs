@@ -23,7 +23,7 @@ public class CutterDiceAbility : DiceData
         events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, new int[] {dice1.diceIndex, dice2.diceIndex}, totalScore)
         {
             effectName = abilityName,
-            effectDesc = $"주사위 눈금 2개는 곱해진다."
+            effectDesc = this.effectDesc
         });
         Bow.TryTrigger(ref totalScore, events);
     }

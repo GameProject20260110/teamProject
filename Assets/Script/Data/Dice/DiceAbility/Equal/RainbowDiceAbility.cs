@@ -25,10 +25,9 @@ public class RainbowDiceAbility : DiceData
             events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, "Rainbow")
             {
                 effectName = abilityName,
-                effectDesc = "라운드 점수 x3"
+                effectDesc = this.effectDesc
             });
-            Bow.TryTrigger(ref totalScore, events);
         }
+        Bow.TryTrigger(ref totalScore, events);
     }
-
 }

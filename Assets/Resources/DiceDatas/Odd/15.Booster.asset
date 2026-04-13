@@ -25,5 +25,7 @@ MonoBehaviour:
     3\uAC1C \uC774\uC0C1\uC77C \uB54C \uBAA8\uB4E0 \uC8FC\uC0AC\uC704 \uC810\uC218
     +3, \uC7AC\uAD74\uB9BC \uAE30\uD68C +1 (\uC7AC\uAD74\uB9BC \uCD94\uAC00\uB294
     \uB77C\uC6B4\uB4DC 1\uD68C)"
+  effectDesc: "\uBAA8\uB4E0 \uC8FC\uC0AC\uC704 \uC810\uC218 +3 \uC7AC\uAD74\uB9BC 
+    +1"
   skin: {fileID: 11400000, guid: c2408c9b6800ab142b0182c2001c680b, type: 2}
   bonusScore: 3

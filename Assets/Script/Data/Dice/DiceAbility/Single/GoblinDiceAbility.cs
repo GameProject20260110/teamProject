@@ -16,7 +16,7 @@ public class GoblinDiceAbility : DiceData
         events.Add(new ScoreEventData(ScoreEventData.Type.GainGold, myState.diceIndex, gold, $"Gold +{gold}")
         {
             effectName = abilityName,
-            effectDesc = "¶ó¿îµå ¼ö¸¸Å­ °ñµå È¹µæ"
+            effectDesc = this.effectDesc
         });
         Bow.TryTrigger(ref totalScore, events);
     }

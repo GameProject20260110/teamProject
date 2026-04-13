@@ -21,10 +21,10 @@ public class PurgeDiceAbility : DiceData
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{bonusScore}", dice.scoreValue)
                 {
                     effectName = abilityName,
-                    effectDesc = $"모든 주사위 점수 + {bonusScore}"
+                    effectDesc = this.effectDesc
                 });
-                Bow.TryTrigger(ref totalScore, events);
             }
-        }       
+        }
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

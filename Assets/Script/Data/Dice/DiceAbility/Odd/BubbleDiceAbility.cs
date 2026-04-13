@@ -23,11 +23,11 @@ public class BubbleDiceAbility : DiceData
                     events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
                     {
                         effectName = abilityName,
-                        effectDesc = "모든 짝수 취급하고 이 주사위 눈금 +3"
+                        effectDesc = this.effectDesc
                     });
-                    Bow.TryTrigger(ref totalScore, events);
                 }
             }
         }
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

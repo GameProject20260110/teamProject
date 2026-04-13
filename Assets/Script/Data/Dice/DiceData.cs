@@ -24,6 +24,9 @@ public class DiceData : ScriptableObject
     [TextArea]
     public string Desc;
 
+    [TextArea]
+    public string effectDesc;
+
     [Header("주사위 스킨")]
     public DiceSkin skin;
 

@@ -12,7 +12,7 @@ public class WitchDiceAbility : DiceData
         events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{bonusScore}")
         {
             effectName = abilityName,
-            effectDesc = $"라운드 점수 x{bonusScore} 이후 하나 무효"
+            effectDesc = this.effectDesc
         });
 
         int startIndex = myState.diceIndex + 1;
