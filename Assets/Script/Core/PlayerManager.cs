@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviour
 
     private const int DiceSlotCount = 6;
     private const int ItemSlotCount = 7;
+    private const string SAVE_FILE = "playerData.json";
 
     public DiceData defaultDice;
     private DiceData[] allDices;
@@ -67,7 +68,7 @@ public class PlayerManager : MonoBehaviour
         gameRerollCount = 1;
         isFirstRoll = true;
         currentRound = 1;
-        heart = 3;
+        heart = 50;
         ShopLevel = 1;
     }
 
@@ -90,29 +91,26 @@ public class PlayerManager : MonoBehaviour
             data.itemNames.Add(item != null ? item.name : "");
         foreach (var gimmick in pendingGimmicks)
             data.pendingGimmickNames.Add(gimmick != null ? gimmick.name : "");
-   
-        string json = JsonUtility.ToJson(data, true);
-        try
-        {
-            System.IO.File.WriteAllText(SavePath(), json);
-        }
-        catch(System.Exception ex)
-        {
-            Debug.LogError($" 저장 실패 : {ex.Message} (PlayerManager)");
-        }
+
+        SaveManager.instance.Save(data, SAVE_FILE);
     }
 
     public void Load()
     {
-        string path = SavePath();
-        if (!System.IO.File.Exists(path))
+        if (SaveManager.instance == null)
+        {
+            Debug.LogWarning("SaveManager가 없습니다. 기본값 사용");
+            InitDefault();
+            return;
+        }
+
+        if (!SaveManager.instance.HasSaveFile(SAVE_FILE))
         {
             InitDefault();
             return;
         }
 
-        string json = System.IO.File.ReadAllText(path);
-        PlayerSaveData data = JsonUtility.FromJson<PlayerSaveData>(json);
+        PlayerSaveData data = SaveManager.instance.Load<PlayerSaveData>(SAVE_FILE);
 
         gold = data.gold;
         heart = data.heart;
@@ -121,10 +119,10 @@ public class PlayerManager : MonoBehaviour
         extraDice = System.Array.Find(allDices, s => s.name == name);
         isFirstRoll = data.isFirstRoll;
 
-        dices.Clear();
-        items.Clear();
+        
 
         this.SpecialSlots = data.specialSlots;
+
         if(data.specialSlots != null && data.specialSlots.Length == 6)
         {
             this.SpecialSlots = data.specialSlots;
@@ -134,11 +132,14 @@ public class PlayerManager : MonoBehaviour
             this.SpecialSlots = new bool[6];
         }
 
-         foreach (var name in data.diceNames)
-         {
-            var dice = System.Array.Find(allDices, s => s.name == name);
-            if (dice != null) dices.Add(dice);
-         }
+        dices.Clear();
+        foreach (var name in data.diceNames)
+        {
+           var dice = System.Array.Find(allDices, s => s.name == name);
+           if (dice != null) dices.Add(dice);
+        }
+
+        items.Clear();
         foreach (var name in data.itemNames)
         {
             if (string.IsNullOrEmpty(name))
@@ -149,6 +150,7 @@ public class PlayerManager : MonoBehaviour
             var item = System.Array.Find(allItems, s => s.name == name);
             if (item != null) items.Add(item);
         }
+
         if(data.pendingGimmickNames != null)
         {
             foreach(var name in data.pendingGimmickNames)
@@ -158,6 +160,7 @@ public class PlayerManager : MonoBehaviour
                 if (gimmick != null) pendingGimmicks.Add(gimmick);
             }
         }
+
         if (dices.Count == 0) InitDefault();
 
         bool anyUnlocked = false;
@@ -177,20 +180,5 @@ public class PlayerManager : MonoBehaviour
         isGameOver = true;   
         InitDefault();
         Save();
-    }
-
-    private string SavePath()
-    {
-        Debug.Log(Application.persistentDataPath);
-        return Application.persistentDataPath + "/playerData.json";        
-    }
-
-    public void DeleteSave()
-    {
-        string path = SavePath();
-        if (System.IO.File.Exists(path))
-        {
-            System.IO.File.Delete(path);
-        }
     }
 }

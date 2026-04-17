@@ -15,6 +15,9 @@ public class SettingsManager : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject SettingsContent;
     [SerializeField] private Button homeBtn;
+    [SerializeField] private GameObject Panel;
+
+    private bool Open = false;
 
     private void Awake()
     {
@@ -32,17 +35,17 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    public void InitializeUI()
+    public void GoLobby()
     {
-        if (SceneController.instance != null)
-            homeBtn.onClick.AddListener(() => SceneController.instance.LoadHomeScene());
+        ToggleSettings();
+        SceneController.instance.LoadHomeScene();
     }
 
     public void ToggleSettings()
     {
-        if (SettingsContent != null)
-            SettingsContent.SetActive(true);
-            
+        bool activeSet = !SettingsContent.activeSelf;
+        Panel.SetActive(activeSet);
+        SettingsContent.SetActive(activeSet);
     }
 
     public void SaveSettings()
