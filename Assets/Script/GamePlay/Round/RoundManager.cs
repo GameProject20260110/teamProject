@@ -120,6 +120,11 @@ public class RoundManager : MonoBehaviour
         {
             GameManager.instance.diceManager.SetupDiceBoard();
         }
+
+        if (BattleManager.instance != null)
+        {
+            BattleManager.instance.InitializeBattle();
+        }
     }
 
     private void UpdateEnemyImage()

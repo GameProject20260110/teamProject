@@ -1,36 +1,39 @@
 using DG.Tweening;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class DiceRoller : MonoBehaviour
 {
     public bool isRolling { get; private set; } = false;
-    public System.Action OnRollComplete;
+    //public System.Action OnRollComplete;
 
     private float padding = 100.0f;
 
     private bool UseTestMode => TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
 
-    public void StartRoll(Dice[] allDice, RectTransform rollArea) 
+    public async UniTask StartRoll(Dice[] allDice, RectTransform rollArea) 
     {
         if (isRolling) return;
-        StartCoroutine(RollRoutine(allDice, rollArea));
+        await RollRoutine(allDice, rollArea);
     }
-    IEnumerator RollRoutine(Dice[] allDice, RectTransform rollArea)
+
+    private async UniTask RollRoutine(Dice[] allDice, RectTransform rollArea)
     {
         isRolling = true;
         UiController.instance.SetRollBtnInteractable(false);
+
         float rollDuration = 1.5f;
 
         DG.Tweening.Sequence rollSeq = BuildRollSequence(allDice, rollArea, rollDuration);
-        yield return rollSeq.WaitForCompletion();
-        yield return new WaitForSeconds(1.0f);
+        await rollSeq.AsyncWaitForCompletion();
+
+        await UniTask.Delay(1000);
 
         DG.Tweening.Sequence returnSeq = BuildReturnSequence(allDice);
-        yield return returnSeq.WaitForCompletion();
+        await returnSeq.AsyncWaitForCompletion();
 
         isRolling = false;
-        OnRollComplete?.Invoke();
+        //OnRollComplete?.Invoke();
     }
 
     private DG.Tweening.Sequence BuildRollSequence(Dice[] allDice, RectTransform rollArea, float duration)

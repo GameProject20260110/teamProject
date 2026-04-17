@@ -50,6 +50,6 @@ public class CardRevealAnimator : MonoBehaviour
         }
 
         await UniTask.Delay(100);
-        gameObject.SetActive(false);
+        UiController.instance.resultUI.Hide();
     }
 }
