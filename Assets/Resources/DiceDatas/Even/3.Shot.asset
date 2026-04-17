@@ -22,5 +22,6 @@ MonoBehaviour:
   gold: 7
   sell: 7
   Desc: "\u2605\n\n\uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758 \uC810\uC218 +3"
+  effectDesc: "\uBAA8\uB4E0 \uC9DD\uC218 \uB208\uAE08\uC758 \uC810\uC218 +3"
   skin: {fileID: 11400000, guid: fc6d1d2d69085804cabe940dec917c80, type: 2}
   bonusScore: 3

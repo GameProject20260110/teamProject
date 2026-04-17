@@ -23,4 +23,6 @@ MonoBehaviour:
   sell: 9
   Desc: "\u2605\u2605\n\n\uB77C\uC6B4\uB4DC \uC885\uB8CC \uC2DC \uBCF4\uC720\uD55C
     \uC2AC\uB86F \uC218\uB9CC\uD07C \uACE8\uB4DC\uB97C \uC5BB\uB294\uB2E4."
+  effectDesc: "\uB77C\uC6B4\uB4DC \uC885\uB8CC \uC2DC \uBCF4\uC720\uD55C \uC2AC\uB86F
+    \uC218\uB9CC\uD07C \uACE8\uB4DC \uD719\uB4DD"
   skin: {fileID: 11400000, guid: c175d76460af1704fbb0abdc4b23eda9, type: 2}

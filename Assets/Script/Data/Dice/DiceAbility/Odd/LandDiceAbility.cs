@@ -23,11 +23,11 @@ public class LandDiceAbility : DiceData
                     events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
                     {
                         effectName = abilityName,
-                        effectDesc = $"¸ðµç È¦¼ö ´«±ÝÀÇ Á¡¼ö x{currentBonusScore}"
-                    });
-                    Bow.TryTrigger(ref totalScore, events);
+                        effectDesc = this.effectDesc
+                    });  
                 }
             }
         }
+        Bow.TryTrigger(ref totalScore, events);
     }
 }

@@ -24,7 +24,7 @@ public class DeadDiceAbility : DiceData
         events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, oddInDice.ToArray(), totalScore, "Dead")
         {
             effectName = abilityName,
-            effectDesc = "홀수 주사위 수 x 라운드 점수"
+            effectDesc = this.effectDesc
         });
         Bow.TryTrigger(ref totalScore, events);
     }

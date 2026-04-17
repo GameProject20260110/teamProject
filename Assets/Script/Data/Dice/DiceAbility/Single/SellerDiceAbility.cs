@@ -12,7 +12,7 @@ public class SellerDiceAbility : DiceData
         events.Add(new ScoreEventData(ScoreEventData.Type.Notice, myState.diceIndex, totalScore, $"+{gold}", myState.scoreValue)
         {
             effectName = abilityName,
-            effectDesc = $"라운드 점수 + 보유한 골드 수"
+            effectDesc = this.effectDesc
         });
         Bow.TryTrigger(ref totalScore, events);
     }

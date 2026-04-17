@@ -26,7 +26,7 @@ public class ChainDiceAbility : DiceData
             events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, target.diceIndex, 6, "Chain!")
             {
                 effectName = abilityName,
-                effectDesc = "3개의 주사위를 눈금 6으로 한다."
+                effectDesc = this.effectDesc
             });
 
             int diff = target.ApplyDiceScoreChange(bonusScore);
@@ -34,10 +34,9 @@ public class ChainDiceAbility : DiceData
             {
                 totalScore += diff;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, target.diceIndex, totalScore, $"+{diff}", target.scoreValue));
-                Bow.TryTrigger(ref totalScore, events);
             }
         }
+        Bow.TryTrigger(ref totalScore, events);
         ChangeModi(myState, allDice, ref totalScore, events);
     }
-
 }

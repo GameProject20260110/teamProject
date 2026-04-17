@@ -24,12 +24,12 @@ public class CherryDiceAbility : DiceData
                         events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
                         {
                             effectName = abilityName,
-                            effectDesc = $"¸ðµç È¦¼ö ´«±Ý Á¡¼ö +{currentBonusScore}"
+                            effectDesc = this.effectDesc
                         });
-                        Bow.TryTrigger(ref totalScore, events);
                     }
                 }
             }
+            Bow.TryTrigger(ref totalScore, events);
         }
     }
 }

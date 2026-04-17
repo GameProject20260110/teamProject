@@ -16,16 +16,20 @@ public class BamDiceAbility : DiceData
         {
             dice.modifiedValue = localMaxValue;
             dice.change = true;
-            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, $"Change {localMaxValue}") { effectName = abilityName, effectDesc = "모든 주사위를 현재 가장 높은 눈금으로 변경" });
+            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, $"Change {localMaxValue}")
+            {
+                effectName = abilityName,
+                effectDesc = this.effectDesc
+            });
 
             int diff = dice.ApplyDiceScoreChange(localMaxValue);
             if(diff != 0)
             {
                 totalScore += diff;
                 events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue));
-                Bow.TryTrigger(ref totalScore, events);
             }
         }
+        Bow.TryTrigger(ref totalScore, events);
         ChangeModi(myState, allDice, ref totalScore, events);
     }
 }
