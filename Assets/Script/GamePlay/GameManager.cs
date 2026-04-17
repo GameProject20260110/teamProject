@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 using Cysharp.Threading.Tasks;
 
@@ -219,20 +219,23 @@ public class GameManager : MonoBehaviour
             UiController.instance.UpdateRerollUi(_currentRerollCount);
             Dice[] allDice = await diceManager.StartRolling();
 
-
             var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
+
+            ScoreVisualizer.instance?.UpdateScoreBoard(result.baseScore);
+            foreach(var dice in allDice)
+            {
+                if (dice == null || !dice.gameObject.activeSelf) continue;
+                if (dice.MyState == null) continue;
+                dice.UpdateDiceScoreUi(dice.MyState.originalValue, false);
+            }
+            await UniTask.Delay(500);
 
             if (ScoreVisualizer.instance != null)
             {
-                await ScoreVisualizer.instance
-                    .PlayScoreEventSequence(allDice, result.events)
-                    .ToUniTask(this);
+                await ScoreVisualizer.instance.PlayScoreEventSequence(allDice, result.events);
             }
 
             ProcessRollResult(result.finalScore, result.consumedItems);
-
-
-
             await BattleManager.instance.OnPlayerAttack(currentScore);
         }
         catch (Exception e)
