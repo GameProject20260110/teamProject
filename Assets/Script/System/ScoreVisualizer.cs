@@ -1,10 +1,12 @@
+using Cysharp.Threading.Tasks;
 using System.Collections;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UI;
-using NUnit.Framework.Constraints;
+using System.Threading.Tasks;
+
 
 
 public class ScoreVisualizer : MonoBehaviour
@@ -14,11 +16,10 @@ public class ScoreVisualizer : MonoBehaviour
     public TextMeshProUGUI finalScoreText;
     public GameObject floatingText;
     public Transform effectCanvas;
-
-    public RectTransform goldUiTarget;
+    public RectTransform goldUITarget;
     public GameObject goldIconPrefab;
-
     public GameObject negateOverlayPrefab;
+    public ParticleSystem diceEffect;
 
     private int _currentDisplayScore = 0;
     private string _lastEffectName;
@@ -29,66 +30,63 @@ public class ScoreVisualizer : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public IEnumerator PlayScoreEventSequence(Dice[] uiDice, List<ScoreEventData> scoreEvent)
+    public async UniTask PlayScoreEventSequence(Dice[] allDice, List<ScoreEventData> scoreEvent)
     {
-        //_lastEffectName = "";
+        _lastEffectName = "";
    
         foreach(var evt in scoreEvent)
         {
-            Dice targetDice = GetTargetDice(uiDice, evt.targetIndex);
+            Dice targetDice = GetTargetDice(allDice, evt.targetIndex);
 
             if(evt.type != ScoreEventData.Type.ItemEffect)
             {
-                if (ShowEffectMessage(evt.effectName, evt.effectDesc)) yield return new WaitForSeconds(1.0f);
+                if (ShowEffectMessage(evt.effectName, evt.effectDesc)) await UniTask.Delay(1000);
             }
             
             switch(evt.type)
             {
                 case ScoreEventData.Type.AddScore:
-                    yield return PlayAddScore(targetDice, evt);
-                    break;
-                case ScoreEventData.Type.Multiplier:
-                    yield return PlayMultiplier(targetDice, evt);
+                    await PlayAddScore(allDice, targetDice, evt);
                     break;
                 case ScoreEventData.Type.TargetBuff:
-                    yield return PlayTargetBuff(uiDice, evt);
+                    await PlayTargetBuff(allDice, evt);
                     break;
                 case ScoreEventData.Type.ChangeFace:
-                    yield return PlayChangeFace(uiDice, targetDice, evt);
+                    await PlayChangeFace(allDice, targetDice, evt);
                     break;
                 case ScoreEventData.Type.GlobalBuff:
-                    yield return PlayGlobalBuffs(uiDice, evt);
+                    await PlayGlobalBuffs(allDice, evt);
                     break;
                 case ScoreEventData.Type.Negate:
-                    yield return PlayNegate(targetDice, evt);
+                    await PlayNegate(targetDice, evt);
                     break;
                 case ScoreEventData.Type.ItemEffect:
-                    yield return PlayItemEffect(evt);
+                    await PlayItemEffect(evt);
                     break;
                 case ScoreEventData.Type.FinalScore:
-                    yield return PlayFinalScore(uiDice, evt);
+                    await PlayFinalScore(allDice, evt);
                     break;
                 case ScoreEventData.Type.GainGold:
-                    yield return new WaitForSeconds(0.3f);
+                    await UniTask.Delay(300);
                     break;
                 case ScoreEventData.Type.GainReroll:
-                    yield return PlayGainReroll(evt);
+                    await PlayGainReroll(evt);
                     break;
                 case ScoreEventData.Type.Notice:
-                    yield return PlayNotice(evt);
+                    await PlayNotice(evt);
                     break;
             }
         }
     }
 
-    private IEnumerator PlayAddScore(Dice targetDice, ScoreEventData evt)
+    private async UniTask PlayAddScore(Dice[] allDice, Dice targetDice, ScoreEventData evt)
     {
+        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
+        if (triggerDice != null)
+            await PlayScale(triggerDice);
+
         if(targetDice != null)
         {
-            if(!string.IsNullOrEmpty(evt.effectName))
-            {
-                yield return PlayScale(targetDice);
-            }
             PlayDotweenEffect(targetDice, "Punch");
             ShowFloatingText(targetDice.transform.position, evt.desc);
             if(evt.currentDiceScore != int.MinValue)
@@ -100,89 +98,76 @@ public class ScoreVisualizer : MonoBehaviour
         {
             UpdateScoreBoard(evt.value);
         }
-        yield return new WaitForSeconds(0.7f);
+        await UniTask.Delay(700);
     }
 
-    private IEnumerator PlayMultiplier(Dice targetDice, ScoreEventData evt)
+    private async UniTask PlayTargetBuff(Dice[] allDice, ScoreEventData evt)
     {
-        if(targetDice != null)
-        {
-            yield return PlayScale(targetDice);
-            PlayDotweenEffect(targetDice, "Punch");
-            ShowFloatingText(targetDice.transform.position, evt.desc);
-            if(evt.currentDiceScore != int.MinValue)
-            {
-                targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
-            }
-        }
-        UpdateScoreBoard(evt.value);
-        yield return new WaitForSeconds(0.7f);
-    }
-
-    private IEnumerator PlayTargetBuff(Dice[] uiDice, ScoreEventData evt)
-    {
-        Dice triggerDice = GetTargetDice(uiDice, evt.targetIndex);
+        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
         if(triggerDice != null)
-        {
-            yield return PlayScale(triggerDice);
-        }
+            await PlayScale(triggerDice);
 
         if(evt.targetIndices != null)
         {
 
             foreach(int idx in evt.targetIndices)
             {
-                if (idx < 0 || idx >= uiDice.Length) continue;
-                if (uiDice[idx] == null || !uiDice[idx].gameObject.activeSelf) continue;
+                if (idx < 0 || idx >= allDice.Length) continue;
+                if (allDice[idx] == null || !allDice[idx].gameObject.activeSelf) continue;
 
-                PlayDotweenEffect(uiDice[idx], "Bounce");
-                if (evt.currentDiceScore != int.MinValue) uiDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
+                PlayDotweenEffect(allDice[idx], "Bounce");
+                if (evt.currentDiceScore != int.MinValue) allDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
         }
         UpdateScoreBoard(evt.value);
-        yield return new WaitForSeconds(0.7f);
+        await UniTask.Delay(700);
     }
 
-    private IEnumerator PlayChangeFace(Dice[] uiDice, Dice targetDice, ScoreEventData evt)
+    private async UniTask PlayChangeFace(Dice[] allDice, Dice targetDice, ScoreEventData evt)
     {
+        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
+        if (triggerDice != null)
+            await PlayScale(triggerDice);
+
         if(evt.targetIndex == -1)
         {
-            foreach (var dice in uiDice)
+            foreach (var dice in allDice)
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
                 dice.transform.DOShakeRotation(0.4f, 90f);
             }
-            yield return new WaitForSeconds(0.3f);
+            await UniTask.Delay(300);
 
-            foreach(var dice in uiDice)
+            foreach(var dice in allDice)
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
                 dice.UpdateDiceImage(evt.value);
                 ShowFloatingText(dice.transform.position, evt.desc);
             }
-            yield return new WaitForSeconds(0.7f);
+            await UniTask.Delay(700);
         }
         else if(targetDice != null)
         {
             targetDice.transform.DOShakeRotation(0.3f, 90f);
-            yield return new WaitForSeconds(0.3f);
+            await UniTask.Delay(300);
 
-            targetDice.UpdateDiceImage(evt.value);
+            targetDice.UpdateDiceImage(evt.currentDiceScore);
+            if (evt.currentDiceScore != int.MinValue)
+                targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             ShowFloatingText(targetDice.transform.position, evt.desc);
-            yield return new WaitForSeconds(0.7f);
+            UpdateScoreBoard(evt.value);
+            await UniTask.Delay(700);
         }
     }
 
-    private IEnumerator PlayGlobalBuffs(Dice[] uiDice, ScoreEventData evt)
+    private async UniTask PlayGlobalBuffs(Dice[] allDice, ScoreEventData evt)
     {
-        Dice triggerDice = GetTargetDice(uiDice, evt.targetIndex);
-        if(triggerDice != null)
-        {
-            yield return PlayScale(triggerDice);
-        }
+        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
+        if (triggerDice != null)
+            await PlayScale(triggerDice);
 
         Tween lastTween = null;
-        foreach(var dice in uiDice)
+        foreach(var dice in allDice)
         {
             if (dice == null || !dice.gameObject.activeSelf) continue;
             lastTween = PlayDotweenEffect(dice, "Jump");
@@ -191,16 +176,12 @@ public class ScoreVisualizer : MonoBehaviour
         UpdateScoreBoard(evt.value);
 
         if(lastTween != null)
-        {
-            yield return lastTween.WaitForCompletion();
-        }
+            await lastTween.AsyncWaitForCompletion();
         else
-        {
-            yield return new WaitForSeconds(0.7f);
-        }
+            await UniTask.Delay(700);
     }
 
-    private IEnumerator PlayNegate(Dice targetDice, ScoreEventData evt)
+    private async UniTask PlayNegate(Dice targetDice, ScoreEventData evt)
     {
         if(targetDice != null)
         {
@@ -225,9 +206,9 @@ public class ScoreVisualizer : MonoBehaviour
             UiController.instance?.NegateItemCard(evt.effectName, negateOverlayPrefab);
             ShowFloatingText(effectCanvas.position, evt.desc);
         }
-        yield return new WaitForSeconds(0.7f);
+        await UniTask.Delay(700);
     }
-    private IEnumerator PlayItemEffect(ScoreEventData evt)
+    private async UniTask PlayItemEffect(ScoreEventData evt)
     {
         ShowEffectMessage(evt.effectName, evt.effectDesc);
         var card = evt.targetIndex >= 0 ? UiController.instance.inventoryUI.FindCardByIndex(evt.targetIndex) : UiController.instance.inventoryUI.FindCardByName(evt.effectName);
@@ -236,28 +217,28 @@ public class ScoreVisualizer : MonoBehaviour
         {
             Vector3 originalScale = card.transform.localScale;
             card.transform.DOScale(originalScale * 1.3f, 0.3f).SetEase(Ease.OutBack);
-            yield return new WaitForSeconds(0.7f);
+            await UniTask.Delay(700);
             card.transform.DOScale(originalScale, 0.3f);
-            yield return new WaitForSeconds(0.7f);
+            await UniTask.Delay(700);
         }
         else
         {
             ShowFloatingText(effectCanvas.position, evt.desc);
         }
         UpdateScoreBoard(evt.value);
-        yield return new WaitForSeconds(0.7f);
+        await UniTask.Delay(700);
     }
 
-    private IEnumerator PlayFinalScore(Dice[] uiDice, ScoreEventData evt)
+    private async UniTask PlayFinalScore(Dice[] allDice, ScoreEventData evt)
     {
         UpdateScoreBoard(evt.value);
         finalScoreText.transform.DOPunchScale(Vector3.one * 0.35f, 0.3f);
-        yield return new WaitForSeconds(0.35f);
+        await UniTask.Delay(350);
     }
 
-    private IEnumerator PlayNotice(ScoreEventData evt)
+    private async UniTask PlayNotice(ScoreEventData evt)
     {
-        yield return new WaitForSeconds(0.7f);
+        await UniTask.Delay(700);
     }
 
     public void ClearNegateOverlays()
@@ -269,19 +250,6 @@ public class ScoreVisualizer : MonoBehaviour
         _negateOverlays.Clear();
     }
 
-    public void ResetDiceColors(Dice[] uiDice)
-    {
-        foreach(var dice in uiDice)
-        {
-            if (dice == null || !dice.gameObject.activeSelf) continue;
-            Image img = dice.GetComponent<Image>();
-            if (img != null) 
-            {
-                img.DOColor(Color.white, 0.3f);
-                dice.transform.DOScale(Vector3.one, 0.3f);
-            }
-        }
-    }
     private Dice GetTargetDice(Dice[] uiDice, int index)
     {
         if (index >= 0 && index < uiDice.Length) return uiDice[index];
@@ -349,25 +317,46 @@ public class ScoreVisualizer : MonoBehaviour
         obj.transform.DOMoveY(obj.transform.position.y + 100f, 1.5f);
         tmp.DOFade(0, 1f).OnComplete(() => Destroy(obj));
     }
+
+    public void ResetDiceColors(Dice[] allDice)
+    {
+        foreach(var overlay in _negateOverlays)
+        {
+            if (overlay != null) Destroy(overlay);
+        }
+        _negateOverlays.Clear();
+    }
+
+    private void PlayDiceParticle(Dice dice) 
+    {
+        if (diceEffect == null || dice == null) return;
+        diceEffect.transform.position = dice.transform.position;
+        diceEffect.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+        diceEffect.Play();
+        
+    }
     private float GetBaseScale(Dice dice)
     {
         if (dice.MyState != null && dice.MyState.isIgnored) return 0.8f;
         return 1.0f;
     }
-    private IEnumerator PlayScale(Dice dice)
+    private async UniTask PlayScale(Dice dice)
     {
+        PlayDiceParticle(dice);
         float baseScale = GetBaseScale(dice);
         dice.transform.DOScale(Vector3.one * baseScale * 1.3f, 0.3f);
-        yield return new WaitForSeconds(0.3f);
+        await UniTask.Delay(300);
         dice.transform.DOScale(Vector3.one * baseScale, 0.3f);
-        yield return new WaitForSeconds(0.7f);
+        await UniTask.Delay(750);
     }
 
-    private IEnumerator PlayGainReroll(ScoreEventData evt)
+    private async UniTask PlayGainReroll(ScoreEventData evt)
     {
         GameManager.instance.CurrentRerollCount++;
         Vector3 pos = UiController.instance.rerollText.transform.position;
         ShowFloatingText(pos, evt.desc);
-        yield return new WaitForSeconds(0.5f);
+        await UniTask.Delay(400);
     }
+
+    
 }

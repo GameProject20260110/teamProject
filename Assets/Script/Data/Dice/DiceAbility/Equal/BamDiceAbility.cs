@@ -12,22 +12,20 @@ public class BamDiceAbility : DiceData
             if(dice.modifiedValue > localMaxValue) localMaxValue = dice.modifiedValue;
         }
 
+        bool isFirst = true;
         foreach(var dice in allDice)
         {
             dice.modifiedValue = localMaxValue;
             dice.change = true;
-            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, localMaxValue, $"Change {localMaxValue}")
+            int diff = dice.ApplyDiceScoreChange(localMaxValue);
+            if (diff != 0) totalScore += diff;
+            
+            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, dice.diceIndex, totalScore, $"Change {localMaxValue}", localMaxValue, triggerIndex : isFirst ?  myState.diceIndex : -1)
             {
                 effectName = abilityName,
                 effectDesc = this.effectDesc
             });
-
-            int diff = dice.ApplyDiceScoreChange(localMaxValue);
-            if(diff != 0)
-            {
-                totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue));
-            }
+            isFirst = false;
         }
         Bow.TryTrigger(ref totalScore, events);
         ChangeModi(myState, allDice, ref totalScore, events);

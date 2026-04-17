@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Collections;
+using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
@@ -196,16 +196,27 @@ public class GameManager : MonoBehaviour
 
     public void OnDiceRollComplete(Dice[] allDice)
     {
-        StartCoroutine(ProcessRollSequence(allDice));
+        ProcessRollSequence(allDice).Forget();
     }
 
-    private IEnumerator ProcessRollSequence(Dice[] allDice)
+    private async UniTask ProcessRollSequence(Dice[] allDice)
     {
         var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
 
-        if(ScoreVisualizer.instance != null)
+        ScoreVisualizer.instance?.UpdateScoreBoard(result.baseScore);
+
+        foreach(var dice in allDice)
         {
-            yield return StartCoroutine(ScoreVisualizer.instance.PlayScoreEventSequence(allDice, result.events));
+            if (dice == null || !dice.gameObject.activeSelf) continue;
+            if (dice.MyState == null) continue;
+            dice.UpdateDiceScoreUi(dice.MyState.originalValue, false);
+        }
+
+        await UniTask.Delay(500);
+
+        if (ScoreVisualizer.instance != null)
+        {
+            await ScoreVisualizer.instance.PlayScoreEventSequence(allDice, result.events);
         }
         ProcessRollResult(result.finalScore, result.consumedItems);
     }

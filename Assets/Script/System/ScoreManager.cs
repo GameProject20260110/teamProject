@@ -13,12 +13,13 @@ public class ScoreManager : MonoBehaviour
         if (instance == null) instance = this;
     }
 
-    public (int finalScore, List<ScoreEventData> events, List<ItemSo> consumedItems) CalculateScore(Dice[] uiDice, DiceType filterType = DiceType.Roll)
+    public (int baseScore, int finalScore, List<ScoreEventData> events, List<ItemSo> consumedItems) CalculateScore(Dice[] uiDice, DiceType filterType = DiceType.Roll)
     {
         List<DiceState> simulationStates = new List<DiceState>();
         List<ScoreEventData> scoreEvents = new List<ScoreEventData>();
         List<ItemSo> itemsToComsume = new List<ItemSo>();
         List<ItemSo> toRemove = new List<ItemSo>();
+        int baseScore = 0;
         int finalScore = 0;
 
         for(int i = 0; i < uiDice.Length; i++)
@@ -53,8 +54,8 @@ public class ScoreManager : MonoBehaviour
             }
 
             finalScore += state.originalValue;
+            baseScore += state.originalValue;
             state.appliedScoreValue = state.originalValue;
-            scoreEvents.Add(new ScoreEventData(ScoreEventData.Type.AddScore, state.diceIndex, finalScore, $"+{state.originalValue}", state.originalValue));
         }
 
         if (gimmickNegateDiceEffect)
@@ -165,7 +166,7 @@ public class ScoreManager : MonoBehaviour
             finalScore,
             "Total"));
 
-        return (finalScore, scoreEvents, itemsToComsume);
+        return (baseScore, finalScore, scoreEvents, itemsToComsume);
     }
 
     private bool IsGimmickActive(GimmickType type)
