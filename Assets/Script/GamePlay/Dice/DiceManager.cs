@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class DiceManager : MonoBehaviour
@@ -28,11 +29,12 @@ public class DiceManager : MonoBehaviour
     {
         diceSetup.Setup(panelDiceScript, defaultDice);
     }
-    public void StartRolling()
+    public async UniTask<Dice[]> StartRolling()
     {
         Dice[] allDice = GetAllDice();
-        diceRoller.OnRollComplete = () => GameManager.instance.OnDiceRollComplete(allDice);
-        diceRoller.StartRoll(allDice, rollArea);
+        //diceRoller.OnRollComplete = () => GameManager.instance.OnDiceRollComplete(allDice);
+        await diceRoller.StartRoll(allDice, rollArea);
+        return allDice;
     }
 
     public Dice[] GetAllDice()
