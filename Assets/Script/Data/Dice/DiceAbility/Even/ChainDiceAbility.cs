@@ -13,6 +13,12 @@ public class ChainDiceAbility : DiceData
         List<DiceState> targets = new List<DiceState>(allDice);
         int loopCount = Mathf.Min(count, targets.Count);
 
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
+
         for(int i = 0; i < loopCount; i++)
         {
             int rand = Random.Range(i, targets.Count);
@@ -22,19 +28,11 @@ public class ChainDiceAbility : DiceData
 
             target.modifiedValue = 6;
             target.scoreValue = bonusScore;
-            // ����
-            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, target.diceIndex, 6, "Chain!")
-            {
-                effectName = abilityName,
-                effectDesc = this.effectDesc
-            });
 
             int diff = target.ApplyDiceScoreChange(bonusScore);
-            if(diff != 0)
-            {
-                totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, target.diceIndex, totalScore, $"+{diff}", target.scoreValue));
-            }
+            if (diff != 0) totalScore += diff;
+
+            events.Add(new ScoreEventData(ScoreEventData.Type.ChangeFace, target.diceIndex, totalScore, "Chain!", bonusScore));
         }
         Bow.TryTrigger(ref totalScore, events);
         ChangeModi(myState, allDice, ref totalScore, events);

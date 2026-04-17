@@ -21,6 +21,12 @@ public class BoosterDiceAbility : DiceData
 
         if (count >= 3)
         {
+            events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+            {
+                effectName = abilityName,
+                effectDesc = this.effectDesc
+            });
+
             if (!GameManager.instance.hasUsedPlusReroll)
             {
                 GameManager.instance.hasUsedPlusReroll = true;
@@ -34,11 +40,7 @@ public class BoosterDiceAbility : DiceData
                 if(diff != 0)
                 {
                     totalScore += diff;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
-                    {
-                        effectName = abilityName,
-                        effectDesc = this.effectDesc
-                    });
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue));
                 }
             }
         }

@@ -9,6 +9,12 @@ public class SkyDiceAbility : DiceData
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
         foreach (var dice in allDice)
         {
             if (dice != null && dice.IsCurrentEven)
@@ -18,11 +24,7 @@ public class SkyDiceAbility : DiceData
                 if(diff != 0)
                 {
                     totalScore += diff;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
-                    {
-                        effectName = abilityName,
-                        effectDesc = this.effectDesc
-                    });
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue));
                 }
             }
         }

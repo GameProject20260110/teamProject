@@ -14,6 +14,7 @@ public class TurboDiceAbility : DiceData
         if(myState.IsCurrentEven)
         {
             int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
+            events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex));
             foreach(var dice in allDice)
             {
                 if(dice != null && dice.IsCurrentEven)
@@ -23,15 +24,11 @@ public class TurboDiceAbility : DiceData
                     if(diff != 0)
                     {
                         totalScore += diff;
-                        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
-                        {
-                            effectName = abilityName,
-                            effectDesc = this.effectDesc
-                        });
+                        events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue, myState.diceIndex));
                     }
                 }
             }
+            Bow.TryTrigger(ref totalScore, events);
         }
-        Bow.TryTrigger(ref totalScore, events);
     }
 }

@@ -10,7 +10,13 @@ public class DevilDiceAbility : DiceData
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         int currentPlus = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
-        
+
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
+
         foreach(var dice in allDice)
         {
             int score = dice.IsCurrentEven ? dice.scoreValue + currentPlus : dice.scoreValue - panelty;
@@ -18,11 +24,7 @@ public class DevilDiceAbility : DiceData
             if(diff != 0)
             {
                 totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, dice.IsCurrentEven ? $"+{currentPlus}" : $"-{panelty}", dice.scoreValue)
-                {
-                    effectName = abilityName,
-                    effectDesc = this.effectDesc
-                });
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, dice.IsCurrentEven ? $"+{currentPlus}" : $"-{panelty}", dice.scoreValue));
             }
         }
         Bow.TryTrigger(ref totalScore, events);

@@ -10,6 +10,12 @@ public class BubbleDiceAbility : DiceData
     {
         int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
+
         foreach(var dice in allDice)
         {
             if(dice.IsCurrentEven)
@@ -20,11 +26,7 @@ public class BubbleDiceAbility : DiceData
                 if(diff != 0)
                 {
                     totalScore += diff;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
-                    {
-                        effectName = abilityName,
-                        effectDesc = this.effectDesc
-                    });
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue));
                 }
             }
         }

@@ -11,10 +11,15 @@ public class WizardDiceAbility : DiceData
         {
             if (!dice.IsCurrentEven) oddCount++;
         }
-
         if (oddCount == 0) return;
 
-        foreach(var dice in allDice)
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
+
+        foreach (var dice in allDice)
         {
             int score = dice.scoreValue + oddCount;
             int diff = dice.ApplyDiceScoreChange(score);
@@ -22,11 +27,7 @@ public class WizardDiceAbility : DiceData
             if(diff != 0)
             {
                 totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{oddCount}", dice.scoreValue)
-                {
-                    effectName = abilityName,
-                    effectDesc = this.effectDesc
-                });
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{oddCount}", dice.scoreValue));
             }
         }
         Bow.TryTrigger(ref totalScore, events);
