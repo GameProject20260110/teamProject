@@ -32,7 +32,6 @@ public class DiceManager : MonoBehaviour
     public async UniTask<Dice[]> StartRolling()
     {
         Dice[] allDice = GetAllDice();
-        //diceRoller.OnRollComplete = () => GameManager.instance.OnDiceRollComplete(allDice);
         await diceRoller.StartRoll(allDice, rollArea);
         return allDice;
     }

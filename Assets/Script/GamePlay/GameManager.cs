@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
-using Cysharp.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -169,32 +168,7 @@ public class GameManager : MonoBehaviour
         UiController.instance.rollBtn.interactable = false;
         UiController.instance.SetShopBtnInteratable(false);
 
-
         RollFlow().Forget();
-        //if (_isFirstRoll)
-        //{
-        //    _isFirstRoll = false;
-        //    PlayerManager.instance.isFirstRoll = false;
-        //    diceManager.StartRolling();
-        //    UiController.instance.SetRollButtnonToReroll();
-        //}
-        //else if(!_isFirstRoll /*&& _currentRerollCount > 0*/)
-        //{
-        //    //_currentRerollCount--;
-        //    //PlayerManager.instance.gameRerollCount = _currentRerollCount;
-        //    currentScore = 0;
-        //    ScoreVisualizer.instance?.UpdateScoreBoard(0);
-        //    ScoreVisualizer.instance?.ClearNegateOverlays();
-        //    ScoreVisualizer.instance?.ResetDiceColors(diceManager.GetAllDice());
-        //    UiController.instance?.ResetItemCards();
-        //    diceManager.StartRolling();
-        //}
-
-        //UiController.instance.UpdateRerollUi(_currentRerollCount);
-        //if(!_isFirstRoll && _currentRerollCount <= 0)
-        //{
-        //    UiController.instance.SetRollBtnInteractable(false);
-        //}
     }
 
     private async UniTask RollFlow()
@@ -236,6 +210,7 @@ public class GameManager : MonoBehaviour
             }
 
             ProcessRollResult(result.finalScore, result.consumedItems);
+
             await BattleManager.instance.OnPlayerAttack(currentScore);
         }
         catch (Exception e)
@@ -243,22 +218,6 @@ public class GameManager : MonoBehaviour
             Debug.LogException(e);
         }
     }
-
-    //public void OnDiceRollComplete(Dice[] allDice)
-    //{
-    //    StartCoroutine(ProcessRollSequence(allDice));
-    //}
-
-    //private IEnumerator ProcessRollSequence(Dice[] allDice)
-    //{
-    //    var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
-
-    //    if(ScoreVisualizer.instance != null)
-    //    {
-    //        yield return StartCoroutine(ScoreVisualizer.instance.PlayScoreEventSequence(allDice, result.events));
-    //    }
-    //    ProcessRollResult(result.finalScore, result.consumedItems);
-    //}
 
     public void ProcessRollResult(int finalScore, List<ItemSo> consumedItems)
     {

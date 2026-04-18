@@ -10,6 +10,8 @@ public class BattleManager : MonoBehaviour
     [Header("전투 데이터")]
     [SerializeField] private PlayerBattleData playerData;
     [SerializeField] private EnemyBattleData enemyData;
+    [SerializeField] private Transform Enemytrans;
+    [SerializeField] private Transform Playertrans;
 
     [Header("reference")]
     [SerializeField] private BattleUI battleUI;
@@ -17,8 +19,13 @@ public class BattleManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public bool isBattleActive = false;
     public int currentTurn = 1;
+    public GameObject SkillPrefab;
+    public GameObject EnemySkillPrefab;
 
     private CancellationTokenSource _battleCts;
+    //private UniTaskCompletionSource<bool> attackCompletion;
+    private int peddingDamage;
+
 
     private const string BATTLE_SAVE_FILE = "battleData.json";
 
@@ -86,9 +93,28 @@ public class BattleManager : MonoBehaviour
     {
         if (!isBattleActive || !isPlayerTurn) return;
 
-        enemyData.TakeDamage(totalScore);
-        battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
-        battleUI.ShowDamageText(totalScore, isPlayer: false);
+        var attackCompletion = new UniTaskCompletionSource<bool>();
+
+        peddingDamage = totalScore;
+        SkillPrefab = ObjectPool.instance.Get(0);
+        SkillPrefab.transform.position = Enemytrans.position;
+
+        SkillPrefab.GetComponent<Skill>().Init(
+            isPlayer: true,
+            damage: totalScore,
+            onHit: () =>
+            {
+                enemyData.TakeDamage(peddingDamage);
+                battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
+                battleUI.ShowDamageText(peddingDamage, isPlayer: false);
+            },
+            onEnd: () =>
+            {
+                attackCompletion?.TrySetResult(true);
+            }
+        );
+
+        await attackCompletion.Task; // 애니메이션 끝나고
 
         if (enemyData.IsDead())
         {
@@ -118,23 +144,38 @@ public class BattleManager : MonoBehaviour
 
     private async UniTask EnemyTurnRoutine(int playerFinalScore)
     {
-        
-        // 적 공격 연출 대기
-        await UniTask.Delay(1000, cancellationToken: _battleCts.Token);
+        await UniTask.Delay(500, cancellationToken: _battleCts.Token);
 
         int damage = CalculateEnemyAttackPower();
-        playerData.TakeDamage(damage);
+        var attackCompletion = new UniTaskCompletionSource<bool>();
 
-        battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-        battleUI.ShowDamageText(damage, isPlayer: true);
+        GameObject skill = ObjectPool.instance.Get((int)ObjectPool.PoolType.Fireball); // enum에 추가 필요
+        skill.transform.position = Playertrans.position; // 플레이어 위치로
 
-        if (PlayerManager.instance != null)
-        {
-            PlayerManager.instance.heart = playerData.CurrentHP;
-            PlayerManager.instance.Save();
-        }
+        skill.GetComponent<Skill>().Init(
+            isPlayer: false,
+            damage: damage,
+            onHit: () =>
+            {
+                playerData.TakeDamage(damage);
+                battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
+                battleUI.ShowDamageText(damage, isPlayer: true);
 
-        SaveBattleData();
+                // 플레이어 데이터 저장
+                if (PlayerManager.instance != null)
+                {
+                    PlayerManager.instance.heart = playerData.CurrentHP;
+                    PlayerManager.instance.Save();
+                }
+                SaveBattleData();
+            },
+            onEnd: () =>
+            {
+                attackCompletion?.TrySetResult(true);
+            }
+        );
+
+        await attackCompletion.Task.AttachExternalCancellation(_battleCts.Token);
 
         if (playerData.IsDead())
         {
@@ -144,12 +185,9 @@ public class BattleManager : MonoBehaviour
         }
 
         await UniTask.Delay(500, cancellationToken: _battleCts.Token);
-
         isPlayerTurn = true;
         currentTurn++;
-
         StartNewTurn();
-        
     }
 
     private void StartNewTurn() // 턴 종료시 이벤트

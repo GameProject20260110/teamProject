@@ -5,7 +5,6 @@ using UnityEngine;
 public class DiceRoller : MonoBehaviour
 {
     public bool isRolling { get; private set; } = false;
-    //public System.Action OnRollComplete;
 
     private float padding = 100.0f;
 
@@ -33,7 +32,6 @@ public class DiceRoller : MonoBehaviour
         await returnSeq.AsyncWaitForCompletion();
 
         isRolling = false;
-        //OnRollComplete?.Invoke();
     }
 
     private DG.Tweening.Sequence BuildRollSequence(Dice[] allDice, RectTransform rollArea, float duration)
