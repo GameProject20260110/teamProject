@@ -15,11 +15,12 @@ public class TriggerDiceAbility : DiceData
 
         int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
         totalScore *= currentBonusScore;
-        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}" )
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
         {
             effectName = abilityName,
             effectDesc = this.effectDesc
         });
+        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}"));
         Bow.TryTrigger(ref totalScore, events);
     }
 }

@@ -15,6 +15,11 @@ public class CurbDiceAbility : DiceData
             localBonus[dice.modifiedValue]++;            
         }
 
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
         foreach(var dice in allDice)
         {
             int score = localBonus[dice.modifiedValue] * dice.modifiedValue;
@@ -23,11 +28,7 @@ public class CurbDiceAbility : DiceData
             if(diff != 0)
             {
                 totalScore += diff;
-                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue)
-                {
-                    effectName = abilityName,
-                    effectDesc = this.effectDesc
-                });
+                events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, diff > 0 ? $"+{diff}" : "", dice.scoreValue));
             }
         }
         Bow.TryTrigger(ref totalScore, events);

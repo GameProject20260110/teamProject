@@ -15,16 +15,17 @@ public class LandDiceAbility : DiceData
         {
             if(dice != null && !dice.IsCurrentEven)
             {
+                events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+                {
+                    effectName = abilityName,
+                    effectDesc = this.effectDesc
+                });
                 int score = dice.scoreValue * currentBonusScore;
                 int diff = dice.ApplyDiceScoreChange(score);
                 if(diff != 0)
                 {
                     totalScore += diff;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue)
-                    {
-                        effectName = abilityName,
-                        effectDesc = this.effectDesc
-                    });  
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"x{currentBonusScore}", dice.scoreValue));  
                 }
             }
         }

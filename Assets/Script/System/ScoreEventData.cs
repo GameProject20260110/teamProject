@@ -14,7 +14,8 @@ public class ScoreEventData
         FinalScore,     
         GainGold,
         GainReroll,
-        Notice
+        Notice,
+        TriggerDice
     }
 
     public Type type;
@@ -45,5 +46,14 @@ public class ScoreEventData
         this.value = value;
         this.desc = desc;
         this.currentDiceScore = currentDiceScore;
+    }
+
+    public ScoreEventData(Type type, int triggerIndex)
+    {
+        this.type = type;
+        this.triggerIndex = triggerIndex;
+        this.targetIndex = -1;
+        this.value = 0;
+        this.currentDiceScore = int.MinValue;
     }
 }

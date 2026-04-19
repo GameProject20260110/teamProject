@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Diagnostics.Tracing;
 
 [CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/dead")]
 public class DeadDiceAbility : DiceData
@@ -21,11 +22,12 @@ public class DeadDiceAbility : DiceData
         int multiplier = oddInDice.Count * myState.multiBonusScore + myState.plusBonusScore;
         totalScore *= multiplier;
 
-        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, oddInDice.ToArray(), totalScore, "Dead")
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
         {
             effectName = abilityName,
             effectDesc = this.effectDesc
         });
+        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, oddInDice.ToArray(), totalScore, "Dead"));
         Bow.TryTrigger(ref totalScore, events);
     }
 }

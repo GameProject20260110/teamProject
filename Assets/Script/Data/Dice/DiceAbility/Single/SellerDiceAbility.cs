@@ -9,11 +9,12 @@ public class SellerDiceAbility : DiceData
         if (myState == null) return;
         int gold = PlayerManager.instance != null ? PlayerManager.instance.gold : 0;
         totalScore += gold;
-        events.Add(new ScoreEventData(ScoreEventData.Type.Notice, myState.diceIndex, totalScore, $"+{gold}", myState.scoreValue)
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
         {
             effectName = abilityName,
             effectDesc = this.effectDesc
         });
+        events.Add(new ScoreEventData(ScoreEventData.Type.Notice, myState.diceIndex, totalScore, $"+{gold}", myState.scoreValue));
         Bow.TryTrigger(ref totalScore, events);
     }
 }

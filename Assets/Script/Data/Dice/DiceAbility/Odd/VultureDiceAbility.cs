@@ -12,11 +12,12 @@ public class VultureDiceAbility : DiceData
         if (!myState.IsCurrentEven)
         {
             totalScore *= currentBonusScore;
-            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}")
+            events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
             {
                 effectName = abilityName,
                 effectDesc = this.effectDesc
             });
+            events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{currentBonusScore}"));
             Bow.TryTrigger(ref totalScore, events);
         }
     }

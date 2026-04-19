@@ -20,11 +20,12 @@ public class CaptainDiceAbility : DiceData
         if (matchInDices.Count <= 1) return;
 
         totalScore *= matchInDices.Count;
-        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, matchInDices.ToArray(), totalScore, $"x{matchInDices.Count}")
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
         {
             effectName = abilityName,
             effectDesc = this.effectDesc
         });
+        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, matchInDices.ToArray(), totalScore, $"x{matchInDices.Count}", triggerIndex : myState.diceIndex));
         Bow.TryTrigger(ref totalScore, events);
     }
 }

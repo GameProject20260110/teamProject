@@ -17,7 +17,7 @@ public class RulerDiceAbility : DiceData
 
             if (dice.currentType != ScoreManager.DiceType.Even) continue;
 
-            events.Add(new ScoreEventData(ScoreEventData.Type.Notice, dice.diceIndex, totalScore)
+            events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, dice.diceIndex)
             {
                 effectName = abilityName,
                 effectDesc = $"{effectDesc} {dice.diceData.abilityName} ¹ßµ¿"
@@ -25,7 +25,6 @@ public class RulerDiceAbility : DiceData
 
             dice.diceData.CalculateEffect(dice, allDice, ref totalScore, events);
             dice.diceData.AfterCalculateEffect(dice, allDice, ref totalScore, events);
-            
         }
     }
 }
