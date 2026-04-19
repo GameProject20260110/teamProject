@@ -8,12 +8,13 @@ public class WitchDiceAbility : DiceData
     public override void CalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
         if (myState == null) return;
-        totalScore *= bonusScore;
-        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{bonusScore}")
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
         {
             effectName = abilityName,
             effectDesc = this.effectDesc
         });
+        totalScore *= bonusScore;
+        events.Add(new ScoreEventData(ScoreEventData.Type.GlobalBuff, -1, totalScore, $"x{bonusScore}"));
 
         int startIndex = myState.diceIndex + 1;
 

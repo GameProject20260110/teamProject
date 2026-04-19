@@ -7,6 +7,8 @@ public class CutterDiceAbility : DiceData
 
     public override void AfterCalculateEffect(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> events)
     {
+        
+
         List<DiceState> targets = new List<DiceState>(allDice);
         int rand1 = Random.Range(0, targets.Count);
         DiceState dice1 = targets[rand1];
@@ -20,12 +22,12 @@ public class CutterDiceAbility : DiceData
 
         totalScore += diff;
 
-        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, new int[] {dice1.diceIndex, dice2.diceIndex}, totalScore)
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
         {
             effectName = abilityName,
             effectDesc = this.effectDesc
         });
+        events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, new int[] {dice1.diceIndex, dice2.diceIndex}, totalScore));
         Bow.TryTrigger(ref totalScore, events);
     }
-
 }

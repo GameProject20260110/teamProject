@@ -10,6 +10,11 @@ public class ShotDiceAbility : DiceData
     {
         int currentBonusScore = bonusScore * myState.multiBonusScore + myState.plusBonusScore;
 
+        events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
+        {
+            effectName = abilityName,
+            effectDesc = this.effectDesc
+        });
         foreach(var dice in allDice)
         {
             if(dice != null && dice.IsCurrentEven)
@@ -19,11 +24,7 @@ public class ShotDiceAbility : DiceData
                 if(diff != 0)
                 {
                     totalScore += diff;
-                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue)
-                    {
-                        effectName = abilityName,
-                        effectDesc = this.effectDesc
-                    });
+                    events.Add(new ScoreEventData(ScoreEventData.Type.AddScore, dice.diceIndex, totalScore, $"+{currentBonusScore}", dice.scoreValue));
                 }
             }
         }

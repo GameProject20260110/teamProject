@@ -36,11 +36,12 @@ public class CupidDiceAbility : DiceData
         }
         if(targetInDices.Count > 0)
         {
-            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, targetInDices.ToArray(), totalScore, $"x{currentBonusScore}")
+            events.Add(new ScoreEventData(ScoreEventData.Type.TriggerDice, myState.diceIndex)
             {
                 effectName = abilityName,
                 effectDesc = this.effectDesc
             });
+            events.Add(new ScoreEventData(ScoreEventData.Type.TargetBuff, targetInDices.ToArray(), totalScore, $"x{currentBonusScore}", triggerIndex : myState.diceIndex));
 
             foreach(var (diceIndex, scoreValue) in addScoreList)
             {

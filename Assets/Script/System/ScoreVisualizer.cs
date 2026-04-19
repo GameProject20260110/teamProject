@@ -1,13 +1,9 @@
 using Cysharp.Threading.Tasks;
-using System.Collections;
 using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.UI;
-using System.Threading.Tasks;
-
-
 
 public class ScoreVisualizer : MonoBehaviour
 {
@@ -45,6 +41,11 @@ public class ScoreVisualizer : MonoBehaviour
             
             switch(evt.type)
             {
+                case ScoreEventData.Type.TriggerDice:
+                    Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
+                    if (triggerDice != null)
+                        await PlayScale(triggerDice);
+                    break;
                 case ScoreEventData.Type.AddScore:
                     await PlayAddScore(allDice, targetDice, evt);
                     break;
@@ -81,10 +82,6 @@ public class ScoreVisualizer : MonoBehaviour
 
     private async UniTask PlayAddScore(Dice[] allDice, Dice targetDice, ScoreEventData evt)
     {
-        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
-        if (triggerDice != null)
-            await PlayScale(triggerDice);
-
         if(targetDice != null)
         {
             PlayDotweenEffect(targetDice, "Punch");
@@ -103,10 +100,6 @@ public class ScoreVisualizer : MonoBehaviour
 
     private async UniTask PlayTargetBuff(Dice[] allDice, ScoreEventData evt)
     {
-        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
-        if(triggerDice != null)
-            await PlayScale(triggerDice);
-
         if(evt.targetIndices != null)
         {
 
@@ -125,10 +118,6 @@ public class ScoreVisualizer : MonoBehaviour
 
     private async UniTask PlayChangeFace(Dice[] allDice, Dice targetDice, ScoreEventData evt)
     {
-        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
-        if (triggerDice != null)
-            await PlayScale(triggerDice);
-
         if(evt.targetIndex == -1)
         {
             foreach (var dice in allDice)
@@ -162,10 +151,6 @@ public class ScoreVisualizer : MonoBehaviour
 
     private async UniTask PlayGlobalBuffs(Dice[] allDice, ScoreEventData evt)
     {
-        Dice triggerDice = GetTargetDice(allDice, evt.triggerIndex);
-        if (triggerDice != null)
-            await PlayScale(triggerDice);
-
         Tween lastTween = null;
         foreach(var dice in allDice)
         {
@@ -265,7 +250,6 @@ public class ScoreVisualizer : MonoBehaviour
         UiController.instance.notificationUI.Show(message, 0.7f);
         return true;
     }
-
     public void UpdateScoreBoard(int targetValue)
     {
         int originalValue = _currentDisplayScore;
@@ -277,7 +261,6 @@ public class ScoreVisualizer : MonoBehaviour
         });
         finalScoreText.transform.DOShakePosition(0.3f, 2f);
     }
-
     public Tween PlayDotweenEffect(Dice dice, string type)
     {
         Transform t = dice.transform;
@@ -357,6 +340,4 @@ public class ScoreVisualizer : MonoBehaviour
         ShowFloatingText(pos, evt.desc);
         await UniTask.Delay(400);
     }
-
-    
 }
