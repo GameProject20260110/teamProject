@@ -385,7 +385,6 @@ public class GameManager : MonoBehaviour
     {
         PlayerManager.instance.gameRerollCount = 1;
         PlayerManager.instance.isFirstRoll = true;
-        PlayerShopManager.instance.OpenWithAnimation();
     }
 
     public void LoadHomeScreen()
