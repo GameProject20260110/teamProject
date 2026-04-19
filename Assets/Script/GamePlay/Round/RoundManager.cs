@@ -28,9 +28,6 @@ public class RoundManager : MonoBehaviour
             TestModeManager.instance.ApplyTestStats();
         }
         StartRound();
-
-        if (currentRound == 1)
-            PlayerShopManager.instance.OpenWithAnimation();
     }
 
     public void StartRound()

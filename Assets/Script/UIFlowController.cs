@@ -9,9 +9,9 @@ public class UIFlowController : MonoBehaviour
     {
 
         await resultAnimator.UnReveal();
-         
+        RoundManager.instance.StartRound();
 
-        shopManager.OpenWithAnimation();
+        //shopManager.OpenWithAnimation();
     }
 
    

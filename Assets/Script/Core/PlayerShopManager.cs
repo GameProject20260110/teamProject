@@ -1,8 +1,7 @@
 ﻿using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class PlayerShopManager : MonoBehaviour
 {
@@ -22,6 +21,8 @@ public class PlayerShopManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
     public int BaseRerollCost => baseRerollCost;
+    public int maxShopCount = 3;
+    public int currentShopCount = 3;
 
     public bool ClearRound = false;
 
@@ -29,7 +30,7 @@ public class PlayerShopManager : MonoBehaviour
     [SerializeField] private GameObject shopCanvas;
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private ShopUIController shopUIController;
-
+    [SerializeField] private TextMeshProUGUI shopCountText;
     [SerializeField] private ShopPanelAnimator shopAnimator;
 
     public event System.Action<int> OnGoldChanged;
@@ -43,11 +44,16 @@ public class PlayerShopManager : MonoBehaviour
     }
 
     public void Open()
-    {
+    {        
+        
         var player = PlayerManager.instance;
 
         TempGold = player.gold;
         RerollCount = 0;
+
+        currentShopCount = PlayerManager.instance.ShopCount;
+        currentShopCount--;
+        shopCountText.text = $"{currentShopCount} / {maxShopCount}";
 
         TempDices = new List<DiceData>(player.dices);
         TempItems = new List<ItemSo>(player.items);
@@ -60,6 +66,12 @@ public class PlayerShopManager : MonoBehaviour
 
     public async void OpenWithAnimation()
     {
+        if (PlayerManager.instance.ShopCount <= 0)
+        {
+            Debug.Log("상점을 열 수 없습니다.");
+            return;
+        }
+
         Open();
         shopCanvas.SetActive(true);
         if (shopAnimator != null && shopAnimator.gameObject != null)
@@ -82,13 +94,14 @@ public class PlayerShopManager : MonoBehaviour
 
         var player = PlayerManager.instance;
 
+        player.ShopCount = currentShopCount;
+
         player.gold = TempGold;
         player.dices = new List<DiceData>(TempDices);
         player.items = new List<ItemSo>(TempItems);
         player.extraDice = ExtraDice;
 
         player.Save();
-        RoundManager.instance.StartRound();
         IsOpen = false;
     }
 
