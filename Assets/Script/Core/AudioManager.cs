@@ -42,6 +42,19 @@ public class AudioManager : MonoBehaviour
         
     }
 
+    private void OnEnable()
+    {
+        VisualManager.OnFloatingTextSound += PlayFloatingTextSound;
+    }
+    private void OnDisable()
+    {
+        VisualManager.OnFloatingTextSound -= PlayFloatingTextSound;
+    }
+    private void PlayFloatingTextSound()
+    {
+        PlaySfx(Sfx.Score);
+    }
+
     void Init()
     {
 

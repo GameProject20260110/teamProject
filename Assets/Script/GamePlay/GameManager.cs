@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using UnityEngine.SceneManagement;
-using Cysharp.Threading.Tasks;
 
 public class GameManager : MonoBehaviour
 {
@@ -210,9 +209,8 @@ public class GameManager : MonoBehaviour
             else
             {
                 currentScore = 0;
-                ScoreVisualizer.instance?.UpdateScoreBoard(0);
-                ScoreVisualizer.instance?.ClearNegateOverlays();
-                ScoreVisualizer.instance?.ResetDiceColors(diceManager.GetAllDice());
+                VisualManager.instance?.UpdateScoreBoard(0);
+                VisualManager.instance?.ResetDiceColors(diceManager.GetAllDice());
                 UiController.instance?.ResetItemCards();
             }
 
@@ -221,7 +219,7 @@ public class GameManager : MonoBehaviour
 
             var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
 
-            ScoreVisualizer.instance?.UpdateScoreBoard(result.baseScore);
+            VisualManager.instance?.UpdateScoreBoard(result.baseScore);
             foreach(var dice in allDice)
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
@@ -230,9 +228,9 @@ public class GameManager : MonoBehaviour
             }
             await UniTask.Delay(500);
 
-            if (ScoreVisualizer.instance != null)
+            if (VisualManager.instance != null)
             {
-                await ScoreVisualizer.instance.PlayScoreEventSequence(allDice, result.events);
+                await VisualManager.instance.PlayScoreEventSequence(allDice, result.events);
             }
 
             ProcessRollResult(result.finalScore, result.consumedItems);

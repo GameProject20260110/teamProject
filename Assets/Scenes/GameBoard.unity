@@ -3341,9 +3341,9 @@ MonoBehaviour:
   testHeart: 3
   testAbilities:
   - {fileID: 11400000, guid: 8ee6cd5a84eb9334dade88d300659cbd, type: 2}
-  - {fileID: 11400000, guid: 70dffd7eebf09b34bb37cebb2e26bfc2, type: 2}
-  - {fileID: 11400000, guid: b6417d61e70a22549bd850140d1077be, type: 2}
-  - {fileID: 11400000, guid: 7900d26ed7d8ca9408a88a4a1a922bd5, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
   testValues: 
@@ -12601,33 +12601,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 951155805}
-  - component: {fileID: 951155804}
+  - component: {fileID: 951155806}
   m_Layer: 0
-  m_Name: ScoreVisualizer
+  m_Name: VisualManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &951155804
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 951155803}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5f2287a9111e96c4d935396bb002e0e7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::ScoreVisualizer
-  finalScoreText: {fileID: 365483011}
-  floatingText: {fileID: 815641137313243952, guid: 2d3b055fd49a9e8429b8ef81f095cda9, type: 3}
-  effectCanvas: {fileID: 1361143424}
-  goldUITarget: {fileID: 0}
-  goldIconPrefab: {fileID: 5953546548394792309, guid: 6edd2ad041381cf428377a369d8d05f4, type: 3}
-  negateOverlayPrefab: {fileID: 5107177833586284739, guid: 878ad27cb85b218429c0d25aa8d8864b, type: 3}
-  diceEffect: {fileID: 1101827775}
 --- !u!4 &951155805
 Transform:
   m_ObjectHideFlags: 0
@@ -12640,9 +12621,27 @@ Transform:
   m_LocalPosition: {x: 209.15364, y: 801.5239, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 1120560772}
+  - {fileID: 986547240}
+  - {fileID: 1212029118}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &951155806
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 951155803}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c7121012bb4e12b4a8d97dd2e836c6b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VisualManager
+  uiEffect: {fileID: 1212029117}
+  vfxEffect: {fileID: 986547239}
+  tweenAnimator: {fileID: 1120560771}
 --- !u!1001 &951247758
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -13046,6 +13045,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 964184971}
   m_CullTransparentMesh: 1
+--- !u!1 &986547238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 986547240}
+  - component: {fileID: 986547239}
+  m_Layer: 0
+  m_Name: VFXHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &986547239
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986547238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b85c8c4400c46354488f0e6ef21a705d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::VFXEffectHandler
+  diceParticle: {fileID: 1101827775}
+--- !u!4 &986547240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 986547238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 951155805}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &988091364
 GameObject:
   m_ObjectHideFlags: 0
@@ -19357,6 +19401,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1108755021}
   m_CullTransparentMesh: 1
+--- !u!1 &1120560770
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1120560772}
+  - component: {fileID: 1120560771}
+  m_Layer: 0
+  m_Name: TweenAnimator
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1120560771
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120560770}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86bddc4a9cc2c87408da6db66df5cc22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TweenAnimator
+  negateOverlayPrefab: {fileID: 5107177833586284739, guid: 878ad27cb85b218429c0d25aa8d8864b, type: 3}
+--- !u!4 &1120560772
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1120560770}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 951155805}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1125536304
 GameObject:
   m_ObjectHideFlags: 0
@@ -20146,6 +20235,53 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1209075051}
   m_CullTransparentMesh: 1
+--- !u!1 &1212029116
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1212029118}
+  - component: {fileID: 1212029117}
+  m_Layer: 0
+  m_Name: UIEffectHandler
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1212029117
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212029116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d709d86fb7334f4ebfa9544f6af4efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::UIEffectHandler
+  floatingText: {fileID: 815641137313243952, guid: 2d3b055fd49a9e8429b8ef81f095cda9, type: 3}
+  effectCanvas: {fileID: 1361143424}
+  finalScoreText: {fileID: 365483011}
+--- !u!4 &1212029118
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1212029116}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 951155805}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1213888007
 GameObject:
   m_ObjectHideFlags: 0
