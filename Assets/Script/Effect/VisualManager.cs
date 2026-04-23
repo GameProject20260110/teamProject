@@ -25,8 +25,7 @@ public class VisualManager : MonoBehaviour
             Dice targetDice = GetTargetDice(allDice, evt.targetIndex);
 
             if(evt.type != ScoreEventData.Type.ItemEffect &&
-               evt.type != ScoreEventData.Type.GainReroll &&
-               evt.type != ScoreEventData.Type.TriggerDice)
+               evt.type != ScoreEventData.Type.GainReroll)
             {
                 if (uiEffect.ShowMessageBox(evt.effectName, evt.effectDesc))
                     await UniTask.Delay(500);
