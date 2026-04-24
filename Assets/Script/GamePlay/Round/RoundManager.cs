@@ -107,11 +107,9 @@ public class RoundManager : MonoBehaviour
             UiController.instance.ResetItemCards();
         }
 
-        if(ScoreVisualizer.instance != null)
-        {
-            ScoreVisualizer.instance.ClearNegateOverlays();
-            ScoreVisualizer.instance.ResetDiceColors(GameManager.instance.diceManager.GetAllDice());
-        }
+        if(VisualManager.instance != null)
+            VisualManager.instance.ResetDiceColors(GameManager.instance.diceManager.GetAllDice());
+
 
         if(GameManager.instance != null && GameManager.instance.diceManager != null)
         {
