@@ -9,6 +9,7 @@ public class PlayerManager : MonoBehaviour
     public DiceData extraDice;
     public bool[] SpecialSlots = new bool[6];
     public int ShopLevel;
+    public int ShopCount;
     public int tempExtraSlotsCount = 0;
     public int gold;
     public int currentRound;
@@ -70,6 +71,7 @@ public class PlayerManager : MonoBehaviour
         currentRound = 1;
         heart = 50;
         ShopLevel = 1;
+        ShopCount = 3;
     }
 
     public void Save()
@@ -82,7 +84,8 @@ public class PlayerManager : MonoBehaviour
             ShopLevel = ShopLevel,
             extraDiceName = extraDice != null ? extraDice.name : "",
             specialSlots = this.SpecialSlots,
-            isFirstRoll = isFirstRoll
+            isFirstRoll = isFirstRoll,
+            ShopCount = ShopCount
         };
 
         foreach (var dice in dices)
@@ -116,6 +119,7 @@ public class PlayerManager : MonoBehaviour
         heart = data.heart;
         currentRound = data.currentRound;
         ShopLevel = data.ShopLevel;
+        ShopCount = data.ShopCount;
         extraDice = System.Array.Find(allDices, s => s.name == name);
         isFirstRoll = data.isFirstRoll;
 

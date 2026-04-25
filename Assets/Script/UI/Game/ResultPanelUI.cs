@@ -14,7 +14,6 @@ public class ResultPanelUI : MonoBehaviour
     public Button retryBtn;
 
     public GameObject TextGroup;
-    private bool _isListenerAdded = false;
 
     public void Show(bool isSuccess, int targetScore, int score, int currentLife)
     {
