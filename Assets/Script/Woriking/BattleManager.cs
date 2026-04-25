@@ -129,10 +129,11 @@ public class BattleManager : MonoBehaviour
         try
         {
             await EnemyTurnRoutine(totalScore);
+            
         }
-        catch (OperationCanceledException)
+        catch (OperationCanceledException oce)
         {
-            Debug.Log("전투가 취소되었습니다");
+            Debug.Log($"전투가 취소되었습니다 {oce.Message}\n{oce.StackTrace}");
         }
         catch (Exception e)
         {

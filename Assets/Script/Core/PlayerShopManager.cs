@@ -30,7 +30,7 @@ public class PlayerShopManager : MonoBehaviour
     [SerializeField] private GameObject shopCanvas;
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private ShopUIController shopUIController;
-    [SerializeField] private TextMeshProUGUI shopCountText;
+    //[SerializeField] private TextMeshProUGUI shopCountText;
     [SerializeField] private ShopPanelAnimator shopAnimator;
 
     public event System.Action<int> OnGoldChanged;
@@ -53,7 +53,7 @@ public class PlayerShopManager : MonoBehaviour
 
         currentShopCount = PlayerManager.instance.ShopCount;
         currentShopCount--;
-        shopCountText.text = $"{currentShopCount} / {maxShopCount}";
+        //shopCountText.text = $"{currentShopCount} / {maxShopCount}";
 
         TempDices = new List<DiceData>(player.dices);
         TempItems = new List<ItemSo>(player.items);
