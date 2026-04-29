@@ -25,7 +25,7 @@ public class AudioManager : MonoBehaviour
     AudioSource[] sfxPlayer;
     int channelIndex;
 
-    public enum Sfx { Click, Roll, Score}
+    public enum Sfx { Click, Roll, Score, Electric, Void}
 
     private void Awake()
     {
