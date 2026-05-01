@@ -111,3 +111,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf906ae651c8317438c4744ba2a743c7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skill
+  sfxSound: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}

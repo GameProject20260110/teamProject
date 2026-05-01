@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class AudioManager : MonoBehaviour
@@ -127,6 +124,21 @@ public class AudioManager : MonoBehaviour
             break;
         }
 
+    }
+
+    public void PlaySfx(AudioClip clip)
+    {
+        if (clip == null) return;
+        for (int index = 0; index < channels; index++)
+        {
+            int loopIndex = (index + channelIndex) % sfxPlayer.Length;
+            if (sfxPlayer[loopIndex].isPlaying) continue;
+
+            channelIndex = loopIndex;
+            sfxPlayer[loopIndex].clip = clip;
+            sfxPlayer[loopIndex].Play();
+            break;
+        }
     }
 
     public void SetMasterVolume(float volume)

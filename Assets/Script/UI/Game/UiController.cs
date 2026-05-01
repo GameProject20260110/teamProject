@@ -37,6 +37,9 @@ public class UiController : MonoBehaviour
     public GameObject backGround;
 
     [SerializeField] private Image _playerImage;
+
+    [SerializeField] private Sprite clickBtn;
+    [SerializeField] private Sprite NoclickBtn;
     private void Awake()
     {
         if (instance == null)
@@ -167,6 +170,16 @@ public class UiController : MonoBehaviour
 
     }
 
+    public void ShowGlowConfirmBtn()
+    {
+        confirmBtn.GetComponent<ButtonGlowController>().ShowGlow();
+    }
+
+    public void HideGlowConfirmBtn()
+    {
+        confirmBtn.GetComponent<ButtonGlowController>().HideGlow();
+    }
+
     public void ShowResultPanel(bool isSuccess, int targetScore, int currentScore, int currentLife)
     {
         resultUI?.Show(isSuccess, targetScore, currentScore, currentLife);
@@ -233,6 +246,16 @@ public class UiController : MonoBehaviour
     public void ResetItemCards()
     {
         inventoryUI?.ResetCards();
+    }
+
+    public void OnClickConfirmBtn()
+    {
+        confirmBtn.image.sprite = clickBtn;
+    }
+
+    public void OffClickConfirmBtn()
+    {
+        confirmBtn.image.sprite = NoclickBtn;
     }
 
 }
