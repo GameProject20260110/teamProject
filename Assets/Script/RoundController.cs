@@ -12,10 +12,12 @@ public class RoundController : MonoBehaviour
     [SerializeField] private RoundCharacter roundCharacter;
     [SerializeField] private CardAppearEffect playerEffect;
     [SerializeField] private CardAppearEffect enemyEffect;
+    [SerializeField] private RoundIntroController turnEffect;
 
     [Header("°ÔÀÓ UI")]
     [SerializeField] private CanvasGroup playerUIGroup;
     [SerializeField] private CanvasGroup enemyUIGroup;
+    [SerializeField] private CanvasGroup[] HideUIGroup;
     [SerializeField] private float fadeDuration = 0.4f;
 
     private CancellationTokenSource cts;
@@ -23,16 +25,22 @@ public class RoundController : MonoBehaviour
     void Start()
     {
         cts = new CancellationTokenSource();
-        PlayRoundSequenceAsync(cts.Token).Forget();
     }
 
     private void HideGameUI()
     {
-        playerUIGroup.alpha = 0f;
-        enemyUIGroup.alpha = 0f;
+        foreach (var h in HideUIGroup)
+        {
+            h.alpha = 0f;
+        }
     }
 
-    public async UniTask PlayRoundSequenceAsync(CancellationToken ct, int currentRound = 1)
+    public void PlayIntroAnim(int currentRound = 1)
+    {
+        PlayRoundSequenceAsync(cts.Token,currentRound).Forget();
+    }
+
+    private async UniTask PlayRoundSequenceAsync(CancellationToken ct, int currentRound = 1)
     {
         roundIntroCanvas.gameObject.SetActive(true);
         HideGameUI();
@@ -42,11 +50,31 @@ public class RoundController : MonoBehaviour
         await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
+        
+        playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
+        enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
 
+        await PlayEffectAsync(onComplete => turnEffect.Play(1, onComplete), ct);
+
+        await UniTask.Delay(
+           TimeSpan.FromSeconds(fadeDuration),
+           cancellationToken: ct
+        );
+        
         roundIntroCanvas.gameObject.SetActive(false);
-        await ShowGameUIAsync(ct);
-
         BeginRoundLogic(currentRound);
+    }
+
+    public void NextTurn(int currentTurn = 1)
+    {
+        NextTurnUI(cts.Token, currentTurn).Forget();
+    }
+
+    private async UniTask NextTurnUI(CancellationToken ct, int currentTurn = 1)
+    {
+        roundIntroCanvas.gameObject.SetActive(true);
+        await PlayEffectAsync(onComplete => turnEffect.Play(currentTurn, onComplete), ct);
+        roundIntroCanvas.gameObject.SetActive(false);
     }
 
     private UniTask PlayEffectAsync(Action<Action> playFunc, CancellationToken ct)
@@ -54,17 +82,6 @@ public class RoundController : MonoBehaviour
         var utcs = new UniTaskCompletionSource();
         playFunc(() => utcs.TrySetResult());
         return utcs.Task.AttachExternalCancellation(ct);
-    }
-
-    private async UniTask ShowGameUIAsync(CancellationToken ct)
-    {
-        playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
-        enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
-
-        await UniTask.Delay(
-            TimeSpan.FromSeconds(fadeDuration),
-            cancellationToken: ct
-        );
     }
 
     private void BeginRoundLogic(int currentRound)

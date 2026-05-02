@@ -44,7 +44,7 @@ public class RoundIntroController : MonoBehaviour
     public void Play(int roundNumber, Action onComplete)
     {
         KillCurrent();
-        roundText.text = $"Round {roundNumber}";
+        roundText.text = $"Turn {roundNumber}";
         rootObject.SetActive(true);
 
         SetInitialState();
@@ -55,7 +55,7 @@ public class RoundIntroController : MonoBehaviour
                 .SetEase(Ease.OutQuad)
         );
         currentSequence.Join(
-            darkBandImage.DOFade(0.7f, bandFadeInDuration).SetEase(Ease.OutQuad)
+            darkBandImage.DOFade(0.85f, bandFadeInDuration).SetEase(Ease.OutQuad)
         );
 
 

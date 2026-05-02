@@ -16,6 +16,7 @@ public class EnemyBattleData
 
     public void Initialize(int currentHP)
     {
+        this.maxHp = currentHP;
         this.currentHP = currentHP;
     }
 

@@ -793,11 +793,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HomeScreenUI
   StartBtn: {fileID: 1166761965}
-  bestRound: {fileID: 0}
-  bestScore: {fileID: 0}
-  GameClear: {fileID: 0}
-  totalGamePlayed: {fileID: 0}
-  playerImage: {fileID: 935208732}
 --- !u!4 &1091399290
 Transform:
   m_ObjectHideFlags: 0
