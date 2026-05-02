@@ -21,6 +21,10 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI enemyAttackAmount;
     [SerializeField] private RoundController turnUI;
 
+    [Header("Shield")]
+    [SerializeField] private GameObject shieldObject;
+    [SerializeField] private TextMeshProUGUI shieldText;
+
     public void UpdatePlayerHP(int current, int max)
     {
         if (playerHPFill != null)

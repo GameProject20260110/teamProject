@@ -12,7 +12,6 @@ public class UiController : MonoBehaviour
 
     [Header("모듈")]
     public ItemInventoryUI inventoryUI;
-    public LifeUI lifeUI;
     public ResultPanelUI resultUI;
     public GameOverPanelUI gameOverUI;
     public GimmickUI gimmickUI;
@@ -70,14 +69,6 @@ public class UiController : MonoBehaviour
             _playerImage.sprite = PlayerManager.instance.playerImage;
         }
     }
-    
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            
-        }
-    }
 
     private void OnDisable()
     {
@@ -87,8 +78,6 @@ public class UiController : MonoBehaviour
     private void SubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged += UpdateGoldUi;
-        GameManager.instance.OnScoreChanged += UpdateScoreUi;
-        GameManager.instance.OnHeartsChanged += UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
         GameManager.instance.OnRerollCountChanged += UpdateRerollUi;
     }
@@ -96,8 +85,6 @@ public class UiController : MonoBehaviour
     private void UnSubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged -= UpdateGoldUi;
-        GameManager.instance.OnScoreChanged -= UpdateScoreUi;
-        GameManager.instance.OnHeartsChanged -= UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
         GameManager.instance.OnRerollCountChanged -= UpdateRerollUi;
     }
@@ -110,30 +97,12 @@ public class UiController : MonoBehaviour
         }
     }
 
-    private void UpdateScoreUi(int score)
-    {
-        if(myScoreInfoText != null)
-        {
-            myScoreInfoText.SetText("{0}", score);
-        }
-    }
 
-    private void UpdateLivesUi(int lives)
-    {
-        lifeUI?.UpdateHearts(lives);
-    }
-
-    private void UpdateRoundAndGoalUi(int round, int targetScore)
+    private void UpdateRoundAndGoalUi(int round)
     { 
-        Debug.Log($"[UI] 라운드 갱신 시도: Round {round}, Target {targetScore}");
         if (roundInfoText != null)
         {
             roundInfoText.SetText("{0}", round);
-        }
-
-        if (targetScoreInfoText != null)
-        {
-            targetScoreInfoText.SetText("{0}", targetScore);
         }
     }
 
@@ -180,23 +149,21 @@ public class UiController : MonoBehaviour
         confirmBtn.GetComponent<ButtonGlowController>().HideGlow();
     }
 
-    public void ShowResultPanel(bool isSuccess, int targetScore, int currentScore, int currentLife)
+    public void ShowResultPanel(bool isSuccess, int currentLife)
     {
-        resultUI?.Show(isSuccess, targetScore, currentScore, currentLife);
+        resultUI?.Show(isSuccess, currentLife);
         RefreshInventory();
     }
 
-    public void ShowGameOverPanel(int round, int bestScore, List<DiceData> diceDatas, List<int> values)
+    public void ShowGameOverPanel(int round, List<DiceData> diceDatas, List<int> values)
     {
-        gameOverUI?.Show(round, bestScore);
+        gameOverUI?.Show(round);
     }
 
     public void UpdateRerollUi(int count)
     {
-        if(rerollText != null)
-        {
-            rerollText.SetText("Reroll: {0}", count);
-        }
+        if (rerollText != null)
+            rerollText.SetText($"{count}/{PlayerManager.instance?.gameRerollCount}");
     }
 
     public void SetRollBtnInteractable(bool state)
@@ -225,7 +192,7 @@ public class UiController : MonoBehaviour
 
     public void OnClickGameEndBtn()
     {
-        gameOverUI?.Show(12, 123);
+        gameOverUI?.Show(12);
     }
 
     public void ClearGimmickIcons()

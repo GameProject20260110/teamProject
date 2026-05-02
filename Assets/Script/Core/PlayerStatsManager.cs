@@ -28,7 +28,6 @@ public class PlayerStatsManager : MonoBehaviour
         PlayerStatusData data = new PlayerStatusData
         {
             bestRound = bestRound,
-            bestScore = bestScore,
             totalGamePlayed = totalGamePlayed,
             totalClears = totalClears
         };
@@ -57,12 +56,11 @@ public class PlayerStatsManager : MonoBehaviour
         PlayerStatusData data = JsonUtility.FromJson<PlayerStatusData>(json);
 
         bestRound = data.bestRound;
-        bestScore = data.bestScore;
         totalGamePlayed = data.totalGamePlayed;
         totalClears = data.totalClears; 
     }
 
-    public void RecordGameEnd(int finalRound, int finalScore, bool cleared)
+    public void RecordGameEnd(int finalRound, bool cleared)
     {
         totalGamePlayed++;
 
@@ -74,11 +72,6 @@ public class PlayerStatsManager : MonoBehaviour
         {
             bestRound = finalRound;
         }
-        if (finalScore > bestScore)
-        {
-            bestScore = finalScore;
-        }
-
         Save();
     }
 

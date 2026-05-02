@@ -15,7 +15,7 @@ public class ResultPanelUI : MonoBehaviour
 
     public GameObject TextGroup;
 
-    public void Show(bool isSuccess, int targetScore, int score, int currentLife)
+    public void Show(bool isSuccess, int currentLife)
     {
         if (resultPanel != null)
         {
@@ -24,14 +24,6 @@ public class ResultPanelUI : MonoBehaviour
         if (resultTitleText != null)
         {
             resultTitleText.text = isSuccess ? "DEFENSE!" : "FAILED!";
-        }
-        if (resultTargetScoreText != null)
-        {
-            resultTargetScoreText.text = targetScore.ToString();
-        }
-        if (resultScoreText != null)
-        {
-            resultScoreText.text = score.ToString();
         }
 
         if (isSuccess)
