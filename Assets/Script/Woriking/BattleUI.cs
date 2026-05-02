@@ -11,12 +11,14 @@ public class BattleUI : MonoBehaviour
     [Header("HP Texts")]
     [SerializeField] private TextMeshProUGUI playerHPText;
     [SerializeField] private TextMeshProUGUI enemyHPText;
+    [SerializeField] private TextMeshProUGUI playerShieldText;
     [SerializeField] private TextMeshProUGUI currentTurn;
 
     [Header("Damage Text (Optional)")]
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
+    [SerializeField] private TextMeshProUGUI enemyAttackAmount;
 
     [Header("Shield")]
     [SerializeField] private GameObject shieldObject;
@@ -31,6 +33,17 @@ public class BattleUI : MonoBehaviour
             playerHPText.text = $"{current}/{max}";
 
         UpdateHPColor(playerHPFill, (float)current / max);
+    }
+
+    public void UpdateEnemyAttackAmount(int current)
+    {
+        enemyAttackAmount.text = current.ToString();
+    }
+
+    public void UpdatePlayerShield(int current)
+    {
+        current = current < 0 ? 0 : current;
+        playerShieldText.text = current.ToString();
     }
 
     public void UpdateEnemyHP(int current, int max)
@@ -74,6 +87,7 @@ public class BattleUI : MonoBehaviour
     public void UpdateCurrentTurn(int currentTurn)
     {
         this.currentTurn.text = currentTurn.ToString();
+        
     }
 
     public void ShowDamageText(int damage, bool isPlayer)
@@ -84,7 +98,7 @@ public class BattleUI : MonoBehaviour
         if (spawnPos == null) return;
 
         GameObject damageObj = Instantiate(damageTextPrefab, spawnPos.position, Quaternion.identity, spawnPos);
-        Text damageText = damageObj.GetComponent<Text>();
+        TextMeshProUGUI damageText = damageObj.GetComponent<TextMeshProUGUI>();
 
         if (damageText != null)
         {

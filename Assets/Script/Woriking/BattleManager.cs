@@ -23,8 +23,8 @@ public class BattleManager : MonoBehaviour
     public GameObject EnemySkillPrefab;
 
     private CancellationTokenSource _battleCts;
-    //private UniTaskCompletionSource<bool> attackCompletion;
     private int peddingDamage;
+    private int enemyDamage;
 
 
     private const string BATTLE_SAVE_FILE = "battleData.json";
@@ -82,26 +82,35 @@ public class BattleManager : MonoBehaviour
 
             SaveBattleData();
         }
+
+        enemyDamage = CalculateEnemyAttackPower();
+        battleUI.UpdateEnemyAttackAmount(enemyDamage);
+    }
+
+    public void SetPlayerStats(int attackPower, int defensePower)
+    {
+        playerData.SetPlayerStats(attackPower, defensePower);
+        battleUI.UpdatePlayerShield(playerData.CurrentShield);
     }
 
     private int CalculateEnemyAttackPower()
     {
-        return enemyData.CurrentHP;
+        return UnityEngine.Random.Range(7, 15);
     }
 
-    public async UniTask OnPlayerAttack(int totalScore)
+    public async UniTask OnPlayerAttack()
     {
         if (!isBattleActive || !isPlayerTurn) return;
 
         var attackCompletion = new UniTaskCompletionSource<bool>();
 
-        peddingDamage = totalScore;
+        peddingDamage = playerData.AttackPower;
         SkillPrefab = ObjectPool.instance.Get(0);
         SkillPrefab.transform.position = Enemytrans.position;
 
         SkillPrefab.GetComponent<Skill>().Init(
             isPlayer: true,
-            damage: totalScore,
+            damage: peddingDamage,
             onHit: () =>
             {
                 enemyData.TakeDamage(peddingDamage);
@@ -123,12 +132,9 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        SaveBattleData();
-        isPlayerTurn = false;
-
         try
         {
-            await EnemyTurnRoutine(totalScore);
+            await PlayerDefense();
             
         }
         catch (OperationCanceledException oce)
@@ -143,37 +149,73 @@ public class BattleManager : MonoBehaviour
 
     }
 
-    private async UniTask EnemyTurnRoutine(int playerFinalScore)
+    private async UniTask PlayerDefense()
+    {
+        var shieldCompletion = new UniTaskCompletionSource<bool>();
+
+        int shieldValue = playerData.CurrentShield;
+        SkillPrefab = ObjectPool.instance.Get(2);
+        SkillPrefab.transform.position = Playertrans.position;
+
+        SkillPrefab.GetComponent<Skill>().Init(
+            isPlayer: true,
+            damage: shieldValue,
+            onHit: () =>
+            {
+                battleUI.UpdatePlayerShield(playerData.CurrentShield);               
+            },
+            onEnd: () =>
+            {
+                shieldCompletion?.TrySetResult(true);
+            }
+        );
+
+        await shieldCompletion.Task; // 애니메이션 끝나고
+
+        SaveBattleData();
+        isPlayerTurn = false;
+
+        try
+        {
+            await EnemyTurnRoutine();
+
+        }
+        catch (OperationCanceledException oce)
+        {
+            Debug.Log($"전투가 취소되었습니다 {oce.Message}\n{oce.StackTrace}");
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e.Message);
+            isPlayerTurn = true;
+        }
+    }
+
+    private async UniTask EnemyTurnRoutine()
     {
         await UniTask.Delay(500, cancellationToken: _battleCts.Token);
 
-        int rawDamage = CalculateEnemyAttackPower();
-        var attackCompletion = new UniTaskCompletionSource<bool>();
 
-        int actualDamage = rawDamage;
-        if(PlayerManager.instance != null)
-        {
-            actualDamage = PlayerManager.instance.ApplyShieldAndGetRemainingDamage(rawDamage);
-            battleUI.UpdateShield(PlayerManager.instance.defensePower);
-        }
+        int damage = enemyDamage;
+        var attackCompletion = new UniTaskCompletionSource<bool>();
 
         GameObject skill = ObjectPool.instance.Get((int)ObjectPool.PoolType.Fireball); // enum에 추가 필요
         skill.transform.position = Playertrans.position; // 플레이어 위치로
 
         skill.GetComponent<Skill>().Init(
             isPlayer: false,
-            damage: actualDamage,
+            damage: damage,
             onHit: () =>
             {
-                playerData.TakeDamage(actualDamage);
+                battleUI.UpdatePlayerShield(playerData.CurrentShield-damage);
+                playerData.TakeDamage(damage);
                 battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-                battleUI.ShowDamageText(actualDamage, isPlayer: true);
+                battleUI.ShowDamageText(damage, isPlayer: true);
 
                 // 플레이어 데이터 저장
                 if (PlayerManager.instance != null)
                 {
                     PlayerManager.instance.heart = playerData.CurrentHP;
-                    PlayerManager.instance.ResetBattleStats();
                     PlayerManager.instance.Save();
                 }
                 SaveBattleData();
@@ -201,11 +243,18 @@ public class BattleManager : MonoBehaviour
 
     private void StartNewTurn() // 턴 종료시 이벤트
     {
-       battleUI.UpdateCurrentTurn(currentTurn);
+        Debug.Log(12);
+        playerData.ShieldUp(0);
+        battleUI.UpdatePlayerShield(playerData.CurrentShield);
+        enemyDamage = CalculateEnemyAttackPower();
+        battleUI.UpdateEnemyAttackAmount(enemyDamage);
+        battleUI.UpdateCurrentTurn(currentTurn);       
     }
 
     private void OnBattleEnd()
     {
+        playerData.ShieldUp(0);
+        battleUI.UpdatePlayerShield(playerData.CurrentShield);
         isBattleActive = false;
         _battleCts?.Cancel();
         DeleteBattleData();

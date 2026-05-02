@@ -124,12 +124,13 @@ public class GameManager : MonoBehaviour
     {
 
         if (UiController.instance.rollBtn.interactable == false) return;
-        if(AudioManager.instance != null)
+        if (AudioManager.instance != null)
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Roll);
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.rollBtn.interactable = false;
         UiController.instance.SetShopBtnInteratable(false);
+        UiController.instance.HideGlowConfirmBtn();
 
         RollFlow().Forget();
     }
@@ -170,6 +171,7 @@ public class GameManager : MonoBehaviour
 
             ProcessRollResult(result.finalScore, result.consumedItems);
 
+            UiController.instance.ShowGlowConfirmBtn();
         }
         catch (Exception e)
         {
@@ -234,33 +236,51 @@ public class GameManager : MonoBehaviour
         UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound, bestScore, _lastDiceDatas, fakeValues);
     }
 
-    public void OnClickScoreConfirm()
+    public void OnClickScoreConfirmButton()
+    {
+        OnClickScoreConfirm().Forget();
+    }
+
+    public async UniTask OnClickScoreConfirm()
     {
         if (diceManager.isRolling) return;
+        if (BattleManager.instance == null) return;
 
-        int attackValue = DicePanelManager.instance.attackPanel.GetTotal();
-        int defenseValue = DicePanelManager.instance.defensePanel.GetTotal();
+        int attackPower = DicePanelManager.instance?.attackPanel.GetTotal() ?? 0;
+        int defensePower = DicePanelManager.instance?.defensePanel.GetTotal() ?? 0;
+        BattleManager.instance.SetPlayerStats(attackPower, defensePower);
 
-        if(PlayerManager.instance != null)
-        {
-            PlayerManager.instance.attackPower = attackValue;
-            PlayerManager.instance.defensePower = defenseValue;
-        }
-
+        // UI 비활성화
         UiController.instance.SetShopBtnInteratable(false);
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.SetRollBtnInteractable(false);
+        UiController.instance.HideGlowConfirmBtn();
 
-        if(_usedConsumableItems != null && _usedConsumableItems.Count > 0)
+        // 아이템 처리
+        if (_usedConsumableItems != null && _usedConsumableItems.Count > 0)
         {
             RemoveUsedItems(_usedConsumableItems);
         }
-        if(PlayerShopManager.instance != null)
+        if (PlayerShopManager.instance != null)
         {
             PlayerShopManager.instance.pendingConsumables.Clear();
         }
 
-        BattleManager.instance.OnPlayerAttack(attackValue).Forget();
+        try
+        {
+            BattleManager.instance.OnPlayerAttack().Forget();
+        }
+        catch (OperationCanceledException)
+        {
+            Debug.Log("전투 취소됨");
+        }
+        catch (Exception e)
+        {
+            Debug.LogException(e);
+        }
+
+        UiController.instance.SetShopBtnInteratable(true);
+        UiController.instance.SetRollBtnInteractable(true);
     }
 
     public void OnClickSurrenButton()
