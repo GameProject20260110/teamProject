@@ -19,6 +19,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
     [SerializeField] private TextMeshProUGUI enemyAttackAmount;
+    [SerializeField] private RoundController turnUI;
 
     [Header("Shield")]
     [SerializeField] private GameObject shieldObject;
@@ -31,8 +32,6 @@ public class BattleUI : MonoBehaviour
 
         if (playerHPText != null)
             playerHPText.text = $"{current}/{max}";
-
-        UpdateHPColor(playerHPFill, (float)current / max);
     }
 
     public void UpdateEnemyAttackAmount(int current)
@@ -53,41 +52,11 @@ public class BattleUI : MonoBehaviour
 
         if (enemyHPText != null)
             enemyHPText.text = $"{current}/{max}";
-
-        UpdateHPColor(enemyHPFill, (float)current / max);
-    }
-
-    public void UpdateShield(int defensePower)
-    {
-        if (shieldObject == null) return;
-        
-        if(defensePower <= 0)
-        {
-            shieldObject.SetActive(false);
-            return;
-        }
-
-        shieldObject.SetActive(true);
-        if (shieldText != null)
-            shieldText.text = defensePower.ToString();
-    }
-
-    private void UpdateHPColor(Image hpBar, float ratio)
-    {
-        if (hpBar == null) return;
-
-        if (ratio < 0.3f)
-            hpBar.color = Color.red;
-        else if (ratio < 0.6f)
-            hpBar.color = Color.yellow;
-        else
-            hpBar.color = Color.green;
     }
 
     public void UpdateCurrentTurn(int currentTurn)
     {
-        this.currentTurn.text = currentTurn.ToString();
-        
+        turnUI.NextTurn(currentTurn);
     }
 
     public void ShowDamageText(int damage, bool isPlayer)

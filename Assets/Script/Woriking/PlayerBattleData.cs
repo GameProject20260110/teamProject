@@ -20,6 +20,7 @@ public class PlayerBattleData
 
     public void Initialize(int currentHP)
     {
+        this.maxHp = currentHP;
         this.currentHP = currentHP;
         this.currentShield = 0;
     }
