@@ -6,7 +6,7 @@ using DG.Tweening;
 public class DefensePanelUI : MonoBehaviour
 {
     public TextMeshProUGUI defenseValue;
-    public Transform diceContainer;
+    public Transform[] slots; 
 
     private int _currentDefenseValue = 0;
     private List<Dice> _placedDices = new List<Dice>();
@@ -16,11 +16,13 @@ public class DefensePanelUI : MonoBehaviour
 
     public bool TryPlaceDice(Dice dice)
     {
-        if (_placedDices.Count >= 6) return false;
+        Transform emptySlot = FindEmptySlot();
+        if (emptySlot == null) return false;
         if (_placedDices.Contains(dice)) return false;
         
         _placedDices.Add(dice);
-        dice.transform.SetParent(diceContainer);
+        dice.transform.SetParent(emptySlot, false);
+        dice.transform.localPosition = Vector3.zero;
         dice.transform.localScale = Vector3.one;
 
         UpdateValue();
@@ -32,6 +34,26 @@ public class DefensePanelUI : MonoBehaviour
         if (!_placedDices.Contains(dice)) return;
         _placedDices.Remove(dice);
         UpdateValue();
+    }
+
+    private Transform FindEmptySlot()
+    {
+        foreach(var slot in slots)
+        {
+            if (slot.childCount == 0)
+                return slot;
+        }
+        return null;
+    }
+
+    private Transform GetDiceSlot(Dice dice)
+    {
+        foreach(var slot in slots)
+        {
+            if (slot.childCount > 0 && slot.GetChild(0).GetComponent<Dice>() == dice)
+                return slot;
+        }
+        return null;
     }
 
     private void UpdateValue()

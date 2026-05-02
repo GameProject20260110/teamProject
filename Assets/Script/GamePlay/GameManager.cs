@@ -10,13 +10,11 @@ public class GameManager : MonoBehaviour
 
     public event Action<int> OnGoldChanged;
     public event Action<int> OnScoreChanged;
-    public event Action<int, int> OnRoundAndGoalChanged;
+    public event Action<int> OnRoundAndGoalChanged;
     public event Action<int> OnRerollCountChanged;
 
     public DiceManager diceManager;
     public UIFlowController UFC;
-    public int maxRerollCount = 1;
-    public int bestScore = 0;
     public bool hasUsedPlusReroll = false;
     
 
@@ -71,10 +69,9 @@ public class GameManager : MonoBehaviour
     {
         int gold = PlayerManager.instance != null ? PlayerManager.instance.gold : 0;
         int currentRound = RoundManager.instance != null ? RoundManager.instance.currentRound : 0;
-        int targetScore = RoundManager.instance != null ? RoundManager.instance.targetScore : 0;
 
         OnGoldChanged?.Invoke(gold);
-        OnRoundAndGoalChanged?.Invoke(currentRound, targetScore);
+        OnRoundAndGoalChanged?.Invoke(currentRound);
         OnRerollCountChanged?.Invoke(_currentRerollCount);
     }
 
@@ -233,7 +230,7 @@ public class GameManager : MonoBehaviour
                 fakeValues.Add(1);
             }
         }
-        UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound, bestScore, _lastDiceDatas, fakeValues);
+        UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound, _lastDiceDatas, fakeValues);
     }
 
     public void OnClickScoreConfirmButton()
@@ -268,7 +265,7 @@ public class GameManager : MonoBehaviour
 
         try
         {
-            BattleManager.instance.OnPlayerAttack().Forget();
+            await BattleManager.instance.OnPlayerAttack();
         }
         catch (OperationCanceledException)
         {
@@ -279,6 +276,11 @@ public class GameManager : MonoBehaviour
             Debug.LogException(e);
         }
 
+        DicePanelManager.instance?.ResetAllDice(diceManager.GetAllDice());
+
+        _isFirstRoll = true;
+        PlayerManager.instance.isFirstRoll = true;
+        UiController.instance.SetRollButtnonToReroll();
         UiController.instance.SetShopBtnInteratable(true);
         UiController.instance.SetRollBtnInteractable(true);
     }

@@ -128,7 +128,7 @@ public class BattleManager : MonoBehaviour
         if (enemyData.IsDead())
         {
             OnBattleEnd();
-            RoundManager.instance.CompleteRound(10000);
+            RoundManager.instance.CompleteRound(true);
             return;
         }
 
@@ -207,10 +207,10 @@ public class BattleManager : MonoBehaviour
             damage: damage,
             onHit: () =>
             {
-                battleUI.UpdatePlayerShield(playerData.CurrentShield-damage);
-                playerData.TakeDamage(damage);
+                int actualDamage = playerData.TakeDamage(damage);
+                battleUI.UpdatePlayerShield(playerData.CurrentShield);
                 battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-                battleUI.ShowDamageText(damage, isPlayer: true);
+                battleUI.ShowDamageText(actualDamage, isPlayer: true);
 
                 // 플레이어 데이터 저장
                 if (PlayerManager.instance != null)
@@ -231,7 +231,7 @@ public class BattleManager : MonoBehaviour
         if (playerData.IsDead())
         {
             OnBattleEnd();
-            RoundManager.instance.CompleteRound(0);
+            RoundManager.instance.CompleteRound(false);
             return;
         }
 

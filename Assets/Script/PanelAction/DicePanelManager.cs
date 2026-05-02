@@ -98,6 +98,21 @@ public class DicePanelManager : MonoBehaviour
 
     }
 
+    public void ResetAllDice(Dice[] allDice)
+    {
+        foreach(var dice in allDice)
+        {
+            if (dice == null) continue;
+
+            dice.transform.SetParent(dice.OriginalSlot, false);
+            dice.transform.localPosition = Vector3.zero;
+            dice.transform.localScale = Vector3.one;
+
+            dice.SetResult(1);
+        }
+        Clear();
+    }
+
     private bool IsChildOf(GameObject obj, GameObject parent)
     {
         if (obj == null || parent == null) return false;

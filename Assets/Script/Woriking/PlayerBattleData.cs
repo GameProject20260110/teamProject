@@ -31,7 +31,7 @@ public class PlayerBattleData
         ShieldUp(defensePower);
     }
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
         
         int actualDamage = (damage - currentShield) <= 0 ? 0 : damage - currentShield;
@@ -40,6 +40,8 @@ public class PlayerBattleData
 
         currentHP -= actualDamage;
         currentHP = Mathf.Max(0, currentHP);
+
+        return actualDamage;
     }
 
     public void ShieldUp(int amount)

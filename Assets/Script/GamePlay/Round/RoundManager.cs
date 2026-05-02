@@ -5,7 +5,6 @@ public class RoundManager : MonoBehaviour
     public static RoundManager instance;
     [Header("¶ó¿îµå ¼³Á¤")]
     public int currentRound = 1;
-    public int targetScore = 0;
 
     [SerializeField] private RoundController roundEffect;
     public StageDataSo currentStageData;
@@ -35,8 +34,6 @@ public class RoundManager : MonoBehaviour
     {
         if (UseTestMode)
         {
-            targetScore = 9999;
-
             GimmickManager.instance?.ClearGimmick();
             var tm = TestModeManager.instance;
             if (!tm.noGimmick && tm.testGimmick != null)
@@ -56,9 +53,9 @@ public class RoundManager : MonoBehaviour
                 Debug.Log("Å×½ºÆ® ¸ðµå ±â¹Í ºñÈ°¼ºÈ­");
             }
 
-            if(GameManager.instance != null)
+            if(PlayerManager.instance != null)
             {
-                GameManager.instance.maxRerollCount = 9999;
+                 PlayerManager.instance.gameRerollCount = 9999;
             }
         }
         else
@@ -71,8 +68,6 @@ public class RoundManager : MonoBehaviour
 
                 if(roundData != null)
                 {
-                    targetScore = roundData.targetScore;
-
                     if(currentRound % 5 == 1)
                     {
                         GimmickManager.instance?.PreparePendingGimmick(currentRound);
@@ -139,11 +134,9 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    public void CompleteRound(int finalScore)
+    public void CompleteRound(bool isSuccess)
     {
         if (UiController.instance != null) UiController.instance.SetRollBtnInteractable(false);
-
-        bool isSuccess = finalScore >= targetScore;
 
         if(PlayerManager.instance != null)
         {
@@ -178,7 +171,7 @@ public class RoundManager : MonoBehaviour
                 GameManager.instance.AddGold(reward);
                 Debug.Log($"¶ó¿îµå ¼º°ø! °ñµå {reward} È¹µæ");
             }
-            UiController.instance.ShowResultPanel(true, targetScore, finalScore, currentHP);
+            UiController.instance.ShowResultPanel(true, currentHP);
         }
         else
         {
@@ -191,7 +184,7 @@ public class RoundManager : MonoBehaviour
                     GameManager.instance.AddGold(reward);
                     Debug.Log($"¶ó¿îµå ½ÇÆÐ °ñµå {reward} È¹µæ");
                 }
-                UiController.instance.ShowResultPanel(false, targetScore, finalScore, currentHP);
+                UiController.instance.ShowResultPanel(false, currentHP);
             }
             else
             {

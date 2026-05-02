@@ -38,7 +38,7 @@ public class PlayerManager : MonoBehaviour
             allDices = Resources.LoadAll<DiceData>("DiceDatas");
             allItems = Resources.LoadAll<ItemSo>("ItemDatas");
             allGimmicks = Resources.LoadAll<GimmickSo>("GimmickData");
-            gameRerollCount = 1;
+            gameRerollCount = 3;
             isFirstRoll = true;
             Load();
         }
