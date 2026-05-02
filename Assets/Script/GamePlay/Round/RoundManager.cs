@@ -7,6 +7,7 @@ public class RoundManager : MonoBehaviour
     public int currentRound = 1;
     public int targetScore = 0;
 
+    [SerializeField] private RoundController roundEffect;
     public StageDataSo currentStageData;
     public Image enemyImage;
     private bool UseTestMode => TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
@@ -62,7 +63,9 @@ public class RoundManager : MonoBehaviour
         }
         else
         {
-            if(currentStageData != null)
+            roundEffect.PlayIntroAnim(currentRound);
+
+            if (currentStageData != null)
             {
                 RoundData roundData = currentStageData.GetRoundData(currentRound);
 

@@ -247,6 +247,7 @@ public class BattleManager : MonoBehaviour
 
     private void OnBattleEnd()
     {
+        currentTurn = 1;
         playerData.ShieldUp(0);
         battleUI.UpdatePlayerShield(playerData.CurrentShield);
         isBattleActive = false;
