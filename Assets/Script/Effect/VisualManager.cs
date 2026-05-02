@@ -56,9 +56,6 @@ public class VisualManager : MonoBehaviour
                 case ScoreEventData.Type.ItemEffect:
                     await tweenAnimator.PlayItemCard(evt, uiEffect);
                     break;
-                case ScoreEventData.Type.FinalScore:
-                    await tweenAnimator.PlayFinalScore(evt.value, uiEffect);
-                    break;
                 case ScoreEventData.Type.GainReroll:
                     await uiEffect.PlayGainReroll(evt);
                     break;
@@ -69,7 +66,6 @@ public class VisualManager : MonoBehaviour
         }
     }
 
-    public void UpdateScoreBoard(int value) => uiEffect.UpdateScoreBoard(value);
     public void ResetDiceColors(Dice[] allDice) => tweenAnimator.ResetDiceColor(allDice);
 
     public void ShowFloatingText(Vector3 pos, string text)

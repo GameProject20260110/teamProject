@@ -28,8 +28,6 @@ public class TweenAnimator : MonoBehaviour
             if(evt.currentDiceScore != int.MinValue)
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
         }
-        if (evt.value != 0)
-            ui.UpdateScoreBoard(evt.value);
         await UniTask.Delay(600);
     }
 
@@ -46,7 +44,6 @@ public class TweenAnimator : MonoBehaviour
                     allDice[idx].UpdateDiceScoreUi(evt.currentDiceScore, true);
             }
         }
-        ui.UpdateScoreBoard(evt.value);
         await UniTask.Delay(600);
     }
 
@@ -59,7 +56,6 @@ public class TweenAnimator : MonoBehaviour
             lastTween = PlayDotweenEffect(dice, "Jump");
             ui.ShowFloatingText(dice.transform.position, evt.desc);
         }
-        ui.UpdateScoreBoard(evt.value);
         if (lastTween != null)
             await lastTween.AsyncWaitForCompletion();
         else
@@ -87,7 +83,6 @@ public class TweenAnimator : MonoBehaviour
             if (evt.currentDiceScore != int.MinValue)
                 targetDice.UpdateDiceScoreUi(evt.currentDiceScore, true);
             ui.ShowFloatingText(targetDice.transform.position, evt.desc);
-            ui.UpdateScoreBoard(evt.value);
             await UniTask.Delay(300);
         }
     }
@@ -132,14 +127,6 @@ public class TweenAnimator : MonoBehaviour
             card.transform.DOScale(originalScale, 0.3f).SetEase(Ease.InBack);
             await UniTask.Delay(500);
         }
-        ui.UpdateScoreBoard(evt.value);
-        await UniTask.Delay(300);
-    }
-
-    public async UniTask PlayFinalScore(int value, UIEffectHandler ui)
-    {
-        ui.UpdateScoreBoard(value);
-        ui.finalScoreText.transform.DOPunchScale(Vector3.one * 0.5f, 0.35f);
         await UniTask.Delay(300);
     }
 

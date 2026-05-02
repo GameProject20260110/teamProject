@@ -10,37 +10,23 @@ public class GameManager : MonoBehaviour
 
     public event Action<int> OnGoldChanged;
     public event Action<int> OnScoreChanged;
-    public event Action<int> OnHeartsChanged;
     public event Action<int, int> OnRoundAndGoalChanged;
     public event Action<int> OnRerollCountChanged;
 
     public DiceManager diceManager;
     public UIFlowController UFC;
     public int maxRerollCount = 1;
-    public int currentScore = 0;
     public int bestScore = 0;
     public bool hasUsedPlusReroll = false;
+    
 
     private List<DiceData> _lastDiceDatas;
     private List<int> _lastValues;
     private List<ItemSo> _usedConsumableItems = new List<ItemSo>();
-    private bool _isFirstRoll = true;
     private int _currentRerollCount;
-    private int _fallbackHeart;
+    private bool _isFirstRoll = true;
 
-    public int CurrentHearts
-    {
-        get => PlayerManager.instance != null ? PlayerManager.instance.heart : _fallbackHeart;
-        private set
-        {
-            if (PlayerManager.instance != null)
-            {
-                PlayerManager.instance.heart = value;
-            }
-            else
-                _fallbackHeart = value;
-        }
-    }
+    public bool IsFirstRoll => _isFirstRoll;
 
     public int CurrentRerollCount
     {
@@ -51,7 +37,6 @@ public class GameManager : MonoBehaviour
             OnRerollCountChanged?.Invoke(_currentRerollCount);
         }
     }
-
 
     private void Awake()
     {
@@ -72,14 +57,12 @@ public class GameManager : MonoBehaviour
         {
             AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
         }
-
     }
 
     public void InitializeRoundData()
     {
         _isFirstRoll = PlayerManager.instance.isFirstRoll;
         _currentRerollCount = PlayerManager.instance.gameRerollCount;
-        currentScore = 0;
         if (UiController.instance != null) UiController.instance.UpdateRerollUi(_currentRerollCount);
         NotifyAllUI();
     }
@@ -91,8 +74,6 @@ public class GameManager : MonoBehaviour
         int targetScore = RoundManager.instance != null ? RoundManager.instance.targetScore : 0;
 
         OnGoldChanged?.Invoke(gold);
-        OnScoreChanged?.Invoke(currentScore);
-        OnHeartsChanged?.Invoke(CurrentHearts);
         OnRoundAndGoalChanged?.Invoke(currentRound, targetScore);
         OnRerollCountChanged?.Invoke(_currentRerollCount);
     }
@@ -107,23 +88,6 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ModifyHearts(int heart)
-    {
-        if (PlayerManager.instance != null)
-        {
-            PlayerManager.instance.heart += heart;
-            if (PlayerManager.instance.heart < 0) PlayerManager.instance.heart = 0;
-            PlayerManager.instance.Save();
-        }
-        else
-        {
-            _fallbackHeart += heart;
-            if(_fallbackHeart < 0) _fallbackHeart = 0;
-        }
-        OnHeartsChanged?.Invoke(CurrentHearts);
-
-    }
-
     public void StartRound()
     {
         Debug.Log($"{_usedConsumableItems.Count}");
@@ -131,7 +95,6 @@ public class GameManager : MonoBehaviour
         if (UiController.instance == null) return;
         _isFirstRoll = PlayerManager.instance.isFirstRoll;
         _currentRerollCount = PlayerManager.instance.gameRerollCount;
-        currentScore = 0;
         hasUsedPlusReroll = false;
 
         NotifyAllUI();
@@ -183,8 +146,6 @@ public class GameManager : MonoBehaviour
             }
             else
             {
-                currentScore = 0;
-                VisualManager.instance?.UpdateScoreBoard(0);
                 VisualManager.instance?.ResetDiceColors(diceManager.GetAllDice());
                 UiController.instance?.ResetItemCards();
             }
@@ -194,7 +155,6 @@ public class GameManager : MonoBehaviour
 
             var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
 
-            VisualManager.instance?.UpdateScoreBoard(result.baseScore);
             foreach(var dice in allDice)
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
@@ -210,7 +170,6 @@ public class GameManager : MonoBehaviour
 
             ProcessRollResult(result.finalScore, result.consumedItems);
 
-            await BattleManager.instance.OnPlayerAttack(currentScore);
         }
         catch (Exception e)
         {
@@ -220,9 +179,7 @@ public class GameManager : MonoBehaviour
 
     public void ProcessRollResult(int finalScore, List<ItemSo> consumedItems)
     {
-        currentScore = finalScore;
         _usedConsumableItems = consumedItems;
-        OnScoreChanged?.Invoke(currentScore);
 
         if (diceManager != null)
         {
@@ -237,11 +194,6 @@ public class GameManager : MonoBehaviour
                     _lastValues.Add(dice.MyState.originalValue);
                 }
             }
-        }
-
-        if(currentScore > bestScore)
-        {
-            bestScore = currentScore;
         }
 
         if (_currentRerollCount <= 0)
@@ -286,6 +238,15 @@ public class GameManager : MonoBehaviour
     {
         if (diceManager.isRolling) return;
 
+        int attackValue = DicePanelManager.instance.attackPanel.GetTotal();
+        int defenseValue = DicePanelManager.instance.defensePanel.GetTotal();
+
+        if(PlayerManager.instance != null)
+        {
+            PlayerManager.instance.attackPower = attackValue;
+            PlayerManager.instance.defensePower = defenseValue;
+        }
+
         UiController.instance.SetShopBtnInteratable(false);
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.SetRollBtnInteractable(false);
@@ -299,7 +260,7 @@ public class GameManager : MonoBehaviour
             PlayerShopManager.instance.pendingConsumables.Clear();
         }
 
-        if (RoundManager.instance != null) RoundManager.instance.CompleteRound(currentScore);
+        BattleManager.instance.OnPlayerAttack(attackValue).Forget();
     }
 
     public void OnClickSurrenButton()
@@ -353,7 +314,7 @@ public class GameManager : MonoBehaviour
         }
         if(PlayerStatsManager.instance != null)
         {
-            PlayerStatsManager.instance.RecordGameEnd(RoundManager.instance.currentRound, currentScore, false);
+            PlayerStatsManager.instance.RecordGameEnd(RoundManager.instance.currentRound, true);
         }
 
         SceneManager.LoadScene("HomeScreen");

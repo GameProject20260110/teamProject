@@ -16,12 +16,14 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public TextMeshProUGUI diceScoreText;
 
     public DiceState MyState { get; private set; }
+    public Transform OriginalSlot { get; private set; }
 
     private int _currentDiceScore = 0;
 
     public void Initialize(int index, DiceData data)
     {
         MyState = new DiceState(data, index, 1);
+        OriginalSlot = transform.parent;
         UpdateDiceImage(1);
         UpdateDiceScoreUi(0, hide: true);
     }

@@ -12,7 +12,6 @@ public class UiController : MonoBehaviour
 
     [Header("¸ðµâ")]
     public ItemInventoryUI inventoryUI;
-    public LifeUI lifeUI;
     public ResultPanelUI resultUI;
     public GameOverPanelUI gameOverUI;
     public GimmickUI gimmickUI;
@@ -67,14 +66,6 @@ public class UiController : MonoBehaviour
             _playerImage.sprite = PlayerManager.instance.playerImage;
         }
     }
-    
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            
-        }
-    }
 
     private void OnDisable()
     {
@@ -84,8 +75,6 @@ public class UiController : MonoBehaviour
     private void SubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged += UpdateGoldUi;
-        GameManager.instance.OnScoreChanged += UpdateScoreUi;
-        GameManager.instance.OnHeartsChanged += UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
         GameManager.instance.OnRerollCountChanged += UpdateRerollUi;
     }
@@ -93,8 +82,6 @@ public class UiController : MonoBehaviour
     private void UnSubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged -= UpdateGoldUi;
-        GameManager.instance.OnScoreChanged -= UpdateScoreUi;
-        GameManager.instance.OnHeartsChanged -= UpdateLivesUi;
         GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
         GameManager.instance.OnRerollCountChanged -= UpdateRerollUi;
     }
@@ -107,18 +94,6 @@ public class UiController : MonoBehaviour
         }
     }
 
-    private void UpdateScoreUi(int score)
-    {
-        if(myScoreInfoText != null)
-        {
-            myScoreInfoText.SetText("{0}", score);
-        }
-    }
-
-    private void UpdateLivesUi(int lives)
-    {
-        lifeUI?.UpdateHearts(lives);
-    }
 
     private void UpdateRoundAndGoalUi(int round, int targetScore)
     { 

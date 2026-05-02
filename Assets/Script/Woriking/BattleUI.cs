@@ -18,6 +18,10 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
 
+    [Header("Shield")]
+    [SerializeField] private GameObject shieldObject;
+    [SerializeField] private TextMeshProUGUI shieldText;
+
     public void UpdatePlayerHP(int current, int max)
     {
         if (playerHPFill != null)
@@ -38,6 +42,21 @@ public class BattleUI : MonoBehaviour
             enemyHPText.text = $"{current}/{max}";
 
         UpdateHPColor(enemyHPFill, (float)current / max);
+    }
+
+    public void UpdateShield(int defensePower)
+    {
+        if (shieldObject == null) return;
+        
+        if(defensePower <= 0)
+        {
+            shieldObject.SetActive(false);
+            return;
+        }
+
+        shieldObject.SetActive(true);
+        if (shieldText != null)
+            shieldText.text = defensePower.ToString();
     }
 
     private void UpdateHPColor(Image hpBar, float ratio)

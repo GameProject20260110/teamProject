@@ -147,25 +147,33 @@ public class BattleManager : MonoBehaviour
     {
         await UniTask.Delay(500, cancellationToken: _battleCts.Token);
 
-        int damage = CalculateEnemyAttackPower();
+        int rawDamage = CalculateEnemyAttackPower();
         var attackCompletion = new UniTaskCompletionSource<bool>();
+
+        int actualDamage = rawDamage;
+        if(PlayerManager.instance != null)
+        {
+            actualDamage = PlayerManager.instance.ApplyShieldAndGetRemainingDamage(rawDamage);
+            battleUI.UpdateShield(PlayerManager.instance.defensePower);
+        }
 
         GameObject skill = ObjectPool.instance.Get((int)ObjectPool.PoolType.Fireball); // enum에 추가 필요
         skill.transform.position = Playertrans.position; // 플레이어 위치로
 
         skill.GetComponent<Skill>().Init(
             isPlayer: false,
-            damage: damage,
+            damage: actualDamage,
             onHit: () =>
             {
-                playerData.TakeDamage(damage);
+                playerData.TakeDamage(actualDamage);
                 battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-                battleUI.ShowDamageText(damage, isPlayer: true);
+                battleUI.ShowDamageText(actualDamage, isPlayer: true);
 
                 // 플레이어 데이터 저장
                 if (PlayerManager.instance != null)
                 {
                     PlayerManager.instance.heart = playerData.CurrentHP;
+                    PlayerManager.instance.ResetBattleStats();
                     PlayerManager.instance.Save();
                 }
                 SaveBattleData();

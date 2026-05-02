@@ -7,7 +7,6 @@ public class UIEffectHandler : MonoBehaviour
 {
     public GameObject floatingText;
     public Transform effectCanvas;
-    public TextMeshProUGUI finalScoreText;
 
     private string _lastDiceEffectName;
     private int _currentDisplayScore = 0;
@@ -48,17 +47,6 @@ public class UIEffectHandler : MonoBehaviour
         Vector3 rerollPos = UiController.instance.rerollText.transform.position;
         ShowFloatingText(rerollPos, evt.desc);
         await UniTask.Delay(500);
-    }
-    public void UpdateScoreBoard(int targetValue)
-    {
-        int originalValue = _currentDisplayScore;
-        _currentDisplayScore = targetValue;
-
-        DOVirtual.Int(originalValue, targetValue, 0.25f, (x) =>
-        {
-            finalScoreText.text = x.ToString();
-        });
-        finalScoreText.transform.DOShakePosition(0.25f, 2f);
     }
 
     public async UniTask PlayNotice(ScoreEventData evt)

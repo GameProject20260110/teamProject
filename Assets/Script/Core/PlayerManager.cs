@@ -19,6 +19,9 @@ public class PlayerManager : MonoBehaviour
     public bool isGameOver;
     public Sprite playerImage;
 
+    public int attackPower;
+    public int defensePower;
+
     private const int DiceSlotCount = 6;
     private const int ItemSlotCount = 7;
     private const string SAVE_FILE = "playerData.json";
@@ -72,6 +75,23 @@ public class PlayerManager : MonoBehaviour
         heart = 50;
         ShopLevel = 1;
         ShopCount = 3;
+        attackPower = 0;
+        defensePower = 0;
+    }
+    public void ResetBattleStats()
+    {
+        attackPower = 0;
+        defensePower = 0;
+    }
+
+    public int ApplyShieldAndGetRemainingDamage(int damage)
+    {
+        if(defensePower <= 0) return damage;
+
+        int remaining = damage - defensePower;
+        defensePower = Mathf.Max(0, defensePower - damage);
+        return Mathf.Max(0, remaining);
+
     }
 
     public void Save()
@@ -122,7 +142,7 @@ public class PlayerManager : MonoBehaviour
         ShopCount = data.ShopCount;
         extraDice = System.Array.Find(allDices, s => s.name == name);
         isFirstRoll = data.isFirstRoll;
-
+        
         
 
         this.SpecialSlots = data.specialSlots;

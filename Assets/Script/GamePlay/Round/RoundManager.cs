@@ -165,6 +165,8 @@ public class RoundManager : MonoBehaviour
             PlayerManager.instance.tempExtraSlotsCount = 0;
         }
 
+        int currentHP = PlayerManager.instance != null ? PlayerManager.instance.heart : 0;
+
         if(isSuccess)
         {
             if(currentStageData != null && GameManager.instance != null)
@@ -173,13 +175,12 @@ public class RoundManager : MonoBehaviour
                 GameManager.instance.AddGold(reward);
                 Debug.Log($"¶ó¿îµå ¼º°ø! °ñµå {reward} È¹µæ");
             }
-            UiController.instance.ShowResultPanel(true, targetScore, finalScore, GameManager.instance.CurrentHearts);
+            UiController.instance.ShowResultPanel(true, targetScore, finalScore, currentHP);
         }
         else
         {
-            GameManager.instance.ModifyHearts(-1);
 
-            if(GameManager.instance.CurrentHearts > 0)
+            if(currentHP > 0)
             {
                 if (currentStageData != null && GameManager.instance != null)
                 {
@@ -187,7 +188,7 @@ public class RoundManager : MonoBehaviour
                     GameManager.instance.AddGold(reward);
                     Debug.Log($"¶ó¿îµå ½ÇÆÐ °ñµå {reward} È¹µæ");
                 }
-                UiController.instance.ShowResultPanel(false, targetScore, finalScore, GameManager.instance.CurrentHearts);
+                UiController.instance.ShowResultPanel(false, targetScore, finalScore, currentHP);
             }
             else
             {
