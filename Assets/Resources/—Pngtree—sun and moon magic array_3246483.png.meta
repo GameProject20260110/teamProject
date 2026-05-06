@@ -1,10 +1,19 @@
 fileFormatVersion: 2
-guid: f0e1e919924851b4a870a0727e76db84
+guid: cb45f5cfce81c6a438bf10d364fe5413
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 39516445742236537
-    second: dice_0
+      213: -5093388759639993409
+    second: "\u2014Pngtree\u2014sun and moon magic array_3246483_0"
+  - first:
+      213: 3086042232883739904
+    second: "\u2014Pngtree\u2014sun and moon magic array_3246483_1"
+  - first:
+      213: -3719330077931095566
+    second: "\u2014Pngtree\u2014sun and moon magic array_3246483_2"
+  - first:
+      213: 1145476937077828956
+    second: "\u2014Pngtree\u2014sun and moon magic array_3246483_3"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +109,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dice_0
+      name: "\u2014Pngtree\u2014sun and moon magic array_3246483_0"
       rect:
         serializedVersion: 2
-        x: 53
-        y: 69
-        width: 895
-        height: 857
+        x: 181
+        y: 146
+        width: 818
+        height: 819
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +124,74 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 973804f7ff36c8000800000000000000
-      internalID: 39516445742236537
+      spriteID: fb3d0b6b8e5a059b0800000000000000
+      internalID: -5093388759639993409
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014sun and moon magic array_3246483_1"
+      rect:
+        serializedVersion: 2
+        x: 503
+        y: 52
+        width: 126
+        height: 35
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 00d73ec6f03d3da20800000000000000
+      internalID: 3086042232883739904
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014sun and moon magic array_3246483_2"
+      rect:
+        serializedVersion: 2
+        x: 627
+        y: 58
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: 2f9bd7efff8426cc0800000000000000
+      internalID: -3719330077931095566
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: "\u2014Pngtree\u2014sun and moon magic array_3246483_3"
+      rect:
+        serializedVersion: 2
+        x: 633
+        y: 58
+        width: 65
+        height: 25
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      customData: 
+      outline: []
+      physicsShape: []
+      tessellationDetail: -1
+      bones: []
+      spriteID: c5d2dec843d85ef00800000000000000
+      internalID: 1145476937077828956
       vertices: []
       indices: 
       edges: []
@@ -125,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +210,10 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      dice_0: 39516445742236537
+      "\u2014Pngtree\u2014sun and moon magic array_3246483_0": -5093388759639993409
+      "\u2014Pngtree\u2014sun and moon magic array_3246483_1": 3086042232883739904
+      "\u2014Pngtree\u2014sun and moon magic array_3246483_2": -3719330077931095566
+      "\u2014Pngtree\u2014sun and moon magic array_3246483_3": 1145476937077828956
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
