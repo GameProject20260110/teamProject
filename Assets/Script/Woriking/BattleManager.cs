@@ -15,11 +15,13 @@ public class BattleManager : MonoBehaviour
 
     [Header("reference")]
     [SerializeField] private BattleUI battleUI;
+    [SerializeField] private EnemyDeathSequence enemyDeathSequence;
 
     public bool isPlayerTurn = true;
     public bool isBattleActive = false;
     public int currentTurn = 1;
     public GameObject SkillPrefab;
+    public GameObject ShieldPrefab;
     public GameObject EnemySkillPrefab;
 
     private CancellationTokenSource _battleCts;
@@ -105,7 +107,7 @@ public class BattleManager : MonoBehaviour
         var attackCompletion = new UniTaskCompletionSource<bool>();
 
         peddingDamage = playerData.AttackPower;
-        SkillPrefab = ObjectPool.instance.Get(0);
+        SkillPrefab = ObjectPool.instance.Get(SkillPrefab);
         SkillPrefab.transform.position = Enemytrans.position;
 
         SkillPrefab.GetComponent<Skill>().Init(
@@ -127,6 +129,7 @@ public class BattleManager : MonoBehaviour
 
         if (enemyData.IsDead())
         {
+            await enemyDeathSequence.PlayDeathSequence(Enemytrans.position);
             OnBattleEnd();
             RoundManager.instance.CompleteRound(true);
             return;
@@ -154,7 +157,7 @@ public class BattleManager : MonoBehaviour
         var shieldCompletion = new UniTaskCompletionSource<bool>();
 
         int shieldValue = playerData.CurrentShield;
-        SkillPrefab = ObjectPool.instance.Get(2);
+        SkillPrefab = ObjectPool.instance.Get(ShieldPrefab);
         SkillPrefab.transform.position = Playertrans.position;
 
         SkillPrefab.GetComponent<Skill>().Init(
@@ -199,7 +202,7 @@ public class BattleManager : MonoBehaviour
         int damage = enemyDamage;
         var attackCompletion = new UniTaskCompletionSource<bool>();
 
-        GameObject skill = ObjectPool.instance.Get((int)ObjectPool.PoolType.Fireball); // enum에 추가 필요
+        GameObject skill = ObjectPool.instance.Get(EnemySkillPrefab); // enum에 추가 필요
         skill.transform.position = Playertrans.position; // 플레이어 위치로
 
         skill.GetComponent<Skill>().Init(

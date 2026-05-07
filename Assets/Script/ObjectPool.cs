@@ -3,68 +3,46 @@ using UnityEngine;
 
 public class ObjectPool : MonoBehaviour
 {
-    public enum PoolType
-    {
-        Electric = 0,
-        Fireball = 1,
-    }
-
     public static ObjectPool instance;
 
+    [Header("초기 등록 프리팹")]
     [SerializeField] private GameObject[] prefabs;
 
-    private Queue<GameObject>[] pools;
-    private Dictionary<GameObject, int> prefabIndexMap; // 반환 시 인덱스 찾기용
+    private Dictionary<GameObject, Queue<GameObject>> pools = new();
+    private Dictionary<GameObject, GameObject> originMap = new();
 
-    void Awake()
+    private void Awake()
     {
-        if (instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        if (instance == null) instance = this;
+        else { Destroy(gameObject); return; }
 
-        pools = new Queue<GameObject>[prefabs.Length];
-        prefabIndexMap = new Dictionary<GameObject, int>();
-
-        for (int i = 0; i < prefabs.Length; i++)
-        {
-            pools[i] = new Queue<GameObject>();
-        }
+        // 초기 풀 생성
+        foreach (var prefab in prefabs)
+            pools[prefab] = new Queue<GameObject>();
     }
 
-    public GameObject Get(int index)
+    public GameObject Get(GameObject prefab)
     {
-        GameObject obj;
+        if (!pools.ContainsKey(prefab)) return null;
 
-        if (pools[index].Count > 0)
-        {
-            obj = pools[index].Dequeue();
-        }
-        else
-        {
-            obj = Instantiate(prefabs[index], transform);
-            prefabIndexMap[obj] = index; // 어느 풀 소속인지 기록
-        }
+        GameObject obj = pools[prefab].Count > 0
+            ? pools[prefab].Dequeue()
+            : Instantiate(prefab, transform);
 
+        originMap[obj] = prefab;
         obj.SetActive(true);
         return obj;
     }
 
     public void Return(GameObject obj)
     {
-        if (!prefabIndexMap.TryGetValue(obj, out int index))
+        if (!originMap.TryGetValue(obj, out var prefab))
         {
             Debug.LogWarning($"{obj.name}은 이 풀에서 만든 오브젝트가 아닙니다.");
             Destroy(obj);
             return;
         }
-
         obj.SetActive(false);
-        pools[index].Enqueue(obj);
+        pools[prefab].Enqueue(obj);
     }
 }
