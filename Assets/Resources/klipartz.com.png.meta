@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: f0e1e919924851b4a870a0727e76db84
+guid: 03eb956599a6ebf4b943ce5769d73a8a
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 39516445742236537
-    second: dice_0
+      213: -9189654260004807166
+    second: klipartz.com_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: dice_0
+      name: klipartz.com_0
       rect:
         serializedVersion: 2
-        x: 53
-        y: 69
-        width: 895
-        height: 857
+        x: 19
+        y: 15
+        width: 802
+        height: 804
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 973804f7ff36c8000800000000000000
-      internalID: 39516445742236537
+      spriteID: 20e12cfa32ac77080800000000000000
+      internalID: -9189654260004807166
       vertices: []
       indices: 
       edges: []
@@ -125,7 +125,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 5e97eb03825dee720800000000000000
+    spriteID: 
     internalID: 0
     vertices: []
     indices: 
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      dice_0: 39516445742236537
+      klipartz.com_0: -9189654260004807166
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
