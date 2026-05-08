@@ -850,6 +850,7 @@ GameObject:
   m_Component:
   - component: {fileID: 33635709}
   - component: {fileID: 33635708}
+  - component: {fileID: 33635710}
   m_Layer: 0
   m_Name: DicePanelManager
   m_TagString: Untagged
@@ -889,6 +890,22 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &33635710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 33635707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d27587fa8179e8048812a64e8def8e62, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PanelEffect
+  attackPanel: {fileID: 572171928}
+  defensePanel: {fileID: 855507699}
+  scaleUpValue: 1.05
+  scaleDuration: 0.15
 --- !u!1 &37545833
 GameObject:
   m_ObjectHideFlags: 0
@@ -5236,6 +5253,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297697369736fe468770baf62c49851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDice
+  panelEffect: {fileID: 33635710}
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
@@ -9500,6 +9518,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297697369736fe468770baf62c49851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDice
+  panelEffect: {fileID: 33635710}
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
@@ -27008,6 +27027,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297697369736fe468770baf62c49851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDice
+  panelEffect: {fileID: 33635710}
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
@@ -27793,6 +27813,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297697369736fe468770baf62c49851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDice
+  panelEffect: {fileID: 33635710}
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
@@ -35767,6 +35788,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297697369736fe468770baf62c49851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDice
+  panelEffect: {fileID: 33635710}
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
@@ -42498,6 +42520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9297697369736fe468770baf62c49851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DraggableDice
+  panelEffect: {fileID: 33635710}
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
