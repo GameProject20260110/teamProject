@@ -906,6 +906,8 @@ MonoBehaviour:
   defensePanel: {fileID: 855507699}
   scaleUpValue: 1.05
   scaleDuration: 0.15
+  attackGlow: {fileID: 572171931}
+  defenseGlow: {fileID: 855507702}
 --- !u!1 &37545833
 GameObject:
   m_ObjectHideFlags: 0
@@ -10578,6 +10580,7 @@ GameObject:
   - component: {fileID: 572171928}
   - component: {fileID: 572171930}
   - component: {fileID: 572171929}
+  - component: {fileID: 572171931}
   m_Layer: 5
   m_Name: AttackPanel
   m_TagString: Untagged
@@ -10618,7 +10621,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 850207ad9cc8e0b43bf6018cfad4ba78, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -10644,6 +10647,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 572171927}
   m_CullTransparentMesh: 1
+--- !u!114 &572171931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572171927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1832242bc737b924baa5cd2862de72c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonGlowController
+  fadeSpeed: 5
+  maxGlow: 3
+  maxSpeed: 0.7
+  boxWidth: 0.85
+  boxHeight: 0.85
+  startEnabled: 0
+  glow: {fileID: 0}
+  maxAlpha: 1
 --- !u!1 &575695313
 GameObject:
   m_ObjectHideFlags: 0
@@ -16891,6 +16914,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   diceManager: {fileID: 1948593661}
+  panelEffect: {fileID: 33635710}
   UFC: {fileID: 474977917}
   hasUsedPlusReroll: 0
 --- !u!4 &669844171
@@ -19995,6 +20019,8 @@ MonoBehaviour:
   fadeSpeed: 5
   maxGlow: 3
   maxSpeed: 0.7
+  boxWidth: 0.83
+  boxHeight: 0.29
   startEnabled: 0
   glow: {fileID: 1302217009}
   maxAlpha: 1
@@ -20276,6 +20302,7 @@ GameObject:
   - component: {fileID: 855507699}
   - component: {fileID: 855507701}
   - component: {fileID: 855507700}
+  - component: {fileID: 855507702}
   m_Layer: 5
   m_Name: DefensePanel
   m_TagString: Untagged
@@ -20316,7 +20343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 2100000, guid: 850207ad9cc8e0b43bf6018cfad4ba78, type: 2}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
@@ -20342,6 +20369,26 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 855507698}
   m_CullTransparentMesh: 1
+--- !u!114 &855507702
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 855507698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1832242bc737b924baa5cd2862de72c3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ButtonGlowController
+  fadeSpeed: 5
+  maxGlow: 3
+  maxSpeed: 0.7
+  boxWidth: 0.85
+  boxHeight: 0.85
+  startEnabled: 0
+  glow: {fileID: 0}
+  maxAlpha: 1
 --- !u!1 &860805718
 GameObject:
   m_ObjectHideFlags: 0

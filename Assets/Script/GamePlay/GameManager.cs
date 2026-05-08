@@ -14,10 +14,11 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnRerollCountChanged;
 
     public DiceManager diceManager;
+    public PanelEffect panelEffect;
     public UIFlowController UFC;
+
     public bool hasUsedPlusReroll = false;
     
-
     private List<DiceData> _lastDiceDatas;
     private List<int> _lastValues;
     private List<ItemSo> _usedConsumableItems = new List<ItemSo>();
@@ -128,6 +129,7 @@ public class GameManager : MonoBehaviour
         UiController.instance.rollBtn.interactable = false;
         UiController.instance.SetShopBtnInteratable(false);
         UiController.instance.HideGlowConfirmBtn();
+        panelEffect?.HideGlow();
 
         RollFlow().Forget();
     }
@@ -169,6 +171,7 @@ public class GameManager : MonoBehaviour
             ProcessRollResult(result.finalScore, result.consumedItems);
 
             UiController.instance.ShowGlowConfirmBtn();
+            panelEffect?.ShowGlow();
         }
         catch (Exception e)
         {
@@ -235,6 +238,7 @@ public class GameManager : MonoBehaviour
 
     public void OnClickScoreConfirmButton()
     {
+
         OnClickScoreConfirm().Forget();
     }
 
@@ -252,6 +256,7 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.HideGlowConfirmBtn();
+        panelEffect?.HideGlow();
 
         // 아이템 처리
         if (_usedConsumableItems != null && _usedConsumableItems.Count > 0)

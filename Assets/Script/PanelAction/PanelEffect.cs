@@ -14,6 +14,10 @@ public class PanelEffect : MonoBehaviour
     private bool _attackPanelScaled = false;
     private bool _defensePanelScaled = false;
 
+    [Header("±Àµµ ¿Ã∆Â∆Æ")]
+    public ButtonGlowController attackGlow;
+    public ButtonGlowController defenseGlow;
+
     public void CheckHover(Vector2 screenPos, Camera cam)
     {
         bool overAttack = attackPanel != null && RectTransformUtility.RectangleContainsScreenPoint(attackPanel, screenPos, cam);
@@ -54,5 +58,17 @@ public class PanelEffect : MonoBehaviour
             _defensePanelScaled = false;
             attackPanel.DOScale(Vector3.one, scaleDuration).SetEase(Ease.OutQuad);
         }
+    }
+
+    public void ShowGlow()
+    {
+        attackGlow?.ShowGlow();
+        defenseGlow?.ShowGlow();
+    }
+
+    public void HideGlow()
+    {
+        attackGlow?.HideGlow();
+        defenseGlow?.HideGlow();
     }
 }

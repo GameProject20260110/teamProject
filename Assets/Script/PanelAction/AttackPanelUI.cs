@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -42,16 +41,6 @@ public class AttackPanelUI : MonoBehaviour
         foreach(var slot in slots)
         {
             if (slot.childCount == 0)
-                return slot;
-        }
-        return null;
-    }
-
-    private Transform GetDiceSlot(Dice dice)
-    {
-        foreach(var slot in slots)
-        {
-            if(slot.childCount > 0 && slot.GetChild(0).GetComponent<Dice>() == dice)
                 return slot;
         }
         return null;
