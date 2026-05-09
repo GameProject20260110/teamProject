@@ -108,14 +108,6 @@ public class GameManager : MonoBehaviour
             diceManager.SetupDiceBoard();
         }
 
-        foreach(var dice in diceManager.panelDiceScript)
-        {
-            if(dice != null && dice.gameObject.activeSelf)
-            {
-                dice.UpdateDiceScoreUi(0, hide: true);
-            }
-        }
-
     }
 
     public void OnClickRollBtn()
@@ -155,12 +147,13 @@ public class GameManager : MonoBehaviour
 
             var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
 
-            foreach(var dice in allDice)
-            {
-                if (dice == null || !dice.gameObject.activeSelf) continue;
-                if (dice.MyState == null) continue;
-                dice.UpdateDiceScoreUi(dice.MyState.originalValue, false);
-            }
+            //foreach(var dice in allDice)
+            //{
+            //    if (dice == null || !dice.gameObject.activeSelf) continue;
+            //    if (dice.MyState == null) continue;
+            //    dice.UpdateDiceScoreUi(dice.MyState.originalValue, false);
+            //}
+
             await UniTask.Delay(500);
 
             if (VisualManager.instance != null)
@@ -170,7 +163,14 @@ public class GameManager : MonoBehaviour
 
             ProcessRollResult(result.finalScore, result.consumedItems);
 
-            UiController.instance.ShowGlowConfirmBtn();
+            foreach(var dice in allDice)
+            {
+                if (dice == null || !dice.gameObject.activeSelf) continue;
+                var floatingEffect = dice.GetComponent<FloatingEffect>();
+                if (floatingEffect != null) floatingEffect.enabled = true;
+            }
+
+            //UiController.instance.ShowGlowConfirmBtn();
             panelEffect?.ShowGlow();
         }
         catch (Exception e)
@@ -233,7 +233,7 @@ public class GameManager : MonoBehaviour
                 fakeValues.Add(1);
             }
         }
-        UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound, _lastDiceDatas, fakeValues);
+        UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound);
     }
 
     public void OnClickScoreConfirmButton()
@@ -257,6 +257,13 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.HideGlowConfirmBtn();
         panelEffect?.HideGlow();
+
+        foreach (var dice in diceManager.panelDiceScript)
+        {
+            if (dice == null || !dice.gameObject.activeSelf) continue;
+            var floatingEffect = dice.GetComponent<FloatingEffect>();
+            if (floatingEffect != null) floatingEffect.StopFloating();
+        }
 
         // 아이템 처리
         if (_usedConsumableItems != null && _usedConsumableItems.Count > 0)

@@ -13,6 +13,7 @@ public class AttackPanelUI : MonoBehaviour
 
     public int GetTotal() => _cuurentAttackValue;
     public List<Dice> GetDices() => _placedDices;
+    public int GetDiceCount() => _placedDices.Count;
 
     public bool TryPlaceDice(Dice dice)
     {
@@ -59,6 +60,17 @@ public class AttackPanelUI : MonoBehaviour
             attackValue.text = x.ToString();
         });
         _cuurentAttackValue = newValue;
+
+        UpdateTurnEndButtonGlow();
+    }
+
+    private void UpdateTurnEndButtonGlow() 
+    {
+        bool hasAnyDice = DicePanelManager.instance?.HasAnyDiceInPanel() ?? false;
+        if (hasAnyDice)
+            UiController.instance?.ShowGlowConfirmBtn();
+        else 
+            UiController.instance?.HideGlowConfirmBtn();
     }
 
     public void Clear()

@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Runtime.CompilerServices;
 using DG.Tweening;
 
 public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
@@ -20,12 +19,14 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup _canvasGroup;
     private Dice _dice;
     private bool _isDragging = false;
+    private FloatingEffect _floatingEffect;
 
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
         _dice = GetComponent<Dice>();
         _rootCanvas = GetComponentInParent<Canvas>().rootCanvas;
+        _floatingEffect = GetComponent<FloatingEffect>();
 
         _canvasGroup = GetComponent<CanvasGroup>();
         if (_canvasGroup == null)
@@ -48,6 +49,7 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         _isDragging = true;
         _originalParent = transform.parent;
+        _floatingEffect?.StopFloating();
         _originalScale = transform.localScale;
 
         transform.SetParent(_rootCanvas.transform, true);
@@ -102,6 +104,8 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             transform.DOScale(_originalScale, 0.2f);
         }
+
+        if (_floatingEffect != null) _floatingEffect.enabled = true;
     }
 
     public void ReturnToOriginalSlot()
@@ -110,5 +114,6 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(_dice.OriginalSlot, false);
         _rectTransform.localPosition = Vector3.zero;
         transform.DOScale(_originalScale, 0.15f);
+        if (_floatingEffect != null) _floatingEffect.enabled = true;
     }
 }

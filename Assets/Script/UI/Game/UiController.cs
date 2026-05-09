@@ -42,13 +42,9 @@ public class UiController : MonoBehaviour
     private void Awake()
     {
         if (instance == null)
-        {
             instance = this;
-        }
         else
-        {
             Destroy(gameObject);
-        }
     }
 
     private void Start()
@@ -155,7 +151,7 @@ public class UiController : MonoBehaviour
         RefreshInventory();
     }
 
-    public void ShowGameOverPanel(int round, List<DiceData> diceDatas, List<int> values)
+    public void ShowGameOverPanel(int round)
     {
         gameOverUI?.Show(round);
     }

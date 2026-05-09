@@ -98,6 +98,11 @@ public class DicePanelManager : MonoBehaviour
 
     }
 
+    public bool HasAnyDiceInPanel() 
+    {
+        return attackPanel.GetDiceCount() > 0 || defensePanel.GetDiceCount() > 0;
+    }
+
     public void ResetAllDice(Dice[] allDice)
     {
         foreach(var dice in allDice)
