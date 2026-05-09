@@ -107,10 +107,10 @@ public class BattleManager : MonoBehaviour
         var attackCompletion = new UniTaskCompletionSource<bool>();
 
         peddingDamage = playerData.AttackPower;
-        SkillPrefab = ObjectPool.instance.Get(SkillPrefab);
-        SkillPrefab.transform.position = Enemytrans.position;
+        GameObject skill = ObjectPool.instance.Get(SkillPrefab);
+        skill.transform.position = Enemytrans.position;
 
-        SkillPrefab.GetComponent<Skill>().Init(
+        skill.GetComponent<Skill>().Init(
             isPlayer: true,
             damage: peddingDamage,
             onHit: () =>
@@ -157,10 +157,10 @@ public class BattleManager : MonoBehaviour
         var shieldCompletion = new UniTaskCompletionSource<bool>();
 
         int shieldValue = playerData.CurrentShield;
-        SkillPrefab = ObjectPool.instance.Get(ShieldPrefab);
-        SkillPrefab.transform.position = Playertrans.position;
+        GameObject skill = ObjectPool.instance.Get(ShieldPrefab);
+        skill.transform.position = Playertrans.position;
 
-        SkillPrefab.GetComponent<Skill>().Init(
+        skill.GetComponent<Skill>().Init(
             isPlayer: true,
             damage: shieldValue,
             onHit: () =>
