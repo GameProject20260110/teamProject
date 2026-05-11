@@ -1,6 +1,5 @@
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections.Generic;
 using DG.Tweening;
 
@@ -14,6 +13,7 @@ public class AttackPanelUI : MonoBehaviour
 
     public int GetTotal() => _cuurentAttackValue;
     public List<Dice> GetDices() => _placedDices;
+    public int GetDiceCount() => _placedDices.Count;
 
     public bool TryPlaceDice(Dice dice)
     {
@@ -47,16 +47,6 @@ public class AttackPanelUI : MonoBehaviour
         return null;
     }
 
-    private Transform GetDiceSlot(Dice dice)
-    {
-        foreach(var slot in slots)
-        {
-            if(slot.childCount > 0 && slot.GetChild(0).GetComponent<Dice>() == dice)
-                return slot;
-        }
-        return null;
-    }
-
     private void UpdateValue()
     {
         int newValue = 0;
@@ -70,6 +60,17 @@ public class AttackPanelUI : MonoBehaviour
             attackValue.text = x.ToString();
         });
         _cuurentAttackValue = newValue;
+
+        UpdateTurnEndButtonGlow();
+    }
+
+    private void UpdateTurnEndButtonGlow() 
+    {
+        bool hasAnyDice = DicePanelManager.instance?.HasAnyDiceInPanel() ?? false;
+        if (hasAnyDice)
+            UiController.instance?.ShowGlowConfirmBtn();
+        else 
+            UiController.instance?.HideGlowConfirmBtn();
     }
 
     public void Clear()
