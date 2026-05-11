@@ -71,8 +71,8 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _BoxHeight: 0.29
-    - _BoxWidth: 0.83
+    - _BoxHeight: 0.85
+    - _BoxWidth: 0.38
     - _CornerRadius: 0.1
     - _EnableExternalAlpha: 0
     - _GlowIntensity: 0

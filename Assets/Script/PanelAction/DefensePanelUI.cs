@@ -13,6 +13,7 @@ public class DefensePanelUI : MonoBehaviour
 
     public int GetTotal() => _currentDefenseValue;
     public List<Dice> GetDices() => _placedDices;
+    public int GetDiceCount() => _placedDices.Count;
 
     public bool TryPlaceDice(Dice dice)
     {
@@ -46,16 +47,6 @@ public class DefensePanelUI : MonoBehaviour
         return null;
     }
 
-    private Transform GetDiceSlot(Dice dice)
-    {
-        foreach(var slot in slots)
-        {
-            if (slot.childCount > 0 && slot.GetChild(0).GetComponent<Dice>() == dice)
-                return slot;
-        }
-        return null;
-    }
-
     private void UpdateValue()
     {
         int newValue = 0;
@@ -67,6 +58,17 @@ public class DefensePanelUI : MonoBehaviour
             defenseValue.text = x.ToString();
         });
         _currentDefenseValue = newValue;
+
+        UpdateTurnEndButtonGlow();
+    }
+
+    private void UpdateTurnEndButtonGlow()
+    {
+        bool hasAnyDice = DicePanelManager.instance?.HasAnyDiceInPanel() ?? false;
+        if (hasAnyDice)
+            UiController.instance?.ShowGlowConfirmBtn();
+        else
+            UiController.instance?.HideGlowConfirmBtn();
     }
 
     public void Clear()

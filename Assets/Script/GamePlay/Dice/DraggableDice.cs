@@ -1,30 +1,32 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
-using System.Runtime.CompilerServices;
 using DG.Tweening;
 
 public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
     IPointerDownHandler
 {
+    public PanelEffect panelEffect;
+
     public Shadow shadowEffect;
     public float dragScale = 1.2f;
     public float dragScaleDuration = 0.1f;
 
     private Transform _originalParent;
-    private Vector3 _originalLocalPosition;
     private Vector3 _originalScale;
     private Canvas _rootCanvas;
     private RectTransform _rectTransform;
     private CanvasGroup _canvasGroup;
     private Dice _dice;
     private bool _isDragging = false;
+    private FloatingEffect _floatingEffect;
 
     private void Awake()
     {
         _rectTransform = GetComponent<RectTransform>();
         _dice = GetComponent<Dice>();
         _rootCanvas = GetComponentInParent<Canvas>().rootCanvas;
+        _floatingEffect = GetComponent<FloatingEffect>();
 
         _canvasGroup = GetComponent<CanvasGroup>();
         if (_canvasGroup == null)
@@ -47,7 +49,7 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         _isDragging = true;
         _originalParent = transform.parent;
-        _originalLocalPosition = transform.localPosition;
+        _floatingEffect?.StopFloating();
         _originalScale = transform.localScale;
 
         transform.SetParent(_rootCanvas.transform, true);
@@ -73,6 +75,8 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             out Vector2 localPoint
         );
         _rectTransform.localPosition = localPoint;
+
+        panelEffect?.CheckHover(eventData.position, eventData.pressEventCamera);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -84,6 +88,8 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if(shadowEffect != null) 
             shadowEffect.enabled = false;
+
+        panelEffect?.ResetPanelScale(); 
 
         bool placed = DicePanelManager.instance?.OnDiceDrop(_dice, eventData) ?? false;
 
@@ -98,6 +104,8 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         {
             transform.DOScale(_originalScale, 0.2f);
         }
+
+        if (_floatingEffect != null) _floatingEffect.enabled = true;
     }
 
     public void ReturnToOriginalSlot()
@@ -106,5 +114,6 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
         transform.SetParent(_dice.OriginalSlot, false);
         _rectTransform.localPosition = Vector3.zero;
         transform.DOScale(_originalScale, 0.15f);
+        if (_floatingEffect != null) _floatingEffect.enabled = true;
     }
 }
