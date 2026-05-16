@@ -10755,7 +10755,7 @@ MonoBehaviour:
   maxGlow: 3
   maxSpeed: 0.7
   boxWidth: 0.85
-  boxHeight: 0.85
+  boxHeight: 0.35
   startEnabled: 0
   glow: {fileID: 0}
   maxAlpha: 1
@@ -20584,7 +20584,7 @@ MonoBehaviour:
   maxGlow: 3
   maxSpeed: 0.7
   boxWidth: 0.85
-  boxHeight: 0.85
+  boxHeight: 0.35
   startEnabled: 0
   glow: {fileID: 0}
   maxAlpha: 1
