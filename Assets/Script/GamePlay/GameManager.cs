@@ -147,13 +147,6 @@ public class GameManager : MonoBehaviour
 
             var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
 
-            //foreach(var dice in allDice)
-            //{
-            //    if (dice == null || !dice.gameObject.activeSelf) continue;
-            //    if (dice.MyState == null) continue;
-            //    dice.UpdateDiceScoreUi(dice.MyState.originalValue, false);
-            //}
-
             await UniTask.Delay(500);
 
             if (VisualManager.instance != null)
@@ -169,8 +162,6 @@ public class GameManager : MonoBehaviour
                 var floatingEffect = dice.GetComponent<FloatingEffect>();
                 if (floatingEffect != null) floatingEffect.enabled = true;
             }
-
-            //UiController.instance.ShowGlowConfirmBtn();
             panelEffect?.ShowGlow();
         }
         catch (Exception e)
@@ -333,15 +324,16 @@ public class GameManager : MonoBehaviour
             RoundManager.instance.GoNextRound();
         }
         PlayerShopManager.instance.ClearRound = true;
-        PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.gameRerollCount = 3;
         PlayerManager.instance.isFirstRoll = true;
 
         UFC.OnNextRoundButton();
+        SceneController.instance?.LoadMapScene();
     }
 
     public void OnClickRetryRound()
     {
-        PlayerManager.instance.gameRerollCount = 1;
+        PlayerManager.instance.gameRerollCount = 3;
         PlayerManager.instance.isFirstRoll = true;
     }
 

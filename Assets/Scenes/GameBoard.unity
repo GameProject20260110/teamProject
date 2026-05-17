@@ -10838,8 +10838,8 @@ MonoBehaviour:
   fadeSpeed: 5
   maxGlow: 3
   maxSpeed: 0.7
-  boxWidth: 0.85
-  boxHeight: 0.85
+  boxWidth: 0.8
+  boxHeight: 0.8
   startEnabled: 0
   maxAlpha: 1
 --- !u!1 &575695313
@@ -20678,8 +20678,8 @@ MonoBehaviour:
   fadeSpeed: 5
   maxGlow: 3
   maxSpeed: 0.7
-  boxWidth: 0.85
-  boxHeight: 0.85
+  boxWidth: 0.8
+  boxHeight: 0.8
   startEnabled: 0
   maxAlpha: 1
 --- !u!1 &860805718
@@ -53567,8 +53567,6 @@ MonoBehaviour:
   resultPanel: {fileID: 275071303}
   anim: {fileID: 329430536}
   resultTitleText: {fileID: 1442655561}
-  resultTargetScoreText: {fileID: 405846570}
-  resultScoreText: {fileID: 2009130202}
   nextBtn: {fileID: 675130107}
   retryBtn: {fileID: 1974601332}
   TextGroup: {fileID: 1216429098}

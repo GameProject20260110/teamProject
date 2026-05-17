@@ -683,9 +683,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200034858}
-        m_TargetAssemblyTypeName: TitleController, Assembly-CSharp
-        m_MethodName: OnClickStart
+      - m_Target: {fileID: 1278692191}
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+        m_MethodName: LoadMapScene
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1388,6 +1388,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+--- !u!114 &1278692191 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6112706480911818851, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+  m_PrefabInstance: {fileID: 1261452742}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a4334b2d994f7b4aa9b1839de67c128, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SceneControl
 --- !u!1001 &1399411548
 PrefabInstance:
   m_ObjectHideFlags: 0
