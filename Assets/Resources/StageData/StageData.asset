@@ -14,105 +14,90 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::StageDataSo
   allRounds:
   - roundNum: 1
-    targetScore: 23
     successGoldReward: 10
     failGoldReward: 3
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
   - roundNum: 2
-    targetScore: 26
     successGoldReward: 10
     failGoldReward: 3
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 3
-    targetScore: 32
     successGoldReward: 10
     failGoldReward: 3
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 4
-    targetScore: 35
     successGoldReward: 10
     failGoldReward: 3
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 5
-    targetScore: 50
     successGoldReward: 10
     failGoldReward: 4
-    enemyImage: {fileID: 0}
     hasGimmick: 1
+    enemyData: {fileID: 0}
   - roundNum: 6
-    targetScore: 55
     successGoldReward: 12
     failGoldReward: 4
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 7
-    targetScore: 60
     successGoldReward: 12
     failGoldReward: 4
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 8
-    targetScore: 90
     successGoldReward: 12
     failGoldReward: 4
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 9
-    targetScore: 105
     successGoldReward: 12
     failGoldReward: 4
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 10
-    targetScore: 120
     successGoldReward: 12
     failGoldReward: 5
-    enemyImage: {fileID: 0}
     hasGimmick: 1
+    enemyData: {fileID: 0}
   - roundNum: 11
-    targetScore: 150
     successGoldReward: 14
     failGoldReward: 5
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 12
-    targetScore: 300
     successGoldReward: 14
     failGoldReward: 5
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 13
-    targetScore: 350
     successGoldReward: 14
     failGoldReward: 5
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 14
-    targetScore: 400
     successGoldReward: 14
     failGoldReward: 5
-    enemyImage: {fileID: 0}
     hasGimmick: 0
+    enemyData: {fileID: 0}
   - roundNum: 15
-    targetScore: 500
     successGoldReward: 14
     failGoldReward: 5
-    enemyImage: {fileID: 0}
     hasGimmick: 1
+    enemyData: {fileID: 0}
   gimmickEnemyImages:
   - groupName: "\uCC45"
     gimmickTypes: 0100000002000000
-    enemyImage: {fileID: 2302870733942359475, guid: d8cd5ea10e451c84c81bdd186539749b, type: 3}
+    enemyData: {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
   - groupName: "\uC778\uC5B4"
     gimmickTypes: 0300000008000000
-    enemyImage: {fileID: 1550767983955354101, guid: ed94d9de732edc44e8e8770326b27918, type: 3}
+    enemyData: {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
   - groupName: "\uBC29\uB791\uC778"
     gimmickTypes: 0600000007000000
-    enemyImage: {fileID: 1344780287051860636, guid: 2495037256b105540968cd57f9ab1788, type: 3}
+    enemyData: {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
   - groupName: "\uC11C\uCEE4\uC2A4"
     gimmickTypes: 0400000005000000
-    enemyImage: {fileID: 4801227835787818748, guid: fcc2587eedde71f45baef9b8eeb215ba, type: 3}
+    enemyData: {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}

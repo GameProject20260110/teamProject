@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25858c48d0793e447906cf2fbbda2fe5, type: 3}
+  m_Name: 1stageEnemy 1
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyData
+  enemyName: a
+  maxHp: 23
+  attackPower: 1
+  enemyImage: {fileID: 4801227835787818748, guid: fcc2587eedde71f45baef9b8eeb215ba, type: 3}
+  skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}

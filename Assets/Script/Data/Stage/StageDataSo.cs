@@ -1,18 +1,17 @@
-using NUnit.Framework;
 using UnityEngine;
 using System.Collections.Generic;
-using JetBrains.Annotations;
 using System.Linq;
 
 [System.Serializable]
 public class RoundData
 {
     public int roundNum;
-    public int targetScore;
+    //public int targetScore;
     public int successGoldReward;
     public int failGoldReward;
-    public Sprite enemyImage;
+    //public Sprite enemyImage;
     public bool hasGimmick;
+    public EnemyData enemyData;
 }
 
 [System.Serializable]
@@ -20,7 +19,8 @@ public class GimmickEnemyImage
 {
     public string groupName;
     public GimmickType[] gimmickTypes;
-    public Sprite enemyImage;
+    //public Sprite enemyImage;
+    public EnemyData enemyData;
 }
 
 [CreateAssetMenu(fileName = "NewStageData", menuName = "Stage/StageData")]
@@ -54,13 +54,13 @@ public class StageDataSo : ScriptableObject
         else return 5;
     }
 
-    public Sprite GetEnemyImageByGimmick(GimmickType type)
+    public EnemyData GetEnemyDataByGimmick(GimmickType type)
     {
         foreach(var group in gimmickEnemyImages)
         {
             if(group.gimmickTypes != null && group.gimmickTypes.Contains(type))
             {
-                return group.enemyImage;
+                return group.enemyData;
             }
         }
         return null;
@@ -71,10 +71,10 @@ public class StageDataSo : ScriptableObject
     {
         allRounds.Clear();
 
-        int[] targetScores = new int[]
-        {
-            23, 26, 32, 35, 50, 55, 60, 90, 105, 120, 150, 300, 350, 400, 500
-        };
+        //int[] targetScores = new int[]
+        //{
+        //    23, 26, 32, 35, 50, 55, 60, 90, 105, 120, 150, 300, 350, 400, 500
+        //};
         int[] successGoldReward = new int[]
         {
             10, 10, 10, 10, 10,
@@ -96,7 +96,7 @@ public class StageDataSo : ScriptableObject
             allRounds.Add(new RoundData
             {
                 roundNum = roundNum,
-                targetScore = targetScores[i],
+                //targetScore = targetScores[i],
                 successGoldReward = successGoldReward[i],
                 failGoldReward = failGoldReward[i],
                 hasGimmick = isBoss

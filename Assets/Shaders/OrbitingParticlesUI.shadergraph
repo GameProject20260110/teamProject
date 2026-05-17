@@ -1206,7 +1206,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.28999999165534975,
+    "m_Value": 0.8999999761581421,
     "m_FloatType": 0,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -1530,7 +1530,7 @@
     "m_Hidden": false,
     "m_PerRendererData": false,
     "m_customAttributes": [],
-    "m_Value": 0.8299999833106995,
+    "m_Value": 0.8999999761581421,
     "m_FloatType": 0,
     "m_LiteralFloatMode": false,
     "m_RangeValues": {
@@ -1616,7 +1616,7 @@
     "m_PerRendererData": false,
     "m_customAttributes": [],
     "m_Value": {
-        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"781b4ded3f56a0f4681f55b25a54ffee\",\"type\":3}}",
+        "m_SerializedTexture": "{\"texture\":{\"fileID\":2800000,\"guid\":\"ad300b4cced836848b3da6246ec4745b\",\"type\":3}}",
         "m_Guid": ""
     },
     "isMainTexture": false,
