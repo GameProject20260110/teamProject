@@ -36,7 +36,7 @@ public class FloatingEffect : MonoBehaviour
         transform.localRotation = Quaternion.Euler(0, 0, tilt);
         if(useBreathing)
         {
-            float scale = 1f + Mathf.Sin(t * floatSpeed) * breathAmplitude;
+            float scale = 1f + Mathf.Sin(t * breathSpeed) * breathAmplitude;
             transform.localScale = _startScale * scale;
         }
     }

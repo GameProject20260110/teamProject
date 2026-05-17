@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using DG.Tweening;
 
 public class MapManager : MonoBehaviour
 {
@@ -15,14 +14,11 @@ public class MapManager : MonoBehaviour
     [SerializeField] private List<Transform> layerContainers;
     [SerializeField] private Transform lineContainer;
 
-    [Header("라인 설정")]
-    [SerializeField] private Material lineMaterial;
-    [SerializeField] private float lineWidth = 0.15f;
-    [SerializeField] private Color lineColor = Color.black;
-
     private List<MapNodeData> _generateNodes = new List<MapNodeData>();
     private List<MapNode> _spawnNode = new List<MapNode>();
     private int _currentLayer = 0;
+    private int _previousNodeId = -1;
+    private List<PathLineData> _pathLines = new List<PathLineData>();
 
     private void Awake()
     {
@@ -32,7 +28,10 @@ public class MapManager : MonoBehaviour
 
     private void Start()
     {
-        GenerateMap();
+        if (MapSaveLoad.instance != null && MapSaveLoad.instance.HasSaveData())
+            LoadMap();
+        else
+            GenerateMap();
     }
 
     public void GenerateMap()
@@ -68,7 +67,9 @@ public class MapManager : MonoBehaviour
                 Debug.Log($"노드 생성: {node.name}, id: {nodeData.id}");
             }
         }
-        DrawLines();
+        MapPathDrawer.instance?.Initialize(lineContainer);
+        MapPathDrawer.instance?.DrawLines(_generateNodes, _spawnNode);
+
         
         if(layerContainers.Count > 0)
         {
@@ -77,7 +78,86 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    public void OnNodeSelected(MapNode node)
+    private void LoadMap()
+    {
+        MapSaveData saveData = MapSaveLoad.instance.Load();
+        if(saveData == null)
+        {
+            GenerateMap();
+            return;
+        }
+
+        _generateNodes = saveData.nodes;
+        _currentLayer = saveData.currentLayer;
+        _previousNodeId = saveData.previousNodeId;
+        _pathLines = saveData.pathLines;
+
+        List<List<Transform>> slotLayers = ColletSlotLayers();
+        SpawnNodes(slotLayers);
+
+        foreach(var visitedId in saveData.visitedNodeIds)
+        {
+            MapNode visitedNode = _spawnNode.Find(n => n.NodeId == visitedId);
+            visitedNode?.SetVisited();
+        }
+
+        List<MapNodeData> currentLayerNodes = _generateNodes.FindAll(n => n.layer == _currentLayer);
+        foreach(var nodeData in currentLayerNodes)
+        {
+            MapNode node = _spawnNode.Find(n => n.NodeId == nodeData.id);
+            node?.SetSelectable(true);
+        }
+
+        MapPathDrawer.instance?.Initialize(lineContainer);
+        MapPathDrawer.instance?.DrawLines(_generateNodes, _spawnNode);
+
+        foreach(var pathLine in _pathLines)
+        {
+            MapPathDrawer.instance?.RestorePathLine(pathLine.fromNodeId, pathLine.toNodeId, _spawnNode);
+        }
+
+        if(layerContainers.Count > 0 && _currentLayer < layerContainers.Count)
+        {
+            float startY = layerContainers[_currentLayer].position.y;
+            MapCameraController.instance?.MoveToLayerImmediate(startY);
+        }
+    }
+
+    private List<List<Transform>> ColletSlotLayers()
+    {
+        List<List<Transform>> slotLayers = new List<List<Transform>>();
+        foreach(var layerContainer in layerContainers)
+        {
+            List<Transform> slots = new List<Transform>();
+            foreach (Transform slot in layerContainer)
+                slots.Add(slot);
+            slotLayers.Add(slots);
+        }
+        return slotLayers;
+    }
+
+    private void SpawnNodes(List<List<Transform>> slotLayers)
+    {
+        int nodeIndex = 0;
+        for(int i = 0; i < slotLayers.Count; i++)
+        {
+            for(int j = 0; j < slotLayers[i].Count; j++)
+            {
+                if (nodeIndex >= _generateNodes.Count) break;
+
+                MapNodeData nodeData = _generateNodes[nodeIndex];
+                Transform slot = slotLayers[i][j];
+
+                MapNode node = Instantiate(nodePrefab, slot.position, Quaternion.identity);
+                node.Initialize(nodeData.id, nodeData.nodeType, nodeData.layer == 0);
+                node.name = $"Node_{nodeData.id}";
+                nodeIndex++;
+                _spawnNode.Add(node);
+            }
+        }
+    }
+
+    public async void OnNodeSelected(MapNode node)
     { 
         MapNodeData nodeData = _generateNodes.Find(n => n.id == node.NodeId);
         if (nodeData == null) return;
@@ -85,9 +165,24 @@ public class MapManager : MonoBehaviour
         node.SetVisited();
         SetNextLayerSelectable(nodeData);
 
-        _currentLayer++;
-        MoveCameraToLayer(_currentLayer);
+        if (_previousNodeId >= 0 && MapPathDrawer.instance != null)
+        {
+            await MapPathDrawer.instance.DrawPathLineAnimated(_previousNodeId, nodeData.id, _spawnNode);
+            _pathLines.Add(new PathLineData
+            {
+                fromNodeId = _previousNodeId,
+                toNodeId = nodeData.id
+            });
+        }
+            
 
+        _previousNodeId = nodeData.id;
+        _currentLayer++;
+
+        List<int> visitedIds = _spawnNode.FindAll(n => n.IsVisited).ConvertAll(n => n.NodeId);
+        MapSaveLoad.instance?.Save(_generateNodes, visitedIds, _currentLayer, _previousNodeId, _pathLines);
+
+        MoveCameraToLayer(_currentLayer);
         HandleNodeType(nodeData.nodeType);
     }
 
@@ -122,34 +217,11 @@ public class MapManager : MonoBehaviour
         }
     }
 
-    private void DrawLines()
+    public void ClearMapSave()
     {
-        foreach(var nodeData in _generateNodes)
-        {
-            foreach(var nextId in nodeData.nextNodeIDs)
-            {
-                MapNode fromNode = _spawnNode.Find(n => n.NodeId == nodeData.id);
-                MapNode toNode = _spawnNode.Find(n => n.NodeId == nextId);
-
-                if (fromNode == null || toNode == null) continue;
-
-                GameObject lineObj = new GameObject($"Line_{nodeData.id}_{nextId}");
-                lineObj.transform.SetParent(lineContainer);
-
-                LineRenderer lr = lineObj.AddComponent<LineRenderer>();
-                lr.positionCount = 2;
-                lr.SetPosition(0, fromNode.transform.position);
-                lr.SetPosition(1, toNode.transform.position);
-                lr.startWidth = lineWidth;
-                lr.endWidth = lineWidth;
-                lr.material = lineMaterial;
-                lr.material.mainTextureScale = new Vector2(3f, 1f);
-                lr.startColor= lineColor; 
-                lr.endColor = lineColor;
-                lr.textureMode = LineTextureMode.Tile;
-                Debug.Log($"linewidth : {lineWidth}");
-            }
-        }
+        MapSaveLoad.instance?.Delete();
+        _pathLines.Clear();
+        _currentLayer = 0;
+        _previousNodeId = -1;
     }
-
 }

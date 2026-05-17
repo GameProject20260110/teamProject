@@ -766,6 +766,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1290806757}
   - component: {fileID: 1290806756}
+  - component: {fileID: 1290806758}
+  - component: {fileID: 1290806759}
   m_Layer: 0
   m_Name: MapManager
   m_TagString: Untagged
@@ -794,9 +796,6 @@ MonoBehaviour:
   - {fileID: 750298439}
   - {fileID: 1133483731}
   lineContainer: {fileID: 1321846349}
-  lineMaterial: {fileID: 2100000, guid: 02e21fa18128eb849ade7b23fd9a1f24, type: 2}
-  lineWidth: 0.05
-  lineColor: {r: 0, g: 0, b: 0, a: 1}
 --- !u!4 &1290806757
 Transform:
   m_ObjectHideFlags: 0
@@ -812,6 +811,35 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1290806758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290806755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073508a94fbd56c43857e2803185772b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapPathDrawer
+  lineMaterial: {fileID: 2100000, guid: 02e21fa18128eb849ade7b23fd9a1f24, type: 2}
+  lineWidth: 0.15
+  lineColor: {r: 0, g: 0, b: 0, a: 1}
+  pathAnimDuration: 0.5
+  nodeOffset: 0.5
+--- !u!114 &1290806759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1290806755}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef3abc2f5d83e7b4b92d086bbc8417d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapSaveLoad
 --- !u!1 &1321846348
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,7 +9,4 @@ public class UIFlowController : MonoBehaviour
         await resultAnimator.UnReveal();
         RoundManager.instance.StartRound();
     }
-
-
-   
 }

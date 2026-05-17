@@ -203,8 +203,6 @@ public class RoundManager : MonoBehaviour
             PlayerManager.instance.currentRound = currentRound;
             PlayerManager.instance.Save();
         }
-
-        Debug.Log($"{currentRound}라운드로 진입");
     }
 }
 

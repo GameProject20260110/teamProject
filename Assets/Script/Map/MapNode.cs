@@ -18,11 +18,7 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
     [SerializeField] private bool isSelectable = false;
 
     public int NodeId { get; private set; }
-
-    private void Start()
-    {
-        UpdateIcon();
-    }
+    public bool IsVisited => isVisited;
 
     public void Initialize(int id, NodeType type, bool selectable)
     {

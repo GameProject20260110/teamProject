@@ -33,7 +33,6 @@ public class MapCameraController : MonoBehaviour
         }
     }
 
-
     private void Update()
     {
         if (Input.GetMouseButtonDown(0))
@@ -66,8 +65,9 @@ public class MapCameraController : MonoBehaviour
 
     public void MoveToLayer(float targetY)
     {
+        mapCamera.transform.DOKill();
         float clampedY = Mathf.Clamp(targetY, _minY, _maxY);
-        mapCamera.transform.DOMoveY(clampedY, cameraMoveDuration).SetEase(Ease.InOutQuad);
+        mapCamera.transform.DOMoveY(clampedY, cameraMoveDuration).SetEase(Ease.InOutQuad).SetLink(mapCamera.gameObject);
     }
 
     public void MoveToLayerImmediate(float targetY)

@@ -1,6 +1,3 @@
-using System;
-using System.Linq;
-using Unity.VectorGraphics;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -13,7 +10,7 @@ public class TitleController : MonoBehaviour
     void Start()
     {
         uiManager.InitUI();
-        StartBtn.onClick.AddListener(() => SceneController.instance.LoadHomeScene());
+        StartBtn.onClick.AddListener(() => SceneController.instance.LoadMapScene());
 
         if (AudioManager.instance != null)
         {

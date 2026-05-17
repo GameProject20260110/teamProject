@@ -6,6 +6,7 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class SceneController : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class SceneController : MonoBehaviour
     public const string SceneTitle = "Title";
     public const string SceneHome = "HomeScreen";
     public const string SceneBattle = "GameBoard";
+    public const string SceneMap = "Map";
 
     [Header("로딩 패널")]
     [SerializeField] private GameObject loadingPanel;
@@ -50,6 +52,7 @@ public class SceneController : MonoBehaviour
     public void LoadGameScene() => LoadAsync(SceneBattle).Forget(); 
     public void LoadHomeScene() => LoadAsync(SceneHome).Forget();
     public void LoadTitleScene() => LoadAsync(SceneTitle).Forget();
+    public void LoadMapScene() => LoadAsync(SceneMap).Forget();
 
     private async UniTask LoadAsync(string sceneName)
     {
@@ -152,16 +155,12 @@ public class SceneController : MonoBehaviour
     {
         if (fadeCanvasGroup == null) return;
 
-        float elapsed = 0f;
         fadeCanvasGroup.alpha = from;
         fadeCanvasGroup.blocksRaycasts = true;
 
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.unscaledDeltaTime;
-            fadeCanvasGroup.alpha = Mathf.Lerp(from, to, elapsed / fadeDuration);
-            await UniTask.Yield();
-        }
+        var tween = fadeCanvasGroup.DOFade(to, fadeDuration).SetLink(fadeCanvasGroup.gameObject).SetEase(Ease.Linear);
+
+        await tween.AsyncWaitForCompletion();
 
         fadeCanvasGroup.alpha = to;
         fadeCanvasGroup.blocksRaycasts = to > 0f;

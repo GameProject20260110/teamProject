@@ -17,8 +17,6 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Button homeBtn;
     [SerializeField] private GameObject Panel;
 
-    private bool Open = false;
-
     private void Awake()
     {
         if (instance == null)

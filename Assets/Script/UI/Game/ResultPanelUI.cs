@@ -8,8 +8,6 @@ public class ResultPanelUI : MonoBehaviour
     public GameObject resultPanel;
     public CardRevealAnimator anim;
     public TextMeshProUGUI resultTitleText;
-    public TextMeshProUGUI resultTargetScoreText;
-    public TextMeshProUGUI resultScoreText;
     public Button nextBtn;
     public Button retryBtn;
 
