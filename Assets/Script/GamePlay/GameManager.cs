@@ -247,9 +247,14 @@ public class GameManager : MonoBehaviour
         if (diceManager.isRolling) return;
         if (BattleManager.instance == null) return;
 
-        int attackPower = DicePanelManager.instance?.attackPanel.GetTotal() ?? 0;
-        int defensePower = DicePanelManager.instance?.defensePanel.GetTotal() ?? 0;
-        BattleManager.instance.SetPlayerStats(attackPower, defensePower);
+        //int attackPower = DicePanelManager.instance?.attackPanel.GetTotal() ?? 0;
+        //int defensePower = DicePanelManager.instance?.defensePanel.GetTotal() ?? 0;
+
+        List<Dice> attackDices = DicePanelManager.instance.attackPanel.GetDices();
+        List<Dice> defenceDices = DicePanelManager.instance.defensePanel.GetDices();
+
+        //BattleManager.instance.SetPlayerStats(attackPower, defensePower);
+        BattleManager.instance.SetDiceInfo(attackDices, defenceDices);
 
         // UI 비활성화
         UiController.instance.SetShopBtnInteratable(false);

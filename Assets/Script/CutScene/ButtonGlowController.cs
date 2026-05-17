@@ -27,7 +27,7 @@ public class ButtonGlowController : MonoBehaviour
     private static readonly int GlowID = Shader.PropertyToID("_GlowIntensity");
     private static readonly int SpeedID = Shader.PropertyToID("_RotationSpeed");
     private static readonly int BoxWidthID = Shader.PropertyToID("_BoxWidth");
-    private static readonly int BoxHeightID = Shader.PropertyToID("_BoxHeightID");
+    private static readonly int BoxHeightID = Shader.PropertyToID("_BoxHeight");
 
     void Awake()
     {
