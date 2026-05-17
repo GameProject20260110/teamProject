@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using UnityEditor.PackageManager;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Ability", menuName = "DiceAbility/captain")]

@@ -9,6 +9,7 @@ public class RoundManager : MonoBehaviour
     [SerializeField] private RoundController roundEffect;
     public StageDataSo currentStageData;
     public Image enemyImage;
+    public EnemyData enemyData;
     private bool UseTestMode => TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
 
     private void Awake()
@@ -126,12 +127,10 @@ public class RoundManager : MonoBehaviour
         if (GimmickManager.instance == null) return;
 
         GimmickType type = GimmickManager.instance.GetPendingMainGimmickType();
-        Sprite sprite = currentStageData.GetEnemyImageByGimmick(type);
-        Debug.Log($"적 이미지 - 기믹타입: {type}, 스프라이트 : {sprite}");
-        if (sprite != null)
-        {
-            enemyImage.sprite = sprite;
-        }
+        EnemyData enemyData = currentStageData.GetEnemyDataByGimmick(type);
+
+        if (enemyData != null && enemyData.enemyImage != null)
+            enemyImage.sprite = enemyData.enemyImage;
     }
 
     public void CompleteRound(bool isSuccess)

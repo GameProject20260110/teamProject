@@ -31,6 +31,7 @@ public class UiController : MonoBehaviour
     public Sprite rerollSprite;
     public Button confirmBtn;
     public Button ShopBtn;
+    public Button rerollBtn;
 
     [Header("GameEndPanels")]
     public GameObject backGround;
@@ -138,6 +139,16 @@ public class UiController : MonoBehaviour
     public void ShowGlowConfirmBtn()
     {
         confirmBtn.GetComponent<ButtonGlowController>().ShowGlow();
+    }
+
+    public void ShowGlowRerollBtn()
+    {
+        rerollBtn.GetComponent<ButtonGlowController>().ShowGlow();
+    }
+
+    public void HideGlowRerollBtn()
+    {
+        rerollBtn.GetComponent<ButtonGlowController>().HideGlow();
     }
 
     public void HideGlowConfirmBtn()

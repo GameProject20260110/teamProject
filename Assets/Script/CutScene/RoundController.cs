@@ -60,9 +60,10 @@ public class RoundController : MonoBehaviour
            TimeSpan.FromSeconds(fadeDuration),
            cancellationToken: ct
         );
-        
-        roundIntroCanvas.gameObject.SetActive(false);
+
         BeginRoundLogic(currentRound);
+        roundIntroCanvas.gameObject.SetActive(false);
+       
     }
 
     public void NextTurn(int currentTurn = 1)
@@ -86,6 +87,7 @@ public class RoundController : MonoBehaviour
 
     private void BeginRoundLogic(int currentRound)
     {
+        UiController.instance.ShowGlowRerollBtn();
     }
 
     void OnDestroy()

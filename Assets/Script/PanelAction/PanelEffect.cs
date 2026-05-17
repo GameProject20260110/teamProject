@@ -15,8 +15,8 @@ public class PanelEffect : MonoBehaviour
     private bool _defensePanelScaled = false;
 
     [Header("±Àµµ ¿Ã∆Â∆Æ")]
-    public ButtonGlowController attackGlow;
-    public ButtonGlowController defenseGlow;
+    public PanelGlowController attackGlow;
+    public PanelGlowController defenseGlow;
 
     public void CheckHover(Vector2 screenPos, Camera cam)
     {
