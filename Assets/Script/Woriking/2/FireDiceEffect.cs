@@ -9,13 +9,26 @@ public class FireDiceEffect : DiceEffectBase
 
     public override async UniTask OnAttack(BattleContext ctx)
     {
-        // 1. 기본 공격은 BattleContext가 처리
-        // 2. 추가 효과만 여기서
+        var completion = new UniTaskCompletionSource<bool>();
+
         ctx.Enemy.ApplyStatusEffect(new BurnEffect(burnDamage, burnDuration));
 
-        var vfx = ObjectPool.instance.Get(firePrefab);
-        vfx.transform.position = ctx.EnemyPosition;
+        GameObject skill = ObjectPool.instance.Get(firePrefab);
+        skill.transform.position = ctx.EnemyPosition;
 
-        await UniTask.Delay(300, cancellationToken: ctx.CancellationToken);
+        skill.GetComponent<Skill>().Init(new SkillContext {
+            isPlayer = true,
+            damage = ctx.BaseDamage,
+            onHit = () =>
+            {
+                ctx.Enemy.TakeDamage(ctx.BaseDamage);
+                ctx.OnEnemyHit?.Invoke(ctx.BaseDamage);
+            },
+            onEnd = () => completion.TrySetResult(true),
+            startPos = transform.position,
+            targetPos = ctx.EnemyPosition
+        });
+
+        await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
     }
 }

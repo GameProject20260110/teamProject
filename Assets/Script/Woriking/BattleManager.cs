@@ -23,12 +23,9 @@ public class BattleManager : MonoBehaviour
     public bool isPlayerTurn = true;
     public bool isBattleActive = false;
     public int currentTurn = 1;
-    public GameObject SkillPrefab;
-    public GameObject ShieldPrefab;
     public GameObject EnemySkillPrefab;
 
     private CancellationTokenSource _battleCts;
-    private int peddingDamage;
     private int enemyDamage;
 
     private List<Dice> _attackDices = new List<Dice>();
@@ -79,7 +76,6 @@ public class BattleManager : MonoBehaviour
             isBattleActive = true;
             currentTurn = 1;
 
-            //StartNewTurn();
             SaveBattleData();
         }
 
@@ -210,10 +206,10 @@ public class BattleManager : MonoBehaviour
         GameObject skill = ObjectPool.instance.Get(EnemySkillPrefab); // enum에 추가 필요
         skill.transform.position = Playertrans.position; // 플레이어 위치로
 
-        skill.GetComponent<Skill>().Init(
-            isPlayer: false,
-            damage: damage,
-            onHit: () =>
+        skill.GetComponent<Skill>().Init(new SkillContext {
+            isPlayer = false,
+            damage = damage,
+            onHit = () =>
             {
                 int actualDamage = playerData.TakeDamage(damage);
                 battleUI.UpdatePlayerShield(playerData.CurrentShield);
@@ -228,11 +224,13 @@ public class BattleManager : MonoBehaviour
                 }
                 SaveBattleData();
             },
-            onEnd: () =>
+            onEnd = () =>
             {
                 attackCompletion?.TrySetResult(true);
-            }
-        );
+            },
+            startPos = Playertrans.position,
+            targetPos = Enemytrans.position
+        });
 
         await attackCompletion.Task.AttachExternalCancellation(_battleCts.Token);
 
@@ -246,15 +244,39 @@ public class BattleManager : MonoBehaviour
         await UniTask.Delay(500, cancellationToken: _battleCts.Token);
         isPlayerTurn = true;
         currentTurn++;
-        StartNewTurn();
+        await StartNewTurn();
     }
 
-    private void StartNewTurn() // 턴 종료시 이벤트
+    private async UniTask StartNewTurn() // 턴 종료시 이벤트
     {
-        playerData.ResetShield();
-        playerData.ProcessTurnStart();
         
+        //playerData.ProcessTurnStart(Playertrans.position);
+
+        var ctx = new BattleContext
+        {
+            Player = playerData,
+            Enemy = enemyData,
+            EnemyPosition = Enemytrans.position,
+            CancellationToken = _battleCts.Token,
+            OnEnemyHit = (damage) =>
+            {
+                battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
+                battleUI.ShowDamageText(damage, isPlayer: false);
+            }
+        };
+
+        await enemyData.ProcessTurnStart(ctx);
+
+        if (enemyData.IsDead())
+        {
+            await enemyDeathSequence.PlayDeathSequence(Enemytrans.position);
+            OnBattleEnd();
+            RoundManager.instance.CompleteRound(true);
+            return;
+        }
+
         enemyDamage = CalculateEnemyAttackPower();
+        playerData.ResetShield();
 
         battleUI.UpdatePlayerShield(playerData.CurrentShield);
         battleUI.UpdateEnemyAttackAmount(enemyDamage);

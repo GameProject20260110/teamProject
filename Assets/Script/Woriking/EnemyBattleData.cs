@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -53,10 +54,10 @@ public class EnemyBattleData : IDamageable
     }
 
     // 추가 - 적 턴 시작마다 호출
-    public void ProcessTurnStart()
+    public async UniTask ProcessTurnStart(BattleContext ctx)
     {
         foreach (var effect in statusEffects)
-            effect.OnTurnStart(this);  // ← 근데 여기 문제 있음
+            await effect.OnTurnStart(this, ctx);
 
         statusEffects.RemoveAll(e => e.Tick());
     }
