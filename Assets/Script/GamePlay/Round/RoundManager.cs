@@ -63,28 +63,13 @@ public class RoundManager : MonoBehaviour
         {
             roundEffect.PlayIntroAnim(currentRound);
 
-            if (currentStageData != null)
-            {
-                RoundData roundData = currentStageData.GetRoundData(currentRound);
+            EnemyData enemy = PlayerManager.instance?.currentEnemyData;
 
-                if(roundData != null)
-                {
-                    if(currentRound % 5 == 1)
-                    {
-                        GimmickManager.instance?.PreparePendingGimmick(currentRound);
-                        UpdateEnemyImage();
-                    }
-                    else if(currentRound % 5 != 0)
-                    {
-                        UpdateEnemyImage();
-                    }
+            if (enemy != null)
+            {    
+                if (enemyImage != null && enemy.enemyImage != null)                       
+                    enemyImage.sprite = enemy.enemyImage;
 
-                    if (roundData.hasGimmick)
-                    {
-                        UpdateEnemyImage();
-                        GimmickManager.instance.ApplyPendingGimmick(currentRound);
-                    }
-                }
             }
             else
             {
@@ -121,18 +106,6 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    private void UpdateEnemyImage()
-    {
-        if (enemyImage == null || currentStageData == null) return;
-        if (GimmickManager.instance == null) return;
-
-        GimmickType type = GimmickManager.instance.GetPendingMainGimmickType();
-        EnemyData enemyData = currentStageData.GetEnemyDataByGimmick(type);
-
-        if (enemyData != null && enemyData.enemyImage != null)
-            enemyImage.sprite = enemyData.enemyImage;
-    }
-
     public void CompleteRound(bool isSuccess)
     {
         if (UiController.instance != null) UiController.instance.SetRollBtnInteractable(false);
@@ -161,6 +134,8 @@ public class RoundManager : MonoBehaviour
         }
 
         int currentHP = PlayerManager.instance != null ? PlayerManager.instance.heart : 0;
+
+        // 클리어 시 선택 보상
 
         if(isSuccess)
         {

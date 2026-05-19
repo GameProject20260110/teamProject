@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.Serialization;
 
 public class MapManager : MonoBehaviour
 {
@@ -208,6 +209,30 @@ public class MapManager : MonoBehaviour
         {
             case NodeType.Battle:
             case NodeType.Boss:
+                MapNodeData selectedNode = _generateNodes.Find(n => n.id == _previousNodeId);
+                if(selectedNode != null)
+                {
+                    if(selectedNode.nodeType == NodeType.Boss)
+                    {
+                        PlayerManager.instance.currentEnemyData = mapData.bossEnemyData;
+                    }
+                    else if (selectedNode.layer == 0)
+                    {
+                        var enemies = mapData.startLayerEnemies;
+                        if (enemies != null && enemies.Count > selectedNode.enemyDataIndex)
+                            PlayerManager.instance.currentEnemyData = enemies[selectedNode.enemyDataIndex];
+                    }
+                    else
+                    {
+                        int layerIndex = selectedNode.layer = -1;
+                        if(layerIndex >= 0 && layerIndex < mapData.layers.Count)
+                        {
+                            var enemies = mapData.layers[layerIndex].enemies;
+                            if (enemies != null && enemies.Count > selectedNode.enemyDataIndex)
+                                PlayerManager.instance.currentEnemyData = enemies[selectedNode.enemyDataIndex];
+                        }
+                    }
+                }
                 SceneController.instance?.LoadGameScene();
                 break;
             case NodeType.Shop:

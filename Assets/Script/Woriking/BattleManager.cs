@@ -55,33 +55,35 @@ public class BattleManager : MonoBehaviour
 
     public void InitializeBattle()
     {
-        if (RoundManager.instance == null || RoundManager.instance.currentStageData == null)
+        if (RoundManager.instance == null)
             return;
 
         _battleCts?.Cancel();
         _battleCts?.Dispose();
         _battleCts = new CancellationTokenSource();
 
-        RoundData roundData = RoundManager.instance.currentStageData.GetRoundData(
-            RoundManager.instance.currentRound
-        );
+        EnemyData enemy = PlayerManager.instance?.currentEnemyData;
 
-        if (roundData != null && roundData.enemyData != null)
+        if(enemy == null)
         {
-            enemyData.Initialize(roundData.enemyData);
-
-            playerData.Initialize(playerSO);
-
-            battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
-            battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-
-            isPlayerTurn = true;
-            isBattleActive = true;
-            currentTurn = 1;
-
-            //StartNewTurn();
-            SaveBattleData();
+            Debug.LogWarning("currentEnemyData가 없습니다.");
+            return;
         }
+
+        enemyData.Initialize(enemy);
+
+        playerData.Initialize(playerSO);
+
+        battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
+        battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
+
+        isPlayerTurn = true;
+        isBattleActive = true;
+        currentTurn = 1;
+
+        //StartNewTurn();
+        SaveBattleData();
+
 
         enemyDamage = CalculateEnemyAttackPower();
         battleUI.UpdateEnemyAttackAmount(enemyDamage);
@@ -304,13 +306,20 @@ public class BattleManager : MonoBehaviour
             return;
         }
 
-        BattleSaveData data = SaveManager.instance.Load<BattleSaveData>(BATTLE_SAVE_FILE);
 
-        RoundData roundData = RoundManager.instance.currentStageData.GetRoundData(data.currentBattleRound);
+        EnemyData enemy = PlayerManager.instance?.currentEnemyData;
+
+        if(enemy == null)
+        {
+            Debug.Log("currentEnemyData 없음");
+            SaveManager.instance.Delete(BATTLE_SAVE_FILE);
+            return;
+        }
+        BattleSaveData data = SaveManager.instance.Load<BattleSaveData>(BATTLE_SAVE_FILE);
 
         // 데이터 복원
         playerData.Initialize(playerSO, data.playerCurrentHP);
-        enemyData.Initialize(roundData.enemyData, data.enemyMaxHP);
+        enemyData.Initialize(enemy, data.enemyMaxHP);
 
         isPlayerTurn = data.isPlayerTurn;
         isBattleActive = data.isBattleActive;
