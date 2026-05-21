@@ -25,7 +25,7 @@ public class MapDataSo : ScriptableObject
     public List<LayerConfig> layers= new List<LayerConfig>();
 
     [Header("보스 데이터 설정")]
-    public EnemyData bossEnemyData;
+    public BossDataSo bossEnemyData;
 
     public NodeType GetRandomNodeType(LayerConfig config)
     {

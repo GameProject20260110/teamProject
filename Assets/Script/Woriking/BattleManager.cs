@@ -62,16 +62,15 @@ public class BattleManager : MonoBehaviour
         _battleCts?.Dispose();
         _battleCts = new CancellationTokenSource();
 
-        EnemyData enemy = PlayerManager.instance?.currentEnemyData;
-
-        if(enemy == null)
+        // 배틀 데이터 매니저에서 불러오게끔 변경
+        if(BattleDataManager.instance == null || BattleDataManager.instance.GetEnemyMaxHp() == 0)
         {
-            Debug.LogWarning("currentEnemyData가 없습니다.");
+            Debug.LogWarning("BattleDataManager 또는 적 최대 HP 데이터가 없습니다.");
             return;
         }
 
-        enemyData.Initialize(enemy);
-
+ 
+        enemyData.Initialize(BattleDataManager.instance.currentEnemyData);
         playerData.Initialize(playerSO);
 
         battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
@@ -307,11 +306,9 @@ public class BattleManager : MonoBehaviour
         }
 
 
-        EnemyData enemy = PlayerManager.instance?.currentEnemyData;
-
-        if(enemy == null)
+        if(BattleDataManager.instance == null || BattleDataManager.instance.GetEnemyMaxHp() == 0)
         {
-            Debug.Log("currentEnemyData 없음");
+            Debug.LogWarning("BattleDataManager 데이터 없음");
             SaveManager.instance.Delete(BATTLE_SAVE_FILE);
             return;
         }
@@ -319,7 +316,7 @@ public class BattleManager : MonoBehaviour
 
         // 데이터 복원
         playerData.Initialize(playerSO, data.playerCurrentHP);
-        enemyData.Initialize(enemy, data.enemyMaxHP);
+        enemyData.Initialize(BattleDataManager.instance.currentEnemyData, data.enemyMaxHP);
 
         isPlayerTurn = data.isPlayerTurn;
         isBattleActive = data.isBattleActive;

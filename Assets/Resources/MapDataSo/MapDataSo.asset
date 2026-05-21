@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 748cac4df78547d44a40b86c56144824, type: 3}
   m_Name: MapDataSo
   m_EditorClassIdentifier: Assembly-CSharp::MapDataSo
-  startLayerEnemies: []
+  startLayerEnemies:
+  - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
   layers:
   - nodeTypeWeights:
     - nodeType: 0
@@ -50,4 +51,4 @@ MonoBehaviour:
     - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
     - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
     - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
-  bossEnemyData: {fileID: 0}
+  bossEnemyData: {fileID: 11400000, guid: ec47eadbe94124845a62b2bbf8a28529, type: 2}

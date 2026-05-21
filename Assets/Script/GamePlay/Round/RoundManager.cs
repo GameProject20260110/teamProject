@@ -62,19 +62,12 @@ public class RoundManager : MonoBehaviour
         else
         {
             roundEffect.PlayIntroAnim(currentRound);
-
-            EnemyData enemy = PlayerManager.instance?.currentEnemyData;
-
-            if (enemy != null)
-            {    
-                if (enemyImage != null && enemy.enemyImage != null)                       
-                    enemyImage.sprite = enemy.enemyImage;
-
-            }
-            else
+            if (enemyImage != null)
             {
-                Debug.LogWarning($"{currentRound}라운드 정보가 없습니다.");
+                enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
             }
+
+            // 보스전만 기믹
         }
 
         if (GameManager.instance != null)
@@ -108,7 +101,8 @@ public class RoundManager : MonoBehaviour
 
     public void CompleteRound(bool isSuccess)
     {
-        if (UiController.instance != null) UiController.instance.SetRollBtnInteractable(false);
+        if (UiController.instance != null) 
+            UiController.instance.SetRollBtnInteractable(false);
 
         if(PlayerManager.instance != null)
         {
@@ -139,31 +133,20 @@ public class RoundManager : MonoBehaviour
 
         if(isSuccess)
         {
-            if(currentStageData != null && GameManager.instance != null)
+            int reward = BattleDataManager.instance?.GetGoldReward() ?? 10;
+            GameManager.instance.AddGold(reward);
+
+            // 보스전 클리어 후 맵 데이터 초기화
+            if(BattleDataManager.instance?.isBossBattle == true)
             {
-                int reward = currentStageData.GetGoldRewardForSuccess(currentRound);
-                GameManager.instance.AddGold(reward);
-                Debug.Log($"라운드 성공! 골드 {reward} 획득");
+                MapManager.instance?.ClearMapSave();
+                BattleDataManager.instance?.Clear();
             }
             UiController.instance.ShowResultPanel(true, currentHP);
         }
         else
         {
-
-            if(currentHP > 0)
-            {
-                if (currentStageData != null && GameManager.instance != null)
-                {
-                    int reward = currentStageData.GetGoldRewardForFailure(currentRound);
-                    GameManager.instance.AddGold(reward);
-                    Debug.Log($"라운드 실패 골드 {reward} 획득");
-                }
-                UiController.instance.ShowResultPanel(false, currentHP);
-            }
-            else
-            {
-                GameManager.instance.HandleGameOver();
-            }
+            GameManager.instance.HandleGameOver();
         }
         GimmickManager.instance.ClearGimmick();
     }

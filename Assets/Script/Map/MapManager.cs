@@ -208,31 +208,32 @@ public class MapManager : MonoBehaviour
         switch(nodeType)
         {
             case NodeType.Battle:
-            case NodeType.Boss:
                 MapNodeData selectedNode = _generateNodes.Find(n => n.id == _previousNodeId);
                 if(selectedNode != null)
                 {
-                    if(selectedNode.nodeType == NodeType.Boss)
-                    {
-                        PlayerManager.instance.currentEnemyData = mapData.bossEnemyData;
-                    }
-                    else if (selectedNode.layer == 0)
+                    EnemyData enemy = null;
+                    if(selectedNode.layer == 0)
                     {
                         var enemies = mapData.startLayerEnemies;
-                        if (enemies != null && enemies.Count > selectedNode.enemyDataIndex)
-                            PlayerManager.instance.currentEnemyData = enemies[selectedNode.enemyDataIndex];
+                        if(enemies != null && enemies.Count > selectedNode.enemyDataIndex)
+                            enemy = enemies[selectedNode.enemyDataIndex];
                     }
                     else
                     {
-                        int layerIndex = selectedNode.layer = -1;
-                        if(layerIndex >= 0 && layerIndex < mapData.layers.Count)
+                        int layerIndex = selectedNode.layer - 1;
+                        if (layerIndex >= 0 && layerIndex < mapData.layers.Count)
                         {
                             var enemies = mapData.layers[layerIndex].enemies;
                             if (enemies != null && enemies.Count > selectedNode.enemyDataIndex)
-                                PlayerManager.instance.currentEnemyData = enemies[selectedNode.enemyDataIndex];
+                                enemy = enemies[selectedNode.enemyDataIndex];
                         }
                     }
+                    BattleDataManager.instance?.SetBattleData(enemy);
                 }
+                SceneController.instance?.LoadGameScene();
+                break;
+            case NodeType.Boss:
+                BattleDataManager.instance?.SetBossBattleData(mapData.bossEnemyData);
                 SceneController.instance?.LoadGameScene();
                 break;
             case NodeType.Shop:
