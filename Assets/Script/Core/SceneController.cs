@@ -155,12 +155,17 @@ public class SceneController : MonoBehaviour
     {
         if (fadeCanvasGroup == null) return;
 
+        float elapsed = 0f;
         fadeCanvasGroup.alpha = from;
         fadeCanvasGroup.blocksRaycasts = true;
 
-        var tween = fadeCanvasGroup.DOFade(to, fadeDuration).SetLink(fadeCanvasGroup.gameObject).SetEase(Ease.Linear);
-
-        await tween.AsyncWaitForCompletion();
+        while (elapsed < fadeDuration)
+        {
+            if (fadeCanvasGroup == null) return; 
+            elapsed += Time.unscaledDeltaTime;
+            fadeCanvasGroup.alpha = Mathf.Lerp(from, to, elapsed / fadeDuration);
+            await UniTask.Yield();
+        }
 
         fadeCanvasGroup.alpha = to;
         fadeCanvasGroup.blocksRaycasts = to > 0f;

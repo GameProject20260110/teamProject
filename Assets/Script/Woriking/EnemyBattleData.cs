@@ -6,22 +6,22 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyBattleData : IDamageable
 {
-    private EnemyData _data;  // ¿øº» ÂüÁ¶
+    private BaseEnemyData _data;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private int currentHP;
-    private List<StatusEffect> statusEffects = new();  // ¹ø, µ¶ µî
+    private List<StatusEffect> statusEffects = new();  // ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½
 
     public int MaxHp => _data.maxHp;
     public int CurrentHP => currentHP;
     public IReadOnlyList<StatusEffect> StatusEffects => statusEffects;
 
-    public void Initialize(EnemyData data)
+    public void Initialize(BaseEnemyData data)
     {
         _data = data;
         currentHP = data.maxHp;
         statusEffects.Clear();
     }
 
-    public void Initialize(EnemyData data, int savedHP)
+    public void Initialize(BaseEnemyData data, int savedHP)
     {
         _data = data;
         currentHP = savedHP;
@@ -53,7 +53,7 @@ public class EnemyBattleData : IDamageable
         }
     }
 
-    // Ãß°¡ - Àû ÅÏ ½ÃÀÛ¸¶´Ù È£Ãâ
+    // ï¿½ß°ï¿½ - ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ È£ï¿½ï¿½
     public async UniTask ProcessTurnStart(BattleContext ctx)
     {
         foreach (var effect in statusEffects)

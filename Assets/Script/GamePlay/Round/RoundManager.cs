@@ -62,34 +62,12 @@ public class RoundManager : MonoBehaviour
         else
         {
             roundEffect.PlayIntroAnim(currentRound);
-
-            if (currentStageData != null)
+            if (enemyImage != null)
             {
-                RoundData roundData = currentStageData.GetRoundData(currentRound);
-
-                if(roundData != null)
-                {
-                    if(currentRound % 5 == 1)
-                    {
-                        GimmickManager.instance?.PreparePendingGimmick(currentRound);
-                        UpdateEnemyImage();
-                    }
-                    else if(currentRound % 5 != 0)
-                    {
-                        UpdateEnemyImage();
-                    }
-
-                    if (roundData.hasGimmick)
-                    {
-                        UpdateEnemyImage();
-                        GimmickManager.instance.ApplyPendingGimmick(currentRound);
-                    }
-                }
+                enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
             }
-            else
-            {
-                Debug.LogWarning($"{currentRound}라운드 정보가 없습니다.");
-            }
+
+            // 보스전만 기믹
         }
 
         if (GameManager.instance != null)
@@ -122,21 +100,10 @@ public class RoundManager : MonoBehaviour
         }
     }
 
-    private void UpdateEnemyImage()
-    {
-        if (enemyImage == null || currentStageData == null) return;
-        if (GimmickManager.instance == null) return;
-
-        GimmickType type = GimmickManager.instance.GetPendingMainGimmickType();
-        EnemyData enemyData = currentStageData.GetEnemyDataByGimmick(type);
-
-        if (enemyData != null && enemyData.enemyImage != null)
-            enemyImage.sprite = enemyData.enemyImage;
-    }
-
     public void CompleteRound(bool isSuccess)
     {
-        if (UiController.instance != null) UiController.instance.SetRollBtnInteractable(false);
+        if (UiController.instance != null) 
+            UiController.instance.SetRollBtnInteractable(false);
 
         if(PlayerManager.instance != null)
         {
@@ -163,33 +130,24 @@ public class RoundManager : MonoBehaviour
 
         int currentHP = PlayerManager.instance != null ? PlayerManager.instance.heart : 0;
 
+        // 클리어 시 선택 보상
+
         if(isSuccess)
         {
-            if(currentStageData != null && GameManager.instance != null)
+            int reward = BattleDataManager.instance?.GetGoldReward() ?? 10;
+            GameManager.instance.AddGold(reward);
+
+            // 보스전 클리어 후 맵 데이터 초기화
+            if(BattleDataManager.instance?.isBossBattle == true)
             {
-                int reward = currentStageData.GetGoldRewardForSuccess(currentRound);
-                GameManager.instance.AddGold(reward);
-                Debug.Log($"라운드 성공! 골드 {reward} 획득");
+                MapManager.instance?.ClearMapSave();
+                BattleDataManager.instance?.Clear();
             }
             UiController.instance.ShowResultPanel(true, currentHP);
         }
         else
         {
-
-            if(currentHP > 0)
-            {
-                if (currentStageData != null && GameManager.instance != null)
-                {
-                    int reward = currentStageData.GetGoldRewardForFailure(currentRound);
-                    GameManager.instance.AddGold(reward);
-                    Debug.Log($"라운드 실패 골드 {reward} 획득");
-                }
-                UiController.instance.ShowResultPanel(false, currentHP);
-            }
-            else
-            {
-                GameManager.instance.HandleGameOver();
-            }
+            GameManager.instance.HandleGameOver();
         }
         GimmickManager.instance.ClearGimmick();
     }

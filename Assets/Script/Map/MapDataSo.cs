@@ -12,13 +12,20 @@ public class NodeTypeWeight
 public class LayerConfig
 {
     public List<NodeTypeWeight> nodeTypeWeights;
+    public List<EnemyData> enemies;
 }
 
 [CreateAssetMenu(fileName = "MapDataSo", menuName = "Stage/MapDataSo")]
 public class MapDataSo : ScriptableObject
 {
-    [Header("레이더 설정")]
+    [Header("1층 설정")]
+    public List<EnemyData> startLayerEnemies;
+
+    [Header("중간 레이어 설정")]
     public List<LayerConfig> layers= new List<LayerConfig>();
+
+    [Header("보스 데이터 설정")]
+    public BossDataSo bossEnemyData;
 
     public NodeType GetRandomNodeType(LayerConfig config)
     {
@@ -51,6 +58,7 @@ public class MapDataSo : ScriptableObject
             layer = 0,
             xIndex = 0,
             nodeType = NodeType.Battle,
+            enemyDataIndex = GetRandomEnemyIndexFromIndex(startLayerEnemies)
         };
         nodes.Add(startNode);
         allLayers.Add(new List<MapNodeData> { startNode });
@@ -68,7 +76,8 @@ public class MapDataSo : ScriptableObject
                     id = idCounter++,
                     layer = i,
                     xIndex = j,
-                    nodeType = GetRandomNodeType(config)
+                    nodeType = GetRandomNodeType(config),
+                    enemyDataIndex = GetRandomEnemyIndex(config)
                 };
                 layerNodes.Add(node);
                 nodes.Add(node);
@@ -76,6 +85,7 @@ public class MapDataSo : ScriptableObject
             allLayers.Add(layerNodes);
         }
 
+        // 보스레이어
         MapNodeData bossNode = new MapNodeData
         {
             id = idCounter++,
@@ -89,6 +99,7 @@ public class MapDataSo : ScriptableObject
         ConnectNodes(allLayers);
         return nodes;
     }
+
     private void ConnectNodes(List<List<MapNodeData>> allLayers)
     {
         int totalOneToTwo = 0;
@@ -191,5 +202,16 @@ public class MapDataSo : ScriptableObject
         if (totalOneToTwo == 0) return 0.65f;
         if (totalOneToTwo == 1) return 0.2f;
         return 0.05f;
+    }
+    private int GetRandomEnemyIndex(LayerConfig config)
+    {
+        if (config.enemies == null || config.enemies.Count == 0) return 0;
+        return Random.Range(0, config.enemies.Count);
+    }
+
+    private int GetRandomEnemyIndexFromIndex(List<EnemyData> enemies)
+    {
+        if (enemies == null || enemies.Count == 0) return 0;
+        return Random.Range(0, enemies.Count);
     }
 }
