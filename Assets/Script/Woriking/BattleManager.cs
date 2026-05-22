@@ -60,22 +60,23 @@ public class BattleManager : MonoBehaviour
         _battleCts = new CancellationTokenSource();
 
         // 배틀 데이터 매니저에서 불러오게끔 변경
-        if(BattleDataManager.instance == null || BattleDataManager.instance.GetEnemyMaxHp() == 0)
-        {
-            enemyData.Initialize(roundData.enemyData);
+        //if (BattleDataManager.instance == null || BattleDataManager.instance.GetEnemyMaxHp() == 0)
+        //{
+        //    Debug.LogWarning("BattleDataManager 또는 적 최대 HP 데이터가 없습니다.");
+        //    return;           
+        //}
+        enemyData.Initialize(BattleDataManager.instance.currentEnemyData);
 
-            playerData.Initialize(playerSO);
+        playerData.Initialize(playerSO);
 
-            battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
-            battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
+        battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
+        battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
 
-            isPlayerTurn = true;
-            isBattleActive = true;
-            currentTurn = 1;
+        isPlayerTurn = true;
+        isBattleActive = true;
+        currentTurn = 1;
 
-            SaveBattleData();
-        }
-
+        SaveBattleData();
  
         enemyData.Initialize(BattleDataManager.instance.currentEnemyData);
         playerData.Initialize(playerSO);

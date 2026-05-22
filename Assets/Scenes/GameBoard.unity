@@ -42748,6 +42748,53 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2642663466838531071, guid: 1375cb69063a0054fb4dd69fc8959918, type: 3}
   m_PrefabInstance: {fileID: 1504011356}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1398599311
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1398599313}
+  - component: {fileID: 1398599312}
+  m_Layer: 0
+  m_Name: BattleDataManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1398599312
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398599311}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9957b9ff28c78c943901a4f662886a4e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BattleDataManager
+  currentEnemyData: {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
+  isBossBattle: 0
+  currentRewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}
+--- !u!4 &1398599313
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1398599311}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.19144, y: -1.31595, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1398980382
 GameObject:
   m_ObjectHideFlags: 0
@@ -59847,3 +59894,4 @@ SceneRoots:
   - {fileID: 1948593662}
   - {fileID: 1381182014}
   - {fileID: 1777643326}
+  - {fileID: 1398599313}
