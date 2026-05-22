@@ -3,32 +3,67 @@ using UnityEngine;
 
 public class DiceManager : MonoBehaviour
 {
+    public static DiceManager instance;
   
     [Header("UI 연결")]
     public RectTransform rollArea;
+    public PanelEffect panelEffect;
 
-    [Header("주사위 오브젝트")]
-    public Dice[] panelDiceScript;
-
-    [Header("기본 설정")]
-    public DiceData defaultDice;
+    [Header("슬롯")]
+    public Transform[] slots;
 
     [Header("모듈")]
-    public DiceSetup diceSetup;
     public DiceRoller diceRoller;
 
     public bool isRolling => diceRoller != null && diceRoller.isRolling;
+
+    public Dice[] panelDiceScript; //{ get; private set; }
+
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+        else Destroy(gameObject);
+        panelDiceScript = new Dice[slots.Length];
+    }
+
     void Start()
     {
         if(GameManager.instance != null) GameManager.instance.diceManager = this;
-
-        SetupDiceBoard();
     }
 
-    public void SetupDiceBoard()
+    public void PlaceDice(int slotIndex, DiceData data)
     {
-        diceSetup.Setup(panelDiceScript, defaultDice);
+        if (panelDiceScript[slotIndex] != null)
+        {
+            ObjectPool.instance.Return(panelDiceScript[slotIndex].gameObject);
+            panelDiceScript[slotIndex] = null;
+        }
+
+        GameObject obj = ObjectPool.instance.Get(data.dicePrefab);
+        obj.transform.SetParent(slots[slotIndex], false);
+        obj.transform.localPosition = Vector3.zero;
+
+        var draggable = obj.GetComponent<DraggableDice>();
+        if (draggable != null)
+            draggable.panelEffect = panelEffect;
+
+        Dice dice = obj.GetComponent<Dice>();
+        dice.Initialize(slotIndex, data);
+        panelDiceScript[slotIndex] = dice;
     }
+
+    public void ClearAllSlots()
+    {
+        for (int i = 0; i < panelDiceScript.Length; i++)
+        {
+            if (panelDiceScript[i] != null)
+            {
+                ObjectPool.instance.Return(panelDiceScript[i].gameObject);
+                panelDiceScript[i] = null;
+            }
+        }
+    }
+
     public async UniTask<Dice[]> StartRolling()
     {
         Dice[] allDice = GetAllDice();
@@ -38,7 +73,7 @@ public class DiceManager : MonoBehaviour
 
     public Dice[] GetAllDice()
     {
-        Dice[] allDice = new Dice[panelDiceScript.Length ];
+        Dice[] allDice = new Dice[panelDiceScript.Length];
         panelDiceScript.CopyTo(allDice, 0);
         return allDice;
     }

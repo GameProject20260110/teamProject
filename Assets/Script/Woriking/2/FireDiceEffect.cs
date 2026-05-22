@@ -3,17 +3,14 @@ using UnityEngine;
 
 public class FireDiceEffect : DiceEffectBase
 {
-    [SerializeField] private int burnDamage = 1;
-    [SerializeField] private int burnDuration = 2;
-    [SerializeField] private GameObject firePrefab;
-
     public override async UniTask OnAttack(BattleContext ctx)
     {
+        var data = ctx.diceData.effectData as FireEffectData;
         var completion = new UniTaskCompletionSource<bool>();
+ 
+        ctx.Enemy.ApplyStatusEffect(new BurnEffect(data.burnDamage, data.burnDuration));
 
-        ctx.Enemy.ApplyStatusEffect(new BurnEffect(burnDamage, burnDuration));
-
-        GameObject skill = ObjectPool.instance.Get(firePrefab);
+        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
         skill.transform.position = ctx.EnemyPosition;
 
         skill.GetComponent<Skill>().Init(new SkillContext {

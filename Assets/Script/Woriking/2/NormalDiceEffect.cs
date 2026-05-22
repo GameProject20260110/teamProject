@@ -3,14 +3,12 @@ using UnityEngine;
 
 public class NormalDiceEffect : DiceEffectBase
 {
-    [SerializeField] private GameObject attackPrefab;
-    [SerializeField] private GameObject shieldPrefab;
-
     public override async UniTask OnAttack(BattleContext ctx)
     {
+        var data = ctx.diceData.effectData;
         var completion = new UniTaskCompletionSource<bool>();
 
-        GameObject skill = ObjectPool.instance.Get(attackPrefab);
+        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
         skill.transform.position = ctx.EnemyPosition;
 
         skill.GetComponent<Skill>().Init(new SkillContext {
@@ -31,9 +29,10 @@ public class NormalDiceEffect : DiceEffectBase
 
     public override async UniTask OnDefense(BattleContext ctx)
     {
+        var data = ctx.diceData.effectData;
         var completion = new UniTaskCompletionSource<bool>();
 
-        GameObject skill = ObjectPool.instance.Get(shieldPrefab);
+        GameObject skill = ObjectPool.instance.Get(data.shieldPrefab);
         skill.transform.position = ctx.PlayerPosition;
 
         skill.GetComponent<Skill>().Init(new SkillContext {

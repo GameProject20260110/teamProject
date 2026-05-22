@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 50b83e714b983844abd4da4a1520c267, type: 3}
+  m_Name: DiceData_Fire
+  m_EditorClassIdentifier: Assembly-CSharp::DiceData
+  multiBonusScore: 1
+  plusBonusScore: 0
+  type: 0
+  timing: 0
+  diceNum: 2
+  abilityName: "\uBD88 \uC8FC\uC0AC\uC704"
+  tier: 1
+  gold: 0
+  sell: 0
+  Desc: 
+  effectDesc: 
+  skin: {fileID: 11400000, guid: 19ee6f109c6b7504ba245cca99f19b9b, type: 2}
+  dicePrefab: {fileID: 4049955241047962077, guid: 84b5809dab04feb478bdb89ab55cd4ef, type: 3}
+  effectData: {fileID: 11400000, guid: e5bb3d4984ac0114a9d3e61bb41f36d6, type: 2}

@@ -115,11 +115,13 @@ public class BattleManager : MonoBehaviour
                 EnemyPosition = Enemytrans.position,
                 BaseDamage = dice.MyState.originalValue,
                 CancellationToken = _battleCts.Token,
+                diceData = dice.MyState.diceData,
                 OnEnemyHit = (damage) =>
                 {
                     battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
                     battleUI.ShowDamageText(damage, isPlayer: false);
                 }
+                
             };
 
             await dice.GetComponent<DiceEffectBase>().OnAttack(ctx);
@@ -165,6 +167,7 @@ public class BattleManager : MonoBehaviour
                 PlayerPosition = Playertrans.position,
                 BaseDamage = dice.MyState.originalValue,
                 CancellationToken = _battleCts.Token,
+                diceData = dice.MyState.diceData,
                 OnPlayerDefend = (shield) =>
                 {
                     battleUI.UpdatePlayerShield(playerData.CurrentShield);
@@ -280,6 +283,8 @@ public class BattleManager : MonoBehaviour
 
         battleUI.UpdatePlayerShield(playerData.CurrentShield);
         battleUI.UpdateEnemyAttackAmount(enemyDamage);
+
+        DeckManager.instance.DrawDice();
 
         UiController.instance.ShowGlowRerollBtn();
         battleUI.UpdateCurrentTurn(currentTurn);

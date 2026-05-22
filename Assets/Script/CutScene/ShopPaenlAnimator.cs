@@ -65,7 +65,7 @@ public class ShopPanelAnimator : MonoBehaviour
 
     public async UniTask Hide()
     {
-        GameManager.instance.diceManager.SetupDiceBoard();
+        //GameManager.instance.diceManager.SetupDiceBoard();
         UiController.instance.RefreshInventory();
         
         AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
