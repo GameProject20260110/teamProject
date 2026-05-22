@@ -9,4 +9,6 @@ public class MapNodeData
     public int layer;
     public int xIndex;
     public List<int> nextNodeIDs = new List<int>();
+    //적 데이터
+    public int enemyDataIndex = 0;
 }

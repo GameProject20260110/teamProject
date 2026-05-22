@@ -164,11 +164,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
   sceneControlPrefab: {fileID: 822639163992330441, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
-  playerManagerPrefab: {fileID: 8729036687543461648, guid: 570d6b02797570f4a8839fdfc3a957e7, type: 3}
-  playerShopManagerPrefab: {fileID: 3218232283522243185, guid: 11c6721714c606a41af6bafb391d9454, type: 3}
   audioManagerPrefab: {fileID: 7528108071998853804, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
   settingsManagerPrefab: {fileID: 1723131241955938791, guid: 236a30ab0a589ce4995ebef2f05de0e1, type: 3}
   playerStatsManagerPrefab: {fileID: 855262972402716990, guid: 554aafaab026bd645b0298ea74c05baf, type: 3}
+  battleDataManagerPrefab: {fileID: 6322686787336117716, guid: ca885674b73cc584f8ea92c972251c95, type: 3}
 --- !u!1 &2058177989
 GameObject:
   m_ObjectHideFlags: 0

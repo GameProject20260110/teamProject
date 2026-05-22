@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyBattleData : IDamageable
 {
-    private EnemyData _data;  // 원본 참조
+    private BaseEnemyData _data;  // 원본 참조
     private int currentHP;
     private List<StatusEffect> statusEffects = new();  // 번, 독 등
 
@@ -13,14 +13,14 @@ public class EnemyBattleData : IDamageable
     public int CurrentHP => currentHP;
     public IReadOnlyList<StatusEffect> StatusEffects => statusEffects;
 
-    public void Initialize(EnemyData data)
+    public void Initialize(BaseEnemyData data)
     {
         _data = data;
         currentHP = data.maxHp;
         statusEffects.Clear();
     }
 
-    public void Initialize(EnemyData data, int savedHP)
+    public void Initialize(BaseEnemyData data, int savedHP)
     {
         _data = data;
         currentHP = savedHP;
@@ -52,7 +52,7 @@ public class EnemyBattleData : IDamageable
         }
     }
 
-    // 추가 - 적 턴 시작마다 호출
+    // 추가 - 적 턴 시작마다 호출 
     public void ProcessTurnStart()
     {
         foreach (var effect in statusEffects)

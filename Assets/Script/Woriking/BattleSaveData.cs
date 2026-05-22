@@ -10,7 +10,7 @@ public class BattleSaveData
     [Header("Enemy Data")]
     public int enemyCurrentHP;
     public int enemyMaxHP;
-    public string enemyName = "";
+    //public string enemyName = ""; -> EnemyBattleData에서 참조하므로 저장할 필요 없음
 
     [Header("Battle State")]
     public bool isPlayerTurn = true;
