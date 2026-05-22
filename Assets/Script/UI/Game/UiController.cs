@@ -35,6 +35,7 @@ public class UiController : MonoBehaviour
 
     [Header("GameEndPanels")]
     public GameObject backGround;
+    public GameObject InventoryPanel;
 
     [SerializeField] private Image _playerImage;
 
@@ -101,6 +102,11 @@ public class UiController : MonoBehaviour
         {
             roundInfoText.SetText("{0}", round);
         }
+    }
+
+    public void ToggleInventoryPanel()
+    {
+        InventoryPanel.SetActive(!InventoryPanel.activeSelf);
     }
 
     public void RefreshGimmickIcons(List<GimmickSo> gimmick)

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public abstract class StatusEffect
@@ -6,15 +7,8 @@ public abstract class StatusEffect
     public int duration;        // 남은 턴 수
     public int value;           // 데미지, 감소량 등
 
-    protected StatusEffect(string name, int duration, int value)
-    {
-        effectName = name;
-        this.duration = duration;
-        this.value = value;
-    }
-
     // 턴 시작마다 호출
-    public abstract void OnTurnStart(IDamageable target);
+    public abstract UniTask OnTurnStart(IDamageable target, BattleContext ctx);
 
     // 한 턴 소모
     public bool Tick()

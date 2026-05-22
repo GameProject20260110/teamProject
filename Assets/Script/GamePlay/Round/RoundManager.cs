@@ -88,9 +88,10 @@ public class RoundManager : MonoBehaviour
             VisualManager.instance.ResetDiceColors(GameManager.instance.diceManager.GetAllDice());
 
 
-        if(GameManager.instance != null && GameManager.instance.diceManager != null)
+        if (DeckManager.instance != null)
         {
-            GameManager.instance.diceManager.SetupDiceBoard();
+            DeckManager.instance.InitializeDeck();
+            DeckManager.instance.DrawDice();       
         }
 
         if (BattleManager.instance != null)

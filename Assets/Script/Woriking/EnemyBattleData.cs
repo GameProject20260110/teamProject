@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -5,9 +6,9 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyBattleData : IDamageable
 {
-    private BaseEnemyData _data;  // ¿øº» ÂüÁ¶
+    private BaseEnemyData _data;  // ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     private int currentHP;
-    private List<StatusEffect> statusEffects = new();  // ¹ø, µ¶ µî
+    private List<StatusEffect> statusEffects = new();  // ï¿½ï¿½, ï¿½ï¿½ ï¿½ï¿½
 
     public int MaxHp => _data.maxHp;
     public int CurrentHP => currentHP;
@@ -52,11 +53,11 @@ public class EnemyBattleData : IDamageable
         }
     }
 
-    // Ãß°¡ - Àû ÅÏ ½ÃÀÛ¸¶´Ù È£Ãâ 
-    public void ProcessTurnStart()
+    // ï¿½ß°ï¿½ - ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½Û¸ï¿½ï¿½ï¿½ È£ï¿½ï¿½
+    public async UniTask ProcessTurnStart(BattleContext ctx)
     {
         foreach (var effect in statusEffects)
-            effect.OnTurnStart(this);  // ¡ç ±Ùµ¥ ¿©±â ¹®Á¦ ÀÖÀ½
+            await effect.OnTurnStart(this, ctx);
 
         statusEffects.RemoveAll(e => e.Tick());
     }

@@ -80,14 +80,14 @@ public class PlayerBattleData : IDamageable
     }
 
     // 턴 시작마다 호출
-    public void ProcessTurnStart()
-    {
-        foreach (var effect in statusEffects)
-            effect.OnTurnStart(this);
+    //public void ProcessTurnStart(Vector3 position)
+    //{
+    //    foreach (var effect in statusEffects)
+    //        effect.OnTurnStart(this, ctx);
 
-        // 만료된 효과 제거
-        statusEffects.RemoveAll(e => e.Tick());
-    }
+    //    // 만료된 효과 제거
+    //    statusEffects.RemoveAll(e => e.Tick());
+    //}
 
     public bool IsDead() => currentHP <= 0;
 }

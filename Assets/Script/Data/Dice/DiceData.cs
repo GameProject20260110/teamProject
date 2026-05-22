@@ -30,6 +30,12 @@ public class DiceData : ScriptableObject
     [Header("주사위 스킨")]
     public DiceSkin skin;
 
+    [Header("주사위 프래팹")]
+    public GameObject dicePrefab;
+
+    [Header("주사위 효과")]
+    public DiceEffectData effectData;
+
     // myState: 내 주사위 상태, allDice: 모든 주사위 상태 리스트
     public void ChangeModi(DiceState myState, List<DiceState> allDice, ref int totalScore, List<ScoreEventData> scoreEvent) {
         if (myState.changeValue == 0) return;

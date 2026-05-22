@@ -13,6 +13,7 @@ public class RoundController : MonoBehaviour
     [SerializeField] private CardAppearEffect playerEffect;
     [SerializeField] private CardAppearEffect enemyEffect;
     [SerializeField] private RoundIntroController turnEffect;
+    [SerializeField] private BattlePanelAnimation battlePanel;
 
     [Header("∞‘¿” UI")]
     [SerializeField] private CanvasGroup playerUIGroup;
@@ -50,6 +51,7 @@ public class RoundController : MonoBehaviour
         await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
+        await PlayEffectAsync(battlePanel.Play, ct);
         
         playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
         enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
@@ -62,8 +64,7 @@ public class RoundController : MonoBehaviour
         );
 
         BeginRoundLogic(currentRound);
-        roundIntroCanvas.gameObject.SetActive(false);
-       
+        roundIntroCanvas.gameObject.SetActive(false);      
     }
 
     public void NextTurn(int currentTurn = 1)

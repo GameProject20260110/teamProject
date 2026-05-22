@@ -1,12 +1,19 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
     public BurnEffect(int damage, int duration)
-        : base("화상", duration, damage) { }
-
-    public override void OnTurnStart(IDamageable target)
     {
-        target.TakeDamageRaw(value); // 쉴드 무시 데미지
+        effectName = "화상";
+        this.duration = duration;
+        value = damage;
+    }
+
+    public override async UniTask OnTurnStart(IDamageable target, BattleContext ctx)
+    {
+        var completion = new UniTaskCompletionSource<bool>();
+        EffectManager.instance.PlayBurnEffect(target, value, ctx, () => completion.TrySetResult(true));
+        await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
     }
 }
