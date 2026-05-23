@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using UnityEngine;
 
@@ -14,4 +15,7 @@ public class BattleContext
 
     public Action<int> OnEnemyHit;
     public Action<int> OnPlayerDefend;
+
+    public List<Dice> AttackDices;
+    public List<Dice> DefenseDices;
 }

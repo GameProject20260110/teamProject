@@ -18,7 +18,19 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public DiceState MyState { get; private set; }
     public Transform OriginalSlot { get; private set; }
 
+    // 캐싱
+    public DiceEffectBase Effect { get; private set; }
+    public DiceVFXBase VFX { get; private set; }
+    public DiceGlow Glow { get; private set; }
+
     private int _currentDiceScore = 0;
+
+    private void Awake()
+    {
+        Effect = GetComponent<DiceEffectBase>();
+        VFX = GetComponent<DiceVFXBase>();
+        Glow = GetComponentInChildren<DiceGlow>();
+    }
 
     public void Initialize(int index, DiceData data)
     {

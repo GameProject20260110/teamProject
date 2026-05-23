@@ -11,75 +11,77 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public TextMeshProUGUI itemNameText;
     public TextMeshProUGUI itemDescText;
 
-    private ItemSo _item;
+    private BattleItemSo _item;
     private Vector3 _originalScale;
+    private Vector2 _originalPosition;
+    public Vector2 OriginalPosition => _originalPosition;
     private int _originalSiblingIndex;
+    private bool _isDragging;
 
-    private const float HOVER_SCALE = 1.5f;
+    private const float HOVER_SCALE = 1.3f;
     private const float ANIM_DURATION = 0.5f;
+    private const float HOVER_OFFSET_Y = 200f;
 
-    public void SetUp(ItemSo item)
-    {
-        if(item == null)
-        {
-            Debug.LogWarning("ItemCard:SetUp: item이 null입니다.");
-            return;
-        }
+    public string GetItemName() => _item != null ? _item.itemName : "";
 
-        _item = item;
-
-        if(itemImage != null && item.itemIcon != null)
-        {
-            itemImage.sprite = item.itemIcon;
-        }
-
-        if(itemNameText != null)
-        {
-            itemNameText.text = item.itemName;
-        }
-        if(itemDescText != null)
-        {
-            itemDescText.text = item.itemDesc;
-        }
-    }
-
-    private void Start()
+    private void Awake()
     {
         _originalScale = transform.localScale;
     }
 
+    private void Start()
+    {
+        _originalPosition = GetComponent<RectTransform>().anchoredPosition;
+    }
+
+    public void SetUp(BattleItemSo item)
+    {
+        if (item == null)
+        {
+            Debug.LogWarning("ItemCard:SetUp: item이 null입니다.");
+            return;
+        }
+        _item = item;
+        if (itemImage != null && item.itemIcon != null)
+            itemImage.sprite = item.itemIcon;
+        if (itemNameText != null)
+            itemNameText.text = item.itemName;
+        if (itemDescText != null)
+            itemDescText.text = item.itemDesc;
+    }
+
+    public void SetDragging(bool isDragging)
+    {
+        _isDragging = isDragging;
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (_isDragging) return;
         _originalSiblingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
         transform.DOScale(_originalScale * HOVER_SCALE, ANIM_DURATION).SetEase(Ease.OutBack);
-
-        RectTransform rect = GetComponent<RectTransform>();
-        rect.DOAnchorPosY(rect.anchoredPosition.y + rect.rect.height * 0.25f, ANIM_DURATION).SetEase(Ease.OutBack); 
+        GetComponent<RectTransform>()
+            .DOAnchorPosY(_originalPosition.y + HOVER_OFFSET_Y, ANIM_DURATION)
+            .SetEase(Ease.OutBack);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if (_isDragging) return;
         transform.SetSiblingIndex(_originalSiblingIndex);
         transform.DOScale(_originalScale, ANIM_DURATION).SetEase(Ease.OutQuad);
-        RectTransform rect = GetComponent<RectTransform>();
-        rect.DOAnchorPosY(0, ANIM_DURATION).SetEase(Ease.OutQuad);
+        GetComponent<RectTransform>()
+            .DOAnchorPosY(_originalPosition.y, ANIM_DURATION)
+            .SetEase(Ease.OutQuad);
     }
-
-    public string GetItemName()
-    {
-        return _item != null ? _item.itemName : "";
-    }
-
+    
     public void PlayNegateEffect(GameObject negateOverlayPrefab)
     {
-        CanvasGroup cg = GetComponent<CanvasGroup>();
-        if (cg == null) cg = gameObject.AddComponent<CanvasGroup>();
+        CanvasGroup cg = GetComponent<CanvasGroup>() ?? gameObject.AddComponent<CanvasGroup>();
         DOTween.To(() => cg.alpha, x => cg.alpha = x, 0.5f, 0.3f);
-
         transform.DOScale(transform.localScale * 0.8f, 0.3f);
-
-        if(negateOverlayPrefab != null)
+        if (negateOverlayPrefab != null)
         {
             GameObject overlay = Instantiate(negateOverlayPrefab, transform);
             overlay.GetComponent<RectTransform>().anchoredPosition = Vector2.zero;
@@ -90,10 +92,15 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void ResetNegateEffect()
     {
         CanvasGroup cg = GetComponent<CanvasGroup>();
-        if (cg != null) if (cg != null) DOTween.To(() => cg.alpha, x => cg.alpha = x, 1f, 0.3f);
-        transform.DOScale(transform.localScale, 0.3f);
-
+        if (cg != null) DOTween.To(() => cg.alpha, x => cg.alpha = x, 1f, 0.3f);
+        transform.DOScale(_originalScale, 0.3f);
         Transform overlay = transform.Find("NegateOverlay");
         if (overlay != null) Destroy(overlay.gameObject);
+    }
+
+    public void UseItem()
+    {
+        if (_item == null) return;
+        BattleManager.instance.UseItem(_item);
     }
 }

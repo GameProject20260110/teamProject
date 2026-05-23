@@ -23,6 +23,7 @@ public class FloatingEffect : MonoBehaviour
     {
         _startScale = transform.localScale;
         enabled = false;
+        timeOffset = Random.Range(0f, 3f);
     }
 
     private void Update()
