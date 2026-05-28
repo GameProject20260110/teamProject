@@ -15,13 +15,14 @@ public class FloatingEffect : MonoBehaviour
     [SerializeField] private float tiltAmount = 5f;
 
     [Header("타이밍(각 주사위마다 다르게)")]
-    [SerializeField] private float timeOffset = 0f;
+    private float timeOffset = 0f;
 
     private Vector3 _startScale;
 
     private void Awake()
     {
         _startScale = transform.localScale;
+        timeOffset = Random.Range(0f, 2f);
         enabled = false;
         timeOffset = Random.Range(0f, 3f);
     }

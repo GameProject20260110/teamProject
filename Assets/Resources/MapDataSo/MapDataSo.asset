@@ -27,6 +27,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
     - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
     - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
+    randomNodeWeight:
+    - nodeType: 0
+      weight: 5
+    - nodeType: 1
+      weight: 5
   - nodeTypeWeights:
     - nodeType: 0
       weight: 6
@@ -39,6 +44,11 @@ MonoBehaviour:
     - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
     - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
     - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
+    randomNodeWeight:
+    - nodeType: 0
+      weight: 5
+    - nodeType: 1
+      weight: 5
   - nodeTypeWeights:
     - nodeType: 0
       weight: 0
@@ -51,4 +61,9 @@ MonoBehaviour:
     - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
     - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
     - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
+    randomNodeWeight:
+    - nodeType: 0
+      weight: 7
+    - nodeType: 1
+      weight: 3
   bossEnemyData: {fileID: 11400000, guid: ec47eadbe94124845a62b2bbf8a28529, type: 2}
