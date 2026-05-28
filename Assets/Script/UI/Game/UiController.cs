@@ -1,8 +1,5 @@
-using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using System.Collections.Generic;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -36,6 +33,8 @@ public class UiController : MonoBehaviour
     [Header("GameEndPanels")]
     public GameObject backGround;
     public GameObject InventoryPanel;
+    public GameObject itemDarkPanel;
+    public GameObject DropZone;
 
     [SerializeField] private Image _playerImage;
 
@@ -102,6 +101,12 @@ public class UiController : MonoBehaviour
         {
             roundInfoText.SetText("{0}", round);
         }
+    }
+
+    public void ToggleItemDragPanel()
+    {
+        itemDarkPanel.SetActive(!itemDarkPanel.activeSelf);
+        DropZone.SetActive(!DropZone.activeSelf);
     }
 
     public void ToggleInventoryPanel()

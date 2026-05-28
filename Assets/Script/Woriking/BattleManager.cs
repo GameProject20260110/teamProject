@@ -119,7 +119,7 @@ public class BattleManager : MonoBehaviour
 
         foreach(var dice in _attackDices)
         {
-            await dice.GetComponentInChildren<DiceGlow>().ShowGlowAsync();
+            await dice.Glow.ShowGlowAsync();
 
             var ctx = new BattleContext
             {
@@ -129,17 +129,18 @@ public class BattleManager : MonoBehaviour
                 BaseDamage = dice.MyState.originalValue,
                 CancellationToken = _battleCts.Token,
                 diceData = dice.MyState.diceData,
+                AttackDices = _attackDices,
+                DefenseDices = _defenseDices,
                 OnEnemyHit = (damage) =>
                 {
                     battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
                     battleUI.ShowDamageText(damage, isPlayer: false);
-                }
-                
+                }       
             };
 
-            await dice.GetComponent<DiceEffectBase>().OnAttack(ctx);
+            await dice.Effect.OnAttack(ctx);
 
-            dice.GetComponentInChildren<DiceGlow>().HideGlow();
+            dice.Glow.HideGlow();
         }
 
         if (enemyData.IsDead())
@@ -171,7 +172,7 @@ public class BattleManager : MonoBehaviour
     {
         foreach(var dice in _defenseDices)
         {
-            await dice.GetComponentInChildren<DiceGlow>().ShowGlowAsync();
+            await dice.Glow.ShowGlowAsync();
 
             var ctx = new BattleContext
             {
@@ -181,15 +182,17 @@ public class BattleManager : MonoBehaviour
                 BaseDamage = dice.MyState.originalValue,
                 CancellationToken = _battleCts.Token,
                 diceData = dice.MyState.diceData,
+                AttackDices = _attackDices,
+                DefenseDices = _defenseDices,
                 OnPlayerDefend = (shield) =>
                 {
                     battleUI.UpdatePlayerShield(playerData.CurrentShield);
                 }
             };
 
-            await dice.GetComponent<DiceEffectBase>().OnDefense(ctx);
+            await dice.Effect.OnDefense(ctx);
 
-            dice.GetComponentInChildren<DiceGlow>().HideGlow();
+            dice.Glow.HideGlow();
         }       
 
         SaveBattleData();
@@ -298,6 +301,10 @@ public class BattleManager : MonoBehaviour
         battleUI.UpdateEnemyAttackAmount(enemyDamage);
 
         DeckManager.instance.DrawDice();
+        foreach (var dice in _attackDices)
+            dice.VFX?.ResetBuff();
+        foreach (var dice in _defenseDices)
+            dice.VFX?.ResetBuff();
 
         UiController.instance.ShowGlowRerollBtn();
         battleUI.UpdateCurrentTurn(currentTurn);
@@ -314,6 +321,38 @@ public class BattleManager : MonoBehaviour
 
         Debug.Log($"{currentTurn} 턴)");
     }
+
+    public void UseItem(BattleItemSo item)
+    {
+        if (!isBattleActive) return;
+
+        var ctx = new BattleContext
+        {
+            Player = playerData,
+            Enemy = enemyData,
+            PlayerPosition = Playertrans.position,
+            EnemyPosition = Enemytrans.position,
+            CancellationToken = _battleCts.Token,
+            OnEnemyHit = (damage) =>
+            {
+                battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
+                battleUI.ShowDamageText(damage, isPlayer: false);
+            },
+            OnPlayerDefend = (shield) =>
+            {
+                battleUI.UpdatePlayerShield(playerData.CurrentShield);
+            }
+        };
+
+        item.OnUse(ctx);
+
+        if (item.isConsumable)
+        {
+            ItemManager.instance.items.Remove(item);
+        }
+    }
+
+
 
 
 
