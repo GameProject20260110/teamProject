@@ -147,6 +147,8 @@ GameObject:
   m_Component:
   - component: {fileID: 294181399951909881}
   - component: {fileID: 5862299455736084215}
+  - component: {fileID: 7578212461313085723}
+  - component: {fileID: 6508741633192349462}
   m_Layer: 0
   m_Name: ItemCard
   m_TagString: Untagged
@@ -193,6 +195,30 @@ MonoBehaviour:
   itemImage: {fileID: 2761798325919812934}
   itemNameText: {fileID: 2537131360387154730}
   itemDescText: {fileID: 4977754701651396796}
+--- !u!114 &7578212461313085723
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4263562428892716012}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c3695dcd279105b4d8ee88d750b8f0bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ItemDragHandler
+--- !u!225 &6508741633192349462
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4263562428892716012}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &4541342134682934382
 GameObject:
   m_ObjectHideFlags: 0

@@ -14,5 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FireEffectData
   attackPrefab: {fileID: 3633046992857197885, guid: adb9554f03c9b4144985f1ae86fa2bfe, type: 3}
   shieldPrefab: {fileID: 7394023633541940906, guid: 4c9178866f547e245b76be8e2885bbab, type: 3}
+  bonusDamage: 3
+  bonusShield: 0
   burnDamage: 1
   burnDuration: 3
