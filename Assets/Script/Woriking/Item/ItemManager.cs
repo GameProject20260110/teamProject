@@ -6,6 +6,7 @@ public class ItemManager : MonoBehaviour
     public static ItemManager instance;
 
     public List<BattleItemSo> items = new List<BattleItemSo>();
+    public List<BattleItemSo> Artifacts = new List<BattleItemSo>();
 
     private void Awake()
     {

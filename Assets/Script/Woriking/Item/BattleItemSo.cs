@@ -10,4 +10,6 @@ public abstract class BattleItemSo : ScriptableObject
     public string itemDesc;
 
     public abstract void OnUse(BattleContext ctx);
+    public virtual void OnEquip(BattleEventBus bus) { }
+    public virtual void OnUnequip(BattleEventBus bus) { }
 }

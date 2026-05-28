@@ -7,6 +7,7 @@ public class UIFlowController : MonoBehaviour
     public async void OnNextRoundButton()
     {
         await resultAnimator.UnReveal();
-        RoundManager.instance.StartRound();
+        //RoundManager.instance.StartRound();
+        BattleInitalizer.instance.StartBattle();
     }
 }

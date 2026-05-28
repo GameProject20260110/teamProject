@@ -12,11 +12,13 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public TextMeshProUGUI itemDescText;
 
     private BattleItemSo _item;
+    private CardGlow _glow;
     private Vector3 _originalScale;
     private Vector2 _originalPosition;
     public Vector2 OriginalPosition => _originalPosition;
     private int _originalSiblingIndex;
     private bool _isDragging;
+    private bool _isReturning;
 
     private const float HOVER_SCALE = 1.3f;
     private const float ANIM_DURATION = 0.5f;
@@ -27,6 +29,7 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     private void Awake()
     {
         _originalScale = transform.localScale;
+        _glow = GetComponentInChildren<CardGlow>();
     }
 
     private void Start()
@@ -55,9 +58,19 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         _isDragging = isDragging;
     }
 
+    public void SetReturning(bool isReturning)
+    {
+        _isReturning = isReturning;
+    }
+
+    public void SetGlow(bool on)
+    {
+        _glow?.SetGlow(on);
+    }
+
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (_isDragging) return;
+        if (_isDragging || _isReturning) return;
         _originalSiblingIndex = transform.GetSiblingIndex();
         transform.SetAsLastSibling();
         transform.DOScale(_originalScale * HOVER_SCALE, ANIM_DURATION).SetEase(Ease.OutBack);

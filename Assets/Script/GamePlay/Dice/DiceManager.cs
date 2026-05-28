@@ -11,6 +11,9 @@ public class DiceManager : MonoBehaviour
 
     [Header("슬롯")]
     public Transform[] slots;
+    public Transform[] enemySlots;
+    public Transform[] enemyAttackSlots;
+    public Transform[] enemyDefenseSlots;
 
     [Header("모듈")]
     public DiceRoller diceRoller;
@@ -18,12 +21,14 @@ public class DiceManager : MonoBehaviour
     public bool isRolling => diceRoller != null && diceRoller.isRolling;
 
     public Dice[] panelDiceScript; //{ get; private set; }
+    public Dice[] enemyPanelDiceScript;
 
     private void Awake()
     {
         if(instance == null) instance = this;
         else Destroy(gameObject);
         panelDiceScript = new Dice[slots.Length];
+        enemyPanelDiceScript = new Dice[enemySlots.Length];
     }
 
     void Start()
@@ -52,6 +57,44 @@ public class DiceManager : MonoBehaviour
         panelDiceScript[slotIndex] = dice;
     }
 
+
+    #region 적 주사위 배치
+
+    public void EnemyPlaceDice(int slotIndex, DiceData data)
+    {
+        if (enemyPanelDiceScript[slotIndex] != null)
+        {
+            ObjectPool.instance.Return(enemyPanelDiceScript[slotIndex].gameObject);
+            enemyPanelDiceScript[slotIndex] = null;
+        }
+
+        GameObject obj = ObjectPool.instance.Get(data.dicePrefab);
+        obj.transform.SetParent(enemySlots[slotIndex], false);
+        obj.transform.localPosition = Vector3.zero;
+
+        Dice dice = obj.GetComponent<Dice>();
+        dice.Initialize(slotIndex, data);
+        enemyPanelDiceScript[slotIndex] = dice;
+    }
+
+    public void EnemyPlaceAttackDice(int slotIndex, Dice dice)
+    {
+        dice.transform.SetParent(enemyAttackSlots[slotIndex], false);
+        dice.transform.localPosition = Vector3.zero;
+        BattleManager.instance.SetEnemyAttackDice(dice);
+    }
+
+    public void EnemyPlaceDefenseDice(int slotIndex, Dice dice)
+    {
+        dice.transform.SetParent(enemyDefenseSlots[slotIndex], false);
+        dice.transform.localPosition = Vector3.zero;
+        BattleManager.instance.SetEnemyDefenseDice(dice);
+    }
+
+    #endregion
+
+
+
     public void ClearAllSlots()
     {
         for (int i = 0; i < panelDiceScript.Length; i++)
@@ -62,6 +105,32 @@ public class DiceManager : MonoBehaviour
                 panelDiceScript[i] = null;
             }
         }
+    }
+
+    public void ClearEnemyAllSlots()
+    {
+        for (int i = 0; i < enemyPanelDiceScript.Length; i++)
+        {
+            if (enemyPanelDiceScript[i] != null)
+            {
+                ObjectPool.instance.Return(enemyPanelDiceScript[i].gameObject);
+                enemyPanelDiceScript[i] = null;
+            }
+        }
+    }
+
+    public async UniTask<Dice[]> StartEnemyRolling()
+    {
+        Dice[] allDice = GetEnemyAllDice();
+        await diceRoller.StartRoll(allDice, rollArea);
+        return allDice;
+    }
+
+    public Dice[] GetEnemyAllDice()
+    {
+        Dice[] allDice = new Dice[enemyPanelDiceScript.Length];
+        enemyPanelDiceScript.CopyTo(allDice, 0);
+        return allDice;
     }
 
     public async UniTask<Dice[]> StartRolling()

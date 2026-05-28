@@ -8,6 +8,6 @@ public class ShieldItemSo : BattleItemSo
     public override void OnUse(BattleContext ctx)
     {
         ctx.Player.ShieldUp(shield);
-        ctx.OnPlayerDefend?.Invoke(shield);
+        ctx.EventBus?.TriggerPlayerDefend(ctx);
     }
 }

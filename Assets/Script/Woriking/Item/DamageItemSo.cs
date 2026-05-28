@@ -8,6 +8,6 @@ public class DamageItemSo : BattleItemSo
     public override void OnUse(BattleContext ctx)
     {
         ctx.Enemy.TakeDamage(damage);
-        ctx.OnEnemyHit?.Invoke(damage);
+        ctx.EventBus.TriggerHitEnemy(ctx, damage);
     }
 }

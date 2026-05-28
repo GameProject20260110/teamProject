@@ -17,4 +17,5 @@ MonoBehaviour:
   attackPower: 1
   enemyImage: {fileID: 4801227835787818748, guid: fcc2587eedde71f45baef9b8eeb215ba, type: 3}
   skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}
+  aiStrategy: {fileID: 11400000, guid: 602de5bc7d85ec1418071ab0cbf6a4f8, type: 2}
   rewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}

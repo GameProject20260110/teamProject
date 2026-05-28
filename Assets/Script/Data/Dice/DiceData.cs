@@ -1,19 +1,22 @@
 using System.Collections.Generic;
 using UnityEngine;
+using static BattleDiceData;
 
 [CreateAssetMenu(fileName = "DiceData", menuName = "Scriptable Objects/DiceData")]
 public class DiceData : ScriptableObject
 {
-    public enum DiceTiming { Rule, Roll, Calculate, After}
+    public enum DiceRole { Attack, Defense, Neutral }
 
     public int multiBonusScore = 1;
     public int plusBonusScore = 0;
 
     [Header("주사위 기본 정보")]
     public ScoreManager.DiceType type;
-    public DiceTiming timing;
     public int diceNum;
     public string abilityName;
+
+    [Header("주사위 종류")]
+    public DiceRole aiRole = DiceRole.Neutral;
 
     [Range(1, 5)]
     public int tier = 1;

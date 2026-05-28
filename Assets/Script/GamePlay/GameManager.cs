@@ -69,7 +69,7 @@ public class GameManager : MonoBehaviour
     public void NotifyAllUI()
     {
         int gold = PlayerManager.instance != null ? PlayerManager.instance.gold : 0;
-        int currentRound = RoundManager.instance != null ? RoundManager.instance.currentRound : 0;
+        int currentRound = 0;
 
         OnGoldChanged?.Invoke(gold);
         OnRoundAndGoalChanged?.Invoke(currentRound);
@@ -102,6 +102,11 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetShopBtnInteratable(true);
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
+
+        if(EnemyDeckManager.instance != null)
+        {
+            EnemyDeckManager.instance.DrawEnemyDice();
+        }
 
         if (DeckManager.instance != null)
         {
@@ -224,13 +229,31 @@ public class GameManager : MonoBehaviour
                 fakeValues.Add(1);
             }
         }
-        UiController.instance.ShowGameOverPanel(RoundManager.instance.currentRound);
+        UiController.instance.ShowGameOverPanel(1);
     }
 
     public void OnClickScoreConfirmButton()
     {
 
         OnClickScoreConfirm().Forget();
+    }
+
+    public async UniTask EnemyRoll()
+    {
+        Dice[] allDice = await diceManager.StartEnemyRolling();
+
+        var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
+
+        await UniTask.Delay(500);
+
+        if (VisualManager.instance != null)
+        {
+            await VisualManager.instance.PlayScoreEventSequence(allDice, result.events);
+        }
+
+        ProcessRollResult(result.finalScore, result.consumedItems);
+
+        EnemyAI.instance.PlaceDice(allDice);
     }
 
     public async UniTask OnClickScoreConfirm()
@@ -269,7 +292,7 @@ public class GameManager : MonoBehaviour
 
         try
         {
-            await BattleManager.instance.OnPlayerAttack();
+            await BattleManager.instance.EnemyDefense();
         }
         catch (OperationCanceledException)
         {
@@ -293,7 +316,7 @@ public class GameManager : MonoBehaviour
     {
         if(_isFirstRoll) return;
         if (PlayerManager.instance == null) return;
-        if (RoundManager.instance.currentRound <= 1) return;
+        //if (RoundManager.instance.currentRound <= 1) return;
 
         if(PlayerManager.instance != null)
         {
@@ -304,7 +327,8 @@ public class GameManager : MonoBehaviour
             GimmickManager.instance.ClearGimmick();
         }
 
-        RoundManager.instance.StartRound();
+        //RoundManager.instance.StartRound();
+        BattleInitalizer.instance.StartBattle();
     }
 
     public void OnClickShopBtn()
@@ -315,10 +339,12 @@ public class GameManager : MonoBehaviour
 
     public void OnClickNextRound()
     {
-        if (RoundManager.instance != null)
-        {
-            RoundManager.instance.GoNextRound();
-        }
+
+        BattleInitalizer.instance.GoNextRound();
+        //if (RoundManager.instance != null)
+        //{
+        //    RoundManager.instance.GoNextRound();
+        //}
         PlayerShopManager.instance.ClearRound = true;
         PlayerManager.instance.gameRerollCount = 3;
         PlayerManager.instance.isFirstRoll = true;
@@ -339,10 +365,10 @@ public class GameManager : MonoBehaviour
         {
             PlayerManager.instance.Save();
         }
-        if(PlayerStatsManager.instance != null)
-        {
-            PlayerStatsManager.instance.RecordGameEnd(RoundManager.instance.currentRound, true);
-        }
+        //if(PlayerStatsManager.instance != null)
+        //{
+        //    PlayerStatsManager.instance.RecordGameEnd(RoundManager.instance.currentRound, true);
+        //}
 
         SceneManager.LoadScene("HomeScreen");
     }

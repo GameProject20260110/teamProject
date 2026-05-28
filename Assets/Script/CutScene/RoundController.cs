@@ -13,7 +13,7 @@ public class RoundController : MonoBehaviour
     [SerializeField] private CardAppearEffect playerEffect;
     [SerializeField] private CardAppearEffect enemyEffect;
     [SerializeField] private RoundIntroController turnEffect;
-    [SerializeField] private BattlePanelAnimation battlePanel;
+    //[SerializeField] private BattlePanelAnimation battlePanel;
 
     [Header("∞‘¿” UI")]
     [SerializeField] private CanvasGroup playerUIGroup;
@@ -23,7 +23,7 @@ public class RoundController : MonoBehaviour
 
     private CancellationTokenSource cts;
 
-    void Start()
+    void Awake()
     {
         cts = new CancellationTokenSource();
     }
@@ -51,7 +51,7 @@ public class RoundController : MonoBehaviour
         await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
-        await PlayEffectAsync(battlePanel.Play, ct);
+        //await PlayEffectAsync(battlePanel.Play, ct);
         
         playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
         enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
@@ -63,7 +63,7 @@ public class RoundController : MonoBehaviour
            cancellationToken: ct
         );
 
-        BeginRoundLogic(currentRound);
+        await BeginRoundLogic(currentRound);
         roundIntroCanvas.gameObject.SetActive(false);      
     }
 
@@ -86,8 +86,9 @@ public class RoundController : MonoBehaviour
         return utcs.Task.AttachExternalCancellation(ct);
     }
 
-    private void BeginRoundLogic(int currentRound)
+    private async UniTask BeginRoundLogic(int currentRound)
     {
+        await GameManager.instance.EnemyRoll();
         UiController.instance.ShowGlowRerollBtn();
     }
 

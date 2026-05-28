@@ -21,7 +21,7 @@ public class ShopDescPopup : MonoBehaviour
         typeIcon.sprite = diceTypeSprite;
         typeText.text = data.type.ToString();
         nameText.text = data.abilityName;
-        timingText.text = data.timing.ToString();
+        timingText.text = "비어있음";
         Desc.text = data.Desc.ToString();
     }
 
@@ -31,7 +31,7 @@ public class ShopDescPopup : MonoBehaviour
         typeIcon.sprite = itemTypeSprite;
         nameText.text = data.itemName;
         typeText.text = "Item";
-        timingText.text = data.timing.ToString();
+        timingText.text = "비어있음";
         Desc.text = data.itemDesc.ToString();
     }
 }
