@@ -36,10 +36,9 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
         {
             case NodeType.Battle: icon.sprite = battleSprite; break;
             case NodeType.Shop: icon.sprite = shopSprite; break;
-            case NodeType.Event: icon.sprite = eventSprite; break;
+            case NodeType.Random: icon.sprite = eventSprite; break;
             case NodeType.Boss: icon.sprite = bossSprite; break;
         }
-
         icon.color = isVisited ? new Color(1, 1, 1, 0.4f) : Color.white;
     }
 

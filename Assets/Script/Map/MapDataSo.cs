@@ -1,4 +1,6 @@
 using System.Collections.Generic;
+using System.Xml.Schema;
+using Unity.VisualScripting;
 using UnityEngine;
 
 [System.Serializable]
@@ -13,6 +15,7 @@ public class LayerConfig
 {
     public List<NodeTypeWeight> nodeTypeWeights;
     public List<EnemyData> enemies;
+    public List<NodeTypeWeight> randomNodeWeight;
 }
 
 [CreateAssetMenu(fileName = "MapDataSo", menuName = "Stage/MapDataSo")]
@@ -42,6 +45,28 @@ public class MapDataSo : ScriptableObject
             if (random < current)
                 return w.nodeType;
         }
+        return NodeType.Battle;
+    }
+
+    // 랜덤 노드 타입은 randomNodeWeight에서 뽑음. config.nodeTypeWeights는 일반 노드 타입에서만 뽑음
+    public NodeType GetRandomNodeType(List<NodeTypeWeight> weights)
+    {
+        if (weights == null || weights.Count == 0) return NodeType.Battle;
+
+        int totalWeight = 0;
+        foreach (var w in weights)
+            totalWeight += w.weight;
+
+        int random = Random.Range(0, totalWeight);
+        int current = 0;
+
+        foreach (var w in weights)
+        {
+            current += w.weight;
+            if (random < current)
+                return w.nodeType;
+        }
+
         return NodeType.Battle;
     }
 

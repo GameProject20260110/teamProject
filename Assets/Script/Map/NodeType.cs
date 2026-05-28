@@ -2,6 +2,6 @@ public enum NodeType
 {
     Battle,
     Shop,
-    Event,
+    Random,
     Boss
 }

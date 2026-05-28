@@ -158,6 +158,14 @@ public class MainOption : MonoBehaviour
         else Debug.LogWarning($"PlayerManager: {PlayerManager.instance}, SceneController: {SceneController.instance}");
     }
 
+    public void OnMapDataResetClick()
+    {
+        Debug.Log("Reset Clicked");
+        MapSaveLoad.instance?.Delete();
+        ToggleSettingsPanel();
+        SceneController.instance?.ReloadCurrentScene();
+    }
+
     public void ScreenModePrev() => CycleScreenMode(-1);
     public void ScreenModNext() => CycleScreenMode(1);
 

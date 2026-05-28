@@ -228,6 +228,12 @@ public class MapManager : MonoBehaviour
                                 enemy = enemies[selectedNode.enemyDataIndex];
                         }
                     }
+
+                    if(enemy == null)
+                    {
+                        Debug.LogWarning("적 데이터가 없습니다.");
+                        return;
+                    }
                     BattleDataManager.instance?.SetBattleData(enemy);
                 }
                 SceneController.instance?.LoadGameScene();
@@ -238,11 +244,23 @@ public class MapManager : MonoBehaviour
                 break;
             case NodeType.Shop:
                 break;
-            case NodeType.Event:
+            case NodeType.Random:
+                MapNodeData randomNodeData = _generateNodes.Find(n => n.id == _previousNodeId);
+                if(randomNodeData != null)
+                {
+                    int layerIndex = randomNodeData.layer - 1;
+                    if(layerIndex >= 0 && layerIndex < mapData.layers.Count)
+                    {
+                        var weights = mapData.layers[layerIndex].randomNodeWeight;
+                        NodeType randomType = mapData.GetRandomNodeType(weights);
+                        HandleNodeType(randomType);
+                        return;
+                    }
+                }
                 break;
         }
     }
-
+    
     public void ClearMapSave()
     {
         MapSaveLoad.instance?.Delete();
