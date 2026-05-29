@@ -25,7 +25,7 @@ public class ShopDescPopup : MonoBehaviour
         Desc.text = data.Desc.ToString();
     }
 
-    public void UpdateUI(ItemSo data)
+    public void UpdateUI(BattleItemSo data)
     {    
         icon.sprite = data.itemIcon;
         typeIcon.sprite = itemTypeSprite;

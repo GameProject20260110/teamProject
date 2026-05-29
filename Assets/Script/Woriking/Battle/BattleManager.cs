@@ -36,6 +36,8 @@ public class BattleManager : MonoBehaviour
     private BattleEventBus _eventBus;
     private BattleContextFactory _ctxFactory;
     private BattleContextFactory _enemyctxFactory;
+    private DiceContextFactory _diceCtxFactory;
+    private DiceContextFactory _enemyDiceCtxFactory;
     private BattleSaveHandler _saveHandler;
 
     private void OnDestroy()
@@ -84,13 +86,12 @@ public class BattleManager : MonoBehaviour
         // 아이템 구독
         foreach (var item in ItemManager.instance.items)
             item.OnEquip(_eventBus);
-        foreach (var item in ItemManager.instance.Artifacts)
+        foreach (var item in ItemManager.instance.artifacts)
             item.OnEquip(_eventBus);
 
         _ctxFactory = new BattleContextFactory(
             playerData, enemyData,
             Enemytrans, Playertrans,
-            _attackDices, _defenseDices,
             _eventBus,
             _battleCts.Token,
             isPlayer : true
@@ -99,11 +100,13 @@ public class BattleManager : MonoBehaviour
         _enemyctxFactory = new BattleContextFactory(
             playerData, enemyData,
             Enemytrans, Playertrans,
-            _attackDices, _defenseDices,
             _eventBus,
             _battleCts.Token,
             isPlayer: false
         );
+
+        _diceCtxFactory = new DiceContextFactory(_ctxFactory.Create());
+        _enemyDiceCtxFactory = new DiceContextFactory(_enemyctxFactory.Create());
 
         battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
         battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
@@ -111,26 +114,26 @@ public class BattleManager : MonoBehaviour
         _saveHandler.Save(isPlayerTurn, isBattleActive, currentTurn);
     }
 
-    private void HandleHitPlayer(BattleContext ctx, int damage)
+    private void HandleHitPlayer(DiceContext ctx, int damage)
     {
         battleUI.UpdatePlayerShield(playerData.CurrentShield);
         battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
         battleUI.ShowDamageText(damage, isPlayer: false);
     }
 
-    private void HandleHitEnemy(BattleContext ctx, int damage)
+    private void HandleHitEnemy(DiceContext ctx, int damage)
     {
         battleUI.UpdateEnemyShield(enemyData.CurrentShield);
         battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
         battleUI.ShowDamageText(damage, isPlayer: true);
     }
 
-    private void HandleEnemyDefend(BattleContext ctx)
+    private void HandleEnemyDefend(DiceContext ctx)
     {
         battleUI.UpdateEnemyShield(enemyData.CurrentShield);
     }
 
-    private void HandlePlayerDefend(BattleContext ctx)
+    private void HandlePlayerDefend(DiceContext ctx)
     {
         battleUI.UpdatePlayerShield(playerData.CurrentShield);
     }
@@ -151,8 +154,6 @@ public class BattleManager : MonoBehaviour
         _defenseEnemyDices.Add(defenseEnemyDices);
     }
 
-    private int CalculateEnemyAttackPower() => UnityEngine.Random.Range(7, 15);
-
     public async UniTask EnemyDefense()
     {
         //if (!isBattleActive || isPlayerTurn) return;
@@ -163,7 +164,7 @@ public class BattleManager : MonoBehaviour
 
             if (dice == null) continue;
             await dice.Glow.ShowGlowAsync();
-            var ctx = _enemyctxFactory.Create(dice.MyState.originalValue, dice.MyState.diceData);
+            var ctx = _enemyDiceCtxFactory.Create(dice, _attackEnemyDices, _defenseEnemyDices);
             await dice.Effect.OnDefense(ctx);
             dice.Glow.HideGlow();
         }
@@ -190,7 +191,7 @@ public class BattleManager : MonoBehaviour
         foreach (var dice in _attackDices)
         {
             await dice.Glow.ShowGlowAsync();
-            var ctx = _ctxFactory.Create(dice.MyState.originalValue, dice.MyState.diceData);
+            var ctx = _diceCtxFactory.Create(dice, _attackDices, _defenseDices);
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
         }
@@ -225,7 +226,7 @@ public class BattleManager : MonoBehaviour
         foreach (var dice in _defenseDices)
         {
             await dice.Glow.ShowGlowAsync();
-            var ctx = _ctxFactory.Create(dice.MyState.originalValue, dice.MyState.diceData);
+            var ctx = _diceCtxFactory.Create(dice, _attackDices, _defenseDices);
             await dice.Effect.OnDefense(ctx);
             dice.Glow.HideGlow();
         }
@@ -256,7 +257,7 @@ public class BattleManager : MonoBehaviour
         {
             if (dice == null) continue;
             await dice.Glow.ShowGlowAsync();
-            var ctx = _enemyctxFactory.Create(dice.MyState.originalValue, dice.MyState.diceData);
+            var ctx = _enemyDiceCtxFactory.Create(dice, _attackEnemyDices, _defenseEnemyDices);
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
         }
@@ -286,76 +287,34 @@ public class BattleManager : MonoBehaviour
         }
     }
 
-    
-
-    //private async UniTask EnemyTurnRoutine()
-    //{
-    //    await UniTask.Delay(500, cancellationToken: _battleCts.Token);
-
-    //    int damage = enemyDamage;
-    //    var attackCompletion = new UniTaskCompletionSource<bool>();
-
-    //    GameObject skill = ObjectPool.instance.Get(EnemySkillPrefab);
-    //    skill.transform.position = Playertrans.position;
-
-    //    skill.GetComponent<Skill>().Init(new SkillContext
-    //    {
-    //        isPlayer = false,
-    //        damage = damage,
-    //        onHit = () =>
-    //        {
-    //            int actualDamage = playerData.TakeDamage(damage);
-    //            battleUI.UpdatePlayerShield(playerData.CurrentShield);
-    //            battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-    //            battleUI.ShowDamageText(actualDamage, isPlayer: true);
-    //            _eventBus.TriggerPlayerHit(_ctxFactory.Create());
-
-    //            if (PlayerManager.instance != null)
-    //            {
-    //                PlayerManager.instance.heart = playerData.CurrentHP;
-    //                PlayerManager.instance.Save();
-    //            }
-    //            _saveHandler.Save(isPlayerTurn, isBattleActive, currentTurn);
-    //        },
-    //        onEnd = () => attackCompletion?.TrySetResult(true),
-    //        startPos = Playertrans.position,
-    //        targetPos = Enemytrans.position
-    //    });
-
-    //    await attackCompletion.Task.AttachExternalCancellation(_battleCts.Token);
-
-    //    if (playerData.IsDead())
-    //    {
-    //        OnBattleEnd();
-    //        BattleInitalizer.instance.CompleteBattle(false);
-    //        //RoundManager.instance.CompleteRound(false);
-    //        return;
-    //    }
-
-    //    await UniTask.Delay(500, cancellationToken: _battleCts.Token);
-    //    isPlayerTurn = true;
-    //    currentTurn++;
-    //    await StartNewTurn();
-    //}
-
     private async UniTask StartNewTurn()
     {
-        var ctx = _ctxFactory.Create();
-        var enemyCtx = _enemyctxFactory.Create();
-        await enemyData.ProcessTurnStart(enemyCtx);
-        await playerData.ProcessTurnStart(ctx);
+        var battleCtx = _ctxFactory.Create();
+        var enemyBattleCtx = _enemyctxFactory.Create();
+
+        var diceCtx = new DiceContext { battle = battleCtx };
+        var enemyDiceCtx = new DiceContext { battle = enemyBattleCtx };
+
+        await enemyData.ProcessTurnStart(enemyDiceCtx);
+        await playerData.ProcessTurnStart(diceCtx);
+
 
         if (enemyData.IsDead())
         {
-            _eventBus.TriggerEnemyDead(ctx);
+            _eventBus.TriggerEnemyDead(battleCtx);
             await enemyDeathSequence.PlayDeathSequence(Enemytrans.position);
             OnBattleEnd();
-            //RoundManager.instance.CompleteRound(true);
             BattleInitalizer.instance.CompleteBattle(true);
             return;
         }
 
-        enemyDamage = CalculateEnemyAttackPower();
+        if (playerData.IsDead())
+        {
+            OnBattleEnd();
+            BattleInitalizer.instance.CompleteBattle(false);
+            return;
+        }
+
         playerData.ResetShield();
         enemyData.ResetShield();
 
@@ -364,6 +323,9 @@ public class BattleManager : MonoBehaviour
 
         DeckManager.instance.DrawDice();
         EnemyDeckManager.instance.DrawEnemyDice();
+ 
+        _diceCtxFactory = new DiceContextFactory(_ctxFactory.Create());
+        _enemyDiceCtxFactory = new DiceContextFactory(_enemyctxFactory.Create());
 
         foreach (var dice in _attackDices)
             dice.VFX?.ResetBuff();
@@ -374,7 +336,11 @@ public class BattleManager : MonoBehaviour
         foreach (var dice in _defenseEnemyDices)
             dice.VFX?.ResetBuff();
 
-        _eventBus.TriggerTurnStart(ctx);
+        _attackEnemyDices.Clear();
+        _defenseEnemyDices.Clear();
+        _eventBus.TriggerTurnStart(battleCtx);
+        await GameManager.instance.EnemyRoll();
+
 
         UiController.instance.ShowGlowRerollBtn();
         battleUI.UpdateCurrentTurn(currentTurn);
@@ -400,7 +366,7 @@ public class BattleManager : MonoBehaviour
         // 아이템 구독 해제
         foreach (var item in ItemManager.instance.items)
             item.OnUnequip(_eventBus);
-        foreach (var item in ItemManager.instance.Artifacts)
+        foreach (var item in ItemManager.instance.artifacts)
             item.OnUnequip(_eventBus);
     }
 
@@ -408,8 +374,8 @@ public class BattleManager : MonoBehaviour
     {
         if (!isBattleActive) return;
 
-        var ctx = _ctxFactory.Create();
-        item.OnUse(ctx);
+        var diceCtx = new DiceContext { battle = _ctxFactory.Create() };
+        item.OnUse(diceCtx);
 
         if (item.isConsumable)
         {

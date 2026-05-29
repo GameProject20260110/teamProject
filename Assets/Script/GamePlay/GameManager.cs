@@ -331,21 +331,11 @@ public class GameManager : MonoBehaviour
         BattleInitalizer.instance.StartBattle();
     }
 
-    public void OnClickShopBtn()
-    {
-        PlayerShopManager.instance.ClearRound = false;
-        PlayerShopManager.instance.OpenWithAnimation();
-    }
-
     public void OnClickNextRound()
     {
 
         BattleInitalizer.instance.GoNextRound();
-        //if (RoundManager.instance != null)
-        //{
-        //    RoundManager.instance.GoNextRound();
-        //}
-        PlayerShopManager.instance.ClearRound = true;
+
         PlayerManager.instance.gameRerollCount = 3;
         PlayerManager.instance.isFirstRoll = true;
 

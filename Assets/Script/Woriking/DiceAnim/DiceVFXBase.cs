@@ -38,8 +38,8 @@ public abstract class DiceVFXBase : MonoBehaviour
             buffText.transform.parent.gameObject.SetActive(false);
     }
 
-    public virtual UniTask PlayAttack(BattleContext ctx, int damage) => UniTask.CompletedTask;
-    public virtual UniTask PlayDefense(BattleContext ctx, int damage) => UniTask.CompletedTask;
+    public virtual UniTask PlayAttack(DiceContext ctx, int damage) => UniTask.CompletedTask;
+    public virtual UniTask PlayDefense(DiceContext ctx, int damage) => UniTask.CompletedTask;
 
     protected async UniTask ScalePulse(CancellationToken ct)
     {

@@ -12,11 +12,11 @@ public class EffectManager : MonoBehaviour
         else Destroy(gameObject);
     }
 
-    public void PlayBurnEffect(IDamageable target, int damage, BattleContext ctx, System.Action onComplete)
+    public void PlayBurnEffect(IDamageable target, int damage, DiceContext ctx, System.Action onComplete)
     {
         GameObject effect = ObjectPool.instance.Get(burnEffect);
 
-        Vector3 pos = ctx.IsPlayer? ctx.Positions.EnemyPosition : ctx.Positions.PlayerPosition;
+        Vector3 pos = ctx.IsPlayer? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
 
         Debug.Log(ctx.IsPlayer);
         effect.transform.position = pos;
@@ -27,9 +27,9 @@ public class EffectManager : MonoBehaviour
                 target.TakeDamageRaw(damage);
                 Debug.Log(target  + "," + damage + "," + ctx.IsPlayer);
 
-                // 나중에 isPlayer if문 추가
-                    ctx.EventBus.TriggerHitEnemy(ctx, damage);
-                    ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                if(ctx.IsPlayer) ctx.EventBus.TriggerHitEnemy(ctx, damage);
+                else ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                    
             },
             onEnd = () => onComplete?.Invoke()
         });

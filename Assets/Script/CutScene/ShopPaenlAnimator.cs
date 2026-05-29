@@ -31,9 +31,6 @@ public class ShopPanelAnimator : MonoBehaviour
         {
             element.alpha = 0f;
         }
-
-        if (!UiController.instance.backGround.activeSelf)
-            UiController.instance.backGround.SetActive(true);
             
 
         shopUIController.Initialize();

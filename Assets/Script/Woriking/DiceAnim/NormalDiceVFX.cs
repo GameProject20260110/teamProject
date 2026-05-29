@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class NormalDiceVFX : DiceVFXBase
 {
-    public override async UniTask PlayAttack(BattleContext ctx, int damage)
+    public override async UniTask PlayAttack(DiceContext ctx, int damage)
     {
         var completion = new UniTaskCompletionSource<bool>();
         var data = ctx.diceData.effectData;
@@ -12,7 +12,7 @@ public class NormalDiceVFX : DiceVFXBase
         Vector3 startPos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
         Vector3 targetPos = ctx.IsPlayer ? ctx.Positions.EnemyPosition : ctx.Positions.PlayerPosition;
 
-        skill.transform.position = startPos;
+        skill.transform.position = targetPos;
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = ctx.IsPlayer,
@@ -39,7 +39,7 @@ public class NormalDiceVFX : DiceVFXBase
         await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
     }
 
-    public override async UniTask PlayDefense(BattleContext ctx, int damage)
+    public override async UniTask PlayDefense(DiceContext ctx, int damage)
     {
         var completion = new UniTaskCompletionSource<bool>();
         var data = ctx.diceData.effectData;

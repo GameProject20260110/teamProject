@@ -68,18 +68,18 @@ public class ItemSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
         var buyItem = dragObj.GetComponent<BuyItem>();
         if (buyItem != null && buyItem.Data != null)
         {
-            if(buyItem.Data is Ring ring && !ring.CanUse())
-            {
-                Debug.Log("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
-                ShopUIController.instance.notificationUI.Show("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
-                return;
-            }
-            if(buyItem.Data is Bag bag && !bag.CanUse())
-            {
-                Debug.Log("슬롯이 모두 열려있습니다.");
-                ShopUIController.instance.notificationUI.Show("슬롯이 모두 열려있습니다.");
-                return;
-            }
+            //if(buyItem.Data is Ring ring && !ring.CanUse())
+            //{
+            //    Debug.Log("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
+            //    ShopUIController.instance.notificationUI.Show("주사위 슬롯과 여분 슬롯의 자리가 없습니다.");
+            //    return;
+            //}
+            //if(buyItem.Data is Bag bag && !bag.CanUse())
+            //{
+            //    Debug.Log("슬롯이 모두 열려있습니다.");
+            //    ShopUIController.instance.notificationUI.Show("슬롯이 모두 열려있습니다.");
+            //    return;
+            //}
         }
 
         eventData.pointerDrag.transform.SetParent(transform);

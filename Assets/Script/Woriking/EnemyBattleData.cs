@@ -62,7 +62,7 @@ public class EnemyBattleData : IDamageable
         }
     }
 
-    public async UniTask ProcessTurnStart(BattleContext ctx)
+    public async UniTask ProcessTurnStart(DiceContext ctx)
     {
         foreach (var effect in statusEffects)
             await effect.OnTurnStart(this, ctx);

@@ -1,5 +1,4 @@
 using Cysharp.Threading.Tasks;
-using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
@@ -10,7 +9,7 @@ public class BurnEffect : StatusEffect
         value = damage;
     }
 
-    public override async UniTask OnTurnStart(IDamageable target, BattleContext ctx)
+    public override async UniTask OnTurnStart(IDamageable target, DiceContext ctx)
     {
         var completion = new UniTaskCompletionSource<bool>();
         EffectManager.instance.PlayBurnEffect(target, value, ctx, () => completion.TrySetResult(true));

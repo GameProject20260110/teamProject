@@ -3,10 +3,11 @@ using UnityEngine;
 
 public class FireDiceVFX : DiceVFXBase
 {
-    public override async UniTask PlayAttack(BattleContext ctx, int damage)
+    public override async UniTask PlayAttack(DiceContext ctx, int damage)
     {
         var data = ctx.diceData.effectData as FireEffectData;
         var completion = new UniTaskCompletionSource<bool>();
+        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
 
         Vector3 startPos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
         Vector3 targetPos = ctx.IsPlayer ? ctx.Positions.EnemyPosition : ctx.Positions.PlayerPosition;
@@ -16,7 +17,7 @@ public class FireDiceVFX : DiceVFXBase
         else
             ctx.Player.ApplyStatusEffect(new BurnEffect(data.burnDamage, data.burnDuration));
 
-        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
+        
         skill.transform.position = startPos;
 
         skill.GetComponent<Skill>().Init(new SkillContext
@@ -44,7 +45,7 @@ public class FireDiceVFX : DiceVFXBase
         await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
     }
 
-    public override async UniTask PlayDefense(BattleContext ctx, int damage)
+    public override async UniTask PlayDefense(DiceContext ctx, int damage)
     {
         var data = ctx.diceData.effectData as FireEffectData;
         var completion = new UniTaskCompletionSource<bool>();

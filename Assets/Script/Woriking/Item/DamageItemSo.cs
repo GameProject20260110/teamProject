@@ -5,7 +5,7 @@ public class DamageItemSo : BattleItemSo
 {
     public int damage;
 
-    public override void OnUse(BattleContext ctx)
+    public override void OnUse(DiceContext ctx)
     {
         ctx.Enemy.TakeDamage(damage);
         ctx.EventBus.TriggerHitEnemy(ctx, damage);
