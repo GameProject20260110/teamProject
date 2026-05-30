@@ -37,7 +37,7 @@ public abstract class BuyPurchasable<T> : MonoBehaviour, IBeginDragHandler,
     protected abstract void OpenDescPopup();
     protected abstract bool OnBuy();
     protected abstract bool OnSell();
-    protected abstract void OnSwap(BuyPurchasable<T> other);
+    //protected abstract void OnSwap(BuyPurchasable<T> other);
 
     // === virtual===
     public virtual bool CanBeginDrag() => true;
@@ -202,11 +202,11 @@ public abstract class BuyPurchasable<T> : MonoBehaviour, IBeginDragHandler,
             {
                 var otherItem = other.GetComponentInChildren<BuyItem>(true);
                 otherItem.gameObject.SetActive(true);
-                OnSwap(otherItem.GetComponent<BuyPurchasable<T>>());
+                //OnSwap(otherItem.GetComponent<BuyPurchasable<T>>());
                 gameObject.SetActive(false);
             }
-            else if(this is BuyDice) 
-                OnSwap(other.GetComponent<BuyPurchasable<T>>());
+            //else if(this is BuyDice) 
+                //OnSwap(other.GetComponent<BuyPurchasable<T>>());
         }
         else if (other.CompareTag(DropTag))
         {
@@ -216,7 +216,7 @@ public abstract class BuyPurchasable<T> : MonoBehaviour, IBeginDragHandler,
                 return;
             }
             
-            OnSwap(other.GetComponent<BuyPurchasable<T>>());
+            //OnSwap(other.GetComponent<BuyPurchasable<T>>());
         }
 
         RevertToParent();

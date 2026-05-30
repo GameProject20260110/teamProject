@@ -8,13 +8,13 @@ public class ItemGachaTable : ScriptableObject
     [System.Serializable]
     public class ItemWeight
     {
-        public ItemSo _item;
+        public BattleItemSo _item;
         public int weight;
     }
 
     public List<ItemWeight> items;
 
-    public ItemSo Roll()
+    public BattleItemSo Roll()
     {
         int total = 0;
         int weight = 0;

@@ -14,7 +14,9 @@ public class DicePanelManager : MonoBehaviour
 
     [Header("패널")]
     public AttackPanelUI attackPanel;
+    public AttackPanelUI attackEnemyPanel;
     public DefensePanelUI defensePanel;
+    public DefensePanelUI defenseEnemyPanel;
 
     [Header("배경 판때기")]
     public RectTransform attackPanelBg;

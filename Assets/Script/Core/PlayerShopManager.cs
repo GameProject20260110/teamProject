@@ -1,36 +1,27 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
 
 public class PlayerShopManager : MonoBehaviour
 {
     public static PlayerShopManager instance;
 
-    private const int EXTRA_DICE_SLOT_INDEX = 6;
-
     public int TempGold { get; private set; }
     public int RerollCount { get; private set; }
     public int RerollCost => BaseRerollCost + RerollCount;
 
     public List<DiceData> TempDices = new();
-    public List<ItemSo> TempItems = new();
+    public List<BattleItemSo> TempItems = new();
     public List<ItemSo> pendingConsumables = new List<ItemSo>();
-    public DiceData ExtraDice;
 
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
     public int BaseRerollCost => baseRerollCost;
-    public int maxShopCount = 3;
-    public int currentShopCount = 3;
-
-    public bool ClearRound = false;
 
     [Header("UI References")]
     [SerializeField] private GameObject shopCanvas;
     [SerializeField] private RectTransform shopPanel;
     [SerializeField] private ShopUIController shopUIController;
-    //[SerializeField] private TextMeshProUGUI shopCountText;
     [SerializeField] private ShopPanelAnimator shopAnimator;
 
     public event System.Action<int> OnGoldChanged;
@@ -46,18 +37,15 @@ public class PlayerShopManager : MonoBehaviour
     public void Open()
     {        
         
-        var player = PlayerManager.instance;
+        var Resource = ResourceManager.instance;
+        var Deck = PlayerDeck.instance;
+        var Item = ItemManager.instance;
 
-        TempGold = player.gold;
+        TempGold = Resource.gold;
         RerollCount = 0;
 
-        currentShopCount = PlayerManager.instance.ShopCount;
-        currentShopCount--;
-        //shopCountText.text = $"{currentShopCount} / {maxShopCount}";
-
-        TempDices = new List<DiceData>(player.dices);
-        TempItems = new List<ItemSo>(player.items);
-        ExtraDice = player.extraDice;
+        TempDices = new List<DiceData>(Deck.inventory);
+        TempItems = new List<BattleItemSo>(Item.items);
 
         IsOpen = true;
         OnGoldChanged?.Invoke(TempGold);
@@ -65,13 +53,7 @@ public class PlayerShopManager : MonoBehaviour
     }
 
     public async void OpenWithAnimation()
-    {
-        if (PlayerManager.instance.ShopCount <= 0)
-        {
-            Debug.Log("상점을 열 수 없습니다.");
-            return;
-        }
-
+    {       
         Open();
         shopCanvas.SetActive(true);
         if (shopAnimator != null && shopAnimator.gameObject != null)
@@ -92,16 +74,17 @@ public class PlayerShopManager : MonoBehaviour
             return;
         }
 
-        var player = PlayerManager.instance;
+        var Resource = ResourceManager.instance;
+        var Deck = PlayerDeck.instance;
+        var Item = ItemManager.instance;
 
-        player.ShopCount = currentShopCount;
+        Resource.gold = TempGold;
+        Deck.inventory = new List<DiceData>(TempDices);
+        Item.items = new List<BattleItemSo>(TempItems);
 
-        player.gold = TempGold;
-        player.dices = new List<DiceData>(TempDices);
-        player.items = new List<ItemSo>(TempItems);
-        player.extraDice = ExtraDice;
-
-        player.Save();
+        Resource.Save();
+        Deck.Save();
+        Item.Save();
         IsOpen = false;
     }
 
@@ -128,13 +111,10 @@ public class PlayerShopManager : MonoBehaviour
 
         SpendGold(cost);
 
-        if(slotIndex == 6) ExtraDice = dice;
-        else TempDices[slotIndex] = dice;
-
         return true;
     }
 
-    public bool TryPurchaseItem(ItemSo item, int slotIndex)
+    public bool TryPurchaseItem(BattleItemSo item, int slotIndex)
     {
         int cost = LuckyStone.CalcDiscount(item.gold);
         if (!HasEnoughGold(cost)) return false;
@@ -144,25 +124,13 @@ public class PlayerShopManager : MonoBehaviour
         return true;
     }
 
-    public bool TryPurchaseSpecialSlot(int cost, int slotIndex)
-    {
-        if (!HasEnoughGold(cost)) return false;
-
-        SpendGold(cost);
-        PlayerManager.instance.SpecialSlots[slotIndex] = true;
-        PlayerManager.instance.ShopLevel++;
-
-        return true;
-    }
-
     public void SellDice(DiceData dice, int slotIndex, int sellPrice)
     {
-        if (slotIndex == 6) ExtraDice = PlayerManager.instance.defaultDice;
-        else TempDices[slotIndex] = PlayerManager.instance.defaultDice;
+        TempDices[slotIndex] = PlayerManager.instance.defaultDice;
         GainGold(sellPrice);
     }
 
-    public void SellItem(ItemSo item, int slotIndex, int sellPrice)
+    public void SellItem(BattleItemSo item, int slotIndex, int sellPrice)
     {
         TempItems[slotIndex] = null;
         GainGold(sellPrice);
@@ -178,11 +146,8 @@ public class PlayerShopManager : MonoBehaviour
     }
 
     public void SetDiceAtSlot(int slotIndex, DiceData data)
-    {
-        if (slotIndex == EXTRA_DICE_SLOT_INDEX)
-            ExtraDice = data;
-        else 
-            TempDices[slotIndex] = data;
+    { 
+        TempDices[slotIndex] = data;
     }
 
     //---------- Private -------------

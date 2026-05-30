@@ -94,6 +94,12 @@ public class RoundManager : MonoBehaviour
             DeckManager.instance.DrawDice();       
         }
 
+        if(EnemyDeckManager.instance != null)
+        {
+            EnemyDeckManager.instance.InitializeDeck();
+            EnemyDeckManager.instance.DrawEnemyDice();
+        }
+
         if (BattleManager.instance != null)
         {
             BattleManager.instance.InitializeBattle();

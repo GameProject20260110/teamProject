@@ -71,10 +71,14 @@ public class ItemDragHandler : MonoBehaviour,
         transform.SetParent(originalParent, true);
         transform.SetSiblingIndex(originalSiblingIndex);
         
-        UiController.instance.ToggleItemDragPanel();
+        
 
         if (!isDropped)
+        {
+            UiController.instance.ToggleItemDragPanel();
             ReturnToOrigin();
+        }
+            
         else
             Destroy(gameObject);
     }
@@ -82,10 +86,14 @@ public class ItemDragHandler : MonoBehaviour,
     public void OnDropped()
     {
         isDropped = true;
+        UiController.instance.ToggleItemDragPanel();
     }
 
     private void ReturnToOrigin()
-    {    
-        rect.DOAnchorPos(originalPosition, 0.3f).SetEase(Ease.OutQuad);
+    {
+        itemCard.SetReturning(true);
+        rect.DOAnchorPos(originalPosition, 0.3f)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => itemCard.SetReturning(false));
     }
 }

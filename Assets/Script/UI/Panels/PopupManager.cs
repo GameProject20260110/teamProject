@@ -58,24 +58,18 @@ public class PopupManager : MonoBehaviour
             int gold = PlayerShopManager.instance != null && PlayerShopManager.instance.IsOpen ? 
                 PlayerShopManager.instance.TempGold : PlayerManager.instance.gold;
             playerGold.text = gold.ToString();
-            playerRound.text = PlayerManager.instance.currentRound.ToString();
         }
 
         if (PlayerShopManager.instance != null)
         {
             PlayerShopManager.instance.OnGoldChanged += UpdateGold;
-            var text = StartBtn.GetComponentInChildren<TextMeshProUGUI>();
-            if (PlayerShopManager.instance.ClearRound) text.text = "◆ 다음 라운드 ◆";
-            else text.text = "◆ 돌아가기 ◆";
         }
 
         if (StartBtn != null) 
             StartBtn.onClick.AddListener(() => PlayerShopManager.instance.CommitWithAnimation());           
 
         if(SettingsBtn != null)
-            SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());
-
-            
+            SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());           
     }
 
     private void OnDestroy()
@@ -86,8 +80,7 @@ public class PopupManager : MonoBehaviour
 
     public void SetStatus()
     {
-        playerGold.text = PlayerManager.instance.gold.ToString();
-        playerRound.text = PlayerManager.instance.currentRound.ToString();
+        playerGold.text = ResourceManager.instance.gold.ToString();
     }
 
     public void DescOpenPopup(DiceData data)
@@ -95,7 +88,8 @@ public class PopupManager : MonoBehaviour
         DescPopup.gameObject.SetActive(true);
         DescPopup.UpdateUI(data);
     }
-    public void DescOpenPopup(ItemSo data)
+
+    public void DescOpenPopup(BattleItemSo data)
     {
         DescPopup.gameObject.SetActive(true);
         DescPopup.UpdateUI(data);
@@ -109,7 +103,7 @@ public class PopupManager : MonoBehaviour
         dicePopup.gameObject.SetActive(true);
     }
 
-    public void OpenPopup(ItemSo data, RectTransform targetRect)
+    public void OpenPopup(BattleItemSo data, RectTransform targetRect)
     {
         if (itemDesc == null) return;
         this.itemDesc.text = data.itemDesc;

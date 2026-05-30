@@ -1,27 +1,27 @@
 ﻿using UnityEngine;
 
-public class BuyItem : BuyPurchasable<ItemSo>
+public class BuyItem : BuyPurchasable<BattleItemSo>
 {
     public ItemSlot Slot;
 
     protected override string DropTag => "BuyItem";
     protected override string SlotTag => "Inventory";
     protected override int GetCost() => LuckyStone.CalcDiscount(Data.gold);
-    protected override int GetSellPrice() => Data.sell;
+    protected override int GetSellPrice() => 1;
     protected override string GetItemName() => Data.itemName;
-    
+
 
     protected override void OpenPopup() =>
         PopupManager.instance.OpenPopup(Data, descPosition);
 
     protected override void OpenDescPopup() =>
         PopupManager.instance.DescOpenPopup(Data);
-    
-    public int GetTier() => Data.tier;
+
+    public int GetTier() => 1;
 
     #region Initialization
 
-    public void UpdateInfo(ItemSo item, bool isBought)
+    public void UpdateInfo(BattleItemSo item, bool isBought)
     {
         bought = isBought;
         Slot = GetComponentInParent<ItemSlot>();
@@ -39,12 +39,12 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     #region Data Managment
 
-    public void ChangeItemInfo(ItemSo item) => ApplyData(item);
+    public void ChangeItemInfo(BattleItemSo item) => ApplyData(item);
 
-    protected override void ApplyData(ItemSo data)
-    {      
+    protected override void ApplyData(BattleItemSo data)
+    {
         Data = data;
-        if(Data != null) img.sprite = data.itemIcon;
+        if (Data != null) img.sprite = data.itemIcon;
         base.ApplyData(data);
     }
 
@@ -71,7 +71,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
             return existingItem != null && existingItem.gameObject.activeSelf;
         }
         return true;
-        
+
     }
 
     #endregion
@@ -89,7 +89,7 @@ public class BuyItem : BuyPurchasable<ItemSo>
         {
             targetItem.gameObject.SetActive(true);
             targetItem.UpdateInfo(Data, true);
-            if(Data is Ring)
+            if (Data is Ring)
             {
                 targetItem.gameObject.SetActive(false);
             }
@@ -104,20 +104,21 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     protected override bool OnBuy()
     {
-        Slot = GetComponentInParent<ItemSlot>();
-        if (Data is Ring ring && !ring.CanUse())
-        {
-            return false;
-        }
-        if (Data is Bag bag && !bag.CanUse()) return false;
-        bool success = PlayerShopManager.instance.TryPurchaseItem(Data, Slot.slotIndex);
-        if (success && Data.isConsumable) 
-        {
-            Data.Consumable();
-            PlayerShopManager.instance.TempItems[Slot.slotIndex] = null;
-            PlayerShopManager.instance.pendingConsumables.Add(Data);
-        }
-        return success;
+        //Slot = GetComponentInParent<ItemSlot>();
+        //if (Data is Ring ring && !ring.CanUse())
+        //{
+        //    return false;
+        //}
+        //if (Data is Bag bag && !bag.CanUse()) return false;
+        //bool success = PlayerShopManager.instance.TryPurchaseItem(Data, Slot.slotIndex);
+        //if (success && Data.isConsumable)
+        //{
+        //    Data.Consumable();
+        //    PlayerShopManager.instance.TempItems[Slot.slotIndex] = null;
+        //    PlayerShopManager.instance.pendingConsumables.Add(Data);
+        //}
+        //return success;
+        return false;
     }
 
     protected override bool OnSell()
@@ -133,18 +134,18 @@ public class BuyItem : BuyPurchasable<ItemSo>
 
     #region Swap & Move
 
-    protected override void OnSwap(BuyPurchasable<ItemSo> other)
-    {
-        var otherItem = (BuyItem)other;
+    //protected override void OnSwap(BuyPurchasable<ItemSo> other)
+    //{
+    //    //var otherItem = (BuyItem)other;
 
-        ItemSo tmp = otherItem.Data;
-        
-        PlayerShopManager.instance.TempItems[Slot.slotIndex] = tmp;
-        PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = Data;
+    //    //ItemSo tmp = otherItem.Data;
 
-        otherItem.ApplyData(Data);
-        ApplyData(tmp);      
-    }
+    //    //PlayerShopManager.instance.TempItems[Slot.slotIndex] = tmp;
+    //    //PlayerShopManager.instance.TempItems[otherItem.Slot.slotIndex] = Data;
+
+    //    //otherItem.ApplyData(Data);
+    //    //ApplyData(tmp);
+    //}
 
     #endregion
 }

@@ -56,7 +56,7 @@ public class GamePopupManager : MonoBehaviour
         DescPopup.UpdateUI(data);
     }
 
-    public void DescOpenPopup(ItemSo data)
+    public void DescOpenPopup(BattleItemSo data)
     {
         DescPopup.gameObject.SetActive(true);
         DescPopup.UpdateUI(data);

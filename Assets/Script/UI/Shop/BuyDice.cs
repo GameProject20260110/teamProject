@@ -113,17 +113,17 @@ public class BuyDice : BuyPurchasable<DiceData>
 
     #region Swap & Move
 
-    protected override void OnSwap(BuyPurchasable<DiceData> other)
-    {
-        var otherDice = (BuyDice)other;
+    //protected override void OnSwap(BuyPurchasable<DiceData> other)
+    //{
+    //    var otherDice = (BuyDice)other;
 
-        DiceData tmp = otherDice.Data;
-        otherDice.ApplyData(Data);
-        ApplyData(tmp);
+    //    DiceData tmp = otherDice.Data;
+    //    otherDice.ApplyData(Data);
+    //    ApplyData(tmp);
 
-        PlayerShopManager.instance.SetDiceAtSlot(Slot.slotIndex, Data);
-        PlayerShopManager.instance.SetDiceAtSlot(otherDice.Slot.slotIndex, otherDice.Data);        
-    }
+    //    PlayerShopManager.instance.SetDiceAtSlot(Slot.slotIndex, Data);
+    //    PlayerShopManager.instance.SetDiceAtSlot(otherDice.Slot.slotIndex, otherDice.Data);        
+    //}
 
     #endregion
 

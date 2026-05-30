@@ -36,6 +36,7 @@ public class ShopUIController : MonoBehaviour
     {
         if(instance == null) instance = this;
         else Destroy(gameObject);
+
     }
 
     public void Initialize()
@@ -43,8 +44,10 @@ public class ShopUIController : MonoBehaviour
         InitializeShop();
         ReRoll();        
 
-        AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
+        //AudioManager.instance.PlayBgm(AudioManager.Bgm.Shop, true);
         if (notificationUI != null) notificationUI.gameObject.SetActive(false);
+
+        PlayerShopManager.instance.OpenWithAnimation();
     }
 
     #region Shop Managment
@@ -93,10 +96,10 @@ public class ShopUIController : MonoBehaviour
     {
         int childCount = myDicePanel.transform.childCount;
 
-        var extraSlot = extraDiceSlot.GetComponent<ItemSlot>();
-        extraSlot.SetSpecialSlot(true);
-        var extraDice = PlayerShopManager.instance.ExtraDice ?? PlayerManager.instance.defaultDice;
-        extraSlot.GetComponentInChildren<BuyDice>().UpdateDiceInfo(extraDice, true);
+        //var extraSlot = extraDiceSlot.GetComponent<ItemSlot>();
+        //extraSlot.SetSpecialSlot(true);
+        //var extraDice = PlayerShopManager.instance.ExtraDice ?? PlayerManager.instance.defaultDice;
+        //extraSlot.GetComponentInChildren<BuyDice>().UpdateDiceInfo(extraDice, true);
 
         for (int i = 0; i < childCount; i++)
         {

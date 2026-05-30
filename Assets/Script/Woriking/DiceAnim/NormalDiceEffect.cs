@@ -2,14 +2,14 @@ using Cysharp.Threading.Tasks;
 
 public class NormalDiceEffect : DiceEffectBase
 {
-    public override async UniTask OnAttack(BattleContext ctx)
+    public override async UniTask OnAttack(DiceContext ctx)
     {
-        await vfx.PlayAttack(ctx, ctx.BaseDamage);
+        await vfx.PlayAttack(ctx, ctx.baseDamage);
     }
 
-    public override async UniTask OnDefense(BattleContext ctx)
+    public override async UniTask OnDefense(DiceContext ctx)
     {
-        int finalShield = ctx.BaseDamage + ctx.diceData.effectData.bonusShield;
+        int finalShield = ctx.baseDamage + ctx.diceData.effectData.bonusShield;
 
         if (ctx.diceData.effectData.bonusShield > 0)
             await vfx.PlayBuff(ctx.diceData.effectData.bonusShield, ctx.CancellationToken);

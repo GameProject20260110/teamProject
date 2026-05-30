@@ -6,18 +6,21 @@ using UnityEngine;
 [System.Serializable]
 public class EnemyBattleData : IDamageable
 {
-    private BaseEnemyData _data;  // ���� ����
+    private BaseEnemyData _data;
     private int currentHP;
-    private List<StatusEffect> statusEffects = new();  // ��, �� ��
+    private int currentShield;
+    private List<StatusEffect> statusEffects = new();
 
     public int MaxHp => _data.maxHp;
     public int CurrentHP => currentHP;
+    public int CurrentShield => currentShield;
     public IReadOnlyList<StatusEffect> StatusEffects => statusEffects;
 
     public void Initialize(BaseEnemyData data)
     {
         _data = data;
         currentHP = data.maxHp;
+        currentShield = 0;
         statusEffects.Clear();
     }
 
@@ -25,19 +28,25 @@ public class EnemyBattleData : IDamageable
     {
         _data = data;
         currentHP = savedHP;
+        currentShield = 0;
         statusEffects.Clear();
     }
 
-    public void TakeDamage(int damage)
+    public int TakeDamage(int damage)
     {
-        currentHP -= damage;
-        currentHP = Mathf.Max(0, currentHP);
+        int actualDamage = Mathf.Max(0, damage - currentShield);
+        currentShield = Mathf.Max(0, currentShield - damage);
+        currentHP = Mathf.Max(0, currentHP - actualDamage);
+        return actualDamage;
     }
 
     public void TakeDamageRaw(int damage)
     {
         currentHP = Mathf.Max(0, currentHP - damage);
     }
+
+    public void ShieldUp(int amount) => currentShield += amount;
+    public void ResetShield() => currentShield = 0;
 
     public void ApplyStatusEffect(StatusEffect effect)
     {
@@ -53,8 +62,7 @@ public class EnemyBattleData : IDamageable
         }
     }
 
-    // �߰� - �� �� ���۸��� ȣ��
-    public async UniTask ProcessTurnStart(BattleContext ctx)
+    public async UniTask ProcessTurnStart(DiceContext ctx)
     {
         foreach (var effect in statusEffects)
             await effect.OnTurnStart(this, ctx);
@@ -62,8 +70,5 @@ public class EnemyBattleData : IDamageable
         statusEffects.RemoveAll(e => e.Tick());
     }
 
-    public bool IsDead()
-    {
-        return currentHP <= 0;
-    }
+    public bool IsDead() => currentHP <= 0;
 }

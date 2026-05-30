@@ -12,13 +12,13 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI playerHPText;
     [SerializeField] private TextMeshProUGUI enemyHPText;
     [SerializeField] private TextMeshProUGUI playerShieldText;
+    [SerializeField] private TextMeshProUGUI enemyShieldText;
     [SerializeField] private TextMeshProUGUI currentTurn;
 
     [Header("Damage Text (Optional)")]
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
-    [SerializeField] private TextMeshProUGUI enemyAttackAmount;
     [SerializeField] private RoundController turnUI;
 
     [Header("Shield")]
@@ -34,15 +34,17 @@ public class BattleUI : MonoBehaviour
             playerHPText.text = $"{current}/{max}";
     }
 
-    public void UpdateEnemyAttackAmount(int current)
-    {
-        enemyAttackAmount.text = current.ToString();
-    }
-
     public void UpdatePlayerShield(int current)
     {
         current = current < 0 ? 0 : current;
         playerShieldText.text = current.ToString();
+    }
+
+    public void UpdateEnemyShield(int current)
+    {
+        Debug.Log(1);
+        current = current < 0 ? 0 : current;
+        enemyShieldText.text = current.ToString();
     }
 
     public void UpdateEnemyHP(int current, int max)
