@@ -20,7 +20,7 @@ public class RewardData
     public DiceData dice;
     public int goldAmount;
     public int healAmount;
-    public BattleItemSo item;
+    public ItemWeightTable itemTable;
 }
 
 [CreateAssetMenu(fileName = "RewardDataSo", menuName = "Battle/RewardDataSo")]

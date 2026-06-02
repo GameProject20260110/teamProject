@@ -383,6 +383,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b8919cabe00d0b4180dbb66df1af64f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardGlow
+  glowColor1: {r: 0, g: 1.5750457, b: 4.237095, a: 1}
+  glowColor2: {r: 0.7137255, g: 1.4980392, b: 0.2901961, a: 1}
 --- !u!1 &5961308773154497834
 GameObject:
   m_ObjectHideFlags: 0

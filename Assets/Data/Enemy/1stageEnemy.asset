@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 1stageEnemy
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
   enemyName: a
-  maxHp: 23
+  maxHp: 1
   attackPower: 1
   enemyImage: {fileID: 4801227835787818748, guid: fcc2587eedde71f45baef9b8eeb215ba, type: 3}
   skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}

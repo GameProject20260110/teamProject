@@ -19,6 +19,8 @@ public class RewardPanelUI : MonoBehaviour
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
+        rewardPanel.SetActive(false);
+
         if (skipButton != null)
             skipButton.onClick.AddListener(OnSkipButton);
     }
@@ -51,21 +53,25 @@ public class RewardPanelUI : MonoBehaviour
 
         foreach(var reward in rewards)
         {
+            // 아이템 카드 아이템 미리 결정
+            BattleItemSo preSelectedItem = null;
+            if ((reward.rewardType == RewardType.ActiveItem || reward.rewardType == RewardType.PassiveItem) && reward.itemTable != null)
+                preSelectedItem = reward.itemTable.GetRandomItem();
             GameObject cardObj = Instantiate(rewardCardPrefab, cardContainer);
             RewardCardUI cardUI = cardObj.GetComponent<RewardCardUI>();
-            cardUI.SetUp(reward, OnRewardSelected);
+            cardUI.SetUp(reward, preSelectedItem, (r, item) => OnRewardSelected(r, item));
             _spawnedCards.Add(cardObj);
         }
     }
 
-    private void OnRewardSelected(RewardData reward)
+    private void OnRewardSelected(RewardData reward, BattleItemSo preSelectedItem)
     {
-        ApplyReward(reward);
+        ApplyReward(reward, preSelectedItem);
         Hide();
         GoToMap();
     }
 
-    private void ApplyReward(RewardData reward)
+    private void ApplyReward(RewardData reward, BattleItemSo preSelecteItem = null)
     {
         switch(reward.rewardType)
         {
@@ -94,11 +100,11 @@ public class RewardPanelUI : MonoBehaviour
                 break;
             case RewardType.PassiveItem:
             case RewardType.ActiveItem:
-                if (reward.item != null)
+                if (preSelecteItem != null)
                 {
-                    ItemManager.instance?.items.Add(reward.item);
+                    ItemManager.instance?.items.Add(preSelecteItem);
                     ItemManager.instance?.Save();
-                    Debug.Log($"{reward.item.itemName} 아이템 획득");
+                    Debug.Log($"{preSelecteItem.itemName} 아이템 획득");
                 }
                 break;
         }
