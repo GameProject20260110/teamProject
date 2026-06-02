@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62cb41fa54fe559428150dd79006f878, type: 3}
+  m_Name: ItemWeightTable_Layer_2
+  m_EditorClassIdentifier: Assembly-CSharp::ItemWeightTable
+  items:
+  - item: {fileID: 11400000, guid: 60d3f419e26ffb84db1e5eefcd9eb3ce, type: 2}
+    weight: 5
+  - item: {fileID: 11400000, guid: 8607b753db44527478720e8985bef65a, type: 2}
+    weight: 5
