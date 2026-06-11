@@ -1,6 +1,8 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
+using TMPro;
 
 public class RewardPanelUI : MonoBehaviour
 {
@@ -10,9 +12,20 @@ public class RewardPanelUI : MonoBehaviour
     [SerializeField] private GameObject rewardPanel;
     [SerializeField] private Transform cardContainer;
     [SerializeField] private GameObject rewardCardPrefab;
+    
+
+    [Header("주사위 보상")]
+    [SerializeField] private GameObject diceRewardContainer;
+    [SerializeField] private Image diceImage;
+    [SerializeField] private TextMeshProUGUI diceNameText;
+    [SerializeField] private DiceRewardAnimator diceRewardAnimator;
+
+    [Header("버튼")]
+    [SerializeField] private Button acquireButton;
     [SerializeField] private Button skipButton;
 
     private List<GameObject> _spawnedCards = new List<GameObject>();
+    private DiceData _preSelectedDice;
 
     private void Awake()
     {
@@ -20,9 +33,10 @@ public class RewardPanelUI : MonoBehaviour
         else Destroy(gameObject);
 
         rewardPanel.SetActive(false);
+        diceRewardContainer.SetActive(false);
 
-        if (skipButton != null)
-            skipButton.onClick.AddListener(OnSkipButton);
+        skipButton?.onClick.AddListener(OnSkipButton);
+        acquireButton?.onClick.AddListener(OnAcquireButton);
     }
 
     public void Show(RewardDataSo rewardData)
@@ -57,22 +71,61 @@ public class RewardPanelUI : MonoBehaviour
             BattleItemSo preSelectedItem = null;
             if ((reward.rewardType == RewardType.ActiveItem || reward.rewardType == RewardType.PassiveItem) && reward.itemTable != null)
                 preSelectedItem = reward.itemTable.GetRandomItem();
+
+            // 주사위 미리 결정
+            DiceData preSelectedDice = null;
+            if(reward.rewardType == RewardType.Dice && reward.diceTable != null) 
+                preSelectedDice = reward.diceTable.GetRandomDice();
+
             GameObject cardObj = Instantiate(rewardCardPrefab, cardContainer);
             RewardCardUI cardUI = cardObj.GetComponent<RewardCardUI>();
-            cardUI.SetUp(reward, preSelectedItem, (r, item) => OnRewardSelected(r, item));
+            cardUI.SetUp(reward, preSelectedItem, preSelectedDice, (r, item, dice) => OnRewardSelected(r, item, dice));
             _spawnedCards.Add(cardObj);
         }
     }
 
-    private void OnRewardSelected(RewardData reward, BattleItemSo preSelectedItem)
+    private void OnRewardSelected(RewardData reward, BattleItemSo preSelectedItem, DiceData preSelectedDice)
     {
-        ApplyReward(reward, preSelectedItem);
-        Hide();
-        GoToMap();
+        if(reward.rewardType == RewardType.Dice)
+        {
+            _preSelectedDice = preSelectedDice;
+            ShowDiceReward(preSelectedDice).Forget();
+        }
+        else
+        {
+            ApplyReward(reward, preSelectedItem, null);
+            Hide();
+            GoToMap();
+        }
     }
 
-    private void ApplyReward(RewardData reward, BattleItemSo preSelecteItem = null)
+    private async UniTask ShowDiceReward(DiceData dice)
     {
+        cardContainer.gameObject.SetActive(false);
+        skipButton.gameObject.SetActive(false);
+
+        if (diceImage != null && dice != null)
+            diceImage.sprite = dice.skin?.GetSprite(1);
+
+        if(diceNameText != null && dice != null) 
+            diceNameText.text = dice.abilityName;
+
+        diceRewardContainer.SetActive(true);
+
+        await diceRewardAnimator.PlayAnimation();
+    }
+
+    private void ApplyReward(RewardData reward, BattleItemSo preSelecteItem = null, DiceData preSelectedDice = null)
+    {
+        if(preSelectedDice != null)
+        {
+            bool replaced = PlayerDeck.instance.ReplaceDefaultDice(preSelectedDice);
+            if (!replaced)
+                PlayerDeck.instance.AddDice(preSelectedDice);
+            Debug.Log($"{preSelectedDice.name} 주사위 획득");
+            return;
+        }
+
         switch(reward.rewardType)
         {
             case RewardType.Gold:
@@ -110,8 +163,18 @@ public class RewardPanelUI : MonoBehaviour
         }
     }
 
+    private void OnAcquireButton()
+    {
+        diceRewardAnimator.StopFloating();
+        ApplyReward(null, null, _preSelectedDice);
+        Hide();
+        GoToMap();
+    }
+
+
     private void OnSkipButton()
     {
+        diceRewardAnimator.StopFloating();
         Hide();
         GoToMap();
     }

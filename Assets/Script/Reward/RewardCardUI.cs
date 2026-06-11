@@ -14,7 +14,8 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private RewardData _rewardData;
     private BattleItemSo _preSelectedItem;
-    private Action<RewardData, BattleItemSo> _onSelected;
+    private DiceData _preSelectedDice;
+    private Action<RewardData, BattleItemSo, DiceData> _onSelected;
     private CardGlow _glow;
     private Vector3 _originalScale;
 
@@ -28,10 +29,11 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         Debug.Log($"Glow:{_glow != null}");
     }
 
-    public void SetUp(RewardData rewardData, BattleItemSo preSelectedItem, Action<RewardData, BattleItemSo> onSelected)
+    public void SetUp(RewardData rewardData, BattleItemSo preSelectedItem, DiceData preSelectedDice, Action<RewardData, BattleItemSo, DiceData> onSelected)
     {
         _rewardData = rewardData;
         _preSelectedItem = preSelectedItem;
+        _preSelectedDice = preSelectedDice;
         _onSelected = onSelected;
 
         if(rewardNameText != null)
@@ -55,7 +57,7 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     private void OnCardClicked()
     {
-        _onSelected?.Invoke(_rewardData, _preSelectedItem);
+        _onSelected?.Invoke(_rewardData, _preSelectedItem, _preSelectedDice);
     }
 
     private string GetRewardName(RewardData data)
@@ -90,6 +92,8 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         switch(data.rewardType)
         {
+            case RewardType.Dice:
+                return _preSelectedDice?.skin?.GetSprite(1);
             case RewardType.PassiveItem:
             case RewardType.ActiveItem:
                 return _preSelectedItem?.itemIcon;

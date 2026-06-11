@@ -87,4 +87,16 @@ public class PlayerDeck : MonoBehaviour
     {
         public List<int> diceNums = new List<int>();
     }
+
+    public bool ReplaceDefaultDice(DiceData newDice)
+    {
+        DiceData defaultDice = defaultDeckData.defultDeck[0];
+        int index = inventory.FindIndex(d => d == defaultDice);
+
+        if (index < 0) return false;
+
+        inventory[index] = newDice;
+        Save();
+        return true;
+    }
 }
