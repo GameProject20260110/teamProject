@@ -110,6 +110,7 @@ public class BattleInitalizer : MonoBehaviour
                 MapManager.instance?.ClearMapSave();
                 BattleDataManager.instance?.Clear();
             }
+
             RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
             //UiController.instance.ShowResultPanel(true, currentHP);
         }

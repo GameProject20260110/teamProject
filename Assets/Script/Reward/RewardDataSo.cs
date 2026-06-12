@@ -16,7 +16,7 @@ public class RewardData
     public RewardType rewardType;
     public int weight;
     public Sprite icon;
-
+    public DiceWeightTable diceTable;
     public DiceData dice;
     public int goldAmount;
     public int healAmount;
