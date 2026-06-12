@@ -1,0 +1,17 @@
+name: Discord PR 알림
+
+on:
+  pull_request:
+    types: [opened, reopened]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Discord 알림
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          curl -H "Content-Type: application/json" \
+          -d '{"content": "PR이 올라왔습니다! 확인해주세요 \n${{ github.event.pull_request.html_url }}"}' \
+          $DISCORD_WEBHOOK
