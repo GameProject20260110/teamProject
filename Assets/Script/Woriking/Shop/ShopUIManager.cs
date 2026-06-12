@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopUIManager : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ShopUIManager : MonoBehaviour
 
     [Header("UI")]
     public NotificationUI notificationUI;
+    [SerializeField] private Button MapButton;
 
     [Header("Inventory Icon")]
     [SerializeField] private RectTransform inventoryIconRect;
@@ -23,6 +25,11 @@ public class ShopUIManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        MapButton.onClick.AddListener(() => SceneController.instance.LoadMapScene());
     }
 
     public void Initialize()

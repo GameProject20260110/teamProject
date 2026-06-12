@@ -245,19 +245,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 6
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &17579651
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1132,19 +1119,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 3
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &142780532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1414,19 +1388,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 5
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!224 &194537185
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1629,19 +1590,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &235863112
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,19 +1679,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &258814063
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2107,19 +2042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!224 &286138193
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3646,6 +3568,63 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 531836288}
   m_CullTransparentMesh: 1
+--- !u!1001 &533347402
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 822639163992330441, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_Name
+      value: SceneControl
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.18575
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 1.13381
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
 --- !u!1 &535363809
 GameObject:
   m_ObjectHideFlags: 0
@@ -4222,19 +4201,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 4
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &626508576
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4450,19 +4416,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 2
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &630423675
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4978,19 +4931,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 3
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!224 &697609887
 RectTransform:
   m_ObjectHideFlags: 0
@@ -5080,19 +5020,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &703116925
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6448,35 +6375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db479a03fd51ea14a9eee92e647eb708, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShopItem
-  buyDice: []
-  buyItem: []
-  ShopDiceDatabase: {fileID: 11400000, guid: 9dbd64997f631ab43b5e5bdd9d4947e3, type: 2}
-  diceGacha: {fileID: 11400000, guid: 3100cef10b54e704098fca9673883448, type: 2}
-  itemGacha: {fileID: 11400000, guid: 16df8da84ea7e194a9e64da0343b0adf, type: 2}
-  itemSlots:
-  - {fileID: 1402347883}
-  - {fileID: 1132435617}
-  - {fileID: 703116924}
-  - {fileID: 235863111}
-  - {fileID: 2145981081}
-  - {fileID: 2143100452}
-  - {fileID: 1389427807}
-  - {fileID: 2000513786}
-  - {fileID: 258814062}
-  diceSlotCount: 6
-  itemSlotCount: 3
-  dicePrefab: {fileID: 1295416271785748531, guid: 3c6a451ab96b23743a94293bb9b42ebe, type: 3}
-  itemPrefab: {fileID: 1295416271785748531, guid: 8d002cd219c3a5e4e827451da0117a13, type: 3}
-  myDicePanel: {fileID: 1164476322}
-  iventoryPanel: {fileID: 1053676840}
-  extraDiceSlot: {fileID: 0}
-  notificationUI: {fileID: 592134685}
-  tierSlotImages:
-  - {fileID: -6051708374051045886, guid: 06c2c553bea570344b26c5c08b41363b, type: 3}
-  - {fileID: 1414571315492035909, guid: 5e9ceb8baa3d4c04b84f960fe0832252, type: 3}
-  - {fileID: -6842485886266865429, guid: a178357ab0bad5143b8031bf9cad6e4d, type: 3}
-  - {fileID: 1314681209176032438, guid: 2e4d7e69c6d0b9b43bb48d28a4793211, type: 3}
-  - {fileID: -4958027316185083386, guid: 9cd43bf621af5754784227a399ad0cd4, type: 3}
 --- !u!4 &855721423
 Transform:
   m_ObjectHideFlags: 0
@@ -6518,6 +6416,7 @@ MonoBehaviour:
   ShopDiceDatabase: {fileID: 11400000, guid: 9dbd64997f631ab43b5e5bdd9d4947e3, type: 2}
   itemGacha: {fileID: 11400000, guid: 16df8da84ea7e194a9e64da0343b0adf, type: 2}
   notificationUI: {fileID: 592134685}
+  MapButton: {fileID: 1525389223}
   inventoryIconRect: {fileID: 535363810}
   ShopCanvas: {fileID: 1241135455}
 --- !u!1 &872876364
@@ -7026,19 +6925,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 1
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!224 &940847487
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7223,19 +7109,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &966993667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7791,19 +7664,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 2
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!224 &1100515286
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7893,19 +7753,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &1132435618
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8870,19 +8717,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 4
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!224 &1225143712
 RectTransform:
   m_ObjectHideFlags: 0
@@ -9970,19 +9804,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &1389427808
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10072,19 +9893,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &1402347884
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10940,19 +10748,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1525389224}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShopItem, Assembly-CSharp
-        m_MethodName: OnLeaveButton
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!114 &1525389224
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11345,6 +11141,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 742efaeb8ca90f949b9682bba229390e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResourceManager
+  PlayerImage: {fileID: 0}
   gold: 0
   heart: 0
 --- !u!4 &1626965544
@@ -11998,19 +11795,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 5
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &1728150992
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12958,19 +12742,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 1
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &1863126163
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -14137,19 +13908,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &2000513787
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15277,19 +15035,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &2143100453
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15379,19 +15124,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 91bd64e0297b2244bbf88e2d6c5331e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ItemSlot
-  image: {fileID: 0}
-  rect: {fileID: 0}
-  slotIndex: 0
-  highlightColor:
-    r: 1
-    g: 0.92156863
-    b: 0.015686275
-    a: 1
-  normalColor:
-    r: 1
-    g: 1
-    b: 1
-    a: 1
 --- !u!114 &2145981082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -15464,3 +15196,4 @@ SceneRoots:
   - {fileID: 1626965544}
   - {fileID: 819646019}
   - {fileID: 822556876}
+  - {fileID: 533347402}

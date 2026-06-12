@@ -5,6 +5,8 @@ public class ResourceManager : MonoBehaviour
     public static ResourceManager instance;
     private const string SAVE_FILE = "Resource.json";
 
+    public Sprite PlayerImage;
+
     public int gold;
     public int heart;
 

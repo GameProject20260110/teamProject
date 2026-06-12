@@ -1,6 +1,5 @@
 using UnityEngine;
 using System.Collections.Generic;
-using System.Runtime.Serialization;
 
 public class MapManager : MonoBehaviour
 {
@@ -21,6 +20,8 @@ public class MapManager : MonoBehaviour
     private int _previousNodeId = -1;
     private List<PathLineData> _pathLines = new List<PathLineData>();
 
+    [SerializeField] private AudioClip MapBGM;
+
     private void Awake()
     {
         if (instance == null) instance = this;
@@ -33,6 +34,8 @@ public class MapManager : MonoBehaviour
             LoadMap();
         else
             GenerateMap();
+
+        AudioManager.instance.PlayBgm(MapBGM);
     }
 
     public void GenerateMap()
@@ -243,6 +246,7 @@ public class MapManager : MonoBehaviour
                 SceneController.instance?.LoadGameScene();
                 break;
             case NodeType.Shop:
+                SceneController.instance.LoadShopScene();
                 break;
             case NodeType.Random:
                 MapNodeData randomNodeData = _generateNodes.Find(n => n.id == _previousNodeId);

@@ -17,7 +17,6 @@ public class PlayerManager : MonoBehaviour
     public int gameRerollCount;
     public bool isFirstRoll;
     public bool isGameOver;
-    public Sprite playerImage;
 
     private const int DiceSlotCount = 6;
     private const int ItemSlotCount = 7;
