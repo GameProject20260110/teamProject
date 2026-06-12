@@ -12,7 +12,7 @@ public class ShopPanelAnimator : MonoBehaviour
     [SerializeField] private RectMask2D contentMask;
     [SerializeField] private CanvasGroup[] uiElements;
     [SerializeField] private CanvasGroup shopCanvasGroup;
-    [SerializeField] private ShopUIController shopUIController;
+    [SerializeField] private ShopUIManager shopUIController;
 
     [Header("Settings")]
     [SerializeField] private float panelDuration = 0.8f;

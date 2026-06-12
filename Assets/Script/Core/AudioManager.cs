@@ -126,6 +126,14 @@ public class AudioManager : MonoBehaviour
 
     }
 
+    public void PlayBgm(AudioClip clip)
+    {
+        if(clip == null) return;
+
+        bgmPlayer.clip = clip;
+        bgmPlayer.Play();       
+    }
+
     public void PlaySfx(AudioClip clip)
     {
         if (clip == null) return;

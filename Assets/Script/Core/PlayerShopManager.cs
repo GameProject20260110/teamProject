@@ -17,11 +17,11 @@ public class PlayerShopManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
     public int BaseRerollCost => baseRerollCost;
+    [SerializeField] private AudioClip ShopBGM;
 
     [Header("UI References")]
     [SerializeField] private GameObject shopCanvas;
     [SerializeField] private RectTransform shopPanel;
-    [SerializeField] private ShopUIController shopUIController;
     [SerializeField] private ShopPanelAnimator shopAnimator;
 
     public event System.Action<int> OnGoldChanged;
@@ -32,6 +32,12 @@ public class PlayerShopManager : MonoBehaviour
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
+    }
+
+    private void Start()
+    {
+        OpenWithAnimation();
+        AudioManager.instance.PlayBgm(ShopBGM);
     }
 
     public void Open()
@@ -104,23 +110,23 @@ public class PlayerShopManager : MonoBehaviour
 
     //--- 구매 / 판매 / 리롤 ---
 
-    public bool TryPurchaseDice(DiceData dice, int slotIndex)
+    public bool TryPurchaseDice(DiceData dice)
     {
         int cost = LuckyStone.CalcDiscount(dice.gold);
         if (!HasEnoughGold(cost)) return false;
 
         SpendGold(cost);
-
+        TempDices.Add(dice);
         return true;
     }
 
-    public bool TryPurchaseItem(BattleItemSo item, int slotIndex)
+    public bool TryPurchaseItem(BattleItemSo item)
     {
         int cost = LuckyStone.CalcDiscount(item.gold);
         if (!HasEnoughGold(cost)) return false;
 
         SpendGold(cost);
-        TempItems[slotIndex] = item;
+        TempItems.Add(item);
         return true;
     }
 
