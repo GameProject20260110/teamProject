@@ -23,6 +23,7 @@ public class RewardPanelUI : MonoBehaviour
     [Header("¹öÆ°")]
     [SerializeField] private Button acquireButton;
     [SerializeField] private Button skipButton;
+    [SerializeField] private Button diceRewardSkipButton;
 
     private List<GameObject> _spawnedCards = new List<GameObject>();
     private DiceData _preSelectedDice;
@@ -37,6 +38,7 @@ public class RewardPanelUI : MonoBehaviour
 
         skipButton?.onClick.AddListener(OnSkipButton);
         acquireButton?.onClick.AddListener(OnAcquireButton);
+        diceRewardSkipButton?.onClick.AddListener(OnSkipButton);
     }
 
     public void Show(RewardDataSo rewardData)
@@ -182,6 +184,9 @@ public class RewardPanelUI : MonoBehaviour
     private void Hide()
     {
         rewardPanel.SetActive(false);
+        cardContainer.gameObject.SetActive(true);
+        skipButton.gameObject.SetActive(true);
+        diceRewardContainer.SetActive(false);
     }
 
     private void GoToMap()

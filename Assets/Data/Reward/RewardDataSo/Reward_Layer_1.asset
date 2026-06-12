@@ -16,7 +16,7 @@ MonoBehaviour:
   rewardPool:
   - rewardType: 0
     weight: 7
-    icon: {fileID: 21300000, guid: 394899dbf2938874ca7d1025f7598406, type: 3}
+    icon: {fileID: 8003260396191338441, guid: 0237a295e8998784c9e4b3eca9dfa827, type: 3}
     diceTable: {fileID: 0}
     dice: {fileID: 0}
     goldAmount: 30
@@ -24,7 +24,7 @@ MonoBehaviour:
     itemTable: {fileID: 0}
   - rewardType: 2
     weight: 5
-    icon: {fileID: 21300000, guid: 117b17facff65dc42b1b57deb7c21551, type: 3}
+    icon: {fileID: 6720093260872320616, guid: 763bd4e2dc728e64eaa5bdc7060fcb15, type: 3}
     diceTable: {fileID: 0}
     dice: {fileID: 0}
     goldAmount: 0
@@ -47,7 +47,7 @@ MonoBehaviour:
     healAmount: 0
     itemTable: {fileID: 11400000, guid: 14840450f762b0a48b04a9e5cc3123e4, type: 2}
   - rewardType: 1
-    weight: 2
+    weight: 100
     icon: {fileID: 0}
     diceTable: {fileID: 11400000, guid: cea7dddbb6278b24fae5f0586543f8a5, type: 2}
     dice: {fileID: 0}
