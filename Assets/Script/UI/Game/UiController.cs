@@ -63,7 +63,7 @@ public class UiController : MonoBehaviour
 
         if(PlayerManager.instance != null && _playerImage != null)
         {
-            _playerImage.sprite = PlayerManager.instance.playerImage;
+            _playerImage.sprite = ResourceManager.instance.PlayerImage;
         }
     }
 

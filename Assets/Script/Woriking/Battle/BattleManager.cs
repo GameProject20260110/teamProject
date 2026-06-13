@@ -118,14 +118,14 @@ public class BattleManager : MonoBehaviour
     {
         battleUI.UpdatePlayerShield(playerData.CurrentShield);
         battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
-        battleUI.ShowDamageText(damage, isPlayer: false);
+        battleUI.ShowDamageText(damage, isPlayer: true);
     }
 
     private void HandleHitEnemy(DiceContext ctx, int damage)
     {
         battleUI.UpdateEnemyShield(enemyData.CurrentShield);
         battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
-        battleUI.ShowDamageText(damage, isPlayer: true);
+        battleUI.ShowDamageText(damage, isPlayer: false);
     }
 
     private void HandleEnemyDefend(DiceContext ctx)

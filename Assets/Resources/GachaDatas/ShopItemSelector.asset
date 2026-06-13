@@ -13,33 +13,7 @@ MonoBehaviour:
   m_Name: ShopItemSelector
   m_EditorClassIdentifier: Assembly-CSharp::ItemGachaTable
   items:
-  - _item: {fileID: 11400000, guid: 56df3bcaa3659374e9109872da43dae2, type: 2}
+  - _item: {fileID: 11400000, guid: 60d3f419e26ffb84db1e5eefcd9eb3ce, type: 2}
     weight: 50
-  - _item: {fileID: 11400000, guid: 84e43cd9f611fe2489c160a94710b508, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 0e9bca13baef9b742867c4ab6d2df4dc, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 49cd3ea74e71b294ba3ba35bfb72d7dc, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 42d3821a89137db45ae3cc5b6c7b0c80, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 0b59b177e0d2c4c41863524ea286b3d7, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: ece6ac52a405ecc4eaa7fc1f7223bf06, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 6cb9467e74a6d4c44814657f78bb1c7c, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 653bbfba842d33f4cb437fe6a79bca02, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: cc9eb5a4eaa98534e80297dde176bf8e, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: bdcb035bf233d4a47bdf322a02e3685a, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 910fca5ad6eda4a429bdc21f246c5430, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 85ab3ff3cd099ed478b18ffabea55dfc, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: 68a2e46f2e05140488152ceef1eb9eb5, type: 2}
-    weight: 50
-  - _item: {fileID: 11400000, guid: d2cb733461870c44bb770a3e802063f1, type: 2}
+  - _item: {fileID: 11400000, guid: 8607b753db44527478720e8985bef65a, type: 2}
     weight: 50

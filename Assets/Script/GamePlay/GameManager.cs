@@ -16,6 +16,7 @@ public class GameManager : MonoBehaviour
     public DiceManager diceManager;
     public PanelEffect panelEffect;
     public UIFlowController UFC;
+    [SerializeField] private AudioClip BattleBGM;
 
     public bool hasUsedPlusReroll = false;
     
@@ -52,10 +53,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NotifyAllUI();
-        if(AudioManager.instance != null)
-        {
-            AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
-        }
+        AudioManager.instance.PlayBgm(BattleBGM);
     }
 
     public void InitializeRoundData()

@@ -16,6 +16,7 @@ public class SceneController : MonoBehaviour
     public const string SceneHome = "HomeScreen";
     public const string SceneBattle = "GameBoard";
     public const string SceneMap = "Map";
+    public const string ShopScene = "Shop";
 
     [Header("로딩 패널")]
     [SerializeField] private GameObject loadingPanel;
@@ -53,6 +54,7 @@ public class SceneController : MonoBehaviour
     public void LoadHomeScene() => LoadAsync(SceneHome).Forget();
     public void LoadTitleScene() => LoadAsync(SceneTitle).Forget();
     public void LoadMapScene() => LoadAsync(SceneMap).Forget();
+    public void LoadShopScene() => LoadAsync(ShopScene).Forget();
 
     private async UniTask LoadAsync(string sceneName)
     {

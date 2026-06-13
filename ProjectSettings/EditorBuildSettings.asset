@@ -14,9 +14,9 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/GameBoard.unity
     guid: 9643c2edabb867c498222ba16137e1d0
-  - enabled: 0
+  - enabled: 1
     path: Assets/Scenes/Shop.unity
-    guid: 9c97ab7a7d1c0144b95422c8c4975f62
+    guid: cad98579e607a514b9ffdb92ed7683d7
   - enabled: 0
     path: Assets/Scenes/DiceSelect.unity
     guid: b781185b5cffa304c8cdd3f233a98f14

@@ -17,6 +17,7 @@ public class MapPathDrawer : MonoBehaviour
     private List<GameObject> _pathLines = new List<GameObject>();
     // 기존 라인 저장
     private Dictionary<string, GameObject> _lineObjects = new Dictionary<string, GameObject>();
+    [SerializeField] private AudioClip MapBGM;
 
 
     private void Awake()
@@ -28,6 +29,7 @@ public class MapPathDrawer : MonoBehaviour
     public void Initialize(Transform lineContainer)
     {
         _lineContainer = lineContainer;
+        AudioManager.instance.PlayBgm(MapBGM);
     }
 
     public void DrawLines(List<MapNodeData> generatedNodes, List<MapNode> spawnedNodes)
