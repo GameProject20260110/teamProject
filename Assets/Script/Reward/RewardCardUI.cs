@@ -103,13 +103,17 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.DOScale(_originalScale * HOVER_SCALE, ANIM_DURATION).SetEase(Ease.OutBack);
+        transform.DOKill();
+
+        transform.DOScale(_originalScale * HOVER_SCALE, ANIM_DURATION).SetEase(Ease.OutBack).SetLink(gameObject);
         _glow?.SetGlow(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.DOScale(_originalScale, ANIM_DURATION).SetEase(Ease.OutQuad);
+        transform.DOKill();
+
+        transform.DOScale(_originalScale, ANIM_DURATION).SetEase(Ease.OutQuad).SetLink(gameObject);
         _glow?.SetGlow(false);
     }
 }

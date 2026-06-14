@@ -17,6 +17,7 @@ public class DiceRewardAnimator : MonoBehaviour
     [Header("주사위")]
     [SerializeField] private Image diceImage;
     [SerializeField] private TextMeshProUGUI diceNameText;
+    private float _originalDiceY;
 
     [Header("버튼")]
     [SerializeField] private CanvasGroup buttonGroup;
@@ -26,14 +27,6 @@ public class DiceRewardAnimator : MonoBehaviour
     [SerializeField] private float glowDuration = 1f;
     [SerializeField] private float diceAppearDuration = 0.5f;
 
-#if UNITY_EDITOR
-    [ContextMenu("테스트 애니메이션")]
-    private void TestAnimation()
-    {
-        PlayAnimation().Forget();
-    }
-
-#endif
 
     private void Awake()
     {
@@ -42,6 +35,9 @@ public class DiceRewardAnimator : MonoBehaviour
             _haloMaterial = Instantiate(glowEffect.material);
             glowEffect.material = _haloMaterial;
         }
+
+        if (diceImage != null)
+            _originalDiceY = diceImage.transform.localPosition.y;
     }
 
     private void Initialized()
@@ -58,6 +54,10 @@ public class DiceRewardAnimator : MonoBehaviour
         diceColor.a = 0f;
         diceImage.color = diceColor;
 
+        var pos = diceImage.transform.localPosition;
+        pos.y = _originalDiceY;
+        diceImage.transform.localPosition = pos;
+
         var nameColor = diceNameText.color;
         nameColor.a = 0f;
         diceNameText.color = nameColor;
@@ -71,8 +71,8 @@ public class DiceRewardAnimator : MonoBehaviour
     {
         Initialized();
         await PlayParticle();
-        await UniTask.Delay(400);
-        await PlayHalo();
+        await UniTask.Delay(400, cancellationToken: this.GetCancellationTokenOnDestroy());
+        PlayHalo().Forget();
         await PlayDiceAppear();
         await PlayUI();
     }
@@ -80,7 +80,7 @@ public class DiceRewardAnimator : MonoBehaviour
     private async UniTask PlayParticle()
     {
         diceRewardParticle.Play();
-        await UniTask.Delay((int)(particleDuration * 1000));
+        await UniTask.Delay((int)(particleDuration * 1000), cancellationToken: this.GetCancellationTokenOnDestroy());
         diceRewardParticle.Stop();
     }
 
@@ -93,7 +93,9 @@ public class DiceRewardAnimator : MonoBehaviour
             () => _haloMaterial.GetFloat("_Radius"),
             x => _haloMaterial.SetFloat("_Radius", x),
             1f, glowDuration
-        ).SetEase(Ease.OutQuart).AsyncWaitForCompletion();
+        ).SetEase(Ease.OutQuart)
+        .SetLink(gameObject)
+        .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
     }
 
     private async UniTask PlayDiceAppear()
@@ -105,28 +107,28 @@ public class DiceRewardAnimator : MonoBehaviour
         diceImage.color = diceColor;
         diceImage.transform.localScale = Vector3.one * 0.3f;
 
-        diceImage.DOFade(1f, diceAppearDuration);
+        diceImage.DOFade(1f, diceAppearDuration).SetLink(gameObject);
         await diceImage.transform
             .DOScale(Vector3.one, diceAppearDuration)
             .SetEase(Ease.OutBack)
-            .AsyncWaitForCompletion();
+            .SetLink(gameObject)
+            .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
 
         diceImage.transform
-            .DOLocalMoveY(diceImage.transform.localPosition.y + 15f, 1f)
+            .DOLocalMoveY(_originalDiceY + 15f, 1f)
             .SetEase(Ease.InOutSine)
-            .SetLoops(-1, LoopType.Yoyo);
+            .SetLoops(-1, LoopType.Yoyo)
+            .SetLink(gameObject);
     }
 
     private async UniTask PlayUI()
     {
-        diceNameText.DOFade(1f, 0.5f);
-        await UniTask.Delay(200);
+        diceNameText.DOFade(1f, 0.5f).SetLink(gameObject);
+        await UniTask.Delay(200, cancellationToken: this.GetCancellationTokenOnDestroy());
 
-        buttonGroup.DOFade(1f, 0.5f);
+        buttonGroup.DOFade(1f, 0.5f).SetLink(gameObject);
         buttonGroup.interactable = true;
         buttonGroup.blocksRaycasts = true;
-
-        await UniTask.Delay(300);
     }
 
     public void StopFloating()
@@ -136,7 +138,6 @@ public class DiceRewardAnimator : MonoBehaviour
 
     private void OnDestroy()
     {
-        diceImage?.transform.DOKill();
         if(_haloMaterial != null) 
             Destroy(_haloMaterial);
     }

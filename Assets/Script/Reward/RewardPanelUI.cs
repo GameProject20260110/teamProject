@@ -11,8 +11,11 @@ public class RewardPanelUI : MonoBehaviour
     [Header("UI")]
     [SerializeField] private GameObject rewardPanel;
     [SerializeField] private Transform cardContainer;
+    [SerializeField] private RewardIntroAnimator introAnimator;
+
+    [Header("카드 슬롯")]
+    [SerializeField] private List<RectTransform> cardSlots;
     [SerializeField] private GameObject rewardCardPrefab;
-    
 
     [Header("주사위 보상")]
     [SerializeField] private GameObject diceRewardContainer;
@@ -23,6 +26,7 @@ public class RewardPanelUI : MonoBehaviour
     [Header("버튼")]
     [SerializeField] private Button acquireButton;
     [SerializeField] private Button skipButton;
+    [SerializeField] private Button diceRewardSkipButton;
 
     private List<GameObject> _spawnedCards = new List<GameObject>();
     private DiceData _preSelectedDice;
@@ -37,6 +41,7 @@ public class RewardPanelUI : MonoBehaviour
 
         skipButton?.onClick.AddListener(OnSkipButton);
         acquireButton?.onClick.AddListener(OnAcquireButton);
+        diceRewardSkipButton?.onClick.AddListener(OnSkipButton);
     }
 
     public void Show(RewardDataSo rewardData)
@@ -56,32 +61,48 @@ public class RewardPanelUI : MonoBehaviour
         }
 
         rewardPanel.SetActive(true);
-        SpawnCards(rewards);
+        skipButton.gameObject.SetActive(false);
+
+        List<RewardCardUI> cards = SpawnCards(rewards);
+        introAnimator.PlayIntro(cards).Forget();
+
     }
 
-    private void SpawnCards(List<RewardData> rewards)
+    private List<RewardCardUI> SpawnCards(List<RewardData> rewards)
     {
         foreach (var card in _spawnedCards)
             Destroy(card);
         _spawnedCards.Clear();
 
-        foreach(var reward in rewards)
+        List<RewardCardUI> cards = new List<RewardCardUI>();
+
+
+        for(int i = 0; i < rewards.Count; i++)
         {
+            if (i >= cardSlots.Count) break;
+
+            var reward = rewards[i];
+
             // 아이템 카드 아이템 미리 결정
             BattleItemSo preSelectedItem = null;
             if ((reward.rewardType == RewardType.ActiveItem || reward.rewardType == RewardType.PassiveItem) && reward.itemTable != null)
                 preSelectedItem = reward.itemTable.GetRandomItem();
 
-            // 주사위 미리 결정
             DiceData preSelectedDice = null;
-            if(reward.rewardType == RewardType.Dice && reward.diceTable != null) 
+            if (reward.rewardType == RewardType.Dice && reward.diceTable != null)
                 preSelectedDice = reward.diceTable.GetRandomDice();
 
-            GameObject cardObj = Instantiate(rewardCardPrefab, cardContainer);
+            GameObject cardObj = Instantiate(rewardCardPrefab, cardSlots[i], false);
+            RectTransform cardRect = cardObj.GetComponent<RectTransform>();
+            cardRect.anchoredPosition = Vector2.zero;
+            
+
             RewardCardUI cardUI = cardObj.GetComponent<RewardCardUI>();
             cardUI.SetUp(reward, preSelectedItem, preSelectedDice, (r, item, dice) => OnRewardSelected(r, item, dice));
             _spawnedCards.Add(cardObj);
+            cards.Add(cardUI);
         }
+        return cards;
     }
 
     private void OnRewardSelected(RewardData reward, BattleItemSo preSelectedItem, DiceData preSelectedDice)
@@ -182,6 +203,9 @@ public class RewardPanelUI : MonoBehaviour
     private void Hide()
     {
         rewardPanel.SetActive(false);
+        diceRewardContainer.SetActive(false);
+        cardContainer.gameObject.SetActive(true);
+        skipButton.gameObject.SetActive(true);
     }
 
     private void GoToMap()
