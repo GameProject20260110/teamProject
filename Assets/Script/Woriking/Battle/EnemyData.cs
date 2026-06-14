@@ -3,5 +3,6 @@ using UnityEngine;
 [CreateAssetMenu(menuName = "Battle/EnemyData")]
 public class EnemyData : BaseEnemyData
 {
-    // 상속
+    [Header("주사위 설정")]
+    public DiceData[] dicePool;
 }

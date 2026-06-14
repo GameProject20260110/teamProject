@@ -1,5 +1,6 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
+using System.Linq;
 
 public class DiceManager : MonoBehaviour
 {
@@ -128,9 +129,7 @@ public class DiceManager : MonoBehaviour
 
     public Dice[] GetEnemyAllDice()
     {
-        Dice[] allDice = new Dice[enemyPanelDiceScript.Length];
-        enemyPanelDiceScript.CopyTo(allDice, 0);
-        return allDice;
+        return enemyPanelDiceScript.Where(d => d != null).ToArray();
     }
 
     public async UniTask<Dice[]> StartRolling()
