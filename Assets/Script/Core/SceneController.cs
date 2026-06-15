@@ -27,9 +27,6 @@ public class SceneController : MonoBehaviour
     [SerializeField] private float loadingSmoothSpeed = 1.2f; // 숫자가 낮을 시 느림
     [SerializeField] private float finalPushSpeed = 0.3f; // 숫자가 낮을 시 더 지연
 
-    //[Header("페이드 패널")]
-    //[SerializeField] private CanvasGroup fadeCanvasGroup;
-    //[SerializeField] private float fadeDuration = 0.4f;
 
     [Header("스테이지 전환용(맵 -> 스테이지)")]
     [SerializeField] private Image wipeImage;
@@ -45,8 +42,6 @@ public class SceneController : MonoBehaviour
         else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
 
-        //if (fadeCanvasGroup != null) fadeCanvasGroup.alpha = 0f;
-        //if (loadingPanel != null) loadingPanel.SetActive(false);
 
         if(wipeImage != null)
         {
@@ -58,8 +53,6 @@ public class SceneController : MonoBehaviour
     
     private void OnValidate()
     {
-        //if (fadeCanvasGroup == null)
-        //    Debug.LogWarning("fadeCanvasGroup이 비어있습니다.");
         if (wipeImage == null)
             Debug.LogWarning("wipeImage가 비어있습니다.");
         if (loadingPanel == null)
@@ -67,11 +60,11 @@ public class SceneController : MonoBehaviour
     }
     public void ReloadCurrentScene() => LoadAsync(SceneManager.GetActiveScene().name, false).Forget();
 
-    // 로딩창이 필요한 전환
+    // 로딩창 (타이틀 -> 맵)
     public void LoadTitleScene() => LoadAsync(SceneTitle, true).Forget();
     public void LoadMapFromTitle() => LoadAsync(SceneMap, true).Forget();
 
-    // 로딩창이 필요없는 전환
+    // 컷 인/아웃 (맵 -> 스테이지)
     public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget(); 
     public void LoadMapScene() => LoadAsync(SceneMap, false).Forget();
     public void LoadShopScene() => LoadAsync(ShopScene, false).Forget();
@@ -195,26 +188,6 @@ public class SceneController : MonoBehaviour
         if (progressBar != null) progressBar.value = progress;
         if (progressText != null) progressText.text = $"{Mathf.RoundToInt(progress * 100)}%";
     }
-
-    //private async UniTask FadeAsync(float from, float to)
-    //{
-    //    if (fadeCanvasGroup == null) return;
-
-    //    float elapsed = 0f;
-    //    fadeCanvasGroup.alpha = from;
-    //    fadeCanvasGroup.blocksRaycasts = true;
-
-    //    while (elapsed < fadeDuration)
-    //    {
-    //        if (fadeCanvasGroup == null) return; 
-    //        elapsed += Time.unscaledDeltaTime;
-    //        fadeCanvasGroup.alpha = Mathf.Lerp(from, to, elapsed / fadeDuration);
-    //        await UniTask.Yield();
-    //    }
-
-    //    fadeCanvasGroup.alpha = to;
-    //    fadeCanvasGroup.blocksRaycasts = to > 0f;
-    //}
 
     private async UniTask WipeAsync(bool isCovering)
     {
