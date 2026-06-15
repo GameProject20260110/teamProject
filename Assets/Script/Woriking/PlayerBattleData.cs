@@ -45,6 +45,12 @@ public class PlayerBattleData : IDamageable
         currentHP = Mathf.Max(0, currentHP - damage);
     }
 
+    public void Heal(int amount)
+    {
+        currentHP += amount;
+        currentHP = currentHP >= MaxHp ? MaxHp : currentHP;
+    }
+
     public void ShieldUp(int amount) => currentShield += amount;
     public void ResetShield() => currentShield = 0;
 

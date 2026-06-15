@@ -322,8 +322,8 @@ public class BattleManager : MonoBehaviour
         battleUI.UpdateEnemyShield(enemyData.CurrentShield);
 
         DeckManager.instance.DrawDice();
-        EnemyDeckManager.instance.DrawEnemyDice();
- 
+        EnemyDeckHandler.instance.SetupEnemyDice();
+
         _diceCtxFactory = new DiceContextFactory(_ctxFactory.Create());
         _enemyDiceCtxFactory = new DiceContextFactory(_enemyctxFactory.Create());
 

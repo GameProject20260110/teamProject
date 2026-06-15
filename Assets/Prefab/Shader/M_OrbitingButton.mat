@@ -46,7 +46,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 781b4ded3f56a0f4681f55b25a54ffee, type: 3}
+        m_Texture: {fileID: 2800000, guid: 00a764c906f4c62498cd2529ab862cb6, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MaskTex:
@@ -73,7 +73,7 @@ Material:
     m_Floats:
     - _BoxHeight: 0.85
     - _BoxWidth: 0.38
-    - _CornerRadius: 0.1
+    - _CornerRadius: 0.5
     - _EnableExternalAlpha: 0
     - _GlowIntensity: 0
     - _ParticleCount: 2
