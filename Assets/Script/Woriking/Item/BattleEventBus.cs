@@ -9,6 +9,7 @@ public class BattleEventBus
     public event Action<DiceContext, int> OnPlayerHit;
     public event Action<DiceContext> OnPlayerDefend;
     public event Action<DiceContext> OnEnemyDefend;
+    public event Action<BattleContext> OnBattleEnd;
 
     public void TriggerHitEnemy(DiceContext ctx, int damage) => OnHitEnemy?.Invoke(ctx, damage);
     public void TriggerEnemyDead(BattleContext ctx) => OnEnemyDead?.Invoke(ctx);
@@ -17,4 +18,5 @@ public class BattleEventBus
     public void TriggerPlayerHit(DiceContext ctx, int damage) => OnPlayerHit?.Invoke(ctx, damage);
     public void TriggerPlayerDefend(DiceContext ctx) => OnPlayerDefend?.Invoke(ctx);
     public void TriggerEnemyDefend(DiceContext ctx) => OnEnemyDefend?.Invoke(ctx);
+    public void TriggerBattleEnd(BattleContext ctx) => OnBattleEnd?.Invoke(ctx);
 }

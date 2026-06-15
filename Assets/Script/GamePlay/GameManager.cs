@@ -101,9 +101,9 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
 
-        if(EnemyDeckManager.instance != null)
+        if (EnemyDeckHandler.instance != null)
         {
-            EnemyDeckManager.instance.DrawEnemyDice();
+            EnemyDeckHandler.instance.SetupEnemyDice();
         }
 
         if (DeckManager.instance != null)
@@ -329,17 +329,17 @@ public class GameManager : MonoBehaviour
         BattleInitalizer.instance.StartBattle();
     }
 
-    public void OnClickNextRound()
-    {
+    //public void OnClickNextRound()
+    //{
 
-        BattleInitalizer.instance.GoNextRound();
+    //    BattleInitalizer.instance.GoNextRound();
 
-        PlayerManager.instance.gameRerollCount = 3;
-        PlayerManager.instance.isFirstRoll = true;
+    //    PlayerManager.instance.gameRerollCount = 3;
+    //    PlayerManager.instance.isFirstRoll = true;
 
-        UFC.OnNextRoundButton();
-        SceneController.instance?.LoadMapScene();
-    }
+    //    //UFC.OnNextRoundButton();
+    //    SceneController.instance?.LoadMapScene();
+    //}
 
     public void OnClickRetryRound()
     {

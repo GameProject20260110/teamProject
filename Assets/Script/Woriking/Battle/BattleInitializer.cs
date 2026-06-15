@@ -55,10 +55,9 @@ public class BattleInitalizer : MonoBehaviour
             DeckManager.instance.DrawDice();
         }
 
-        if (EnemyDeckManager.instance != null)
+        if (EnemyDeckHandler.instance != null)
         {
-            EnemyDeckManager.instance.InitializeDeck();
-            EnemyDeckManager.instance.DrawEnemyDice();
+            EnemyDeckHandler.instance.SetupEnemyDice();
         }
 
         if (BattleManager.instance != null)
