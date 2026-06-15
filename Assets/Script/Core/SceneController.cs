@@ -7,25 +7,33 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using Unity.VisualScripting;
 
 public class SceneController : MonoBehaviour
 {
     public static SceneController instance;
 
     public const string SceneTitle = "Title";
-    public const string SceneHome = "HomeScreen";
     public const string SceneBattle = "GameBoard";
     public const string SceneMap = "Map";
     public const string ShopScene = "Shop";
 
-    [Header("로딩 패널")]
+    [Header("로딩 패널(타이틀 -> 맵)")]
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
 
-    [Header("페이드 패널")]
-    [SerializeField] private CanvasGroup fadeCanvasGroup;
-    [SerializeField] private float fadeDuration = 0.4f;
+    [Header("로딩 연출 속도 제어")]
+    [SerializeField] private float loadingSmoothSpeed = 1.2f; // 숫자가 낮을 시 느림
+    [SerializeField] private float finalPushSpeed = 0.3f; // 숫자가 낮을 시 더 지연
+
+    //[Header("페이드 패널")]
+    //[SerializeField] private CanvasGroup fadeCanvasGroup;
+    //[SerializeField] private float fadeDuration = 0.4f;
+
+    [Header("스테이지 전환용(맵 -> 스테이지)")]
+    [SerializeField] private Image wipeImage;
+    [SerializeField] private float wipeDuration = 0.4f;
 
     private SceneInstance? currentAddressableScene;
 
@@ -37,45 +45,63 @@ public class SceneController : MonoBehaviour
         else Destroy(gameObject);
         DontDestroyOnLoad(gameObject);
 
-        if (fadeCanvasGroup != null) fadeCanvasGroup.alpha = 0f;
+        //if (fadeCanvasGroup != null) fadeCanvasGroup.alpha = 0f;
+        //if (loadingPanel != null) loadingPanel.SetActive(false);
+
+        if(wipeImage != null)
+        {
+            wipeImage.fillAmount = 0f;
+            wipeImage.gameObject.SetActive(false);
+        }
         if (loadingPanel != null) loadingPanel.SetActive(false);
     }
     
     private void OnValidate()
     {
-        if (fadeCanvasGroup == null)
-            Debug.LogWarning("fadeCanvasGroup이 비어있습니다.");
+        //if (fadeCanvasGroup == null)
+        //    Debug.LogWarning("fadeCanvasGroup이 비어있습니다.");
+        if (wipeImage == null)
+            Debug.LogWarning("wipeImage가 비어있습니다.");
         if (loadingPanel == null)
             Debug.LogWarning("loadingPanel이 비어있습니다.");
     }
+    public void ReloadCurrentScene() => LoadAsync(SceneManager.GetActiveScene().name, false).Forget();
 
-    public void ReloadCurrentScene() => LoadAsync(SceneManager.GetActiveScene().name).Forget();
-    public void LoadGameScene() => LoadAsync(SceneBattle).Forget(); 
-    public void LoadHomeScene() => LoadAsync(SceneHome).Forget();
-    public void LoadTitleScene() => LoadAsync(SceneTitle).Forget();
-    public void LoadMapScene() => LoadAsync(SceneMap).Forget();
-    public void LoadShopScene() => LoadAsync(ShopScene).Forget();
+    // 로딩창이 필요한 전환
+    public void LoadTitleScene() => LoadAsync(SceneTitle, true).Forget();
+    public void LoadMapFromTitle() => LoadAsync(SceneMap, true).Forget();
 
-    private async UniTask LoadAsync(string sceneName)
+    // 로딩창이 필요없는 전환
+    public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget(); 
+    public void LoadMapScene() => LoadAsync(SceneMap, false).Forget();
+    public void LoadShopScene() => LoadAsync(ShopScene, false).Forget();
+
+    private async UniTask LoadAsync(string sceneName, bool showLoadingUI)
     {
         if (IsTransitioning) return;
-
         IsTransitioning = true;
 
         try
         {
-            await FadeAsync(0f, 1f);
+            if(showLoadingUI)
+            {
+                SetLoadingUI(true, 0f);
+            }
+            else
+            {
+                await WipeAsync(isCovering: true);
+            }
 
-            SetLoadingUI(true, 0f);
+            await LoadNormalSceneAsync(sceneName, showLoadingUI);
 
-
-
-            
-            await LoadNormalSceneAsync(sceneName);
-            
-
-            SetLoadingUI(false, 0f);
-            await FadeAsync(1f, 0f);
+            if(showLoadingUI)
+            {
+                SetLoadingUI(false, 0f);
+            }
+            else
+            {
+                await WipeAsync(isCovering: false);
+            }
         }
         catch (System.Exception e)
         {
@@ -121,7 +147,7 @@ public class SceneController : MonoBehaviour
         }
     }
 
-    private async UniTask LoadNormalSceneAsync(string sceneName)
+    private async UniTask LoadNormalSceneAsync(string sceneName, bool updateUI)
     {
         // 기존 Addressable 씬 언로드
         if (currentAddressableScene.HasValue)
@@ -133,13 +159,30 @@ public class SceneController : MonoBehaviour
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName); // 로드만
         op.allowSceneActivation = false; // 100% -> 0.9f
 
-        while (op.progress < 0.9f)
+        float fakeProgress = 0f;
+
+        while (op.progress < 0.9f || fakeProgress < 1f)
         {
-            SetLoadingUI(true, Mathf.Clamp01(op.progress / 0.9f));
+            if(updateUI)
+            {
+                float targetProgress = Mathf.Clamp01(op.progress / 0.9f);
+
+                fakeProgress = Mathf.Lerp(fakeProgress, targetProgress, Time.unscaledDeltaTime * loadingSmoothSpeed);
+
+                if(op.progress >= 0.9f)
+                {
+                    fakeProgress = Mathf.MoveTowards(fakeProgress, 1f, Time.unscaledDeltaTime * finalPushSpeed);
+                }
+                SetLoadingUI(true, fakeProgress);
+            }
+            else
+            {
+                if (op.progress >= 0.9f) break;
+            }
             await UniTask.Yield();
         }
 
-        SetLoadingUI(true, 1f);
+        if (updateUI) SetLoadingUI(true, 1f);
         await UniTask.Delay(300);
 
         op.allowSceneActivation = true;
@@ -153,25 +196,54 @@ public class SceneController : MonoBehaviour
         if (progressText != null) progressText.text = $"{Mathf.RoundToInt(progress * 100)}%";
     }
 
-    private async UniTask FadeAsync(float from, float to)
+    //private async UniTask FadeAsync(float from, float to)
+    //{
+    //    if (fadeCanvasGroup == null) return;
+
+    //    float elapsed = 0f;
+    //    fadeCanvasGroup.alpha = from;
+    //    fadeCanvasGroup.blocksRaycasts = true;
+
+    //    while (elapsed < fadeDuration)
+    //    {
+    //        if (fadeCanvasGroup == null) return; 
+    //        elapsed += Time.unscaledDeltaTime;
+    //        fadeCanvasGroup.alpha = Mathf.Lerp(from, to, elapsed / fadeDuration);
+    //        await UniTask.Yield();
+    //    }
+
+    //    fadeCanvasGroup.alpha = to;
+    //    fadeCanvasGroup.blocksRaycasts = to > 0f;
+    //}
+
+    private async UniTask WipeAsync(bool isCovering)
     {
-        if (fadeCanvasGroup == null) return;
+        if (wipeImage == null) return;
 
-        float elapsed = 0f;
-        fadeCanvasGroup.alpha = from;
-        fadeCanvasGroup.blocksRaycasts = true;
+        wipeImage.gameObject.SetActive(true);
 
-        while (elapsed < fadeDuration)
+        if(isCovering)
         {
-            if (fadeCanvasGroup == null) return; 
-            elapsed += Time.unscaledDeltaTime;
-            fadeCanvasGroup.alpha = Mathf.Lerp(from, to, elapsed / fadeDuration);
-            await UniTask.Yield();
+            wipeImage.fillOrigin = (int)Image.OriginHorizontal.Left;
+            wipeImage.fillAmount = 0f;
+
+            await wipeImage.DOFillAmount(1f, wipeDuration)
+                .SetUpdate(true)
+                .SetEase(Ease.InOutCubic)
+                .ToUniTask();
         }
+        else
+        {
+            wipeImage.fillOrigin = (int)Image.OriginHorizontal.Right;
+            wipeImage.fillAmount = 1f;
 
-        fadeCanvasGroup.alpha = to;
-        fadeCanvasGroup.blocksRaycasts = to > 0f;
+            await wipeImage.DOFillAmount(0f, wipeDuration)
+                .SetUpdate(true)
+                .SetEase(Ease.InOutCubic)
+                .ToUniTask();
+
+            wipeImage.gameObject.SetActive(false);
+        }
     }
-
     
 }

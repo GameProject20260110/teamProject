@@ -218,11 +218,6 @@ public class UiController : MonoBehaviour
         gimmickUI?.ClearIcons();
     }
 
-    public void GotoLobby()
-    {
-        SceneController.instance.LoadHomeScene();
-    }
-
     public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)
     {
         var card = inventoryUI?.FindCardByName(itemName);
