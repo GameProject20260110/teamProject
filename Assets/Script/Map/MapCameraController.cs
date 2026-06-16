@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -12,6 +13,13 @@ public class MapCameraController : MonoBehaviour
     [SerializeField] private float cameraMoveDuration = 1.0f;
     [SerializeField] private float dragThreshold = 5f;
 
+    [Header("카메라 줌인 세팅")]
+    [SerializeField] private float zoomSize = 1.5f;
+    [SerializeField] private float zoomDuration = 0.4f;
+    [SerializeField] private float zoomMoveDuration = 0.5f;
+
+    private float _originalSize;
+    private Vector3 _originalPosition;
     private Vector2 _dragStartPos;
     private float _minY;
     private float _maxY;
@@ -30,6 +38,12 @@ public class MapCameraController : MonoBehaviour
             float camHalfHeight = mapCamera.orthographicSize;
             _minY = background.bounds.min.y + camHalfHeight;
             _maxY = background.bounds.max.y - camHalfHeight;
+        }
+
+        if (mapCamera != null)
+        {
+            _originalSize = mapCamera.orthographicSize;
+            _originalPosition = mapCamera.transform.position;
         }
     }
 
@@ -74,5 +88,35 @@ public class MapCameraController : MonoBehaviour
     {
         float clampedY = Mathf.Clamp(targetY, _minY, _maxY);
         mapCamera.transform.position = new Vector3(mapCamera.transform.position.x, clampedY, mapCamera.transform.position.z);
+    }
+
+    public async UniTask ZoomToNode(Vector3 position)
+    {
+        if (mapCamera == null) return;
+
+        _originalSize = mapCamera.orthographicSize;
+        _originalPosition = mapCamera.transform.position;
+
+        Vector3 targetPos = new Vector3(position.x, position.y, mapCamera.transform.position.z);
+
+        mapCamera.transform.DOMove(targetPos, zoomMoveDuration)
+            .SetEase(Ease.InOutQuad)
+            .SetLink(mapCamera.gameObject);
+
+        await DOTween.To(
+            () => mapCamera.orthographicSize,
+            x => mapCamera.orthographicSize = x, zoomSize, zoomDuration)
+            .SetEase(Ease.InOutQuad)
+            .SetLink(mapCamera.gameObject)
+            .ToUniTask(cancellationToken: this.GetCancellationTokenOnDestroy());
+    }
+
+    public void ResetZoom()
+    {
+        if (mapCamera == null) return;
+
+        mapCamera.transform.DOKill();
+        mapCamera.orthographicSize = _originalSize;
+        mapCamera.transform.position = _originalPosition;
     }
 }

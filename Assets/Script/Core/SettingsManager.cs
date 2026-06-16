@@ -33,11 +33,6 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-    public void GoLobby()
-    {
-        ToggleSettings();
-        SceneController.instance.LoadHomeScene();
-    }
 
     public void ToggleSettings()
     {
