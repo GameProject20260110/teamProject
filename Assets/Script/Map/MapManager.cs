@@ -35,6 +35,10 @@ public class MapManager : MonoBehaviour
         else
             GenerateMap();
 
+        if (MapCameraController.instance != null)
+            MapCameraController.instance.ResetZoom();
+
+        MoveCameraToLayer(_currentLayer);
         AudioManager.instance.PlayBgm(MapBGM);
     }
 
@@ -186,7 +190,7 @@ public class MapManager : MonoBehaviour
         List<int> visitedIds = _spawnNode.FindAll(n => n.IsVisited).ConvertAll(n => n.NodeId);
         MapSaveLoad.instance?.Save(_generateNodes, visitedIds, _currentLayer, _previousNodeId, _pathLines);
 
-        MoveCameraToLayer(_currentLayer);
+        await MapCameraController.instance.ZoomToNode(node.transform.position);
         HandleNodeType(nodeData.nodeType);
     }
 
