@@ -38,13 +38,7 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     public void OnPointerDown(PointerEventData eventData) { }
 
     public void OnBeginDrag(PointerEventData eventData)
-    {
-        if (GameManager.instance.IsFirstRoll)
-        {
-            _isDragging = false;
-            return;
-        }
-
+    { 
         _isDragging = true;
         _originalParent = transform.parent;
         _floatingEffect?.StopFloating();

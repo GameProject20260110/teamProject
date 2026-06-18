@@ -41,7 +41,6 @@ public class BattleInitalizer : MonoBehaviour
             UiController.instance.HideAllPanels();
             UiController.instance.SetRollBtnInteractable(true);
             UiController.instance.SetConfirmBtnInteratable(false);
-            UiController.instance.SetRollButtonToRoll();
             UiController.instance.ResetItemCards();
         }
 
