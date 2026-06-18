@@ -56,7 +56,7 @@ public class PopupManager : MonoBehaviour
         if (playerGold != null)
         {
             int gold = PlayerShopManager.instance != null && PlayerShopManager.instance.IsOpen ? 
-                PlayerShopManager.instance.TempGold : PlayerManager.instance.gold;
+                PlayerShopManager.instance.TempGold : ResourceManager.instance.gold;
             playerGold.text = gold.ToString();
         }
 

@@ -3,9 +3,8 @@ using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
-using UnityEngine.EventSystems;
 
-public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class Dice : MonoBehaviour
 {
     public Image diceImage;
 
@@ -112,17 +111,5 @@ public class Dice : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public Sprite GetCurrentSprite()
     {
         return diceImage.sprite;
-    }
-
-    public void OnPointerEnter(PointerEventData eventData)
-    {
-        if (GamePopupManager.instance == null || MyState.diceData == null) return;
-        GamePopupManager.instance.OpenPopup(MyState.diceData, GetComponent<RectTransform>());
-    }
-
-    public void OnPointerExit(PointerEventData eventData)
-    {
-        if (GamePopupManager.instance == null) return;
-        GamePopupManager.instance.ClosePopup();
     }
 }

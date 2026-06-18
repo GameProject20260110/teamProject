@@ -18,7 +18,6 @@ public class DiceState
 
     public int appliedScoreValue;
 
-    public ScoreManager.DiceType currentType;
     public bool isForceOdd = false;
     public bool isForceEven = false;
     public bool isScoreUnLocked = false;
@@ -49,14 +48,12 @@ public class DiceState
 
         if(data != null)
         {
-            this.currentType = data.type;
             multiBonusScore = data.multiBonusScore;
             plusBonusScore = data.plusBonusScore;
 
         }
         else
         {
-            this.currentType = ScoreManager.DiceType.None;
             this.multiBonusScore = 1;
             this.plusBonusScore = 0;
         }

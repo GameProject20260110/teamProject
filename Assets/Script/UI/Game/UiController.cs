@@ -11,8 +11,6 @@ public class UiController : MonoBehaviour
     public ItemInventoryUI inventoryUI;
     public ResultPanelUI resultUI;
     public GameOverPanelUI gameOverUI;
-    public GimmickUI gimmickUI;
-    public NotificationUI notificationUI;
 
     [Header("인게임 정보 UI (상시 표시)")]
     public TextMeshProUGUI roundInfoText;
@@ -55,13 +53,9 @@ public class UiController : MonoBehaviour
         {
             SubscribeToEvents();
         }
-        if(notificationUI != null)
-        {
-            notificationUI.gameObject.SetActive(false);
-        }
         RefreshInventory();
 
-        if(PlayerManager.instance != null && _playerImage != null)
+        if(ResourceManager.instance != null && _playerImage != null)
         {
             _playerImage.sprite = ResourceManager.instance.PlayerImage;
         }
@@ -76,14 +70,12 @@ public class UiController : MonoBehaviour
     {
         GameManager.instance.OnGoldChanged += UpdateGoldUi;
         GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
-        GameManager.instance.OnRerollCountChanged += UpdateRerollUi;
     }
 
     private void UnSubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged -= UpdateGoldUi;
         GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
-        GameManager.instance.OnRerollCountChanged -= UpdateRerollUi;
     }
 
     private void UpdateGoldUi(int gold)
@@ -112,11 +104,6 @@ public class UiController : MonoBehaviour
     public void ToggleInventoryPanel()
     {
         InventoryPanel.SetActive(!InventoryPanel.activeSelf);
-    }
-
-    public void RefreshGimmickIcons(List<GimmickSo> gimmick)
-    {
-        gimmickUI?.RefreshIcons(gimmick);
     }
 
     public void SetRollButtonToRoll()
@@ -178,12 +165,6 @@ public class UiController : MonoBehaviour
         gameOverUI?.Show(round);
     }
 
-    public void UpdateRerollUi(int count)
-    {
-        if (rerollText != null)
-            rerollText.SetText($"{count}/{PlayerManager.instance?.gameRerollCount}");
-    }
-
     public void SetRollBtnInteractable(bool state)
     {
         if(rollBtn != null)
@@ -211,11 +192,6 @@ public class UiController : MonoBehaviour
     public void OnClickGameEndBtn()
     {
         gameOverUI?.Show(12);
-    }
-
-    public void ClearGimmickIcons()
-    {
-        gimmickUI?.ClearIcons();
     }
 
     public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)

@@ -7,13 +7,9 @@ public class GameBootstrap : MonoBehaviour
     [SerializeField] private GameObject sceneControlPrefab;
     [SerializeField] private GameObject audioManagerPrefab;
     [SerializeField] private GameObject settingsManagerPrefab;
-    [SerializeField] private GameObject playerStatsManagerPrefab;
     [SerializeField] private GameObject battleDataManagerPrefab;
     private async UniTask Start()
     {
-        Instantiate(playerStatsManagerPrefab);
-        await UniTask.NextFrame();
-
         Instantiate(settingsManagerPrefab);
         await UniTask.NextFrame();
 
@@ -35,11 +31,6 @@ public class GameBootstrap : MonoBehaviour
 
     private bool VaildateManagers()
     {
-        if (PlayerStatsManager.instance == null)
-        {
-            Debug.LogError("PlayerStatsManager 초기화 실패");
-            return false;
-        }
         if (SettingsManager.instance == null)
         {
             Debug.LogError("SettingsManager 초기화 실패");

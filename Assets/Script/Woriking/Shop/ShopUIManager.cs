@@ -14,7 +14,6 @@ public class ShopUIManager : MonoBehaviour
     [SerializeField] private ItemGachaTable itemGacha;
 
     [Header("UI")]
-    public NotificationUI notificationUI;
     [SerializeField] private Button MapButton;
 
     [Header("Inventory Icon")]
@@ -48,9 +47,6 @@ public class ShopUIManager : MonoBehaviour
         }          
 
         ReRoll();
-
-        if (notificationUI != null)
-            notificationUI.gameObject.SetActive(false);
     }
 
     public void ReRoll()

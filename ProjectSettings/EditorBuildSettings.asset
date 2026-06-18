@@ -20,7 +20,7 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/DiceSelect.unity
     guid: b781185b5cffa304c8cdd3f233a98f14
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Map.unity
     guid: 3677558ea68a720498f135daeacb2cbf
   m_configObjects:
