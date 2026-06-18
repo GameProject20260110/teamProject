@@ -8,8 +8,6 @@ public class DiceRoller : MonoBehaviour
 
     private float padding = 100.0f;
 
-    private bool UseTestMode => TestModeManager.instance != null && TestModeManager.instance.isTestModeActive;
-
     public async UniTask StartRoll(Dice[] allDice, RectTransform rollArea) 
     {
         if (isRolling) return;
@@ -93,13 +91,6 @@ public class DiceRoller : MonoBehaviour
     private int GetResultValue(int index)
     {
         int result = Random.Range(1, 7);
-        if(UseTestMode && TestModeManager.instance.testValues != null && index < TestModeManager.instance.testValues.Length)
-        {
-            if (TestModeManager.instance.testValues[index] > 0)
-            {
-                result = Mathf.Clamp(TestModeManager.instance.testValues[index], 1, 6);
-            }
-        }
         return result;
     }
 

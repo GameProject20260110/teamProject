@@ -137,25 +137,24 @@ public class MainOption : MonoBehaviour
     public void OnPlayerStatusResetClick()
     {
         Debug.Log("Reset Clicked");
-        if (PlayerStatsManager.instance != null && SceneController.instance != null)
+        if (SceneController.instance != null)
         {
-            PlayerStatsManager.instance.ResetStatus();
             ToggleSettingsPanel();
             SceneController.instance.ReloadCurrentScene();
         }
-        else Debug.LogWarning($"PlayerStatsManager: {PlayerStatsManager.instance}, SceneController: {SceneController.instance}");
+        else Debug.LogWarning($"SceneController: {SceneController.instance}");
     }
 
     public void OnPlayerDataResetClick()
     {
         Debug.Log("Reset Clicked");
-        if (PlayerManager.instance != null && SceneController.instance != null)
+        if (ResourceManager.instance != null && SceneController.instance != null)
         {
-            PlayerManager.instance.ResetData();
+            ResourceManager.instance.ResetData();
             ToggleSettingsPanel();
             SceneController.instance.ReloadCurrentScene();
         }
-        else Debug.LogWarning($"PlayerManager: {PlayerManager.instance}, SceneController: {SceneController.instance}");
+        else Debug.LogWarning($"PlayerManager: {ResourceManager.instance}, SceneController: {SceneController.instance}");
     }
 
     public void OnMapDataResetClick()

@@ -19,7 +19,6 @@ public class ShopDescPopup : MonoBehaviour
     {      
         icon.sprite = data.skin.GetSprite(1);
         typeIcon.sprite = diceTypeSprite;
-        typeText.text = data.type.ToString();
         nameText.text = data.abilityName;
         timingText.text = "비어있음";
         Desc.text = data.Desc.ToString();

@@ -6,8 +6,6 @@ using DG.Tweening;
 public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
     IPointerDownHandler
 {
-    public PanelEffect panelEffect;
-
     public Shadow shadowEffect;
     public float dragScale = 1.2f;
     public float dragScaleDuration = 0.1f;
@@ -75,8 +73,6 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             out Vector2 localPoint
         );
         _rectTransform.localPosition = localPoint;
-
-        panelEffect?.CheckHover(eventData.position, eventData.pressEventCamera);
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -88,8 +84,6 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if(shadowEffect != null) 
             shadowEffect.enabled = false;
-
-        panelEffect?.ResetPanelScale(); 
 
         bool placed = DicePanelManager.instance?.OnDiceDrop(_dice, eventData) ?? false;
 

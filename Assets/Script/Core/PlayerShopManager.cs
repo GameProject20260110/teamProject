@@ -12,7 +12,6 @@ public class PlayerShopManager : MonoBehaviour
 
     public List<DiceData> TempDices = new();
     public List<BattleItemSo> TempItems = new();
-    public List<ItemSo> pendingConsumables = new List<ItemSo>();
 
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
@@ -25,6 +24,8 @@ public class PlayerShopManager : MonoBehaviour
     [SerializeField] private ShopPanelAnimator shopAnimator;
 
     public event System.Action<int> OnGoldChanged;
+
+    [SerializeField] private DiceData defaultDice;
 
     public bool IsOpen { get; private set; }
 
@@ -112,7 +113,7 @@ public class PlayerShopManager : MonoBehaviour
 
     public bool TryPurchaseDice(DiceData dice)
     {
-        int cost = LuckyStone.CalcDiscount(dice.gold);
+        int cost = dice.gold;
         if (!HasEnoughGold(cost)) return false;
 
         SpendGold(cost);
@@ -122,7 +123,7 @@ public class PlayerShopManager : MonoBehaviour
 
     public bool TryPurchaseItem(BattleItemSo item)
     {
-        int cost = LuckyStone.CalcDiscount(item.gold);
+        int cost = item.gold;
         if (!HasEnoughGold(cost)) return false;
 
         SpendGold(cost);
@@ -132,7 +133,7 @@ public class PlayerShopManager : MonoBehaviour
 
     public void SellDice(DiceData dice, int slotIndex, int sellPrice)
     {
-        TempDices[slotIndex] = PlayerManager.instance.defaultDice;
+        TempDices[slotIndex] = defaultDice;
         GainGold(sellPrice);
     }
 

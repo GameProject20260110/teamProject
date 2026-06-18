@@ -39,48 +39,48 @@ public class DiceGachaTable : ScriptableObject
         return null;
     }
 
-    [ContextMenu("Tier별 가격 기반 확률로 넣기 (추천)")]
-    private void AutoFillDiceWeightsByTierAndPrice()
-    {
-        // 1. 모든 DiceData 찾기
-        string[] guids = AssetDatabase.FindAssets("t:DiceData");
-        List<DiceData> allDice = new List<DiceData>();
+    //[ContextMenu("Tier별 가격 기반 확률로 넣기 (추천)")]
+    //private void AutoFillDiceWeightsByTierAndPrice()
+    //{
+    //    // 1. 모든 DiceData 찾기
+    //    string[] guids = AssetDatabase.FindAssets("t:DiceData");
+    //    List<DiceData> allDice = new List<DiceData>();
 
-        foreach (string guid in guids)
-        {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            DiceData dice = AssetDatabase.LoadAssetAtPath<DiceData>(path);
-            if (dice != null && dice.type != ScoreManager.DiceType.None)
-            {
-                allDice.Add(dice);
-            }
-        }
+    //    foreach (string guid in guids)
+    //    {
+    //        string path = AssetDatabase.GUIDToAssetPath(guid);
+    //        DiceData dice = AssetDatabase.LoadAssetAtPath<DiceData>(path);
+    //        if (dice != null && dice.type != ScoreManager.DiceType.None)
+    //        {
+    //            allDice.Add(dice);
+    //        }
+    //    }
 
-        // 2. 리스트 초기화
-        diceWeights = new List<DiceWeight>();
+    //    // 2. 리스트 초기화
+    //    diceWeights = new List<DiceWeight>();
 
-        // 3. Tier별 기본 weight
-        foreach (var dice in allDice)
-        {
-            int weight = CalculateWeightByTier(dice.tier);
+    //    // 3. Tier별 기본 weight
+    //    foreach (var dice in allDice)
+    //    {
+    //        int weight = CalculateWeightByTier(dice.tier);
 
-            diceWeights.Add(new DiceWeight
-            {
-                dice = dice,
-                weight = weight
-            });
-        }
+    //        diceWeights.Add(new DiceWeight
+    //        {
+    //            dice = dice,
+    //            weight = weight
+    //        });
+    //    }
 
-        // 4. 정렬
-        diceWeights = diceWeights
-            .OrderBy(d => d.dice.diceNum)
-            .ToList();
+    //    // 4. 정렬
+    //    diceWeights = diceWeights
+    //        .OrderBy(d => d.dice.diceNum)
+    //        .ToList();
 
-        // 5. 저장
-        EditorUtility.SetDirty(this);
-        AssetDatabase.SaveAssets();
+    //    // 5. 저장
+    //    EditorUtility.SetDirty(this);
+    //    AssetDatabase.SaveAssets();
 
-    }
+    //}
 
 
     private int CalculateWeightByTier(int tier)
