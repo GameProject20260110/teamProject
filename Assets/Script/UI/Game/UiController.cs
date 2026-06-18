@@ -106,22 +106,6 @@ public class UiController : MonoBehaviour
         InventoryPanel.SetActive(!InventoryPanel.activeSelf);
     }
 
-    public void SetRollButtonToRoll()
-    {
-        if(rollBtnImage != null && rollSprite != null)
-        {
-            rollBtnImage.sprite = rollSprite;
-        }
-    }
-
-    public void SetRollButtnonToReroll()
-    {
-        if(rollBtnImage != null && rerollSprite != null)
-        {
-            rollBtnImage.sprite = rerollSprite;
-        }
-    }
-
     public void RefreshInventory()
     {
         inventoryUI?.Refresh();

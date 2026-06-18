@@ -16,22 +16,6 @@ public class GameManager : MonoBehaviour
     [SerializeField] private AudioClip BattleBGM;
 
     public bool hasUsedPlusReroll = false;
-    
-    private List<int> _lastValues;
-    private int _currentRerollCount;
-    private bool _isFirstRoll = true;
-
-    public bool IsFirstRoll => _isFirstRoll;
-
-    public int CurrentRerollCount
-    {
-        get => _currentRerollCount;
-        set
-        {
-            _currentRerollCount = value;
-            OnRerollCountChanged?.Invoke(_currentRerollCount);
-        }
-    }
 
     private void Awake()
     {
@@ -63,7 +47,6 @@ public class GameManager : MonoBehaviour
 
         OnGoldChanged?.Invoke(gold);
         OnRoundAndGoalChanged?.Invoke(currentRound);
-        OnRerollCountChanged?.Invoke(_currentRerollCount);
     }
 
     public void StartRound()
@@ -74,7 +57,6 @@ public class GameManager : MonoBehaviour
         NotifyAllUI();
 
         UiController.instance.HideAllPanels();
-        UiController.instance.SetShopBtnInteratable(true);
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
 
@@ -108,14 +90,10 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            if (_isFirstRoll)
-            {
-                UiController.instance.SetRollButtnonToReroll();
-            }
-            else
-            {
-                UiController.instance?.ResetItemCards();
-            }
+            
+            
+            UiController.instance?.ResetItemCards();
+            
 
             Dice[] allDice = await diceManager.StartRolling();
 
@@ -136,16 +114,8 @@ public class GameManager : MonoBehaviour
 
     public void ProcessRollResult()
     {
-        if (_currentRerollCount <= 0)
-        {
-            UiController.instance.SetRollBtnInteractable(false);
-            UiController.instance.SetConfirmBtnInteratable(true);
-        }
-        else
-        {
-            UiController.instance.SetRollBtnInteractable(true);
-            UiController.instance.SetConfirmBtnInteratable(true);
-        }
+        UiController.instance.SetRollBtnInteractable(true);
+        UiController.instance.SetConfirmBtnInteratable(true);       
     }
 
     public void HandleGameOver()
@@ -154,15 +124,6 @@ public class GameManager : MonoBehaviour
         if(ResourceManager.instance != null)
         {
             ResourceManager.instance.ResetData();
-        }
-
-        List<int> fakeValues = new List<int>();
-        if (_lastValues != null)
-        {
-            for (int i = 0; i < _lastValues.Count; i++)
-            {
-                fakeValues.Add(1);
-            }
         }
         UiController.instance.ShowGameOverPanel(1);
     }
@@ -220,7 +181,6 @@ public class GameManager : MonoBehaviour
 
         DicePanelManager.instance?.ResetAllDice(diceManager.GetAllDice());
 
-        UiController.instance.SetRollButtnonToReroll();
         UiController.instance.SetRollBtnInteractable(true);
     }
 }
