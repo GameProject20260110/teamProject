@@ -196,6 +196,9 @@ public class BattleManager : MonoBehaviour
             dice.Glow.HideGlow();
         }
 
+        // 플레이어 공격 끝나고 발동
+        _eventBus.TriggerOnPlayerAttackEnd(_ctxFactory.Create());
+
         if (enemyData.IsDead())
         {
             _eventBus.TriggerEnemyDead(_ctxFactory.Create());
@@ -376,7 +379,7 @@ public class BattleManager : MonoBehaviour
 
         var diceCtx = new DiceContext { battle = _ctxFactory.Create() };
         item.OnUse(diceCtx);
-
+            
         if (item.isConsumable)
         {
             ItemManager.instance.items.Remove(item);

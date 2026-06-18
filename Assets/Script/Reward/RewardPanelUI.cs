@@ -176,8 +176,7 @@ public class RewardPanelUI : MonoBehaviour
             case RewardType.ActiveItem:
                 if (preSelecteItem != null)
                 {
-                    ItemManager.instance?.items.Add(preSelecteItem);
-                    ItemManager.instance?.Save();
+                    ItemManager.instance?.AddItem(preSelecteItem);
                     Debug.Log($"{preSelecteItem.itemName} æ∆¿Ã≈€ »πµÊ");
                 }
                 break;
