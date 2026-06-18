@@ -7,7 +7,6 @@ using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
-using Unity.VisualScripting;
 
 public class SceneController : MonoBehaviour
 {

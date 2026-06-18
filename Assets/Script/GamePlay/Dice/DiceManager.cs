@@ -8,7 +8,6 @@ public class DiceManager : MonoBehaviour
   
     [Header("UI ¿¬°á")]
     public RectTransform rollArea;
-    public PanelEffect panelEffect;
 
     [Header("½½·Ô")]
     public Transform[] slots;
@@ -50,8 +49,6 @@ public class DiceManager : MonoBehaviour
         obj.transform.localPosition = Vector3.zero;
 
         var draggable = obj.GetComponent<DraggableDice>();
-        if (draggable != null)
-            draggable.panelEffect = panelEffect;
 
         Dice dice = obj.GetComponent<Dice>();
         dice.Initialize(slotIndex, data);

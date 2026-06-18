@@ -21,20 +21,19 @@ public class DescPopupContent : MonoBehaviour
         icon.sprite = data.skin.GetSprite(1);
         itemName.text = data.name;
         typeIcon.sprite = diceTypeSprite;
-        typeText.text = data.type.ToString();
         ParchaseGold.text = data.gold.ToString();
         SellGold.text = data.sell.ToString();
         Desc.text = data.Desc.ToString();
     }
 
-    public void UpdataInfo(ItemSo data)
+    public void UpdataInfo(BattleItemSo data)
     {
         icon.sprite = data.itemIcon;
         itemName.text = data.name;
         typeIcon.sprite = itemTypeSprite;
         typeText.text = "Item";
         ParchaseGold.text = data.gold.ToString();
-        SellGold.text = data.sell.ToString();
+        SellGold.text = "";//data.sell.ToString();
         Desc.text = data.itemDesc.ToString();
     }
 }

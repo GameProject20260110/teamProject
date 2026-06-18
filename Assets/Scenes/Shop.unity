@@ -6415,7 +6415,6 @@ MonoBehaviour:
   - {fileID: 75086518}
   ShopDiceDatabase: {fileID: 11400000, guid: 9dbd64997f631ab43b5e5bdd9d4947e3, type: 2}
   itemGacha: {fileID: 11400000, guid: 16df8da84ea7e194a9e64da0343b0adf, type: 2}
-  notificationUI: {fileID: 592134685}
   MapButton: {fileID: 1525389223}
   inventoryIconRect: {fileID: 535363810}
   ShopCanvas: {fileID: 1241135455}
@@ -8382,6 +8381,10 @@ PrefabInstance:
       propertyPath: shopCanvas
       value: 
       objectReference: {fileID: 1241135450}
+    - target: {fileID: 6549974157846703604, guid: 11c6721714c606a41af6bafb391d9454, type: 3}
+      propertyPath: defaultDice
+      value: 
+      objectReference: {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
     - target: {fileID: 6549974157846703604, guid: 11c6721714c606a41af6bafb391d9454, type: 3}
       propertyPath: shopAnimator
       value: 

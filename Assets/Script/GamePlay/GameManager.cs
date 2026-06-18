@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -14,15 +13,11 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnRerollCountChanged;
 
     public DiceManager diceManager;
-    public PanelEffect panelEffect;
-    public UIFlowController UFC;
     [SerializeField] private AudioClip BattleBGM;
 
     public bool hasUsedPlusReroll = false;
     
-    private List<DiceData> _lastDiceDatas;
     private List<int> _lastValues;
-    private List<ItemSo> _usedConsumableItems = new List<ItemSo>();
     private int _currentRerollCount;
     private bool _isFirstRoll = true;
 
@@ -58,15 +53,12 @@ public class GameManager : MonoBehaviour
 
     public void InitializeRoundData()
     {
-        _isFirstRoll = PlayerManager.instance.isFirstRoll;
-        _currentRerollCount = PlayerManager.instance.gameRerollCount;
-        if (UiController.instance != null) UiController.instance.UpdateRerollUi(_currentRerollCount);
         NotifyAllUI();
     }
 
     public void NotifyAllUI()
     {
-        int gold = PlayerManager.instance != null ? PlayerManager.instance.gold : 0;
+        int gold = ResourceManager.instance != null ? ResourceManager.instance.gold : 0;
         int currentRound = 0;
 
         OnGoldChanged?.Invoke(gold);
@@ -74,29 +66,14 @@ public class GameManager : MonoBehaviour
         OnRerollCountChanged?.Invoke(_currentRerollCount);
     }
 
-    public void AddGold(int amount)
-    {
-        if (PlayerManager.instance != null)
-        {
-            PlayerManager.instance.gold += amount;
-            if (PlayerManager.instance.gold < 0) { PlayerManager.instance.gold = 0; }
-            OnGoldChanged?.Invoke(PlayerManager.instance.gold);
-        }
-    }
-
     public void StartRound()
     {
-        Debug.Log($"{_usedConsumableItems.Count}");
-        _usedConsumableItems.Clear();
         if (UiController.instance == null) return;
-        _isFirstRoll = PlayerManager.instance.isFirstRoll;
-        _currentRerollCount = PlayerManager.instance.gameRerollCount;
         hasUsedPlusReroll = false;
 
         NotifyAllUI();
 
         UiController.instance.HideAllPanels();
-        UiController.instance.UpdateRerollUi(_currentRerollCount);
         UiController.instance.SetShopBtnInteratable(true);
         UiController.instance.SetRollBtnInteractable(true);
         UiController.instance.SetConfirmBtnInteratable(false);
@@ -122,9 +99,7 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.rollBtn.interactable = false;
-        UiController.instance.SetShopBtnInteratable(false);
         UiController.instance.HideGlowConfirmBtn();
-        panelEffect?.HideGlow();
 
         RollFlow().Forget();
     }
@@ -135,29 +110,16 @@ public class GameManager : MonoBehaviour
         {
             if (_isFirstRoll)
             {
-                _isFirstRoll = false;
-                PlayerManager.instance.isFirstRoll = false;
                 UiController.instance.SetRollButtnonToReroll();
             }
             else
             {
-                VisualManager.instance?.ResetDiceColors(diceManager.GetAllDice());
                 UiController.instance?.ResetItemCards();
             }
 
-            UiController.instance.UpdateRerollUi(_currentRerollCount);
             Dice[] allDice = await diceManager.StartRolling();
 
-            var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
-
-            await UniTask.Delay(500);
-
-            if (VisualManager.instance != null)
-            {
-                await VisualManager.instance.PlayScoreEventSequence(allDice, result.events);
-            }
-
-            ProcessRollResult(result.finalScore, result.consumedItems);
+            ProcessRollResult();
 
             foreach(var dice in allDice)
             {
@@ -165,7 +127,6 @@ public class GameManager : MonoBehaviour
                 var floatingEffect = dice.GetComponent<FloatingEffect>();
                 if (floatingEffect != null) floatingEffect.enabled = true;
             }
-            panelEffect?.ShowGlow();
         }
         catch (Exception e)
         {
@@ -173,34 +134,15 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    public void ProcessRollResult(int finalScore, List<ItemSo> consumedItems)
+    public void ProcessRollResult()
     {
-        _usedConsumableItems = consumedItems;
-
-        if (diceManager != null)
-        {
-            _lastDiceDatas = new List<DiceData>();
-            _lastValues = new List<int>();
-
-            foreach(var dice in diceManager.panelDiceScript)
-            {
-                if(dice != null && dice.MyState != null && dice.gameObject.activeSelf)
-                {
-                    _lastDiceDatas.Add(dice.MyState.diceData);
-                    _lastValues.Add(dice.MyState.originalValue);
-                }
-            }
-        }
-
         if (_currentRerollCount <= 0)
         {
-            UiController.instance.SetShopBtnInteratable(false);
             UiController.instance.SetRollBtnInteractable(false);
             UiController.instance.SetConfirmBtnInteratable(true);
         }
         else
         {
-            UiController.instance.SetShopBtnInteratable(true);
             UiController.instance.SetRollBtnInteractable(true);
             UiController.instance.SetConfirmBtnInteratable(true);
         }
@@ -209,14 +151,9 @@ public class GameManager : MonoBehaviour
     public void HandleGameOver()
     {
 
-        if(PlayerManager.instance != null)
+        if(ResourceManager.instance != null)
         {
-            PlayerManager.instance.ResetData();
-        }
-
-        if(GimmickManager.instance != null)
-        {
-            GimmickManager.instance.ClearGimmick();
+            ResourceManager.instance.ResetData();
         }
 
         List<int> fakeValues = new List<int>();
@@ -232,7 +169,6 @@ public class GameManager : MonoBehaviour
 
     public void OnClickScoreConfirmButton()
     {
-
         OnClickScoreConfirm().Forget();
     }
 
@@ -240,16 +176,9 @@ public class GameManager : MonoBehaviour
     {
         Dice[] allDice = await diceManager.StartEnemyRolling();
 
-        var result = ScoreManager.instance.CalculateScore(allDice, ScoreManager.DiceType.Roll);
-
         await UniTask.Delay(500);
 
-        if (VisualManager.instance != null)
-        {
-            await VisualManager.instance.PlayScoreEventSequence(allDice, result.events);
-        }
-
-        ProcessRollResult(result.finalScore, result.consumedItems);
+        ProcessRollResult();
 
         EnemyAI.instance.PlaceDice(allDice);
     }
@@ -265,27 +194,15 @@ public class GameManager : MonoBehaviour
         BattleManager.instance.SetDiceInfo(attackDices, defenceDices);
 
         // UI 비활성화
-        UiController.instance.SetShopBtnInteratable(false);
         UiController.instance.SetConfirmBtnInteratable(false);
         UiController.instance.SetRollBtnInteractable(false);
         UiController.instance.HideGlowConfirmBtn();
-        panelEffect?.HideGlow();
 
         foreach (var dice in diceManager.panelDiceScript)
         {
             if (dice == null || !dice.gameObject.activeSelf) continue;
             var floatingEffect = dice.GetComponent<FloatingEffect>();
             if (floatingEffect != null) floatingEffect.StopFloating();
-        }
-
-        // 아이템 처리
-        if (_usedConsumableItems != null && _usedConsumableItems.Count > 0)
-        {
-            RemoveUsedItems(_usedConsumableItems);
-        }
-        if (PlayerShopManager.instance != null)
-        {
-            PlayerShopManager.instance.pendingConsumables.Clear();
         }
 
         try
@@ -303,75 +220,8 @@ public class GameManager : MonoBehaviour
 
         DicePanelManager.instance?.ResetAllDice(diceManager.GetAllDice());
 
-        _isFirstRoll = true;
-        PlayerManager.instance.isFirstRoll = true;
         UiController.instance.SetRollButtnonToReroll();
-        UiController.instance.SetShopBtnInteratable(true);
         UiController.instance.SetRollBtnInteractable(true);
-    }
-
-    public void OnClickSurrenButton()
-    {
-        if(_isFirstRoll) return;
-        if (PlayerManager.instance == null) return;
-        //if (RoundManager.instance.currentRound <= 1) return;
-
-        if(PlayerManager.instance != null)
-        {
-            PlayerManager.instance.ResetData();
-        }
-        if(GimmickManager.instance != null)
-        {
-            GimmickManager.instance.ClearGimmick();
-        }
-
-        //RoundManager.instance.StartRound();
-        BattleInitalizer.instance.StartBattle();
-    }
-
-    //public void OnClickNextRound()
-    //{
-
-    //    BattleInitalizer.instance.GoNextRound();
-
-    //    PlayerManager.instance.gameRerollCount = 3;
-    //    PlayerManager.instance.isFirstRoll = true;
-
-    //    //UFC.OnNextRoundButton();
-    //    SceneController.instance?.LoadMapScene();
-    //}
-
-    public void OnClickRetryRound()
-    {
-        PlayerManager.instance.gameRerollCount = 3;
-        PlayerManager.instance.isFirstRoll = true;
-    }
-
-    public void LoadHomeScreen()
-    {
-        if(PlayerManager.instance != null && !PlayerManager.instance.isGameOver)
-        {
-            PlayerManager.instance.Save();
-        }
-        //if(PlayerStatsManager.instance != null)
-        //{
-        //    PlayerStatsManager.instance.RecordGameEnd(RoundManager.instance.currentRound, true);
-        //}
-
-        SceneManager.LoadScene("HomeScreen");
-    }
-
-    private void RemoveUsedItems(List<ItemSo> itemsToRemove)
-    {
-        if (PlayerManager.instance == null) return;
-
-        var items = PlayerManager.instance.items;
-        foreach (var item in itemsToRemove)
-        {
-            int index = items.IndexOf(item);
-            if (index >= 0) items[index] = null;
-        }
-        UiController.instance.RefreshInventory();
     }
 }
     

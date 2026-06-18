@@ -11,7 +11,7 @@ public class ShopBattleItem : ShopItem<BattleItemSo>
 
     protected override bool OnBuy()
     {
-        int cost = LuckyStone.CalcDiscount(Data.gold);
+        int cost = Data.gold;
         return PlayerShopManager.instance.TryPurchaseItem(Data);
     }
 

@@ -45,10 +45,6 @@ public class BattleInitalizer : MonoBehaviour
             UiController.instance.ResetItemCards();
         }
 
-        if (VisualManager.instance != null)
-            VisualManager.instance.ResetDiceColors(GameManager.instance.diceManager.GetAllDice());
-
-
         if (DeckManager.instance != null)
         {
             DeckManager.instance.InitializeDeck();
@@ -71,38 +67,12 @@ public class BattleInitalizer : MonoBehaviour
         if (UiController.instance != null)
             UiController.instance.SetRollBtnInteractable(false);
 
-        //if (PlayerManager.instance != null)
-        //{
-        //    foreach (var item in PlayerManager.instance.items)
-        //    {
-        //        if (item == null) continue;
-        //        item.RoundEnd();
-        //    }
-        //}
-        //if (PlayerManager.instance.tempExtraSlotsCount > 0)
-        //{
-        //    bool[] slots = PlayerManager.instance.SpecialSlots;
-        //    int remove = 0;
-        //    for (int i = slots.Length - 1; i >= 0 && remove < PlayerManager.instance.tempExtraSlotsCount; i--)
-        //    {
-        //        if (slots[i])
-        //        {
-        //            slots[i] = false;
-        //            remove++;
-        //        }
-        //    }
-        //    PlayerManager.instance.tempExtraSlotsCount = 0;
-        //}
-
-        int currentHP = PlayerManager.instance != null ? PlayerManager.instance.heart : 0;
+        int currentHP = ResourceManager.instance != null ? ResourceManager.instance.heart : 0;
 
         // 클리어 시 선택 보상
 
         if (isSuccess)
         {
-            int reward = BattleDataManager.instance?.GetGoldReward() ?? 10;
-            GameManager.instance.AddGold(reward);
-
             // 보스전 클리어 후 맵 데이터 초기화
             if (BattleDataManager.instance?.isBossBattle == true)
             {
@@ -111,18 +81,11 @@ public class BattleInitalizer : MonoBehaviour
             }
 
             RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
-            //UiController.instance.ShowResultPanel(true, currentHP);
         }
         else
         {
             GameManager.instance.HandleGameOver();
         }
-        GimmickManager.instance.ClearGimmick();
-    }
-
-    public void GoNextRound()
-    {
-        PlayerManager.instance.Save();
     }
 }
 
