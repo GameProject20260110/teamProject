@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class BattleUI : MonoBehaviour
 {
@@ -20,6 +21,8 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
     [SerializeField] private RoundController turnUI;
+    [SerializeField] private float floatHeight = 100f;
+    [SerializeField] private float floatDuration = 0.7f;
 
     [Header("Shield")]
     [SerializeField] private GameObject shieldObject;
@@ -61,23 +64,55 @@ public class BattleUI : MonoBehaviour
         turnUI.NextTurn(currentTurn);
     }
 
+    // 데미지 텍스트
     public void ShowDamageText(int damage, bool isPlayer)
+    {
+        ShowFloatingText(damage, isPlayer, Color.red, "-");
+    }
+
+    // 추가 데미지 텍스트
+    public void ShowBonusDamageText(int damage)
+    {
+        Debug.Log($"ShowBonusDamage 호출 : {damage}");
+        ShowFloatingText(damage, false, Color.yellow, "-");
+    }
+
+    // 힐 텍스트
+    public void ShowHealText(int amount)
+    {
+        Debug.Log($"ShowHealText 호출 : {amount}");
+        ShowFloatingText(amount, true, Color.green, "+");
+    }
+
+    public void ShowFloatingText(int damage, bool isPlayer, Color color, string prefix)
     {
         if (damageTextPrefab == null) return;
 
         Transform spawnPos = isPlayer ? playerDamageSpawn : enemyDamageSpawn;
         if (spawnPos == null) return;
 
-        GameObject damageObj = Instantiate(damageTextPrefab, spawnPos.position, Quaternion.identity, spawnPos);
-        TextMeshProUGUI damageText = damageObj.GetComponent<TextMeshProUGUI>();
+        GameObject textObj = Instantiate(damageTextPrefab, spawnPos.position, Quaternion.identity, spawnPos);
+        TextMeshProUGUI tmpText = textObj.GetComponent<TextMeshProUGUI>();
 
-        if (damageText != null)
+        if (tmpText != null)
         {
-            damageText.text = $"-{damage}";
-            damageText.color = Color.red;
-        }
+            tmpText.text = $"{prefix}{damage}";
+            tmpText.color = color;
 
-        Destroy(damageObj, 1f);
+            tmpText.transform.DOMoveY(floatHeight, floatDuration)
+                .SetRelative()
+                .SetEase(Ease.OutQuart)
+                .SetLink(textObj);
+
+            tmpText.DOFade(0f, floatDuration)
+                .SetEase(Ease.InQuad)
+                .SetLink(textObj)
+                .OnComplete(() => Destroy(textObj));
+        }
+        else
+        {
+            Destroy(textObj, 1f);
+        }   
     }
 
     public void Show()

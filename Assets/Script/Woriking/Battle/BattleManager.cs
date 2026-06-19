@@ -40,6 +40,9 @@ public class BattleManager : MonoBehaviour
     private DiceContextFactory _enemyDiceCtxFactory;
     private BattleSaveHandler _saveHandler;
 
+    public void ShowBonusDamageText(int damage) => battleUI.ShowBonusDamageText(damage);
+    public void ShowHealText(int amount) => battleUI.ShowHealText(amount);
+
     private void OnDestroy()
     {
         _battleCts?.Cancel();

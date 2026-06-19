@@ -65,7 +65,10 @@ public class ItemManager : MonoBehaviour
     public void AddItem(BattleItemSo item)
     {
         if (item.isArtifact)
+        {
             artifacts.Add(item);
+            ArtifactUIController.instance?.AddArtifactIcon(item);
+        }
         else
             items.Add(item);
         Save();

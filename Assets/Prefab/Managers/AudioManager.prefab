@@ -44,18 +44,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e316dee11442efc47bcf508831957889, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AudioManager
-  bgmClip:
-  - {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
-  - {fileID: 8300000, guid: 152a6451e6bc8ec42acd57a0552c1d75, type: 3}
-  - {fileID: 8300000, guid: 08f40560f4d009c4ba7467490cb1afbc, type: 3}
-  - {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
-  bgmVolume: 0.5
-  bgmVolumeMute: 0
-  bgm: 4
-  sfxClips:
-  - {fileID: 8300000, guid: 17c559c56b296124b9606531a49e753e, type: 3}
-  - {fileID: 8300000, guid: 5e174d43f1ed7244d864aab19fedbfa1, type: 3}
-  - {fileID: 8300000, guid: bbe002e85398fb9448133c77aafcf7db, type: 3}
-  sfxVolume: 0.5
-  sfxVolumeMute: 0
+  masterMixer: {fileID: 24100000, guid: 79f15a8e7c2ed8a42b562ea07d113e21, type: 2}
+  bgmGroup: {fileID: -2729079088651419598, guid: 79f15a8e7c2ed8a42b562ea07d113e21, type: 2}
+  sfxGroup: {fileID: 6108214884469909699, guid: 79f15a8e7c2ed8a42b562ea07d113e21, type: 2}
+  bgmDatas:
+  - bgmType: 0
+    clip: {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
+  - bgmType: 1
+    clip: {fileID: 8300000, guid: 152a6451e6bc8ec42acd57a0552c1d75, type: 3}
+  - bgmType: 2
+    clip: {fileID: 8300000, guid: 08f40560f4d009c4ba7467490cb1afbc, type: 3}
+  - bgmType: 3
+    clip: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
+  currentBgm: 4
+  sfxDatas:
+  - sfxType: 0
+    clip: {fileID: 8300000, guid: 17c559c56b296124b9606531a49e753e, type: 3}
+  - sfxType: 1
+    clip: {fileID: 8300000, guid: 5e174d43f1ed7244d864aab19fedbfa1, type: 3}
+  - sfxType: 5
+    clip: {fileID: 8300000, guid: c0a1a1cff87672f46a57a77967707932, type: 3}
+  - sfxType: 6
+    clip: {fileID: 8300000, guid: ab11fb8b61b693040b18c6bfaacf36a7, type: 3}
   channels: 5

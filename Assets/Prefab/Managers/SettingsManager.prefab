@@ -90,6 +90,71 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Mask
   m_ShowMaskGraphic: 0
+--- !u!1 &336253107279009175
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 4742782245885151716}
+  - component: {fileID: 6132219253552280562}
+  m_Layer: 0
+  m_Name: MainOption
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &4742782245885151716
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336253107279009175}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1174274837140231764}
+  m_Father: {fileID: 8322689378540206871}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &6132219253552280562
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336253107279009175}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 444720461081ca04c8ed8f75c41f6dfc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MainOption
+  optionBtn: {fileID: 108227989320478388}
+  UIWindow: {fileID: 7927287852970381347}
+  gamePanel: {fileID: 5243420084454522525}
+  videoPanel: {fileID: 8934477714239147402}
+  audioPanel: {fileID: 3543333285054379187}
+  gamePanelBtn: {fileID: 943760616862866274}
+  videoPanelBtn: {fileID: 2933007285775191680}
+  audioPanelBtn: {fileID: 4058678176845143815}
+  screenModeLabel: {fileID: 4987522525859799207}
+  resolutionLabel: {fileID: 4097020807653738326}
+  masterSlider: {fileID: 2391668309755937265}
+  bgmSlider: {fileID: 6007501168039202683}
+  sfxSlider: {fileID: 7561055887625549871}
+  masterlabel: {fileID: 1597827817292634722}
+  bgmLabel: {fileID: 6218169549478550735}
+  sfxLabel: {fileID: 6456323440387626753}
 --- !u!1 &401148978545823803
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,7 +458,7 @@ RectTransform:
   - {fileID: 4536207016182116178}
   - {fileID: 9072381957078701140}
   - {fileID: 1832196374761214050}
-  - {fileID: 1174274837140231764}
+  - {fileID: 4742782245885151716}
   - {fileID: 3475623399215162400}
   m_Father: {fileID: 4212248816314985585}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -4730,7 +4795,6 @@ GameObject:
   - component: {fileID: 3406486088450402052}
   - component: {fileID: 1716352054510705162}
   - component: {fileID: 6999928479634833943}
-  - component: {fileID: 1107938742685975243}
   m_Layer: 5
   m_Name: Codex
   m_TagString: Untagged
@@ -4828,25 +4892,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &1107938742685975243
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4178190759491043106}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9de65872c417704ab9e8d4815f20bcc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CollectionUI
-  dices: {fileID: 11400000, guid: cc8c1a0cbb73f9c4cab2bc511c4397c1, type: 2}
-  contentParent:
-  - {fileID: 5355779791980897577}
-  - {fileID: 8856271979547723951}
-  - {fileID: 4024666631159232909}
-  - {fileID: 4379430794324333892}
-  slotPrefab: {fileID: 2996570373849937034, guid: 960d77be5f594ca4f8bf6a349294c078, type: 3}
 --- !u!1 &4202862828163750486
 GameObject:
   m_ObjectHideFlags: 0
@@ -5102,9 +5147,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8891863403881098821}
-        m_TargetAssemblyTypeName: SettingsManager, Assembly-CSharp
-        m_MethodName: ToggleSettings
+      - m_Target: {fileID: 11500000, guid: 444720461081ca04c8ed8f75c41f6dfc, type: 3}
+        m_TargetAssemblyTypeName: UnityEditor.MonoScript, UnityEditor.CoreModule
+        m_MethodName: 
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -6539,7 +6584,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1107938742685975243}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: CollectionUI, Assembly-CSharp
         m_MethodName: Open
         m_Mode: 1
@@ -8311,7 +8356,7 @@ RectTransform:
   - {fileID: 6291577688595283125}
   - {fileID: 8388424101465210738}
   - {fileID: 2305770307256336}
-  m_Father: {fileID: 8322689378540206871}
+  m_Father: {fileID: 4742782245885151716}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8378,11 +8423,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7927287852970381347}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 444720461081ca04c8ed8f75c41f6dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainOption
+  optionBtn: {fileID: 108227989320478388}
   UIWindow: {fileID: 7927287852970381347}
   gamePanel: {fileID: 5243420084454522525}
   videoPanel: {fileID: 8934477714239147402}

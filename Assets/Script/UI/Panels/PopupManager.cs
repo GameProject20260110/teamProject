@@ -19,10 +19,10 @@ public class PopupManager : MonoBehaviour
 
     [Header("플레이어 정보")]
     public TextMeshProUGUI playerGold;
-    public TextMeshProUGUI playerRound;
+    //public TextMeshProUGUI playerRound;
 
     [Header("기타")]
-    public GameObject closePanel;
+    //public GameObject closePanel;
     public Button StartBtn;
     public Button SettingsBtn;
     public Canvas rootCanvas;
@@ -69,7 +69,7 @@ public class PopupManager : MonoBehaviour
             StartBtn.onClick.AddListener(() => PlayerShopManager.instance.CommitWithAnimation());           
 
         if(SettingsBtn != null)
-            SettingsBtn.onClick.AddListener(() => SettingsManager.instance.ToggleSettings());           
+            SettingsBtn.onClick.AddListener(() => MainOption.instance.ToggleSettingsPanel());           
     }
 
     private void OnDestroy()
@@ -115,6 +115,7 @@ public class PopupManager : MonoBehaviour
     {
         if(diceDesc != null) dicePopup.gameObject.SetActive(false);
         if(itemDesc != null) itemPopup.gameObject.SetActive(false);
+        if (DescPopup != null) DescPopup.gameObject.SetActive(false);
     }
 
     private void UpdateGold(int gold) => playerGold.text = $"{gold}";

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Ring", menuName = "ArtifactItem/Ring")]
@@ -25,5 +26,17 @@ public class Ring : BattleItemSo
     {
         int healAmount = Mathf.RoundToInt(ctx.Player.MaxHp * healPercent);
         ctx.Player.Heal(healAmount);
+
+        ArtifactUIController.instance.PlayEffect(this);
+        PlayEffectAsync(healAmount).Forget();
+    }
+
+    private async UniTaskVoid PlayEffectAsync(int healAmount)
+    {
+        await UniTask.Delay(200);
+
+        BattleManager.instance?.ShowHealText(healAmount);
+        AudioManager.instance?.PlaySfx(AudioManager.Sfx.Heal);
+        ArtifactUIController.instance?.PlayHealParticle();
     }
 }
