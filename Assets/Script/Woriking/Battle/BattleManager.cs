@@ -191,6 +191,9 @@ public class BattleManager : MonoBehaviour
 
     private async UniTask OnPlayerAttack()
     {
+
+        //int shieldBeforeAttack = enemyData.CurrentShield; // 공격 전 실드 저장
+
         foreach (var dice in _attackDices)
         {
             await dice.Glow.ShowGlowAsync();
@@ -201,6 +204,9 @@ public class BattleManager : MonoBehaviour
 
         // 플레이어 공격 끝나고 발동
         _eventBus.TriggerOnPlayerAttackEnd(_ctxFactory.Create());
+
+        // 공격 전 방어력 기준으로 발동
+        // _eventBus.TriggerOnPlayerAttackEnd(_ctxFactory.Create(), shieldBeforeAttack);
 
         if (enemyData.IsDead())
         {
