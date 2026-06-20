@@ -18,6 +18,7 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private Action<RewardData, BattleItemSo, DiceData> _onSelected;
     private CardGlow _glow;
     private Vector3 _originalScale;
+    private bool _isInteractable = false;
 
     private const float HOVER_SCALE = 1.15f;
     private const float ANIM_DURATION = 0.3f;
@@ -26,7 +27,6 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         _originalScale = transform.localScale;
         _glow = GetComponentInChildren<CardGlow>();
-        Debug.Log($"Glow:{_glow != null}");
     }
 
     public void SetUp(RewardData rewardData, BattleItemSo preSelectedItem, DiceData preSelectedDice, Action<RewardData, BattleItemSo, DiceData> onSelected)
@@ -55,8 +55,14 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
             btn.onClick.AddListener(OnCardClicked);
     }
 
+    public void SetInteractable(bool isInteractable)
+    {
+        _isInteractable = isInteractable;
+    }
+
     private void OnCardClicked()
     {
+        if (!_isInteractable) return;
         _onSelected?.Invoke(_rewardData, _preSelectedItem, _preSelectedDice);
     }
 
@@ -103,16 +109,18 @@ public class RewardCardUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if (!_isInteractable) return;
+        
         transform.DOKill();
-
         transform.DOScale(_originalScale * HOVER_SCALE, ANIM_DURATION).SetEase(Ease.OutBack).SetLink(gameObject);
         _glow?.SetGlow(true);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        if( !_isInteractable) return;
+        
         transform.DOKill();
-
         transform.DOScale(_originalScale, ANIM_DURATION).SetEase(Ease.OutQuad).SetLink(gameObject);
         _glow?.SetGlow(false);
     }

@@ -40,6 +40,9 @@ public class BattleManager : MonoBehaviour
     private DiceContextFactory _enemyDiceCtxFactory;
     private BattleSaveHandler _saveHandler;
 
+    public void ShowBonusDamageText(int damage) => battleUI.ShowBonusDamageText(damage);
+    public void ShowHealText(int amount) => battleUI.ShowHealText(amount);
+
     private void OnDestroy()
     {
         _battleCts?.Cancel();
@@ -188,6 +191,9 @@ public class BattleManager : MonoBehaviour
 
     private async UniTask OnPlayerAttack()
     {
+
+        //int shieldBeforeAttack = enemyData.CurrentShield; // 공격 전 실드 저장
+
         foreach (var dice in _attackDices)
         {
             await dice.Glow.ShowGlowAsync();
@@ -195,6 +201,12 @@ public class BattleManager : MonoBehaviour
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
         }
+
+        // 플레이어 공격 끝나고 발동
+        _eventBus.TriggerOnPlayerAttackEnd(_ctxFactory.Create());
+
+        // 공격 전 방어력 기준으로 발동
+        // _eventBus.TriggerOnPlayerAttackEnd(_ctxFactory.Create(), shieldBeforeAttack);
 
         if (enemyData.IsDead())
         {
@@ -376,7 +388,7 @@ public class BattleManager : MonoBehaviour
 
         var diceCtx = new DiceContext { battle = _ctxFactory.Create() };
         item.OnUse(diceCtx);
-
+            
         if (item.isConsumable)
         {
             ItemManager.instance.items.Remove(item);
