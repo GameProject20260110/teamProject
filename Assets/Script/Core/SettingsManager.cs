@@ -33,14 +33,6 @@ public class SettingsManager : MonoBehaviour
         }
     }
 
-
-    public void ToggleSettings()
-    {
-        bool activeSet = !SettingsContent.activeSelf;
-        Panel.SetActive(activeSet);
-        SettingsContent.SetActive(activeSet);
-    }
-
     public void SaveSettings()
     {
         PlayerPrefs.SetInt("ResolutionIndex", ResolutionIndex);
@@ -68,5 +60,15 @@ public class SettingsManager : MonoBehaviour
         AudioManager.instance.SetMasterVolume(MasterVolume);
         AudioManager.instance.SetBgmVolume(MusicVolume);
         AudioManager.instance.SetSfxVolume(SfxVolume);
+
+        // 해상도 적용
+        FullScreenMode mode = IsFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
+        switch (ResolutionIndex)
+        {
+            case 0: Screen.SetResolution(1920, 1080, mode); break;
+            case 1: Screen.SetResolution(1600, 900, mode); break;
+            case 2: Screen.SetResolution(1280, 720, mode); break;
+        }
+
     }
 }

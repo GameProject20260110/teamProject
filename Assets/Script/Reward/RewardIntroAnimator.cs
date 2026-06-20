@@ -62,6 +62,12 @@ public class RewardIntroAnimator : MonoBehaviour
         for (int i = 0; i < _cardRects.Count; i++)
         {
             int index = i;
+
+            if (cards[index] != null)
+            {
+                cards[index].SetInteractable(false);
+            }
+
             _cardRects[index].DOAnchorPos(Vector2.zero, slideUpDuration)
                 .SetEase(Ease.OutQuad)
                 .SetLink(_cardRects[index].gameObject);
@@ -69,6 +75,12 @@ public class RewardIntroAnimator : MonoBehaviour
             await UniTask.Delay((int)(cardSlideInterval * 1000), cancellationToken: this.GetCancellationTokenOnDestroy());
         }
         await UniTask.Delay((int)(slideUpDuration * 1000), cancellationToken: this.GetCancellationTokenOnDestroy());
+
+        foreach(var card in cards)
+        {
+            if(card != null) 
+                card.SetInteractable(true);
+        }
     }
 
     public async UniTask PlaySkipButton()

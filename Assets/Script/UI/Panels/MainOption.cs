@@ -6,6 +6,9 @@ public class MainOption : MonoBehaviour
 {
     public static MainOption instance = null;
 
+    [Header("버튼")]
+    public Button optionBtn;
+
     [Header("패널")]
     public GameObject UIWindow = null;
 
@@ -41,6 +44,11 @@ public class MainOption : MonoBehaviour
     private void Awake()
     {
         if(instance == null) instance = this;
+        
+        if(optionBtn != null)
+        {
+            optionBtn.onClick.AddListener(ToggleSettingsPanel);
+        }
     }
 
     private void Start()
@@ -65,19 +73,19 @@ public class MainOption : MonoBehaviour
     {
         if(masterSlider)
         {
-            masterSlider.minValue = 0f;
+            masterSlider.minValue = 0.0001f;
             masterSlider.maxValue = 1f;
             masterSlider.onValueChanged.AddListener(OnMasterSliderChanged);
         }
         if (bgmSlider)
         {
-            bgmSlider.minValue = 0f;
+            bgmSlider.minValue = 0.0001f;
             bgmSlider.maxValue = 1f;
             bgmSlider.onValueChanged.AddListener(OnBgmSliderChanged);
         }
         if (sfxSlider)
         {
-            sfxSlider.minValue = 0f;
+            sfxSlider.minValue = 0.0001f;
             sfxSlider.maxValue = 1f;
             sfxSlider.onValueChanged.AddListener(OnSfxSliderChanged);
         }

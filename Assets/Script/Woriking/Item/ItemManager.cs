@@ -62,6 +62,18 @@ public class ItemManager : MonoBehaviour
         }       
     }
 
+    public void AddItem(BattleItemSo item)
+    {
+        if (item.isArtifact)
+        {
+            artifacts.Add(item);
+            ArtifactUIController.instance?.AddArtifactIcon(item);
+        }
+        else
+            items.Add(item);
+        Save();
+    }
+
     private BattleItemSo FindItem(string name)
     {
         itemSearch.TryGetValue(name,out var item);

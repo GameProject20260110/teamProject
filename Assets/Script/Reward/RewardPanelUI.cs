@@ -10,6 +10,7 @@ public class RewardPanelUI : MonoBehaviour
 
     [Header("UI")]
     [SerializeField] private GameObject rewardPanel;
+    [SerializeField] private GameObject background;
     [SerializeField] private Transform cardContainer;
     [SerializeField] private RewardIntroAnimator introAnimator;
 
@@ -61,6 +62,7 @@ public class RewardPanelUI : MonoBehaviour
         }
 
         rewardPanel.SetActive(true);
+        background.SetActive(true);
         skipButton.gameObject.SetActive(false);
 
         List<RewardCardUI> cards = SpawnCards(rewards);
@@ -176,8 +178,7 @@ public class RewardPanelUI : MonoBehaviour
             case RewardType.ActiveItem:
                 if (preSelecteItem != null)
                 {
-                    ItemManager.instance?.items.Add(preSelecteItem);
-                    ItemManager.instance?.Save();
+                    ItemManager.instance?.AddItem(preSelecteItem);
                     Debug.Log($"{preSelecteItem.itemName} æ∆¿Ã≈€ »πµÊ");
                 }
                 break;
@@ -203,6 +204,7 @@ public class RewardPanelUI : MonoBehaviour
     private void Hide()
     {
         rewardPanel.SetActive(false);
+        background.SetActive(false);
         diceRewardContainer.SetActive(false);
         cardContainer.gameObject.SetActive(true);
         skipButton.gameObject.SetActive(true);

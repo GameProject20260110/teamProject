@@ -6,6 +6,7 @@ public abstract class BattleItemSo : ScriptableObject
     public Sprite itemIcon;
     public string itemName;
     public bool isConsumable;
+    public bool isArtifact; // 아티팩트 아이템 구분
     public int gold;
     [TextArea]
     public string itemDesc;
