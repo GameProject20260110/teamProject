@@ -51,10 +51,12 @@ public class RoundController : MonoBehaviour
         await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
-        //await PlayEffectAsync(battlePanel.Play, ct);
+        // 여기서 기믹 추가
         
         playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
-        enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
+        await enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
+
+        BattleManager.instance.TriggerFirstTurnStart();
 
         await PlayEffectAsync(onComplete => turnEffect.Play(1, onComplete), ct);
 

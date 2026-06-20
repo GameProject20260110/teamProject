@@ -14,4 +14,11 @@ public abstract class DiceEffectBase : MonoBehaviour
 
     public virtual UniTask OnAttack(DiceContext ctx) => UniTask.CompletedTask;
     public virtual UniTask OnDefense(DiceContext ctx) => UniTask.CompletedTask;
+
+    protected int GetFinalAttackDamage(DiceContext ctx, int rawDamage)
+    {
+        if (ctx.IsPlayer)
+            return Mathf.RoundToInt(rawDamage * ctx.Player.AttackMultiplier);
+        return rawDamage;
+    }
 }

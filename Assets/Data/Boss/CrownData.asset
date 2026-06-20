@@ -20,6 +20,9 @@ MonoBehaviour:
   aiStrategy: {fileID: 11400000, guid: 602de5bc7d85ec1418071ab0cbf6a4f8, type: 2}
   rewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}
   hasGimmick: 1
+  gimmickList:
+  - {fileID: 11400000, guid: 8b9a086a83e118c48aef6fc167171623, type: 2}
+  - {fileID: 11400000, guid: 88e01025d5adaa249bf4549becaacc94, type: 2}
   dicePool:
   - {fileID: 11400000, guid: 14de432ba691b0f49a6d94a053ee78d9, type: 2}
   - {fileID: 11400000, guid: 14de432ba691b0f49a6d94a053ee78d9, type: 2}

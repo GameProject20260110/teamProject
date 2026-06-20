@@ -11,6 +11,11 @@ public class PlayerBattleData : IDamageable
     private int currentShield;
     private List<StatusEffect> statusEffects = new();
 
+    private float attackMultiplier = 1f;
+    public float AttackMultiplier => attackMultiplier;
+    public void SetAttackMultiplier(float value) => attackMultiplier = value;
+    public void ResetAttackMultiplier() => attackMultiplier = 1f;
+
     public int MaxHp => _data.maxHp;
     public int CurrentHP => currentHP;
     public int CurrentShield => currentShield;
@@ -31,6 +36,9 @@ public class PlayerBattleData : IDamageable
         currentShield = 0;
         statusEffects.Clear();
     }
+
+    public int CalculateAttackDamage(int baseDamage)
+        => Mathf.RoundToInt(baseDamage * attackMultiplier);
 
     public int TakeDamage(int damage)
     {

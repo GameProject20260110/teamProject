@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using System.Threading;
 using UnityEngine;
 
@@ -10,6 +10,9 @@ public class BattleContext
     public BattleEventBus EventBus;
     public bool IsPlayer;
     public BattlePositions Positions;
+    public Func<int> GetCurrentTurn;
+
+    public int CurrentTurn => GetCurrentTurn?.Invoke() ?? 1;
 }
 
 public class BattlePositions

@@ -1,7 +1,6 @@
 using System.Collections.Generic;
-using UnityEngine;
 
-public class DiceContext : MonoBehaviour
+public class DiceContext
 {
     public BattleContext battle;
     public int baseDamage;
