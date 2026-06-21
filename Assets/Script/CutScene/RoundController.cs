@@ -91,7 +91,6 @@ public class RoundController : MonoBehaviour
     private async UniTask BeginRoundLogic(int currentRound)
     {
         await GameManager.instance.EnemyRoll();
-        UiController.instance.ShowGlowRerollBtn();
     }
 
     void OnDestroy()

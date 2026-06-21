@@ -25,6 +25,9 @@ public class CardAppearEffect : MonoBehaviour
     [SerializeField] private Image flashImage;
     [SerializeField] private float flashDuration = 0.3f;
 
+    [Header("ÅØ½ºÆ®")]
+    [SerializeField] private CanvasGroup labelGroup;
+
     private Vector3 originalScale;
     private Sequence currentSequence;
 
@@ -34,6 +37,7 @@ public class CardAppearEffect : MonoBehaviour
         cardGroup.alpha = 0f;
         if (flashImage != null) SetAlpha(flashImage, 0f);
         if (sparkleParticle != null) sparkleParticle.Stop();
+        if (labelGroup != null) labelGroup.alpha = 0f;
     }
 
     [ContextMenu("Test Play")]
@@ -46,6 +50,7 @@ public class CardAppearEffect : MonoBehaviour
 
         cardRect.localScale = Vector3.one * startScale;
         cardGroup.alpha = 0f;
+        if (labelGroup != null) labelGroup.alpha = 0f;
 
         if (sparkleParticle != null)
         {
@@ -85,7 +90,12 @@ public class CardAppearEffect : MonoBehaviour
             )
         );
 
-        
+        if (labelGroup != null)
+        {
+            currentSequence.Append(
+                labelGroup.DOFade(1f, 0.3f).SetEase(Ease.OutQuad)
+            );
+        }
 
         currentSequence.OnComplete(() => onComplete?.Invoke());
     }
@@ -104,6 +114,7 @@ public class CardAppearEffect : MonoBehaviour
         cardRect?.DOKill();
         cardGroup?.DOKill();
         flashImage?.DOKill();
+        labelGroup?.DOKill();
     }
 
     private void SetAlpha(Image img, float a)

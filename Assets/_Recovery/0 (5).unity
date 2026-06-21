@@ -545,7 +545,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ScreenModePrev
         m_Mode: 1
@@ -790,7 +790,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ShowTab
         m_Mode: 3
@@ -1334,10 +1334,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemInventoryUI
   itemCardPrefab: {fileID: 4263562428892716012, guid: 5cabd19122c07fb42a30bfcc2fe7f20c, type: 3}
   cardContainer: {fileID: 436652617}
-  containerWidth: 0
-  cardWidth: 300
-  cardHeight: 0
-  maxSpreadCount: 4
+  overlapRatio: 0.75
+  hiddenOffsetY: -200
 --- !u!1 &173431303
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,16 +1502,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameOverPanelUI
   gameOverPanel: {fileID: 1446300186}
-  roundText: {fileID: 1230854734}
-  bestScoreText: {fileID: 767388147}
-  lastDices:
-  - {fileID: 820921840}
-  - {fileID: 896582454}
-  - {fileID: 383536292}
-  - {fileID: 1349017016}
-  - {fileID: 587514862}
-  - {fileID: 946912531}
-  defaultDiceSkin: {fileID: 11400000, guid: a2a0f760336f6a2479154757fbdc27b7, type: 2}
+  anim: {fileID: 0}
+  textGroup: {fileID: 0}
+  targetScoreText: {fileID: 0}
+  LobbyBtn: {fileID: 0}
+  RetryBtn: {fileID: 0}
 --- !u!1 &242727020
 GameObject:
   m_ObjectHideFlags: 0
@@ -1793,17 +1786,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 257948134}
   m_CullTransparentMesh: 1
---- !u!114 &258712858 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4255846020768132754, guid: 1375cb69063a0054fb4dd69fc8959918, type: 3}
-  m_PrefabInstance: {fileID: 2518976973533457943}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1c530f6c7d79c0b4aa1cbb4b1a0ff87e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Dice
 --- !u!1 &264751818
 GameObject:
   m_ObjectHideFlags: 0
@@ -3076,7 +3058,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ScreenModNext
         m_Mode: 1
@@ -3313,10 +3295,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ItemInventoryUI
   itemCardPrefab: {fileID: 4263562428892716012, guid: 5cabd19122c07fb42a30bfcc2fe7f20c, type: 3}
   cardContainer: {fileID: 436652617}
-  containerWidth: 0
-  cardWidth: 0
-  cardHeight: 0
-  maxSpreadCount: 4
+  overlapRatio: 0.75
+  hiddenOffsetY: -200
 --- !u!1 &445650702
 GameObject:
   m_ObjectHideFlags: 0
@@ -3437,11 +3417,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::UiController
   inventoryUI: {fileID: 159763944}
-  lifeUI: {fileID: 1640296270}
   resultUI: {fileID: 1978101105}
   gameOverUI: {fileID: 174890769}
-  gimmickUI: {fileID: 445650706}
-  notificationUI: {fileID: 1228813983}
   roundInfoText: {fileID: 1779552945}
   targetScoreInfoText: {fileID: 370001214}
   myScoreInfoText: {fileID: 365483011}
@@ -3452,9 +3429,15 @@ MonoBehaviour:
   rollSprite: {fileID: 2530564911472380330, guid: 1b4858d63387dcf4d9a10d80048cb051, type: 3}
   rerollSprite: {fileID: 21300000, guid: ad66888cd8bce1e4aae0e1b44f1fb251, type: 3}
   confirmBtn: {fileID: 823676198}
-  nextRoundBtn: {fileID: 1213203419}
   ShopBtn: {fileID: 173431305}
-  settingPanel: {fileID: 1276917965}
+  rerollBtn: {fileID: 0}
+  backGround: {fileID: 0}
+  InventoryPanel: {fileID: 0}
+  itemDarkPanel: {fileID: 0}
+  DropZone: {fileID: 0}
+  _playerImage: {fileID: 0}
+  clickBtn: {fileID: 0}
+  NoclickBtn: {fileID: 0}
 --- !u!4 &453369281
 Transform:
   m_ObjectHideFlags: 0
@@ -3915,65 +3898,6 @@ RectTransform:
   m_AnchoredPosition: {x: 200, y: 0}
   m_SizeDelta: {x: 100, y: 30}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &531895920
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 531895922}
-  - component: {fileID: 531895921}
-  m_Layer: 0
-  m_Name: MainOption
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &531895921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531895920}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 444720461081ca04c8ed8f75c41f6dfc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MainOption
-  UIWindow: {fileID: 5910422}
-  gamePanel: {fileID: 1552130268}
-  videoPanel: {fileID: 1815419212}
-  audioPanel: {fileID: 1694324429}
-  gamePanelBtn: {fileID: 83902373}
-  videoPanelBtn: {fileID: 1024851249}
-  audioPanelBtn: {fileID: 1340545188}
-  screenModeLabel: {fileID: 1945615196}
-  resolutionLabel: {fileID: 681990783}
-  masterSlider: {fileID: 1065741451}
-  bgmSlider: {fileID: 951880418}
-  sfxSlider: {fileID: 1805413279}
-  masterlabel: {fileID: 1808172357}
-  bgmLabel: {fileID: 864626245}
-  sfxLabel: {fileID: 523561762}
---- !u!4 &531895922
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 531895920}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 477.13843, y: 524.46826, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!224 &548824111 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2642663466838531071, guid: 1375cb69063a0054fb4dd69fc8959918, type: 3}
@@ -4675,9 +4599,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   diceManager: {fileID: 1948593661}
-  maxRerollCount: 1
-  currentScore: 0
-  bestScore: 0
+  BattleBGM: {fileID: 0}
   hasUsedPlusReroll: 0
 --- !u!4 &669844171
 Transform:
@@ -5333,7 +5255,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ResolutionPrev
         m_Mode: 1
@@ -7077,7 +6999,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ToggleSettingsPanel
         m_Mode: 1
@@ -7267,7 +7189,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: SetBgmVolume
         m_Mode: 0
@@ -7906,7 +7828,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ShowTab
         m_Mode: 3
@@ -8008,7 +7930,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: SetBgmVolume
         m_Mode: 0
@@ -8184,11 +8106,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PopupManager
   dicePopup: {fileID: 44952765}
   itemPopup: {fileID: 0}
-  gimmickPopup: {fileID: 1807097829}
   DescPopup: {fileID: 0}
   playerGold: {fileID: 0}
-  playerRound: {fileID: 0}
-  closePanel: {fileID: 0}
   StartBtn: {fileID: 0}
   SettingsBtn: {fileID: 0}
   rootCanvas: {fileID: 1361143423}
@@ -9743,7 +9662,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ShowTab
         m_Mode: 3
@@ -10422,7 +10341,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: OnResetClick
         m_Mode: 1
@@ -12330,7 +12249,7 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: SetBgmVolume
         m_Mode: 0
@@ -13374,17 +13293,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceManager
   rollArea: {fileID: 812174709}
+  slots: []
+  enemySlots: []
+  enemyAttackSlots: []
+  enemyDefenseSlots: []
+  diceRoller: {fileID: 1948593660}
   panelDiceScript:
-  - {fileID: 258712858}
+  - {fileID: 0}
   - {fileID: 1662827599}
   - {fileID: 988091368}
   - {fileID: 494824176}
   - {fileID: 946507316}
   - {fileID: 1193525359}
-  defaultDice: {fileID: 11400000, guid: bfca0dbf9d42bff438f335db41fac95c, type: 2}
-  diceSetup: {fileID: 1948593659}
-  diceRoller: {fileID: 1948593660}
-  wizardHandler: {fileID: 1948593663}
+  enemyPanelDiceScript: []
 --- !u!4 &1948593662
 Transform:
   m_ObjectHideFlags: 0
@@ -13511,7 +13432,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ToggleSettingsPanel
         m_Mode: 1
@@ -13756,11 +13677,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ResultPanelUI
   resultPanel: {fileID: 1710158516}
+  anim: {fileID: 0}
   resultTitleText: {fileID: 107805710}
-  resultTargetScoreText: {fileID: 1323987143}
-  resultScoreText: {fileID: 2106443596}
-  resultLifeContainer: {fileID: 413865303}
-  resultLifePreFab: {fileID: 5848976852156563087, guid: f01d919d14fd6b14eb7eeb422e141159, type: 3}
+  nextBtn: {fileID: 0}
+  retryBtn: {fileID: 0}
+  TextGroup: {fileID: 0}
 --- !u!1 &1980405600
 GameObject:
   m_ObjectHideFlags: 0
@@ -13843,7 +13764,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 531895921}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: MainOption, Assembly-CSharp
         m_MethodName: ResolutionNext
         m_Mode: 1
@@ -14826,6 +14747,5 @@ SceneRoots:
   - {fileID: 1494626578}
   - {fileID: 1876421105}
   - {fileID: 1116332878}
-  - {fileID: 531895922}
   - {fileID: 1948593662}
   - {fileID: 3249148390933713078}

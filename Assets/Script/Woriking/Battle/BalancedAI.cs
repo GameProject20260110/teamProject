@@ -1,11 +1,11 @@
-using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 
 [CreateAssetMenu(menuName = "EnemyAI/Balanced")]
 public class BalancedAI : EnemyAIStrategy
 {
-    public override void PlaceDice(Dice[] hand)
+    public override async UniTask PlaceDice(Dice[] hand)
     {
-        PlaceByRole(hand); // 역할대로 배치
+        await PlaceByRole(hand); // 역할대로 배치
     }
 }

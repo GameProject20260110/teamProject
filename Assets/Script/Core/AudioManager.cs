@@ -65,13 +65,18 @@ public class AudioManager : MonoBehaviour
         {
             instance = this;
             DontDestroyOnLoad(gameObject);
-            Init();
+            
         }
         else
         {
             Destroy(gameObject);
         }
         
+    }
+
+    private void Start()
+    {
+        Init();
     }
 
     void Init()
@@ -106,16 +111,10 @@ public class AudioManager : MonoBehaviour
             sfxPlayer[index].outputAudioMixerGroup = sfxGroup;
         }
 
-        // SFX 딕셔너리 데이터 변환
-        foreach(var data in sfxDatas)
-        {
-            if (!sfxDictionary.ContainsKey(data.sfxType))
-                sfxDictionary.Add(data.sfxType, data.clip);
-        }
-
-        if(SettingsManager.instance != null)
+        if (SettingsManager.instance != null)
             SettingsManager.instance.ApplySettings();
-    }
+
+    }  
 
     public void PlayBgm(Bgm bgm, bool isPlay)
     {
@@ -196,15 +195,22 @@ public class AudioManager : MonoBehaviour
 
     private void SetMixerVolume(string name, float volume)
     {
-        if (masterMixer == null) return;
+        if (masterMixer == null)
+        {
+            Debug.Log($"[Audio] masterMixer NULL!");
+            return;
+        }
 
         if (volume <= 0.0001f)
         {
             masterMixer.SetFloat(name, volume);
+            Debug.Log($"[Audio] {name} = {volume} (무음)");
         }
         else
         {
-            masterMixer.SetFloat(name, Mathf.Log10(volume) * 20f); // 데시벨 변환 공식 dB = 20 * Log10(volume)
+            float db = Mathf.Log10(volume) * 20f;
+            masterMixer.SetFloat(name, db);
+            Debug.Log($"[Audio] {name} = {volume} → {db}dB");
         }
     }
     //public void SetMasterVolume(float volume)

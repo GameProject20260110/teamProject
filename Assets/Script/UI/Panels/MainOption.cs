@@ -11,6 +11,7 @@ public class MainOption : MonoBehaviour
 
     [Header("ÆÐ³Î")]
     public GameObject UIWindow = null;
+    public GameObject BackPanel = null;
 
     [Header("ÅÇ ÆÐ³Î")]
     public GameObject gamePanel;
@@ -53,9 +54,10 @@ public class MainOption : MonoBehaviour
 
     private void Start()
     {
-        InitSliderListeners();
-
+        Debug.Log($"[MainOption] masterSlider: {masterSlider}, SM: {SettingsManager.instance?.MasterVolume}");
         if (SettingsManager.instance != null) PullFromSettings();
+        
+        InitSliderListeners();
 
         RefreshLabel();
         ShowTab(0);
@@ -111,8 +113,9 @@ public class MainOption : MonoBehaviour
     {
         if (UIWindow == null) return;
         bool open = !UIWindow.activeSelf;
+        if (BackPanel != null) BackPanel.SetActive(open);
         UIWindow.SetActive(open);
-
+        
         if (open)
         {
             PullFromSettings();

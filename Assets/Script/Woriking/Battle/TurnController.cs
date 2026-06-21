@@ -13,7 +13,6 @@ public class TurnController
         _bm = battleManager;
     }
 
-    // 확인 버튼 누를 때마다 한 사이클 실행
     public async UniTask RunOneTurnCycle()
     {
         var ct = _bm.BattleToken;
@@ -25,7 +24,11 @@ public class TurnController
             await ExecuteEnemyDefense(ct);
             await UniTask.Delay(500, cancellationToken: ct);
 
-            // 2. 내 공격
+            // 2. 내 방어
+            await ExecutePlayerDefense(ct);
+            await UniTask.Delay(500, cancellationToken: ct);
+
+            // 3. 내 공격
             _bm.isPlayerTurn = true;
             await ExecutePlayerAttack(ct);
             if (_bm.EnemyData.IsDead())
@@ -33,10 +36,6 @@ public class TurnController
                 await _bm.HandleBattleEnd(isSuccess: true);
                 return;
             }
-            await UniTask.Delay(500, cancellationToken: ct);
-
-            // 3. 내 방어
-            await ExecutePlayerDefense(ct);
             await UniTask.Delay(500, cancellationToken: ct);
 
             // 4. 적 공격
@@ -62,9 +61,7 @@ public class TurnController
         }
     }
 
-    // ───────────────────────────────────────────
-    // 페이즈 실행
-    // ───────────────────────────────────────────
+    #region 페이즈 정보
 
     private async UniTask ExecuteEnemyDefense(CancellationToken ct)
     {
@@ -138,21 +135,21 @@ public class TurnController
 
         // VFX 리셋
         _bm.ResetAllDiceVFX();
-
         _bm.ClearEnemyDices();
 
-        // 턴 종료 이벤트
+        // 턴 종료
         _bm.EventBus.TriggerTurnEnd(playerCtx);
-
         _bm.currentTurn++;
 
-        // 턴 시작 이벤트
+        // 턴 시작
         _bm.EventBus.TriggerTurnStart(_bm.CreateCtx());
+
+        _bm.UpdateTurnUI();
 
         await GameManager.instance.EnemyRoll();
 
         _bm.isPlayerTurn = true;
-        UiController.instance.ShowGlowRerollBtn();
-        _bm.UpdateTurnUI();
     }
+
+    #endregion
 }
