@@ -247,7 +247,7 @@ public class MapManager : MonoBehaviour
                 break;
             case NodeType.Boss:
                 BattleDataManager.instance?.SetBossBattleData(mapData.bossEnemyData);
-                SceneController.instance?.LoadGameScene();
+                SceneController.instance?.LoadBossScene();
                 break;
             case NodeType.Shop:
                 SceneController.instance.LoadShopScene();

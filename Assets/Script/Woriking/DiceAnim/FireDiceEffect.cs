@@ -4,8 +4,8 @@ public class FireDiceEffect : DiceEffectBase
 {
     public override async UniTask OnAttack(DiceContext ctx)
     {
-        int finalDamage = ctx.baseDamage + ctx.diceData.effectData.bonusDamage;
-
+        int damage = ctx.baseDamage + ctx.diceData.effectData.bonusDamage;
+        int finalDamage = GetFinalAttackDamage(ctx, damage);
         if (ctx.diceData.effectData.bonusDamage > 0)
             await vfx.PlayBuff(ctx.diceData.effectData.bonusDamage, ctx.CancellationToken);
 

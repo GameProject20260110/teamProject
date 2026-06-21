@@ -734,6 +734,9 @@ MonoBehaviour:
   dragSpeed: 0.01
   cameraMoveDuration: 1
   dragThreshold: 5
+  zoomSize: 1.5
+  zoomDuration: 0.4
+  zoomMoveDuration: 0.5
 --- !u!1 &1204708655
 GameObject:
   m_ObjectHideFlags: 0
@@ -853,7 +856,7 @@ MonoBehaviour:
   - {fileID: 750298439}
   - {fileID: 1133483731}
   lineContainer: {fileID: 1321846349}
-  MapBGM: {fileID: 0}
+  MapBGM: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
 --- !u!4 &1290806757
 Transform:
   m_ObjectHideFlags: 0
@@ -886,7 +889,6 @@ MonoBehaviour:
   lineColor: {r: 0, g: 0, b: 0, a: 1}
   pathAnimDuration: 0.5
   nodeOffset: 0.5
-  MapBGM: {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
 --- !u!114 &1290806759
 MonoBehaviour:
   m_ObjectHideFlags: 0

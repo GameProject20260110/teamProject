@@ -61,15 +61,10 @@ public class GameManager : MonoBehaviour
         UiController.instance.SetConfirmBtnInteratable(false);
 
         if (EnemyDeckHandler.instance != null)
-        {
             EnemyDeckHandler.instance.SetupEnemyDice();
-        }
-
+        
         if (DeckManager.instance != null)
-        {
-            DeckManager.instance.DrawDice();
-        }
-
+            DeckManager.instance.DrawDice();       
     }
 
     public void OnClickRollBtn()
@@ -89,12 +84,9 @@ public class GameManager : MonoBehaviour
     private async UniTask RollFlow()
     {
         try
-        {
-            
-            
+        {           
             UiController.instance?.ResetItemCards();
             
-
             Dice[] allDice = await diceManager.StartRolling();
 
             ProcessRollResult();
@@ -120,11 +112,9 @@ public class GameManager : MonoBehaviour
 
     public void HandleGameOver()
     {
-
         if(ResourceManager.instance != null)
-        {
             ResourceManager.instance.ResetData();
-        }
+        
         UiController.instance.ShowGameOverPanel(1);
     }
 
@@ -168,7 +158,7 @@ public class GameManager : MonoBehaviour
 
         try
         {
-            await BattleManager.instance.EnemyDefense();
+            await BattleManager.instance.RunOneTurnCycle();
         }
         catch (OperationCanceledException)
         {

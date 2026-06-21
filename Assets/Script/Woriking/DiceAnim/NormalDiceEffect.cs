@@ -4,7 +4,8 @@ public class NormalDiceEffect : DiceEffectBase
 {
     public override async UniTask OnAttack(DiceContext ctx)
     {
-        await vfx.PlayAttack(ctx, ctx.baseDamage);
+        int damage = GetFinalAttackDamage(ctx, ctx.baseDamage);
+        await vfx.PlayAttack(ctx, damage);
     }
 
     public override async UniTask OnDefense(DiceContext ctx)
