@@ -65,6 +65,9 @@ public class BattleManager : MonoBehaviour
         LoadBattleData();
     }
 
+    public void ShowBonusDamageText(int damage) => battleUI.ShowBonusDamageText(damage);
+    public void ShowHealText(int amount) => battleUI.ShowHealText(amount);
+
     #region Context
 
     public BattleContext CreateCtx(bool isPlayer = true)
