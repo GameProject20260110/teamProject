@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: DefaultSkin
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 21300000, guid: 32cec6b74f22fb443926269231625060, type: 3}
-  - {fileID: 21300000, guid: 97cb2191e6bc8d344b199a33f8713b1e, type: 3}
-  - {fileID: 21300000, guid: a7064332b320ae646b7f90d76cb80ec6, type: 3}
-  - {fileID: 21300000, guid: 8cbe2b326b3cbd44f8d52c56bf78cead, type: 3}
-  - {fileID: 21300000, guid: 80b5229aa3bea0e48b1d95816444cd3d, type: 3}
-  - {fileID: 21300000, guid: da0bb76c6f628f74c956499b3f843da2, type: 3}
+  - {fileID: 21300000, guid: 9fbe4bc9465b09740a56aebb331ec9d7, type: 3}
+  - {fileID: 21300000, guid: 41ea93b1d503eb140a054bfa93cf32d2, type: 3}
+  - {fileID: 21300000, guid: a9171165ffe537b4697991017647c397, type: 3}
+  - {fileID: 21300000, guid: ffced910ecde26349a21620d538ce714, type: 3}
+  - {fileID: 21300000, guid: 1e029321a5aff1448bb20cc3f11705ee, type: 3}
+  - {fileID: 21300000, guid: a62bd393debc62148a69988813c49892, type: 3}

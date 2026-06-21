@@ -66,9 +66,9 @@ public class DefensePanelUI : MonoBehaviour
     {
         bool hasAnyDice = DicePanelManager.instance?.HasAnyDiceInPanel() ?? false;
         if (hasAnyDice)
-            UiController.instance?.ShowGlowConfirmBtn();
+            UiController.instance?.ShowGlowImage();
         else
-            UiController.instance?.HideGlowConfirmBtn();
+            UiController.instance?.HideGlowImage();
     }
 
     public void Clear()

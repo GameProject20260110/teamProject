@@ -50,16 +50,21 @@ public class SettingsManager : MonoBehaviour
         MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
         MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.6f);
         SfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
+
+        Debug.Log($"[Settings] 로드됨 - Master:{MasterVolume} BGM:{MusicVolume} SFX:{SfxVolume}");
         ApplySettings();
     }
 
     public void ApplySettings()
     {
+        Debug.Log($"[Settings] ApplySettings 호출 - AudioManager: {(AudioManager.instance == null ? "NULL" : "있음")}");
+
         if (AudioManager.instance == null) return;
 
         AudioManager.instance.SetMasterVolume(MasterVolume);
         AudioManager.instance.SetBgmVolume(MusicVolume);
         AudioManager.instance.SetSfxVolume(SfxVolume);
+        Debug.Log($"[Settings] 볼륨 적용 완료");
 
         // 해상도 적용
         FullScreenMode mode = IsFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;

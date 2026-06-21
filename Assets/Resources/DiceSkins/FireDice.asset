@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: FireDice
   m_EditorClassIdentifier: Assembly-CSharp::DiceSkin
   sprites:
-  - {fileID: 21300000, guid: 9c201d9839a9d11408481ba893b4d1f0, type: 3}
-  - {fileID: 21300000, guid: 6153035c0c99a794eb25fae52f27e3b6, type: 3}
-  - {fileID: 21300000, guid: 4c81cf5ff21d7e640b855cb677632d03, type: 3}
-  - {fileID: 21300000, guid: cbd89572b3068c94ea5991a3af8a8f6c, type: 3}
-  - {fileID: 21300000, guid: ca8130fd90ee071428d2253f85db7fc5, type: 3}
-  - {fileID: 21300000, guid: c384ec8f3114ca74988d9e7982dd7cd4, type: 3}
+  - {fileID: 21300000, guid: 90db4f64b03e3ac4384aa12c6cfb2a42, type: 3}
+  - {fileID: 21300000, guid: 06be982f69a1eb54e8311267f0be968e, type: 3}
+  - {fileID: 21300000, guid: 8fd5b9b6b7cfb714a8f9256e30aa8359, type: 3}
+  - {fileID: 21300000, guid: d00acb2c78ed04b439208c1a71b0b232, type: 3}
+  - {fileID: 21300000, guid: 41f7daa51a52fa34fbb3957ca02ae4bc, type: 3}
+  - {fileID: 21300000, guid: 3e5468b4c2f5ffb47baeb261e0e9660b, type: 3}

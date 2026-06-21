@@ -1,6 +1,7 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using System.Linq;
+using DG.Tweening;
 
 public class DiceManager : MonoBehaviour
 {
@@ -58,6 +59,7 @@ public class DiceManager : MonoBehaviour
 
     #region 적 주사위 배치
 
+
     public void EnemyPlaceDice(int slotIndex, DiceData data)
     {
         if (enemyPanelDiceScript[slotIndex] != null)
@@ -75,18 +77,27 @@ public class DiceManager : MonoBehaviour
         enemyPanelDiceScript[slotIndex] = dice;
     }
 
-    public void EnemyPlaceAttackDice(int slotIndex, Dice dice)
+    public async UniTask EnemyPlaceAttackDice(int slotIndex, Dice dice)
     {
-        dice.transform.SetParent(enemyAttackSlots[slotIndex], false);
-        dice.transform.localPosition = Vector3.zero;
+        await MoveDiceToSlot(dice, enemyAttackSlots[slotIndex]);
         BattleManager.instance.SetEnemyAttackDice(dice);
     }
 
-    public void EnemyPlaceDefenseDice(int slotIndex, Dice dice)
+    public async UniTask EnemyPlaceDefenseDice(int slotIndex, Dice dice)
     {
-        dice.transform.SetParent(enemyDefenseSlots[slotIndex], false);
-        dice.transform.localPosition = Vector3.zero;
+        await MoveDiceToSlot(dice, enemyDefenseSlots[slotIndex]);
         BattleManager.instance.SetEnemyDefenseDice(dice);
+    }
+
+    private async UniTask MoveDiceToSlot(Dice dice, Transform targetSlot, float duration = 0.4f)
+    {
+        await dice.transform
+            .DOMove(targetSlot.position, duration)
+            .SetEase(Ease.OutQuart)
+            .AsyncWaitForCompletion();
+
+        dice.transform.SetParent(targetSlot, true);
+        dice.transform.localPosition = Vector3.zero;
     }
 
     #endregion

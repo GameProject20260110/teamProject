@@ -20,13 +20,7 @@ public class UiController : MonoBehaviour
 
     [Header("¹öÆ°")]
     public Button rollBtn;
-    public TextMeshProUGUI rerollText;
-    public Image rollBtnImage;
-    public Sprite rollSprite;
-    public Sprite rerollSprite;
     public Button confirmBtn;
-    public Button ShopBtn;
-    public Button rerollBtn;
 
     [Header("GameEndPanels")]
     public GameObject backGround;
@@ -118,25 +112,39 @@ public class UiController : MonoBehaviour
 
     }
 
-    public void ShowGlowConfirmBtn()
+
+
+    public void ShowGlowImage()
+    {
+        confirmBtn.GetComponent<ButtonGlowController>().ShowImageGlow();
+    }
+
+    public void HideGlowImage()
+    {
+        confirmBtn.GetComponent<ButtonGlowController>().HideImageGlow();
+    }
+
+    public void ShowGlowShader()
+    {
+        confirmBtn.GetComponent<ButtonGlowController>().ShowShaderGlow();
+    }
+
+    public void HideGlowShader()
+    {
+        confirmBtn.GetComponent<ButtonGlowController>().HideShaderGlow();
+    }
+
+    public void ShowGlow()
     {
         confirmBtn.GetComponent<ButtonGlowController>().ShowGlow();
     }
 
-    public void ShowGlowRerollBtn()
-    {
-        rerollBtn.GetComponent<ButtonGlowController>().ShowGlow();
-    }
-
-    public void HideGlowRerollBtn()
-    {
-        rerollBtn.GetComponent<ButtonGlowController>().HideGlow();
-    }
-
-    public void HideGlowConfirmBtn()
+    public void HideGlow()
     {
         confirmBtn.GetComponent<ButtonGlowController>().HideGlow();
     }
+
+
 
     public void ShowResultPanel(bool isSuccess, int currentLife)
     {
@@ -162,14 +170,6 @@ public class UiController : MonoBehaviour
         if (confirmBtn != null)
         {
             confirmBtn.interactable = state;
-        }
-    }
-
-    public void SetShopBtnInteratable(bool state)
-    {
-        if(ShopBtn != null)
-        {
-            ShopBtn.interactable = state;
         }
     }
 

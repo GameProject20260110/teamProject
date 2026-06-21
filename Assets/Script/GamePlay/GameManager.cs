@@ -73,10 +73,6 @@ public class GameManager : MonoBehaviour
         if (UiController.instance.rollBtn.interactable == false) return;
         if (AudioManager.instance != null)
             AudioManager.instance.PlaySfx(AudioManager.Sfx.Roll);
-        UiController.instance.SetRollBtnInteractable(false);
-        UiController.instance.SetConfirmBtnInteratable(false);
-        UiController.instance.rollBtn.interactable = false;
-        UiController.instance.HideGlowConfirmBtn();
 
         RollFlow().Forget();
     }
@@ -84,12 +80,11 @@ public class GameManager : MonoBehaviour
     private async UniTask RollFlow()
     {
         try
-        {           
+        {
+            BattleButton.instance.SetInteractable(false);
             UiController.instance?.ResetItemCards();
             
             Dice[] allDice = await diceManager.StartRolling();
-
-            ProcessRollResult();
 
             foreach(var dice in allDice)
             {
@@ -97,17 +92,13 @@ public class GameManager : MonoBehaviour
                 var floatingEffect = dice.GetComponent<FloatingEffect>();
                 if (floatingEffect != null) floatingEffect.enabled = true;
             }
+
+            await BattleButton.instance.SetState(BattleButton.State.PlaceComplete);
         }
         catch (Exception e)
         {
             Debug.LogException(e);
         }
-    }
-
-    public void ProcessRollResult()
-    {
-        UiController.instance.SetRollBtnInteractable(true);
-        UiController.instance.SetConfirmBtnInteratable(true);       
     }
 
     public void HandleGameOver()
@@ -125,13 +116,16 @@ public class GameManager : MonoBehaviour
 
     public async UniTask EnemyRoll()
     {
+        await BattleButton.instance.SetState(BattleButton.State.EnemyTurn);
+
         Dice[] allDice = await diceManager.StartEnemyRolling();
 
         await UniTask.Delay(500);
 
-        ProcessRollResult();
-
         EnemyAI.instance.PlaceDice(allDice);
+
+        await BattleButton.instance.SetState(BattleButton.State.Roll);
+        UiController.instance.SetRollBtnInteractable(true);
     }
 
     public async UniTask OnClickScoreConfirm()
@@ -139,15 +133,12 @@ public class GameManager : MonoBehaviour
         if (diceManager.isRolling) return;
         if (BattleManager.instance == null) return;
 
+        await BattleButton.instance.SetState(BattleButton.State.InBattle);
+
         List<Dice> attackDices = DicePanelManager.instance.attackPanel.GetDices();
         List<Dice> defenceDices = DicePanelManager.instance.defensePanel.GetDices();
 
         BattleManager.instance.SetDiceInfo(attackDices, defenceDices);
-
-        // UI 비활성화
-        UiController.instance.SetConfirmBtnInteratable(false);
-        UiController.instance.SetRollBtnInteractable(false);
-        UiController.instance.HideGlowConfirmBtn();
 
         foreach (var dice in diceManager.panelDiceScript)
         {
@@ -170,8 +161,6 @@ public class GameManager : MonoBehaviour
         }
 
         DicePanelManager.instance?.ResetAllDice(diceManager.GetAllDice());
-
-        UiController.instance.SetRollBtnInteractable(true);
     }
 }
     
