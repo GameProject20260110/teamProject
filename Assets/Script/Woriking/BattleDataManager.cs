@@ -52,6 +52,13 @@ public class BattleDataManager : MonoBehaviour
         return currentEnemyData?.enemyImage;
     }
 
+    public GameObject GetEnemyPrefab()
+    {
+        if (currentEnemyData is BossDataSo bossData)
+            return bossData.enemyPrefab;
+        return null;
+    }
+
     public bool hasGimmick()
     {
         if (!isBossBattle) return false;

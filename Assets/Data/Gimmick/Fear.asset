@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::FearGim
   gimmickName: "\uACF5\uD3EC"
   description: "\uACF5\uD3EC"
-  icon: {fileID: 21300000, guid: 3e6e7ecdadffb5446923c42157fc1e04, type: 3}
+  icon: {fileID: 3040411234694419558, guid: 322b14a24f6a91b44afbf1baec62e450, type: 3}
   startTurn: 2
-  activateInterval: 3
+  activateInterval: 2
   attackMultiplier: 0.7

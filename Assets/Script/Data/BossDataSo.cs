@@ -4,6 +4,9 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "BossDataSo", menuName = "Battle/BossDataSo")]
 public class BossDataSo : BaseEnemyData
 {
+    [Header("ÇÁ¸®ÆÕ")]
+    public GameObject enemyPrefab;
+
     [Header("±â¹Í")]
     public bool hasGimmick;
     [SerializeField] private List<GimmickSo> gimmickList;
