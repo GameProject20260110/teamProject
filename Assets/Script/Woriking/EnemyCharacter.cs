@@ -6,16 +6,17 @@ using System.Linq;
 
 public class EnemyCharacter : MonoBehaviour
 {
-    // SpriteRenderer 기반 (보스)
     private SpriteRenderer[] _renderers;
 
-    // Image 기반 (일반 적)
     private Image _image;
+
+    private Animator _animator;
 
     private void Awake()
     {
         _renderers = GetComponentsInChildren<SpriteRenderer>();
         _image = GetComponentInChildren<Image>();
+        _animator = GetComponent<Animator>();
     }
 
     public void SetAlpha(float alpha)
@@ -45,5 +46,27 @@ public class EnemyCharacter : MonoBehaviour
         }
 
         return UniTask.CompletedTask;
+    }
+
+    public void SubscribeToBattleEvents(BattleEventBus eventBus)
+    {
+        eventBus.OnHitEnemy += HandleHitEnemy;
+        eventBus.OnPlayerAttackStart += HandleAttack;
+    }
+
+    public void UnsubscribeFromBattleEvents(BattleEventBus eventBus)
+    {
+        eventBus.OnHitEnemy -= HandleHitEnemy;
+        eventBus.OnPlayerAttackStart -= HandleAttack;
+    }
+
+    private void HandleAttack(DiceContext ctx)
+    {
+        _animator.SetTrigger("Attack");
+    }
+
+    private void HandleHitEnemy(DiceContext ctx, int damage)
+    {
+        _animator.SetTrigger("Hit");
     }
 }

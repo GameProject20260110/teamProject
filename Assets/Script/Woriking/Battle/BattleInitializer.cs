@@ -70,6 +70,7 @@ public class BattleInitalizer : MonoBehaviour
         if (BattleManager.instance != null)
         {
             BattleManager.instance.InitializeBattle();
+            enemyCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
         }
     }
 
@@ -77,6 +78,9 @@ public class BattleInitalizer : MonoBehaviour
     {
         if (UiController.instance != null)
             UiController.instance.SetRollBtnInteractable(false);
+
+        if (BattleManager.instance != null)
+            enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);
 
         int currentHP = ResourceManager.instance != null ? ResourceManager.instance.heart : 0;
 

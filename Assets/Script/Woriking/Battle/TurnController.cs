@@ -68,7 +68,7 @@ public class TurnController
         foreach (var dice in _bm.DefenseEnemyDices)
         {
             if (dice == null) continue;
-            await dice.Glow.ShowGlowAsync();
+            await dice.Glow.ShowGlowAsync(ct);
             var ctx = _bm.CreateDiceCtx(false, dice, _bm.AttackEnemyDices, _bm.DefenseEnemyDices);
             await dice.Effect.OnDefense(ctx);
             dice.Glow.HideGlow();
@@ -79,7 +79,7 @@ public class TurnController
     {
         foreach (var dice in _bm.AttackDices)
         {
-            await dice.Glow.ShowGlowAsync();
+            await dice.Glow.ShowGlowAsync(ct);
             var ctx = _bm.CreateDiceCtx(true, dice, _bm.AttackDices, _bm.DefenseDices);
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
@@ -90,7 +90,7 @@ public class TurnController
     {
         foreach (var dice in _bm.DefenseDices)
         {
-            await dice.Glow.ShowGlowAsync();
+            await dice.Glow.ShowGlowAsync(ct);
             var ctx = _bm.CreateDiceCtx(true, dice, _bm.AttackDices, _bm.DefenseDices);
             await dice.Effect.OnDefense(ctx);
             dice.Glow.HideGlow();
@@ -103,7 +103,10 @@ public class TurnController
         foreach (var dice in _bm.AttackEnemyDices)
         {
             if (dice == null) continue;
-            await dice.Glow.ShowGlowAsync();
+            _bm.EventBus.TriggerPlayerAttackStart(_bm.CreateDiceCtx(true, dice, _bm.AttackDices, _bm.DefenseDices));
+            await UniTask.Delay(300, cancellationToken: ct);
+
+            await dice.Glow.ShowGlowAsync(ct);
             var ctx = _bm.CreateDiceCtx(false, dice, _bm.AttackEnemyDices, _bm.DefenseEnemyDices);
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
