@@ -28,11 +28,15 @@ public class BattleInitalizer : MonoBehaviour
             var enemyPrefab = BattleDataManager.instance?.GetEnemyPrefab();
             if (enemyPrefab != null)
             {
+                var bossData = BattleDataManager.instance.currentEnemyData as BossDataSo;
                 enemyImage.gameObject.SetActive(false);
                 spawnEnemy = Instantiate(enemyPrefab);
-                spawnEnemy.transform.position = new Vector3(0, 3, 0);
+                spawnEnemy.transform.position = bossData.spawnPosition;
+                spawnEnemy.transform.localScale = bossData.bossScale;
                 enemyCharacter = spawnEnemy.GetComponent<EnemyCharacter>();
                 enemyCharacter.SetAlpha(0f);
+
+                
             }
             else if (enemyImage != null)
             {

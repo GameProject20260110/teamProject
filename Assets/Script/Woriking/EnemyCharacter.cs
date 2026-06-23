@@ -12,11 +12,13 @@ public class EnemyCharacter : MonoBehaviour
 
     private Animator _animator;
 
+
     private void Awake()
     {
         _renderers = GetComponentsInChildren<SpriteRenderer>();
         _image = GetComponentInChildren<Image>();
         _animator = GetComponent<Animator>();
+
     }
 
     public void SetAlpha(float alpha)

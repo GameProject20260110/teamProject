@@ -14,8 +14,6 @@ public class UiController : MonoBehaviour
 
     [Header("인게임 정보 UI (상시 표시)")]
     public TextMeshProUGUI roundInfoText;
-    public TextMeshProUGUI targetScoreInfoText;
-    public TextMeshProUGUI myScoreInfoText;
     public TextMeshProUGUI goldText;
 
     [Header("버튼")]
