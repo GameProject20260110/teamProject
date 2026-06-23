@@ -6,6 +6,8 @@ public class BattleInitalizer : MonoBehaviour
 
     [SerializeField] private RoundController roundEffect;
     public Image enemyImage;
+    public GameObject spawnEnemy;
+    private EnemyCharacter enemyCharacter;
 
     private void Awake()
     {
@@ -23,12 +25,22 @@ public class BattleInitalizer : MonoBehaviour
         {
             roundEffect.PlayIntroAnim();
 
-            if (enemyImage != null)
+            var enemyPrefab = BattleDataManager.instance?.GetEnemyPrefab();
+            if (enemyPrefab != null)
             {
-                enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
+                enemyImage.gameObject.SetActive(false);
+                spawnEnemy = Instantiate(enemyPrefab);
+                spawnEnemy.transform.position = new Vector3(0, 3, 0);
+                enemyCharacter = spawnEnemy.GetComponent<EnemyCharacter>();
+                enemyCharacter.SetAlpha(0f);
             }
-
-            // 보스전만 기믹
+            else if (enemyImage != null)
+            {
+                enemyImage.gameObject.SetActive(true);
+                enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
+                enemyCharacter = enemyImage.GetComponent<EnemyCharacter>();
+                enemyCharacter.SetAlpha(0f);
+            }
         }
 
         if (GameManager.instance != null)
@@ -58,6 +70,7 @@ public class BattleInitalizer : MonoBehaviour
         if (BattleManager.instance != null)
         {
             BattleManager.instance.InitializeBattle();
+            enemyCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
         }
     }
 
@@ -65,6 +78,9 @@ public class BattleInitalizer : MonoBehaviour
     {
         if (UiController.instance != null)
             UiController.instance.SetRollBtnInteractable(false);
+
+        if (BattleManager.instance != null)
+            enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);
 
         int currentHP = ResourceManager.instance != null ? ResourceManager.instance.heart : 0;
 

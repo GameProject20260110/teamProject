@@ -52,6 +52,8 @@ public class RoundController : MonoBehaviour
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
         // 여기서 기믹 추가
+
+        await FadeInEnemyCharacter(ct);
         
         playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
         await enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
@@ -91,6 +93,34 @@ public class RoundController : MonoBehaviour
     private async UniTask BeginRoundLogic(int currentRound)
     {
         await GameManager.instance.EnemyRoll();
+    }
+
+    private async UniTask FadeInEnemyCharacter(CancellationToken ct)
+    {
+        // 보스 - SpriteRenderer
+        var enemy = BattleInitalizer.instance.spawnEnemy;
+        if (enemy != null)
+        {
+            var renderers = enemy.GetComponentsInChildren<SpriteRenderer>();
+            foreach (var sr in renderers)
+                sr.color = new Color(1, 1, 1, 0);
+
+            var tasks = renderers
+                .Select(sr => sr.DOFade(1f, 0.5f).SetEase(Ease.OutQuad).ToUniTask());
+
+            await UniTask.WhenAll(tasks).AttachExternalCancellation(ct);
+            return;
+        }
+
+        // 일반 적 - Image
+        var enemyImage = BattleInitalizer.instance.enemyImage;
+        if (enemyImage != null && enemyImage.gameObject.activeSelf)
+        {
+            enemyImage.color = new Color(1, 1, 1, 0);
+            await enemyImage.DOFade(1f, 0.5f).SetEase(Ease.OutQuad)
+                .ToUniTask()
+                .AttachExternalCancellation(ct);
+        }
     }
 
     void OnDestroy()

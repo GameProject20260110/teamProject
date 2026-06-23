@@ -8,7 +8,6 @@ using UnityEngine.EventSystems;
 public class GimmickIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private Image iconImage;
-    [SerializeField] private Image backgroundImage;
     [SerializeField] private CanvasGroup canvasGroup;
 
     [SerializeField] private GameObject tooltipPanel;
@@ -22,14 +21,12 @@ public class GimmickIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         _gimmick = gimmick;
     }
 
-    // 기믹 발동 예고 시 등장 연출
     public async UniTask ShowAsync()
     {
         gameObject.SetActive(true);
         await PlayAppearEffect();
     }
 
-    // 턴 끝나면 숨기기
     public void Hide()
     {
         gameObject.SetActive(false);
@@ -51,11 +48,9 @@ public class GimmickIconUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHa
         var rect = GetComponent<RectTransform>();
         Vector3 original = rect.localScale;
 
-        // 초기 상태
         rect.localScale = Vector3.zero;
         canvasGroup.alpha = 0f;
 
-        // 스케일 펀치 + 페이드 동시에
         var seq = DOTween.Sequence()
         .Append(rect.DOScale(original * 1.1f, 0.2f).SetEase(Ease.OutBack))
         .Join(canvasGroup.DOFade(1f, 0.2f))

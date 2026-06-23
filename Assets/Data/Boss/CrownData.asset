@@ -15,10 +15,11 @@ MonoBehaviour:
   enemyName: Crown
   maxHp: 50
   attackPower: 20
-  enemyImage: {fileID: 4801227835787818748, guid: fcc2587eedde71f45baef9b8eeb215ba, type: 3}
+  enemyImage: {fileID: 0}
   skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}
   aiStrategy: {fileID: 11400000, guid: 602de5bc7d85ec1418071ab0cbf6a4f8, type: 2}
   rewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}
+  enemyPrefab: {fileID: 1674477809305831931, guid: f7c6b367c8d0a874bb4b1192545af35b, type: 3}
   hasGimmick: 1
   gimmickList:
   - {fileID: 11400000, guid: 8b9a086a83e118c48aef6fc167171623, type: 2}

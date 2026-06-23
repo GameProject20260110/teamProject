@@ -15,7 +15,7 @@ MonoBehaviour:
   gimmickName: "\uBC18\uC0AC"
   description: "\uC801\uC758 \uACF5\uACA9\uC744 \uB370\uBBF8\uC9C0 2\uB9CC\uD07C
     \uBC18\uC0AC\uD55C\uB2E4."
-  icon: {fileID: 21300000, guid: af89e5a66d266764a91729c35cde3444, type: 3}
+  icon: {fileID: -8427951912024532060, guid: cedef08ba988b154ea36fb8c5017dbc4, type: 3}
   startTurn: 3
-  activateInterval: 2
+  activateInterval: 3
   reflectAmount: 2
