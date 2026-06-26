@@ -46,9 +46,9 @@ public class RoundController : MonoBehaviour
         roundIntroCanvas.gameObject.SetActive(true);
         HideGameUI();
 
-        await PlayEffectAsync(onComplete => roundStartEffect.Play(currentRound, onComplete), ct);
+        await PlayEffectAsync(onComplete => roundStartEffect.Play(onComplete), ct);
         await PlayEffectAsync(cardAppearEffect.Play, ct);
-        await PlayEffectAsync(roundCharacter.Play, ct);
+        //await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
         // 여기서 기믹 추가

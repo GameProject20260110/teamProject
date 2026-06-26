@@ -15,10 +15,12 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private RectTransform spear2Rect;      
     [SerializeField] private Image spear1Image;
     [SerializeField] private Image spear2Image;
-    [SerializeField] private RectTransform impactEffect;
-    [SerializeField] private Image impactImage;
-    [SerializeField] private RectTransform roundTextRect;
-    [SerializeField] private TextMeshProUGUI roundText;
+    [SerializeField] private RectTransform vsTextRect;
+    [SerializeField] private TextMeshProUGUI vsText;
+    [SerializeField] private Image blueBackground;
+    [SerializeField] private Image redBackground;
+    [SerializeField] private Image playerCharacter;
+    [SerializeField] private Image enemyCharacter;
 
     [Header("Dimmer")]
     [SerializeField] private float dimmerTargetAlpha = 0.65f;
@@ -30,29 +32,27 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private float spear2Duration = 0.3f;
     [SerializeField] private float spearDelay = 0.3f;              
     [SerializeField] private Ease spearEase = Ease.OutQuint;        
-    [SerializeField] private Vector2 crossPoint = Vector2.zero;     
+    [SerializeField] private Vector2 crossPoint = Vector2.zero;
 
     [Header("충돌 효과")]
-    [SerializeField] private float impactScaleStart = 0f;
-    [SerializeField] private float impactScaleEnd = 1.5f;
-    [SerializeField] private float impactDuration = 0.3f;
     [SerializeField] private float screenShakeStrength = 15f;
     [SerializeField] private float screenShakeDuration = 0.3f;
 
-    [Header("텍스트 낙하")]
-    [SerializeField] private float textDropHeight = 1200f;
-    [SerializeField] private float textDropDuration = 0.4f;
-    [SerializeField] private Ease textDropEase = Ease.InQuad;
-    [SerializeField] private float textDropDelay = 0.1f;            
-    [SerializeField] private float bounceDuration = 0.15f;
-    [SerializeField] private float bounceHeight = 35f;
+    [Header("VS 텍스트")]
+    [SerializeField] private float vsAppearDuration = 0.3f;
+    [SerializeField] private float vsStartScale = 0.7f;
+    [SerializeField] private float bounceDuration = 0.1f;
+
+    [Header("캐릭터 / 배경")]
+    [SerializeField] private float characterBackFadeInDuration = 1f;
+    [SerializeField] private float characterFadeInDuration = 0.7f;
+    [SerializeField] private float characterFadeInDelay = 0.2f;
 
     [Header("아웃트로")]
-    [SerializeField] private float holdDuration = 1.0f;
+    [SerializeField] private float holdDuration = 2.0f;
     [SerializeField] private float outroFadeDuration = 0.4f;
 
     private Sequence currentSequence;
-    private Vector2 textTargetPos;
 
     void Awake()
     {
@@ -60,55 +60,76 @@ public class RoundIntro : MonoBehaviour
         ResetDimmer();
     }
 
-    public void Play(int roundNumber) => Play(roundNumber, null);
+    public void Play() => Play(null);
 
-    public void Play(int roundNumber, Action onComplete)
+    public void Play(Action onComplete)
     {
         KillCurrent();
-        roundText.text = $"Round {roundNumber}";
         visualsRoot.SetActive(true);
         SetInitialState();
 
         currentSequence = DOTween.Sequence();
 
+        // 1. dimmer
         currentSequence.Append(
             dimmer.DOFade(dimmerTargetAlpha, dimmerDuration).SetEase(Ease.OutQuad)
         );
 
+        // 2. 창1
         currentSequence.Append(
             spear1Rect.DOAnchorPos(crossPoint, spear1Duration).SetEase(spearEase)
         );
 
+        // 3. 창2
         currentSequence.AppendInterval(spearDelay);
         currentSequence.Append(
             spear2Rect.DOAnchorPos(crossPoint, spear2Duration).SetEase(spearEase)
         );
 
+        // 4. 창 충돌 효과
         currentSequence.AppendCallback(() => OnSpearImpact());
-        currentSequence.AppendInterval(textDropDelay);
-        currentSequence.Append(
-            roundTextRect.DOAnchorPos(textTargetPos, textDropDuration).SetEase(textDropEase)
-        );
 
-        currentSequence.AppendCallback(() => OnTextLand());
+        // 5-1. vs텍스트 위에서 아래로 떨어짐
+        currentSequence.AppendInterval(0.1f);
         currentSequence.Append(
-            roundTextRect.DOAnchorPosY(textTargetPos.y + bounceHeight, bounceDuration * 0.5f)
-                .SetEase(Ease.OutQuad)
-        );
-
-
-        currentSequence.Append(
-            roundTextRect.DOAnchorPosY(textTargetPos.y, bounceDuration * 0.5f)
-                .SetEase(Ease.InQuad)
+           vsText.DOFade(1f, 0.15f)
         );
         currentSequence.Join(
-            roundTextRect.DOScale(Vector3.one, bounceDuration).SetEase(Ease.OutBack)
+            vsTextRect.DOScale(Vector3.one, vsAppearDuration).SetEase(Ease.OutBack)
+        );
+        currentSequence.Join(
+        DOVirtual.DelayedCall(0.15f, () => OnTextLand())
+        );
+
+        // 5-2. vs텍스트 바닥에 닿으며 튀어 오름
+        currentSequence.Append(
+            vsTextRect.DOScale(new Vector3(1.1f, 0.9f, 1f), bounceDuration * 0.5f).SetEase(Ease.OutQuad)
+        );
+        currentSequence.Append(
+            vsTextRect.DOScale(Vector3.one, bounceDuration * 0.5f).SetEase(Ease.InQuad)
+        );
+
+        // 6. 캐릭터 페이드 인
+        currentSequence.AppendInterval(characterFadeInDelay);
+        currentSequence.Append(
+            blueBackground.DOFillAmount(1f, characterBackFadeInDuration).SetEase(Ease.OutQuad)
+        );
+        currentSequence.Join(
+            redBackground.DOFillAmount(1f, characterBackFadeInDuration).SetEase(Ease.OutQuad)
+        );
+
+        currentSequence.Append(
+            playerCharacter.DOFade(1f, characterFadeInDuration).SetEase(Ease.OutQuad)
+        );
+        currentSequence.Join(
+            enemyCharacter.DOFade(1f, characterFadeInDuration).SetEase(Ease.OutQuad)
         );
 
 
+        // 7. 홀드
         currentSequence.AppendInterval(holdDuration);
 
-
+        // 8. 아웃트로
         currentSequence.AppendCallback(() => PlayOutro());
         currentSequence.AppendInterval(outroFadeDuration);
         currentSequence.OnComplete(() =>
@@ -121,26 +142,20 @@ public class RoundIntro : MonoBehaviour
         });
     }
 
+    public void SetEnemySprite(Sprite sprite)
+    {
+        if (enemyCharacter != null)
+            enemyCharacter.sprite = sprite;
+    }
+
+    public void SetPlayerSprite(Sprite sprite)
+    {
+        if (playerCharacter != null)
+            playerCharacter.sprite = sprite;
+    }
+
     private void OnSpearImpact()
     {
-        if (impactEffect != null && impactImage != null)
-        {
-            impactEffect.gameObject.SetActive(true);
-            
-            Color c = impactImage.color;
-            c.a = 1f;
-            impactImage.color = c;
-
-            Animator animator = impactEffect.GetComponent<Animator>();
-            animator.Play("ImpactAnim", 0, 0f); // 처음부터 재생
-
-            // 애니메이션 길이만큼 대기 후 비활성화
-            DOVirtual.DelayedCall(animator.GetCurrentAnimatorStateInfo(0).length, () =>
-            {
-                impactEffect.gameObject.SetActive(false);
-            });
-        }
-
         spear1Rect.DOAnchorPos(crossPoint + new Vector2(5f, -5f), 0.05f)
             .SetEase(Ease.OutQuad)
             .OnComplete(() =>
@@ -154,7 +169,10 @@ public class RoundIntro : MonoBehaviour
             {
                 spear2Rect.DOAnchorPos(crossPoint, 0.1f).SetEase(Ease.InQuad);
             });
+    }
 
+    private void OnTextLand()
+    {
         RectTransform shakeTarget = visualsRoot.GetComponent<RectTransform>();
         if (shakeTarget != null)
         {
@@ -164,39 +182,38 @@ public class RoundIntro : MonoBehaviour
         }
     }
 
-    private void OnTextLand()
-    {
-        roundTextRect.DOScale(new Vector3(1.25f, 0.75f, 1f), 0.08f).SetEase(Ease.OutQuad);
-    }
-
     private void PlayOutro()
     {
         float d = outroFadeDuration;
         dimmer.DOFade(0f, d).SetEase(Ease.InQuad);
         spear1Image.DOFade(0f, d).SetEase(Ease.InQuad);
         spear2Image.DOFade(0f, d).SetEase(Ease.InQuad);
-        roundText.DOFade(0f, d).SetEase(Ease.InQuad);
+        vsText.DOFade(0f, d).SetEase(Ease.InQuad);
+        blueBackground.DOFade(0f, d).SetEase(Ease.InQuad);
+        redBackground.DOFade(0f, d).SetEase(Ease.InQuad);
+        playerCharacter.DOFade(0f, d).SetEase(Ease.InQuad);
+        enemyCharacter.DOFade(0f, d).SetEase(Ease.InQuad);
 
     }
 
     private void SetInitialState()
     {
-        textTargetPos = new Vector2(0f, 0f);
-
         spear1Rect.anchoredPosition = new Vector2(-spearOffscreenDistance, spearOffscreenDistance);
         SetAlpha(spear1Image, 1f);
 
         spear2Rect.anchoredPosition = new Vector2(spearOffscreenDistance, spearOffscreenDistance);
         SetAlpha(spear2Image, 1f);
 
-        roundTextRect.anchoredPosition = new Vector2(0f, textDropHeight);
-        roundTextRect.localScale = Vector3.one;
-        SetTMPAlpha(roundText, 1f);
+        vsTextRect.anchoredPosition = Vector2.zero;
+        vsTextRect.localScale = Vector3.one * vsStartScale;
+        SetTMPAlpha(vsText, 0f);
 
-        if (impactEffect != null)
-        {
-            SetAlpha(impactImage, 0f);
-        }
+        blueBackground.fillAmount = 0f;
+        redBackground.fillAmount = 0f;
+        SetAlpha(blueBackground, 1f);
+        SetAlpha(redBackground, 1f);
+        SetAlpha(playerCharacter, 0f);
+        SetAlpha(enemyCharacter, 0f);
     }
 
     private void ResetDimmer()
@@ -209,13 +226,15 @@ public class RoundIntro : MonoBehaviour
         currentSequence?.Kill();
         spear1Rect?.DOKill();
         spear2Rect?.DOKill();
-        roundTextRect?.DOKill();
+        vsTextRect?.DOKill();
         dimmer?.DOKill();
         spear1Image?.DOKill();
         spear2Image?.DOKill();
-        roundText?.DOKill();
-        impactEffect?.DOKill();
-        impactImage?.DOKill();
+        vsText?.DOKill();
+        blueBackground?.DOKill();
+        redBackground?.DOKill();
+        playerCharacter?.DOKill();
+        enemyCharacter?.DOKill();
     }
 
     private void SetAlpha(Image img, float a)
@@ -238,8 +257,8 @@ public class RoundIntro : MonoBehaviour
 
     // 테스트
     [ContextMenu("Test Round 1")]
-    private void TestRound1() => Play(1);
+    private void TestRound1() => Play();
 
     [ContextMenu("Test Round 2")]
-    private void TestRound2() => Play(2);
+    private void TestRound2() => Play();
 }
