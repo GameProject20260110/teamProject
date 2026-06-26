@@ -5,7 +5,8 @@ using UnityEngine;
 public enum SkillMoveType
 {
     None,       // 적 위치에서 바로 재생
-    Projectile  // 플레이어 위치에서 날아감
+    Projectile,  // 플레이어 위치에서 날아감
+    Particle
 }
 
 public class Skill : MonoBehaviour
@@ -31,16 +32,30 @@ public class Skill : MonoBehaviour
         onEndCallback = ctx.onEnd;
         ct = ctx.ct;
 
-        if (moveType == SkillMoveType.Projectile)
+        switch (moveType)
         {
-            transform.position = ctx.startPos;
-            targetPosition = ctx.targetPos;
+            case SkillMoveType.Projectile:
+                transform.position = ctx.startPos;
+                targetPosition = ctx.targetPos;
+                Vector3 direction = (ctx.targetPos - ctx.startPos).normalized;
+                float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+                transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                isMoving = true;
+                break;
 
-            Vector3 direction = (ctx.targetPos - ctx.startPos).normalized;
-            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-            transform.rotation = Quaternion.Euler(0f, 0f, angle);
+            case SkillMoveType.Particle:
+                transform.position = ctx.targetPos;
+                var particle = GetComponent<ParticleSystem>();
+                if (particle != null)
+                {
+                    particle.Play();
+                    PlayParticleAsync(particle, ct).Forget();
+                }
+                break;
 
-            isMoving = true;
+            case SkillMoveType.None:
+                // 애니메이션 이벤트로 타이밍 잡음
+                break;
         }
     }
 
@@ -66,6 +81,13 @@ public class Skill : MonoBehaviour
     {
         HitAnimFrame();
         await UniTask.Delay(100, cancellationToken: ct);
+        OnAttackEnd();
+    }
+
+    private async UniTaskVoid PlayParticleAsync(ParticleSystem particle, CancellationToken ct)
+    {
+        HitAnimFrame();
+        await UniTask.WaitUntil(() => !particle.isPlaying, cancellationToken: ct);
         OnAttackEnd();
     }
 

@@ -55,8 +55,10 @@ public class PlayerBattleData : IDamageable
 
     public void Heal(int amount)
     {
+        Debug.Log($"Heal 호출: {amount}, 현재HP: {currentHP}, 최대HP: {MaxHp}");
         currentHP += amount;
         currentHP = currentHP >= MaxHp ? MaxHp : currentHP;
+        Debug.Log($"힐 후 HP: {currentHP}");
     }
 
     public void ShieldUp(int amount) => currentShield += amount;

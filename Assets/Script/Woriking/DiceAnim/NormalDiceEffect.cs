@@ -10,10 +10,10 @@ public class NormalDiceEffect : DiceEffectBase
 
     public override async UniTask OnDefense(DiceContext ctx)
     {
-        int finalShield = ctx.baseDamage + ctx.diceData.effectData.bonusShield;
+        int finalShield = ctx.baseDamage + ctx.DiceData.effectData.bonusShield;
 
-        if (ctx.diceData.effectData.bonusShield > 0)
-            await vfx.PlayBuff(ctx.diceData.effectData.bonusShield, ctx.CancellationToken);
+        if (ctx.DiceData.effectData.bonusShield > 0)
+            await vfx.PlayBuff(ctx.DiceData.effectData.bonusShield, ctx.CancellationToken);
 
         await vfx.PlayDefense(ctx, finalShield);
     }

@@ -4,8 +4,8 @@ public class DiceContext
 {
     public BattleContext battle;
     public int baseDamage;
-    public DiceData diceData;
     public BattleDices dices;
+    public DiceState diceState;
 
     public PlayerBattleData Player => battle.Player;
     public EnemyBattleData Enemy => battle.Enemy;
@@ -13,6 +13,8 @@ public class DiceContext
     public bool IsPlayer => battle.IsPlayer;
     public BattlePositions Positions => battle.Positions;
     public System.Threading.CancellationToken CancellationToken => battle.CancellationToken;
+
+    public DiceData DiceData => diceState.diceData;
 }
 
 public class BattleDices

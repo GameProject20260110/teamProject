@@ -4,10 +4,10 @@ public class FireDiceEffect : DiceEffectBase
 {
     public override async UniTask OnAttack(DiceContext ctx)
     {
-        int damage = ctx.baseDamage + ctx.diceData.effectData.bonusDamage;
+        int damage = ctx.baseDamage + ctx.DiceData.effectData.bonusDamage;
         int finalDamage = GetFinalAttackDamage(ctx, damage);
-        if (ctx.diceData.effectData.bonusDamage > 0)
-            await vfx.PlayBuff(ctx.diceData.effectData.bonusDamage, ctx.CancellationToken);
+        if (ctx.DiceData.effectData.bonusDamage > 0)
+            await vfx.PlayBuff(ctx.DiceData.effectData.bonusDamage, ctx.CancellationToken);
 
         await vfx.PlayAttack(ctx, finalDamage);
     }
