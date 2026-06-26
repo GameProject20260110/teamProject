@@ -18,7 +18,8 @@ public class BossDataSo : BaseEnemyData
     [Header("주사위 설정")]
     public DiceData[] dicePool;
 
-    public List<GimmickSo> GimmickList => gimmickList;
+    [Header("정렬")]
+    public int sortingOrder = 0;
 
     public void RegisterAllGimmicks(BattleEventBus bus)
     {
