@@ -4428,8 +4428,6 @@ MonoBehaviour:
   resultUI: {fileID: 1978101105}
   gameOverUI: {fileID: 174890769}
   roundInfoText: {fileID: 1779552945}
-  targetScoreInfoText: {fileID: 0}
-  myScoreInfoText: {fileID: 0}
   goldText: {fileID: 257948136}
   rollBtn: {fileID: 1933890307}
   confirmBtn: {fileID: 823676198}
@@ -18472,6 +18470,7 @@ GameObject:
   m_Component:
   - component: {fileID: 794785513}
   - component: {fileID: 794785512}
+  - component: {fileID: 794785514}
   m_Layer: 0
   m_Name: RoundController
   m_TagString: Untagged
@@ -18486,7 +18485,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794785511}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca6f482674a4f42498ef7a443767ad54, type: 3}
   m_Name: 
@@ -18522,6 +18521,33 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &794785514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794785511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d1c84f214ce2274b872c1cf8bbc3c57, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NormalStageController
+  stageIntroCanvas: {fileID: 863786498}
+  turnEffect: {fileID: 724314228}
+  fadeDuration: 0.4
+  interval: 0.17
+  HideUIGroup:
+  - {fileID: 487895555}
+  - {fileID: 2118513870}
+  - {fileID: 889818004}
+  - {fileID: 1924332476}
+  - {fileID: 1452403851}
+  stageStartEffect: {fileID: 2059961223}
+  cardAppearEffect: {fileID: 1617776649}
+  roundCharacter: {fileID: 1815063455}
+  playerEffect: {fileID: 728004692}
+  enemyEffect: {fileID: 1104239768}
 --- !u!1 &812174708
 GameObject:
   m_ObjectHideFlags: 0
@@ -43338,7 +43364,7 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 815641137313243952, guid: 2d3b055fd49a9e8429b8ef81f095cda9, type: 3}
   playerDamageSpawn: {fileID: 228663385}
   enemyDamageSpawn: {fileID: 853782679}
-  turnUI: {fileID: 794785512}
+  turnUI: {fileID: 0}
   floatHeight: 100
   floatDuration: 0.7
   shieldObject: {fileID: 679513749}
@@ -50966,7 +50992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992aa7e2147b9da41a77d4b985ddb674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleInitalizer
-  roundEffect: {fileID: 794785512}
+  stageController: {fileID: 794785514}
   enemyImage: {fileID: 722693364}
   spawnEnemy: {fileID: 0}
 --- !u!4 &2024758280

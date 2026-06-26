@@ -1894,7 +1894,6 @@ GameObject:
   m_Component:
   - component: {fileID: 209049177}
   - component: {fileID: 209049180}
-  - component: {fileID: 209049179}
   - component: {fileID: 209049178}
   m_Layer: 5
   m_Name: ArtifactContainer
@@ -1919,8 +1918,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -272, y: -440}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: -396, y: -465}
+  m_SizeDelta: {x: 500, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &209049178
 MonoBehaviour:
@@ -1936,6 +1935,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ArtifactUIController
   artifactContainer: {fileID: 209049177}
   artifactIconPrefab: {fileID: 6044504551265267969, guid: 8ea384ef4ae2c5a4092d74da60b1a5ef, type: 3}
+<<<<<<< HEAD
   healParticle: {fileID: 0}
 --- !u!114 &209049179
 MonoBehaviour:
@@ -1951,6 +1951,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.ContentSizeFitter
   m_HorizontalFit: 2
   m_VerticalFit: 0
+=======
+  healParticle: {fileID: 1995167793}
+>>>>>>> main
 --- !u!114 &209049180
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23426,7 +23429,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 849057156}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -9719.998}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -23435,7 +23438,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 810, y: 300}
+  m_SizeDelta: {x: 570, y: 300}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &849057158
 MonoBehaviour:
@@ -42369,7 +42372,7 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 815641137313243952, guid: 2d3b055fd49a9e8429b8ef81f095cda9, type: 3}
   playerDamageSpawn: {fileID: 228663385}
   enemyDamageSpawn: {fileID: 853782679}
-  turnUI: {fileID: 794785512}
+  turnUI: {fileID: 0}
   floatHeight: 100
   floatDuration: 0.7
   shieldObject: {fileID: 679513749}
@@ -49921,7 +49924,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992aa7e2147b9da41a77d4b985ddb674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleInitalizer
-  roundEffect: {fileID: 794785512}
+  stageController: {fileID: 0}
   enemyImage: {fileID: 722693364}
   spawnEnemy: {fileID: 0}
 --- !u!4 &2024758280
