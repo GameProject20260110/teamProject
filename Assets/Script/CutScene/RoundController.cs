@@ -61,8 +61,13 @@ public class RoundController : MonoBehaviour
         playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
         await enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
 
-        BattleManager.instance.TriggerFirstTurnStart();
+        await diceSpawnAnimation.PlayAsync(ct);
 
+        await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
+
+        await diceSpawnAnimation.PlayEnemyAsync(ct);
+
+        BattleManager.instance.TriggerFirstTurnStart();
         await PlayEffectAsync(onComplete => turnEffect.Play(1, onComplete), ct);
 
         await UniTask.Delay(
@@ -70,23 +75,23 @@ public class RoundController : MonoBehaviour
            cancellationToken: ct
         );
 
+        await BeginRoundLogic(currentRound);
+        roundIntroCanvas.gameObject.SetActive(false);      
+    }
+
+    public async UniTask NextTurn(int currentTurn = 1)
+    {
+        await NextTurnUI(cts.Token, currentTurn);
+    }
+
+    private async UniTask NextTurnUI(CancellationToken ct, int currentTurn = 1)
+    {
         await diceSpawnAnimation.PlayAsync(ct);
 
         await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
 
         await diceSpawnAnimation.PlayEnemyAsync(ct);
 
-        await BeginRoundLogic(currentRound);
-        roundIntroCanvas.gameObject.SetActive(false);      
-    }
-
-    public void NextTurn(int currentTurn = 1)
-    {
-        NextTurnUI(cts.Token, currentTurn).Forget();
-    }
-
-    private async UniTask NextTurnUI(CancellationToken ct, int currentTurn = 1)
-    {
         roundIntroCanvas.gameObject.SetActive(true);
         await PlayEffectAsync(onComplete => turnEffect.Play(currentTurn, onComplete), ct);
         roundIntroCanvas.gameObject.SetActive(false);

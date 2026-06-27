@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25858c48d0793e447906cf2fbbda2fe5, type: 3}
-  m_Name: 1stageEnemy 1
+  m_Name: IceSlime
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: a
-  maxHp: 1
+  enemyName: "\uC544\uC774\uC2A4 \uC2AC\uB77C\uC784"
+  maxHp: 25
   attackPower: 1
   enemyImage: {fileID: 2996405644704382645, guid: 2989f8047c92a5247b09f299c85a65d0, type: 3}
   skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}

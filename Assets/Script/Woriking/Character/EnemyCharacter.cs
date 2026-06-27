@@ -52,12 +52,16 @@ public class EnemyCharacter : MonoBehaviour
 
     public void SubscribeToBattleEvents(BattleEventBus eventBus)
     {
+        if (_animator == null) return;
+
         eventBus.OnHitEnemy += HandleHitEnemy;
         eventBus.OnPlayerAttackStart += HandleAttack;
     }
 
     public void UnsubscribeFromBattleEvents(BattleEventBus eventBus)
     {
+        if (_animator == null) return;
+
         eventBus.OnHitEnemy -= HandleHitEnemy;
         eventBus.OnPlayerAttackStart -= HandleAttack;
     }

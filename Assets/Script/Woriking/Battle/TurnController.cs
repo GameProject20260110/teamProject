@@ -147,7 +147,7 @@ public class TurnController
         // ≈œ Ω√¿€
         _bm.EventBus.TriggerTurnStart(_bm.CreateCtx());
 
-        _bm.UpdateTurnUI();
+        await _bm.UpdateTurnUI();
 
         await GameManager.instance.EnemyRoll();
 

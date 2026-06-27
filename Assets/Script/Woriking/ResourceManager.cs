@@ -29,6 +29,13 @@ public class ResourceManager : MonoBehaviour
         heart = 50;
     }
 
+    public void AddGold(int gold)
+    {
+        this.gold += gold;
+        Debug.Log($"ÇöÀç gold : {this.gold}");
+        Save();
+    }
+
     public void Save()
     {
         ResourceSaveData resource = new ResourceSaveData

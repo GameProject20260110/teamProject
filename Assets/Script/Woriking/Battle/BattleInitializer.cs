@@ -111,7 +111,7 @@ public class BattleInitalizer : MonoBehaviour
                 MapManager.instance?.ClearMapSave();
                 BattleDataManager.instance?.Clear();
             }
-
+            ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
             RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
         }
         else

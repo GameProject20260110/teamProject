@@ -90,6 +90,7 @@ public class GameManager : MonoBehaviour
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
                 var floatingEffect = dice.GetComponent<FloatingEffect>();
+                dice.GetComponent<DraggableDice>().SetDraggable(true);
                 if (floatingEffect != null) floatingEffect.enabled = true;
             }
 
@@ -144,6 +145,7 @@ public class GameManager : MonoBehaviour
         {
             if (dice == null || !dice.gameObject.activeSelf) continue;
             var floatingEffect = dice.GetComponent<FloatingEffect>();
+            dice.GetComponent<DraggableDice>().SetDraggable(false);
             if (floatingEffect != null) floatingEffect.StopFloating();
         }
 

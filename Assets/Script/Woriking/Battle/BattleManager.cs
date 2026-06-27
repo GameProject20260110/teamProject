@@ -211,9 +211,9 @@ public class BattleManager : MonoBehaviour
         battleUI.UpdateEnemyShield(enemyData.CurrentShield);
     }
 
-    public void UpdateTurnUI()
+    public async UniTask UpdateTurnUI()
     {
-        battleUI.UpdateCurrentTurn(currentTurn);
+        await battleUI.UpdateCurrentTurn(currentTurn);
     }
 
     public void ResetAllDiceVFX()

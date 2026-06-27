@@ -10,15 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 25858c48d0793e447906cf2fbbda2fe5, type: 3}
-  m_Name: 1stageEnemy
+  m_Name: GreenSlime
   m_EditorClassIdentifier: Assembly-CSharp::EnemyData
-  enemyName: a
-  maxHp: 1
+  enemyName: "\uCD08\uB85D \uC2AC\uB77C\uC784"
+  maxHp: 30
   attackPower: 1
-  enemyImage: {fileID: -7303984280810781722, guid: 564e2b12f16e18c4db0c8c43b5ccc412, type: 3}
+  enemyImage: {fileID: 1686379296705441917, guid: dfcf2c0c01a3d8b46b4b756f4a5330f5, type: 3}
   skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}
   aiStrategy: {fileID: 11400000, guid: 602de5bc7d85ec1418071ab0cbf6a4f8, type: 2}
   rewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}
   dicePool:
   - {fileID: 11400000, guid: 14de432ba691b0f49a6d94a053ee78d9, type: 2}
+  - {fileID: 11400000, guid: 14de432ba691b0f49a6d94a053ee78d9, type: 2}
+  - {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
   - {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
