@@ -70,9 +70,16 @@ public class RoundIntro : MonoBehaviour
         ResetDimmer();
 
         if (playerCharacter != null)
+        {
             playerCharacterOriginPos = playerCharacter.rectTransform.anchoredPosition;
+            playerCharacter.sprite = ResourceManager.instance.PlayerImage;
+        }
+            
         if (enemyCharacter != null)
+        {
             enemyCharacterOriginPos = enemyCharacter.rectTransform.anchoredPosition;
+            enemyCharacter.sprite = BattleDataManager.instance.GetEnemyImage();
+        }            
     }
 
     public void Play() => Play(null);
@@ -90,21 +97,21 @@ public class RoundIntro : MonoBehaviour
             dimmer.DOFade(dimmerTargetAlpha, dimmerDuration).SetEase(Ease.OutQuad)
         );
 
-        // 2. 창1 등장
+        // 2. 창1
         currentSequence.Append(
             spear1Rect.DOAnchorPos(crossPoint, spear1Duration).SetEase(spearEase)
         );
 
-        // 3. 창2 등장
+        // 3. 창2
         currentSequence.AppendInterval(spearDelay);
         currentSequence.Append(
             spear2Rect.DOAnchorPos(crossPoint, spear2Duration).SetEase(spearEase)
         );
 
-        // 4. 창 충돌 + 빛 폭발 + 화면 흔들림
+        // 4. 창 충돌 연출
         currentSequence.AppendCallback(() => OnSpearImpact());
 
-        // 5-1. VS 텍스트 등장
+        // 5-1. VS 텍스트
         currentSequence.AppendInterval(0.1f);
         currentSequence.Append(
             vsText.DOFade(1f, 0.1f)
@@ -113,11 +120,13 @@ public class RoundIntro : MonoBehaviour
             vsTextRect.DOScale(Vector3.one, vsAppearDuration)
             .SetEase(Ease.OutBack, 1.0f)
         );
+
+        // 5-2. VS 텍스트 연출
         currentSequence.Join(
             DOVirtual.DelayedCall(0.2f, () => OnTextLand())
         );
 
-        // 5-3. VS 파티클 재생
+        // 5-3. VS 파티클
         currentSequence.AppendCallback(() =>
         {
             if (energyBurst != null) energyBurst.Play();
