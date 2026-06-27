@@ -32,7 +32,7 @@ public class BoostDiceVFX : DiceVFXBase
         // 2. 대상 주사위로 이펙트 날아감
         var completion = new UniTaskCompletionSource<bool>();
         GameObject skill = ObjectPool.instance.Get(ctx.DiceData.effectData.attackPrefab);
-        skill.transform.position = transform.position;
+        skill.transform.position = highest.transform.position;
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = ctx.IsPlayer,

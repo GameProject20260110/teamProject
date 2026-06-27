@@ -40,7 +40,7 @@ public class RoundIntro : MonoBehaviour
 
     [Header("VS 텍스트")]
     [SerializeField] private float vsAppearDuration = 0.3f;
-    [SerializeField] private float vsStartScale = 0.7f;
+    [SerializeField] private float vsStartScale = 3f;
     [SerializeField] private float bounceDuration = 0.1f;
 
     [Header("캐릭터 / 배경")]

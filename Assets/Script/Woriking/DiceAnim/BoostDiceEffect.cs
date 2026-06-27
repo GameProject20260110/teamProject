@@ -5,15 +5,17 @@ public class BoostDiceEffect : DiceEffectBase
 {
     public override async UniTask OnAttack(DiceContext ctx)
     {
-        await Boost(ctx, ctx.dices.attackDices);
+        Boost(ctx, ctx.dices.attackDices);
+        await vfx.PlayAttack(ctx, 0);
     }
 
     public override async UniTask OnDefense(DiceContext ctx)
     {
-        await Boost(ctx, ctx.dices.defenseDices);
+        Boost(ctx, ctx.dices.defenseDices);
+        await vfx.PlayDefense(ctx, 0);
     }
 
-    private async UniTask Boost(DiceContext ctx, List<Dice> sameLane)
+    private void Boost(DiceContext ctx, List<Dice> sameLane)
     {
         Dice highest = null;
         foreach (var d in sameLane)
@@ -24,8 +26,6 @@ public class BoostDiceEffect : DiceEffectBase
         }
 
         if (highest != null)
-            highest.MyState.modifiedValue += ctx.diceState.modifiedValue;
-
-        await vfx.PlayAttack(ctx, 0);
+            highest.MyState.modifiedValue += ctx.diceState.modifiedValue;       
     }
 }

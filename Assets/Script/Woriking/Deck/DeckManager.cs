@@ -28,6 +28,8 @@ public class DeckManager : MonoBehaviour
     {
         DiscardHand();
 
+        DiceSpawnAnimation.instance.ClearList();
+
         for (int i = 0; i < drawCount; i++)
         {
             if (drawPile.Count == 0)
@@ -39,8 +41,14 @@ public class DeckManager : MonoBehaviour
             DiceData data = drawPile[0];
             drawPile.RemoveAt(0);
             hand.Add(data);
-
             DiceManager.instance.PlaceDice(i, data);
+
+            var dice = DiceManager.instance.panelDiceScript[i];
+            if (dice != null)
+            {
+                var particle = dice.GetComponentInChildren<ParticleSystem>();
+                DiceSpawnAnimation.instance.RegisterDice(dice.gameObject, particle);
+            }
         }
     }
 

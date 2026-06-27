@@ -796,8 +796,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292962625
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -817,10 +817,10 @@ MonoBehaviour:
   m_fontSize: 48
   m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 24
+  m_fontSizeMax: 48
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1719,8 +1719,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4292962625
-  m_fontColor: {r: 1, g: 1, b: 1, a: 1}
+    rgba: 4278190080
+  m_fontColor: {r: 0, g: 0, b: 0, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -1740,10 +1740,10 @@ MonoBehaviour:
   m_fontSize: 48
   m_fontSizeBase: 48
   m_fontWeight: 400
-  m_enableAutoSizing: 0
-  m_fontSizeMin: 18
-  m_fontSizeMax: 72
-  m_fontStyle: 0
+  m_enableAutoSizing: 1
+  m_fontSizeMin: 24
+  m_fontSizeMax: 48
+  m_fontStyle: 1
   m_HorizontalAlignment: 2
   m_VerticalAlignment: 512
   m_textAlignment: 65535
@@ -1776,7 +1776,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 12.456387, y: 19.72258, z: 10.380314, w: 12.456387}
+  m_margin: {x: 12.456387, y: 19.72258, z: 10.380314, w: 24.908573}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -11701,7 +11701,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 158, y: -492}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &679513751
 MonoBehaviour:
@@ -18583,6 +18583,7 @@ MonoBehaviour:
   - {fileID: 1924332476}
   - {fileID: 1452403851}
   fadeDuration: 0.4
+  diceSpawnAnimation: {fileID: 1785833111}
 --- !u!4 &794785513
 Transform:
   m_ObjectHideFlags: 0
@@ -30869,7 +30870,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 153, y: 355}
-  m_SizeDelta: {x: 100, y: 100}
+  m_SizeDelta: {x: 90, y: 90}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &948389695
 MonoBehaviour:
@@ -31685,7 +31686,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1202934677}
+  m_Father: {fileID: 2118513869}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
@@ -38060,7 +38061,6 @@ RectTransform:
   m_Children:
   - {fileID: 2118513869}
   - {fileID: 228663385}
-  - {fileID: 1058668169}
   m_Father: {fileID: 1722562490}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -43734,6 +43734,8 @@ MonoBehaviour:
   allDiceData:
   - {fileID: 11400000, guid: 14de432ba691b0f49a6d94a053ee78d9, type: 2}
   - {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
+  - {fileID: 11400000, guid: 2b89441dbf4865540ab20d599a496562, type: 2}
+  - {fileID: 11400000, guid: 848a9cf798e96bc4197015e9507cb0a6, type: 2}
   inventory: []
 --- !u!4 &1777643326
 Transform:
@@ -43887,6 +43889,56 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!1 &1785833110
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1785833112}
+  - component: {fileID: 1785833111}
+  m_Layer: 0
+  m_Name: DiceSpawnAnimation
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1785833111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785833110}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 111c5267c65c5194c86adcba07800d60, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DiceSpawnAnimation
+  particleSFX: {fileID: 0}
+  diceList:
+  - diceObject: {fileID: 0}
+    dustParticle: {fileID: 0}
+  delayBetweenDice: 0.15
+  fadeDuration: 0.5
+--- !u!4 &1785833112
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1785833110}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -27.14716, y: 19.06964, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1803133493
 GameObject:
   m_ObjectHideFlags: 0
@@ -44540,6 +44592,7 @@ GameObject:
   - component: {fileID: 1890742761}
   - component: {fileID: 1890742760}
   - component: {fileID: 1890742759}
+  - component: {fileID: 1890742762}
   m_Layer: 5
   m_Name: Image
   m_TagString: Untagged
@@ -44604,6 +44657,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 200, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1890742762
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1890742758}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 343b8bcac36837142b91f4b23d60c747, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerCharacter
 --- !u!1 &1916452876
 GameObject:
   m_ObjectHideFlags: 0
@@ -50957,6 +51022,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BattleInitalizer
   roundEffect: {fileID: 794785512}
   enemyImage: {fileID: 722693364}
+  playerImage: {fileID: 1890742759}
   spawnEnemy: {fileID: 0}
 --- !u!4 &2024758280
 Transform:
@@ -56394,7 +56460,7 @@ MonoBehaviour:
   screenShakeStrength: 15
   screenShakeDuration: 0.3
   vsAppearDuration: 0.3
-  vsStartScale: 0.7
+  vsStartScale: 3
   bounceDuration: 0.15
   characterBackFadeInDuration: 1
   characterFadeInDuration: 0.4
@@ -57082,6 +57148,7 @@ RectTransform:
   m_Children:
   - {fileID: 679513750}
   - {fileID: 2030884404}
+  - {fileID: 1058668169}
   m_Father: {fileID: 1202934677}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
@@ -57789,3 +57856,4 @@ SceneRoots:
   - {fileID: 433220757}
   - {fileID: 1566378978}
   - {fileID: 883267258}
+  - {fileID: 1785833112}

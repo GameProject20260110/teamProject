@@ -6,8 +6,13 @@ public class BattleInitalizer : MonoBehaviour
 
     [SerializeField] private RoundController roundEffect;
     public Image enemyImage;
+    public Image playerImage;
     public GameObject spawnEnemy;
     private EnemyCharacter enemyCharacter;
+    private PlayerCharacter playerCharacter;
+
+    public EnemyCharacter EnemyCharacter => enemyCharacter;
+    public PlayerCharacter PlayerCharacter => playerCharacter;
 
     private void Awake()
     {
@@ -44,6 +49,14 @@ public class BattleInitalizer : MonoBehaviour
                 enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
                 enemyCharacter = enemyImage.GetComponent<EnemyCharacter>();
                 enemyCharacter.SetAlpha(0f);
+            }
+
+            if (playerImage != null)
+            {
+                playerImage.gameObject.SetActive(true);
+                playerImage.sprite = ResourceManager.instance?.PlayerImage;
+                playerCharacter = playerImage.GetComponent<PlayerCharacter>();
+                playerCharacter.SetAlpha(0f);
             }
         }
 

@@ -3580,6 +3580,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: SceneControl
       objectReference: {fileID: 0}
+    - target: {fileID: 822639163992330441, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1167815339276104923, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4042848813934587794, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.18575
@@ -4034,7 +4042,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 547c180a32168f041b5f391ab174bdd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NotificationUI
-  notificationText: {fileID: 1410679291}
 --- !u!114 &592134686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11742,8 +11749,6 @@ MonoBehaviour:
   itemPopup: {fileID: 770942119}
   DescPopup: {fileID: 1931652677}
   playerGold: {fileID: 2039678437}
-  playerRound: {fileID: 982125294}
-  closePanel: {fileID: 1596996435}
   StartBtn: {fileID: 1525389223}
   SettingsBtn: {fileID: 0}
   rootCanvas: {fileID: 1241135454}

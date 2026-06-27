@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42098d9e2d029b844b26ea580ef18fdb, type: 3}
   m_Name: Effect_Boost
   m_EditorClassIdentifier: Assembly-CSharp::DiceEffectData
-  attackPrefab: {fileID: 3633046992857197885, guid: adb9554f03c9b4144985f1ae86fa2bfe, type: 3}
+  attackPrefab: {fileID: 9129831330358972086, guid: 9f2b7e314d864dc43839b6e9456bdf63, type: 3}
   shieldPrefab: {fileID: 7394023633541940906, guid: 4c9178866f547e245b76be8e2885bbab, type: 3}
   bonusDamage: 2
   bonusShield: 0
