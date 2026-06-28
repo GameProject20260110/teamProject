@@ -46,6 +46,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShopManager
   TempDices: []
   TempItems: []
-  ExtraDice: {fileID: 0}
   baseRerollCost: 1
-  ClearRound: 1
+  ShopBGMKey: Shop
+  shopCanvas: {fileID: 0}
+  shopPanel: {fileID: 0}
+  shopAnimator: {fileID: 0}
+  defaultDice: {fileID: 0}

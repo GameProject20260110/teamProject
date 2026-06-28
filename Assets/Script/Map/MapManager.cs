@@ -20,7 +20,7 @@ public class MapManager : MonoBehaviour
     private int _previousNodeId = -1;
     private List<PathLineData> _pathLines = new List<PathLineData>();
 
-    [SerializeField] private AudioClip MapBGM;
+    [SerializeField] private string MapBgmKey;
 
     private void Awake()
     {
@@ -39,7 +39,7 @@ public class MapManager : MonoBehaviour
             MapCameraController.instance.ResetZoom();
 
         MoveCameraToLayer(_currentLayer);
-        AudioManager.instance.PlayBgm(MapBGM);
+        AudioManager.instance.PlayBgm(MapBgmKey);
     }
 
     public void GenerateMap()

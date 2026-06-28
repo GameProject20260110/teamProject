@@ -8,8 +8,8 @@ public class ShieldSkill : MonoBehaviour
 
     public void Init(bool isPlayer, int damage, System.Action onHit, System.Action onEnd)
     {
-        if(isPlayer) AudioManager.instance.PlaySfx(AudioManager.Sfx.Electric);
-        else AudioManager.instance.PlaySfx(AudioManager.Sfx.Void);
+        if(isPlayer) AudioManager.instance.PlaySfx("Electric");
+        else AudioManager.instance.PlaySfx("Void");
         this.damage = damage;
         this.onShieldCallback = onHit;
         this.onEndCallback = onEnd;

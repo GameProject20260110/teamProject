@@ -114,3 +114,4 @@ MonoBehaviour:
   sfxSound: {fileID: 8300000, guid: 93bdda81e6426c9488f0bc4fd36ca0b3, type: 3}
   moveType: 0
   moveSpeed: 10
+  sfxKey: Electric

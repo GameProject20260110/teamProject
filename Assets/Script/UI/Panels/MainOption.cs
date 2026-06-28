@@ -6,6 +6,9 @@ public class MainOption : MonoBehaviour
 {
     public static MainOption instance = null;
 
+    [Header("설정UI")]
+    public GameObject settingUI;
+
     [Header("버튼")]
     public Button optionBtn;
 
@@ -242,5 +245,11 @@ public class MainOption : MonoBehaviour
         SettingsManager.instance.SfxVolume = value;
         if (sfxLabel) sfxLabel.text = Mathf.RoundToInt(value * 100) + "%";
 
+    }
+
+    public void SetSettingsButtonActive(bool active)
+    {
+        if(settingUI != null) 
+            settingUI.gameObject.SetActive(active);
     }
 }

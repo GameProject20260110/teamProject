@@ -14,6 +14,7 @@ public class Skill : MonoBehaviour
     [SerializeField] AudioClip sfxSound;
     [SerializeField] SkillMoveType moveType;
     [SerializeField] float moveSpeed = 10f;
+    [SerializeField] private string sfxKey;
 
     private System.Action onHitCallback;
     private System.Action onEndCallback;
@@ -27,7 +28,7 @@ public class Skill : MonoBehaviour
         onEndCallback = null;
         isMoving = false;
 
-        AudioManager.instance.PlaySfx(sfxSound);
+        AudioManager.instance.PlaySfx(sfxKey);
         onHitCallback = ctx.onHit;
         onEndCallback = ctx.onEnd;
         ct = ctx.ct;
