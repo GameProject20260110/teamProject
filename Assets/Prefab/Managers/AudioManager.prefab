@@ -48,22 +48,59 @@ MonoBehaviour:
   bgmGroup: {fileID: -2729079088651419598, guid: 79f15a8e7c2ed8a42b562ea07d113e21, type: 2}
   sfxGroup: {fileID: 6108214884469909699, guid: 79f15a8e7c2ed8a42b562ea07d113e21, type: 2}
   bgmDatas:
-  - bgmType: 0
+  - key: Title
     clip: {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
-  - bgmType: 1
+    volume: 1
+  - key: Home
     clip: {fileID: 8300000, guid: 152a6451e6bc8ec42acd57a0552c1d75, type: 3}
-  - bgmType: 2
+    volume: 1
+  - key: Shop
     clip: {fileID: 8300000, guid: 08f40560f4d009c4ba7467490cb1afbc, type: 3}
-  - bgmType: 3
+    volume: 1
+  - key: Battle
     clip: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
-  currentBgm: 4
+    volume: 1
+  - key: Boss
+    clip: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
+    volume: 1
   sfxDatas:
-  - sfxType: 0
+  - key: Click
     clip: {fileID: 8300000, guid: 17c559c56b296124b9606531a49e753e, type: 3}
-  - sfxType: 1
+    volume: 1
+  - key: Roll
     clip: {fileID: 8300000, guid: 5e174d43f1ed7244d864aab19fedbfa1, type: 3}
-  - sfxType: 5
+    volume: 1
+  - key: Heal
     clip: {fileID: 8300000, guid: c0a1a1cff87672f46a57a77967707932, type: 3}
-  - sfxType: 6
+    volume: 1
+  - key: ShieldAttack
     clip: {fileID: 8300000, guid: ab11fb8b61b693040b18c6bfaacf36a7, type: 3}
+    volume: 1
+  - key: ClownLaugh
+    clip: {fileID: 8300000, guid: 9d42c69b263db1049a6d75c37d0527b2, type: 3}
+    volume: 1
+  - key: Clap
+    clip: {fileID: 8300000, guid: 26f3b5d050e670849a2e2c631cd3eb84, type: 3}
+    volume: 1
+  - key: Wind
+    clip: {fileID: 8300000, guid: 8e57a88f1e95429498d28e70d0f86bc9, type: 3}
+    volume: 1
+  - key: Burn
+    clip: {fileID: 8300000, guid: 4fcc72751d01d674080715b8c03c24dc, type: 3}
+    volume: 1
+  - key: Electric
+    clip: {fileID: 8300000, guid: 93bdda81e6426c9488f0bc4fd36ca0b3, type: 3}
+    volume: 1
+  - key: Void
+    clip: {fileID: 8300000, guid: 8e57a88f1e95429498d28e70d0f86bc9, type: 3}
+    volume: 1
+  - key: Cross
+    clip: {fileID: 8300000, guid: e79b641a361950b42a74825cec7314cc, type: 3}
+    volume: 1
+  - key: Cut
+    clip: {fileID: 8300000, guid: 98937623d6979bf43b1e0907171a5947, type: 3}
+    volume: 1
+  - key: Void
+    clip: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}
+    volume: 1
   channels: 5

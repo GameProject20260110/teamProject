@@ -14,7 +14,7 @@ public class TitleController : MonoBehaviour
 
         if (AudioManager.instance != null)
         {
-            AudioManager.instance.PlayBgm(AudioManager.Bgm.title,true);
+            AudioManager.instance.PlayBgm("Title");
         }
     }
 

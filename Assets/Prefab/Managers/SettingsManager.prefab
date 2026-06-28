@@ -139,6 +139,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444720461081ca04c8ed8f75c41f6dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainOption
+  settingUI: {fileID: 470335871633695614}
   optionBtn: {fileID: 108227989320478388}
   UIWindow: {fileID: 7927287852970381347}
   BackPanel: {fileID: 4202862828163750486}
@@ -8417,6 +8418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 444720461081ca04c8ed8f75c41f6dfc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MainOption
+  settingUI: {fileID: 0}
   optionBtn: {fileID: 108227989320478388}
   UIWindow: {fileID: 7927287852970381347}
   BackPanel: {fileID: 0}

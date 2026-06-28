@@ -16169,7 +16169,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   diceManager: {fileID: 1948593661}
-  BattleBGM: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
+  BattleBgmKey: Battle
   hasUsedPlusReroll: 0
 --- !u!4 &669844171
 Transform:
@@ -17265,6 +17265,10 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.size
+      value: 12
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
       propertyPath: 'sfxClips.Array.data[3]'
       value: 
       objectReference: {fileID: 8300000, guid: 93bdda81e6426c9488f0bc4fd36ca0b3, type: 3}
@@ -17272,6 +17276,66 @@ PrefabInstance:
       propertyPath: 'sfxClips.Array.data[4]'
       value: 
       objectReference: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[7].key
+      value: Void
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[8].key
+      value: Void
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[9].key
+      value: Electric
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[10].key
+      value: Cross
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[11].key
+      value: Cut
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[7].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[8].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[9].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 93bdda81e6426c9488f0bc4fd36ca0b3, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[10].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: e79b641a361950b42a74825cec7314cc, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[11].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 98937623d6979bf43b1e0907171a5947, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[7].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[8].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[9].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[10].volume
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[11].volume
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7528108071998853804, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
       propertyPath: m_Name
       value: AudioManager

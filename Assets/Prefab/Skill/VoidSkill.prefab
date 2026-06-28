@@ -112,3 +112,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   sfxSound: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}
+  moveType: 0
+  moveSpeed: 10
+  sfxKey: Void

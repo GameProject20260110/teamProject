@@ -110,8 +110,6 @@ public class UiController : MonoBehaviour
 
     }
 
-
-
     public void ShowGlowImage()
     {
         confirmBtn.GetComponent<ButtonGlowController>().ShowImageGlow();

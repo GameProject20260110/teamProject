@@ -14,7 +14,8 @@ public class EventMapManager : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private TypeWriter typeWriter;
     [SerializeField] private string eventDescription;
-    [SerializeField] private AudioClip audioClip;
+    //[SerializeField] private AudioClip audioClip;
+    [SerializeField] private string audioClipKey;
 
     private EventSo[] assignedEvents;
 
@@ -22,7 +23,7 @@ public class EventMapManager : MonoBehaviour
     {
         AssignRandomEvents();
         SetUpButtons();
-        AudioManager.instance.PlayBgm(audioClip);
+        AudioManager.instance.PlayBgm(audioClipKey);
         PlayOpenAnimation().Forget();
     }
 

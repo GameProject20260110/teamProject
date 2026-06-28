@@ -16,7 +16,8 @@ public class PlayerShopManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
     public int BaseRerollCost => baseRerollCost;
-    [SerializeField] private AudioClip ShopBGM;
+    //[SerializeField] private AudioClip ShopBGM;
+    [SerializeField] private string ShopBGMKey;
 
     [Header("UI References")]
     [SerializeField] private GameObject shopCanvas;
@@ -38,7 +39,7 @@ public class PlayerShopManager : MonoBehaviour
     private void Start()
     {
         OpenWithAnimation();
-        AudioManager.instance.PlayBgm(ShopBGM);
+        AudioManager.instance.PlayBgm(ShopBGMKey);
     }
 
     public void Open()

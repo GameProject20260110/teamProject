@@ -36,7 +36,7 @@ public class Ring : BattleItemSo
         await UniTask.Delay(200);
 
         BattleManager.instance?.ShowHealText(healAmount);
-        AudioManager.instance?.PlaySfx(AudioManager.Sfx.Heal);
+        AudioManager.instance?.PlaySfx("Heal");
         ArtifactUIController.instance?.PlayHealParticle();
     }
 }

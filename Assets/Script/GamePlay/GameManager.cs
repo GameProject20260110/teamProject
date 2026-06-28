@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public event Action<int> OnRerollCountChanged;
 
     public DiceManager diceManager;
-    [SerializeField] private AudioClip BattleBGM;
+    [SerializeField] private string BattleBgmKey;
 
     public bool hasUsedPlusReroll = false;
 
@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NotifyAllUI();
-        AudioManager.instance.PlayBgm(BattleBGM);
+        AudioManager.instance.PlayBgm(BattleBgmKey);
     }
 
     public void InitializeRoundData()
@@ -72,7 +72,7 @@ public class GameManager : MonoBehaviour
 
         if (UiController.instance.rollBtn.interactable == false) return;
         if (AudioManager.instance != null)
-            AudioManager.instance.PlaySfx(AudioManager.Sfx.Roll);
+            AudioManager.instance.PlaySfx("Roll");
 
         RollFlow().Forget();
     }

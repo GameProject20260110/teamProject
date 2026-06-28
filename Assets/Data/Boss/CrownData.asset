@@ -20,8 +20,8 @@ MonoBehaviour:
   aiStrategy: {fileID: 11400000, guid: 602de5bc7d85ec1418071ab0cbf6a4f8, type: 2}
   rewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}
   enemyPrefab: {fileID: 1674477809305831931, guid: f7c6b367c8d0a874bb4b1192545af35b, type: 3}
-  bossScale: {x: 0.42, y: 0.42, z: 1}
-  spawnPosition: {x: 0, y: 1.3, z: 0}
+  bossScale: {x: 0.9, y: 0.9, z: 0.9}
+  spawnPosition: {x: 0, y: 3, z: 0}
   hasGimmick: 1
   gimmickList:
   - {fileID: 11400000, guid: 8b9a086a83e118c48aef6fc167171623, type: 2}
@@ -32,4 +32,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
   - {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
   - {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
-  sortingOrder: 0
+  appearDialogues:
+  - "\uC8FD\uC5B4\uB77C!"
+  battleDialogue: "\uC8FD\uC5B4\uB77C!"

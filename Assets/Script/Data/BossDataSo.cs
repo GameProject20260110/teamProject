@@ -18,12 +18,20 @@ public class BossDataSo : BaseEnemyData
     [Header("주사위 설정")]
     public DiceData[] dicePool;
 
-    [Header("정렬")]
-    public int sortingOrder = 0;
+//<<<<<<< Updated upstream
+//    [Header("정렬")]
+//    public int sortingOrder = 0;
+//=======
+    [Header("대사")]
+    public string[] appearDialogues;
+    public string battleDialogue;
+
+    public List<GimmickSo> GimmickList => gimmickList;
+//>>>>>>> Stashed changes
 
     public void RegisterAllGimmicks(BattleEventBus bus)
     {
-        BossGimmickUIContainer.instance.Setup(gimmickList);
+        //BossGimmickUIContainer.instance.Setup(gimmickList);
 
         foreach (var gimm in gimmickList)
         {

@@ -4,8 +4,17 @@ using Cysharp.Threading.Tasks;
 
 public class BossGimmickUIContainer : MonoBehaviour
 {
-    public static BossGimmickUIContainer instance;
-
+    private static BossGimmickUIContainer _instance;
+    public static BossGimmickUIContainer instance
+    {
+        get
+        {
+            if (_instance == null)
+                _instance = FindFirstObjectByType<BossGimmickUIContainer>(FindObjectsInactive.Include);
+            return _instance;
+        }
+    }
+        
     [SerializeField] private GimmickIconUI gimmickIconPrefab;
     [SerializeField] private Transform container;
 
@@ -13,8 +22,13 @@ public class BossGimmickUIContainer : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null) instance = this;
+        if (_instance == null) _instance = this;
         else Destroy(gameObject);
+    }
+
+    private void OnDestroy()
+    {
+        if (_instance == this) _instance = null;
     }
 
     public void Setup(List<GimmickSo> gimmicks)

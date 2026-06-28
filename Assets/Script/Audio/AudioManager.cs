@@ -11,29 +11,19 @@ public class AudioManager : MonoBehaviour
     public AudioMixerGroup bgmGroup;
     public AudioMixerGroup sfxGroup;
 
-    
     //public AudioClip[] bgmClip;
     //AudioSource bgmPlayer;
     //public Bgm bgm;
     //AudioHighPassFilter bgmEffect;
     //public float bgmVolume;
     //public bool bgmVolumeMute;
-    public enum Bgm { title, Home, Shop, Battle, None}
 
-    [System.Serializable]
-    public struct BgmData
-    {
-        public Bgm bgmType;
-        public AudioClip clip;
-    }
 
     [Header("# BGM")]
-    public BgmData[] bgmDatas;
-    private Dictionary<Bgm, AudioClip> bgmDictionary = new Dictionary<Bgm, AudioClip>();
-
-    public Bgm currentBgm = Bgm.None;
-    AudioSource bgmPlayer;
-
+    public AudioData[] bgmDatas;
+    private Dictionary<string, AudioData> bgmDictionary = new Dictionary<string, AudioData>();
+    private AudioSource bgmPlayer;
+    private string currentBgm = "";
     
     //public AudioClip[] sfxClips;
     //public float sfxVolume;
@@ -42,19 +32,9 @@ public class AudioManager : MonoBehaviour
     //AudioSource[] sfxPlayer;
     //int channelIndex;
 
-    public enum Sfx { Click, Roll, Score, Electric, Void, Heal, ShieldAttack}
-
-    [System.Serializable]
-    public struct SfxData
-    {
-        public Sfx sfxType;
-        public AudioClip clip;
-    }
-
     [Header("# SFX")]
-    public SfxData[] sfxDatas;
-    private Dictionary<Sfx, AudioClip> sfxDictionary = new Dictionary<Sfx, AudioClip>();
-
+    public AudioData[] sfxDatas;
+    private Dictionary<string, AudioData> sfxDictionary = new Dictionary<string, AudioData>();
     public int channels = 16;
     AudioSource[] sfxPlayer;
     int channelIndex;
@@ -81,24 +61,23 @@ public class AudioManager : MonoBehaviour
 
     void Init()
     {      
-        // 배경음 플레이어 초기화
+        // BGM 플레이어 초기화
         GameObject bgmObject = new GameObject("BgmPlayer");
         bgmObject.transform.SetParent(transform);
         bgmPlayer = bgmObject.AddComponent<AudioSource>();
         bgmPlayer.playOnAwake = false;
         bgmPlayer.loop = true;
         bgmPlayer.outputAudioMixerGroup = bgmGroup;
-        //bgmPlayer.clip = bgmClip[0];
-        //bgmEffect = Camera.main.GetComponent<AudioHighPassFilter>();
+
 
         // BGM 딕셔너리 데이터 변환
         foreach(var data in bgmDatas)
         {
-            if (!bgmDictionary.ContainsKey(data.bgmType))
-                bgmDictionary.Add(data.bgmType, data.clip);
+            if (!bgmDictionary.ContainsKey(data.key))
+                bgmDictionary.Add(data.key, data);
         }
 
-        //효과음 플레이어 초기화
+        //SFX 플레이어 초기화
         GameObject sfxObject = new GameObject("SfxPlayer");
         sfxObject.transform.SetParent(transform);
         sfxPlayer = new AudioSource[channels];
@@ -111,28 +90,34 @@ public class AudioManager : MonoBehaviour
             sfxPlayer[index].outputAudioMixerGroup = sfxGroup;
         }
 
+        foreach(var data in sfxDatas)
+        {
+            if (!sfxDictionary.ContainsKey(data.key))
+                sfxDictionary.Add(data.key, data);
+        }
+
         if (SettingsManager.instance != null)
             SettingsManager.instance.ApplySettings();
 
     }  
 
-    public void PlayBgm(Bgm bgm, bool isPlay)
+    public void PlayBgm(string key, bool isPlay = true)
     {
-        if (this.currentBgm == bgm)
+        if (currentBgm == key && isPlay)
             return;
 
         if (isPlay)
         {
-            if (!bgmDictionary.ContainsKey(bgm) || bgmDictionary[bgm] == null) return;
-            this.currentBgm = bgm;
-            bgmPlayer.clip = bgmDictionary[bgm];
+            if (!bgmDictionary.TryGetValue(key, out AudioData data)) return;
+            currentBgm = key;
+            bgmPlayer.clip = data.clip;
+            bgmPlayer.volume = data.volume;
             bgmPlayer.Play();
-            //bgmPlayer.clip = bgmClip[(int)bgm];
         }
         else
         {
             bgmPlayer.Stop();
-            this.currentBgm = Bgm.None;
+            this.currentBgm = "";
         }
     }
 
@@ -141,10 +126,10 @@ public class AudioManager : MonoBehaviour
     //    bgmEffect.enabled = isPlay;
     //}
 
-    public void PlaySfx(Sfx sfx)
+    public void PlaySfx(string key)
     {
         //if (sfxClips == null || (int)sfx >= sfxClips.Length) return;
-        if (!sfxDictionary.ContainsKey(sfx) || sfxDictionary[sfx] == null) return;
+        if (!sfxDictionary.TryGetValue(key, out AudioData data)) return;
 
         for (int index = 0; index < channels; index++)
         {
@@ -158,35 +143,42 @@ public class AudioManager : MonoBehaviour
             //int ranIndex = 0;
 
             channelIndex = loopIndex;
-            sfxPlayer[loopIndex].clip = sfxDictionary[sfx];
+            sfxPlayer[loopIndex].clip = data.clip;
+            sfxPlayer[loopIndex].volume = data.volume;
             sfxPlayer[loopIndex].Play();
             break;
         }
 
     }
-
-    public void PlayBgm(AudioClip clip)
+    
+    public void StopBgm()
     {
-        if(clip == null) return;
-
-        bgmPlayer.clip = clip;
-        bgmPlayer.Play();       
+        bgmPlayer.Stop();
+        currentBgm = "";
     }
 
-    public void PlaySfx(AudioClip clip)
-    {
-        if (clip == null) return;
-        for (int index = 0; index < channels; index++)
-        {
-            int loopIndex = (index + channelIndex) % sfxPlayer.Length;
-            if (sfxPlayer[loopIndex].isPlaying) continue;
+    //public void PlayBgm(AudioClip clip)
+    //{
+    //    if(clip == null) return;
 
-            channelIndex = loopIndex;
-            sfxPlayer[loopIndex].clip = clip;
-            sfxPlayer[loopIndex].Play();
-            break;
-        }
-    }
+    //    bgmPlayer.clip = clip;
+    //    bgmPlayer.Play();       
+    //}
+
+    //public void PlaySfx(AudioClip clip)
+    //{
+    //    if (clip == null) return;
+    //    for (int index = 0; index < channels; index++)
+    //    {
+    //        int loopIndex = (index + channelIndex) % sfxPlayer.Length;
+    //        if (sfxPlayer[loopIndex].isPlaying) continue;
+
+    //        channelIndex = loopIndex;
+    //        sfxPlayer[loopIndex].clip = clip;
+    //        sfxPlayer[loopIndex].Play();
+    //        break;
+    //    }
+    //}
 
     // 볼륨 제어 (오디오 믹서)
     public void SetMasterVolume(float volume) => SetMixerVolume("Master", volume);
@@ -203,7 +195,7 @@ public class AudioManager : MonoBehaviour
 
         if (volume <= 0.0001f)
         {
-            masterMixer.SetFloat(name, volume);
+            masterMixer.SetFloat(name, -80f);
             Debug.Log($"[Audio] {name} = {volume} (무음)");
         }
         else
