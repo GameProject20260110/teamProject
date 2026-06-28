@@ -11,7 +11,9 @@ public abstract class ShopItem<T> : MonoBehaviour,
     [Header("References")]
     [SerializeField] protected Image img;
     [SerializeField] protected RectTransform descPosition;
-    [SerializeField] private AudioClip PurchaseSound;
+    //[SerializeField] private AudioClip PurchaseSound;
+    [SerializeField] private string purchaseSoundKey;
+
 
     public T Data { get; protected set; }
 
@@ -63,7 +65,7 @@ public abstract class ShopItem<T> : MonoBehaviour,
         if (eventData.button == PointerEventData.InputButton.Right)
         {
             TryBuyWithAnimation();
-            AudioManager.instance.PlaySfx(PurchaseSound);
+            AudioManager.instance.PlaySfx(purchaseSoundKey);
         }
             
         if (eventData.button == PointerEventData.InputButton.Middle)

@@ -114,3 +114,4 @@ MonoBehaviour:
   sfxSound: {fileID: 8300000, guid: 4fcc72751d01d674080715b8c03c24dc, type: 3}
   moveType: 1
   moveSpeed: 20
+  sfxKey: Burn

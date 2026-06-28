@@ -65,7 +65,7 @@ public class ShopPanelAnimator : MonoBehaviour
         //GameManager.instance.diceManager.SetupDiceBoard();
         UiController.instance.RefreshInventory();
         
-        AudioManager.instance.PlayBgm(AudioManager.Bgm.Battle, true);
+        AudioManager.instance.PlayBgm("Battle", true);
 
         foreach (var element in uiElements)
         {

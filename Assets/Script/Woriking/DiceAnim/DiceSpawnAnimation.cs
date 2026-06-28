@@ -6,7 +6,7 @@ using System.Threading;
 public class DiceSpawnAnimation : MonoBehaviour
 {
     public static DiceSpawnAnimation instance;
-    public AudioClip particleSFX;
+    //public AudioClip particleSFX;
 
     [System.Serializable]
     public class DiceEntry
@@ -101,7 +101,7 @@ public class DiceSpawnAnimation : MonoBehaviour
         if (entry.dustParticle != null)
         {
             entry.dustParticle.Play();
-            AudioManager.instance.PlaySfx(particleSFX);
+            AudioManager.instance.PlaySfx("particleSFX");
         }
         
         await FadeInAsync(entry.diceObject);

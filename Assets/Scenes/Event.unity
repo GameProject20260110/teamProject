@@ -1083,7 +1083,7 @@ MonoBehaviour:
   image: {fileID: 661974411}
   typeWriter: {fileID: 309711517}
   eventDescription: 1234
-  audioClip: {fileID: 8300000, guid: f5e4c0f016ee61a4ea7b59d2fe3f1c75, type: 3}
+  audioClipKey: Title
 --- !u!4 &1057650900
 Transform:
   m_ObjectHideFlags: 0

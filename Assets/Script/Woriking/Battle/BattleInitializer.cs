@@ -4,7 +4,7 @@ public class BattleInitalizer : MonoBehaviour
 {
     public static BattleInitalizer instance;
 
-    [SerializeField] private RoundController roundEffect;
+    [SerializeField] private BaseStageController stageController;
     public Image enemyImage;
     public Image playerImage;
     public GameObject spawnEnemy;
@@ -28,7 +28,7 @@ public class BattleInitalizer : MonoBehaviour
     public void StartBattle()
     {       
         {
-            roundEffect.PlayIntroAnim();
+            stageController.PlayIntroAnim();
 
             var enemyPrefab = BattleDataManager.instance?.GetEnemyPrefab();
             if (enemyPrefab != null)
