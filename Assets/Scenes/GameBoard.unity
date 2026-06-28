@@ -23507,6 +23507,7 @@ GameObject:
   m_Component:
   - component: {fileID: 794785513}
   - component: {fileID: 794785512}
+  - component: {fileID: 794785514}
   m_Layer: 0
   m_Name: RoundController
   m_TagString: Untagged
@@ -23521,7 +23522,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 794785511}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ca6f482674a4f42498ef7a443767ad54, type: 3}
   m_Name: 
@@ -23558,6 +23559,34 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &794785514
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 794785511}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ca1ea804040c9d48b10a2addbcecf2e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::NormalStageController
+  stageIntroCanvas: {fileID: 863786498}
+  turnEffect: {fileID: 724314228}
+  fadeDuration: 0.4
+  interval: 0.17
+  diceSpawnAnimation: {fileID: 1785833111}
+  HideUIGroup:
+  - {fileID: 487895555}
+  - {fileID: 2118513870}
+  - {fileID: 889818004}
+  - {fileID: 1924332476}
+  - {fileID: 1452403851}
+  stageStartEffect: {fileID: 2059961223}
+  cardAppearEffect: {fileID: 1617776649}
+  roundCharacter: {fileID: 1815063455}
+  playerEffect: {fileID: 728004692}
+  enemyEffect: {fileID: 1104239768}
 --- !u!1 &812174708
 GameObject:
   m_ObjectHideFlags: 0
@@ -53790,7 +53819,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 111c5267c65c5194c86adcba07800d60, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DiceSpawnAnimation
-  particleSFX: {fileID: 0}
   diceList:
   - diceObject: {fileID: 0}
     dustParticle: {fileID: 0}
@@ -60892,7 +60920,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 992aa7e2147b9da41a77d4b985ddb674, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleInitalizer
-  roundEffect: {fileID: 794785512}
+  stageController: {fileID: 794785514}
   enemyImage: {fileID: 722693364}
   playerImage: {fileID: 1890742759}
   spawnEnemy: {fileID: 0}
