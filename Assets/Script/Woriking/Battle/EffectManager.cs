@@ -27,8 +27,8 @@ public class EffectManager : MonoBehaviour
                 target.TakeDamageRaw(damage);
                 Debug.Log(target  + "," + damage + "," + ctx.IsPlayer);
 
-                if(ctx.IsPlayer) ctx.EventBus.TriggerHitEnemy(ctx, damage);
-                else ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                if(ctx.IsPlayer) ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                else ctx.EventBus.TriggerHitEnemy(ctx, damage);
                     
             },
             onEnd = () => onComplete?.Invoke()

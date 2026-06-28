@@ -145,11 +145,12 @@ public class MainOption : MonoBehaviour
             sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100) + "%";
     }
 
-    public void OnPlayerStatusResetClick()
+    public void OnPlayerDeckResetClick()
     {
         Debug.Log("Reset Clicked");
-        if (SceneController.instance != null)
+        if (PlayerDeck.instance != null && SceneController.instance != null)
         {
+            PlayerDeck.instance.DeleteSave();
             ToggleSettingsPanel();
             SceneController.instance.ReloadCurrentScene();
         }

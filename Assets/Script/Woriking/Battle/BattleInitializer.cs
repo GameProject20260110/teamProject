@@ -4,11 +4,15 @@ public class BattleInitalizer : MonoBehaviour
 {
     public static BattleInitalizer instance;
 
-    //[SerializeField] private RoundController roundEffect;
-    [SerializeField] private BaseStageController stageController;
+    [SerializeField] private RoundController roundEffect;
     public Image enemyImage;
+    public Image playerImage;
     public GameObject spawnEnemy;
     private EnemyCharacter enemyCharacter;
+    private PlayerCharacter playerCharacter;
+
+    public EnemyCharacter EnemyCharacter => enemyCharacter;
+    public PlayerCharacter PlayerCharacter => playerCharacter;
 
     private void Awake()
     {
@@ -24,7 +28,7 @@ public class BattleInitalizer : MonoBehaviour
     public void StartBattle()
     {       
         {
-            stageController.PlayIntroAnim();
+            roundEffect.PlayIntroAnim();
 
             var enemyPrefab = BattleDataManager.instance?.GetEnemyPrefab();
             if (enemyPrefab != null)
@@ -45,6 +49,14 @@ public class BattleInitalizer : MonoBehaviour
                 enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
                 enemyCharacter = enemyImage.GetComponent<EnemyCharacter>();
                 enemyCharacter.SetAlpha(0f);
+            }
+
+            if (playerImage != null)
+            {
+                playerImage.gameObject.SetActive(true);
+                playerImage.sprite = ResourceManager.instance?.PlayerImage;
+                playerCharacter = playerImage.GetComponent<PlayerCharacter>();
+                playerCharacter.SetAlpha(0f);
             }
         }
 
@@ -99,7 +111,7 @@ public class BattleInitalizer : MonoBehaviour
                 MapManager.instance?.ClearMapSave();
                 BattleDataManager.instance?.Clear();
             }
-
+            ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
             RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
         }
         else

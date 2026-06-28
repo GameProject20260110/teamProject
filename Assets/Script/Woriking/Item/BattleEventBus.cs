@@ -17,6 +17,9 @@ public class BattleEventBus
     public event Action<DiceContext> OnPlayerAttackStart;
     public event Action<DiceContext> OnEnemyAttackStart;
 
+    public event Action<DiceContext, int> OnPlayerHeal;
+    public event Action<DiceContext, int> OnEnemyHeal;
+
     // 아이템 이벤트
     public event Action<BattleContext> OnBattleEnd;
     public event Action<BattleContext> OnPlayerAttackEnd;
@@ -39,6 +42,9 @@ public class BattleEventBus
 
     public void TriggerPlayerDefend(DiceContext ctx) => OnPlayerDefend?.Invoke(ctx);
     public void TriggerEnemyDefend(DiceContext ctx) => OnEnemyDefend?.Invoke(ctx);
+
+    public void TriggerPlayerHeal(DiceContext ctx, int Amount) => OnPlayerHeal?.Invoke(ctx, Amount);
+    public void TriggerEnemyHeal(DiceContext ctx, int Amount) => OnEnemyHeal?.Invoke(ctx, Amount);
 
     // 아이템
     public void TriggerBattleEnd(BattleContext ctx) => OnBattleEnd?.Invoke(ctx);

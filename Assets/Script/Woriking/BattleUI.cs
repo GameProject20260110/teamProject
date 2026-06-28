@@ -2,6 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
+using Cysharp.Threading.Tasks;
 
 public class BattleUI : MonoBehaviour
 {
@@ -20,7 +21,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
-    [SerializeField] private BaseStageController turnUI;
+    [SerializeField] private RoundController turnUI;
     [SerializeField] private float floatHeight = 100f;
     [SerializeField] private float floatDuration = 0.7f;
 
@@ -59,9 +60,9 @@ public class BattleUI : MonoBehaviour
             enemyHPText.text = $"{current}/{max}";
     }
 
-    public void UpdateCurrentTurn(int currentTurn)
+    public async UniTask UpdateCurrentTurn(int currentTurn)
     {
-        turnUI.NextTurn(currentTurn);
+        await turnUI.NextTurn(currentTurn);
     }
 
     // 데미지 텍스트

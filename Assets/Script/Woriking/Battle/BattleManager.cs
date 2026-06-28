@@ -92,8 +92,8 @@ public class BattleManager : MonoBehaviour
         return new DiceContext
         {
             battle = CreateCtx(isPlayer),
-            baseDamage = dice.MyState.originalValue,
-            diceData = dice.MyState.diceData,
+            baseDamage = dice.MyState.modifiedValue,
+            diceState = dice.MyState,
             dices = new BattleDices { attackDices = attack, defenseDices = defense }
         };
     }
@@ -122,6 +122,8 @@ public class BattleManager : MonoBehaviour
         _eventBus = new BattleEventBus();
 
         // UI 구독
+        _eventBus.OnPlayerHeal += HandlePlayerHeal;
+        _eventBus.OnEnemyHeal += HandleEnemyHeal;
         _eventBus.OnHitEnemy += HandleHitEnemy;
         _eventBus.OnPlayerDefend += HandlePlayerDefend;
         _eventBus.OnPlayerHit += HandleHitPlayer;
@@ -181,6 +183,8 @@ public class BattleManager : MonoBehaviour
         _saveHandler.Delete();
 
         // UI 구독 해제
+        _eventBus.OnPlayerHeal -= HandlePlayerHeal;
+        _eventBus.OnEnemyHeal -= HandleEnemyHeal;
         _eventBus.OnHitEnemy -= HandleHitEnemy;
         _eventBus.OnPlayerDefend -= HandlePlayerDefend;
         _eventBus.OnPlayerHit -= HandleHitPlayer;
@@ -207,9 +211,9 @@ public class BattleManager : MonoBehaviour
         battleUI.UpdateEnemyShield(enemyData.CurrentShield);
     }
 
-    public void UpdateTurnUI()
+    public async UniTask UpdateTurnUI()
     {
-        battleUI.UpdateCurrentTurn(currentTurn);
+        await battleUI.UpdateCurrentTurn(currentTurn);
     }
 
     public void ResetAllDiceVFX()
@@ -229,6 +233,16 @@ public class BattleManager : MonoBehaviour
     #endregion
 
     #region UI handler
+
+    private void HandlePlayerHeal(DiceContext ctx, int amount)
+    {
+        battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
+    }
+
+    private void HandleEnemyHeal(DiceContext ctx, int amount)
+    {
+        battleUI.UpdateEnemyHP(playerData.CurrentHP, playerData.MaxHp);
+    }
 
     private void HandleHitPlayer(DiceContext ctx, int damage)
     {

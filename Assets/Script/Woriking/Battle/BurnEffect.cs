@@ -1,4 +1,5 @@
 using Cysharp.Threading.Tasks;
+using UnityEngine;
 
 public class BurnEffect : StatusEffect
 {
@@ -11,6 +12,7 @@ public class BurnEffect : StatusEffect
 
     public override async UniTask OnTurnStart(IDamageable target, DiceContext ctx)
     {
+        Debug.Log($"BurnEffect - EventBus: {ctx.EventBus}, IsPlayer: {ctx.IsPlayer}");
         var completion = new UniTaskCompletionSource<bool>();
         EffectManager.instance.PlayBurnEffect(target, value, ctx, () => completion.TrySetResult(true));
         await completion.Task.AttachExternalCancellation(ctx.CancellationToken);

@@ -154,9 +154,7 @@ public class RewardPanelUI : MonoBehaviour
             case RewardType.Gold:
                 if(ResourceManager.instance != null)
                 {
-                    ResourceManager.instance.gold += reward.goldAmount;
-                    ResourceManager.instance.Save();
-                    Debug.Log($"{reward.goldAmount} °ñµå È¹µæ");
+                    ResourceManager.instance.AddGold(reward.goldAmount);
                 }
                 break;
             case RewardType.HpPotion:

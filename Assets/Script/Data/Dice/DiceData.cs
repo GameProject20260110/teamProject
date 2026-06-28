@@ -5,9 +5,6 @@ public class DiceData : ScriptableObject
 {
     public enum DiceRole { Attack, Defense, Neutral }
 
-    public int multiBonusScore = 1;
-    public int plusBonusScore = 0;
-
     [Header("주사위 기본 정보")]
     public int diceNum;
     public string abilityName;

@@ -33,7 +33,6 @@ public class BattleButton : MonoBehaviour
     {
         _currentAngle += 90f;
 
-        // 45도 지점(찌그러진 타이밍)에 텍스트 교체
         await transform.DORotate(new Vector3(0, 0, _currentAngle - 45f), 0.3f)
             .SetEase(Ease.InQuart)
             .AsyncWaitForCompletion();

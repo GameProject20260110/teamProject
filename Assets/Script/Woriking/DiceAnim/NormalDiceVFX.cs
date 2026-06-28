@@ -6,7 +6,7 @@ public class NormalDiceVFX : DiceVFXBase
     public override async UniTask PlayAttack(DiceContext ctx, int damage)
     {
         var completion = new UniTaskCompletionSource<bool>();
-        var data = ctx.diceData.effectData;
+        var data = ctx.DiceData.effectData;
         GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
 
         Vector3 startPos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
@@ -42,7 +42,7 @@ public class NormalDiceVFX : DiceVFXBase
     public override async UniTask PlayDefense(DiceContext ctx, int damage)
     {
         var completion = new UniTaskCompletionSource<bool>();
-        var data = ctx.diceData.effectData;
+        var data = ctx.DiceData.effectData;
 
         GameObject skill = ObjectPool.instance.Get(data.shieldPrefab);
 

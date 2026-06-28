@@ -21,6 +21,8 @@ public class RoundController : MonoBehaviour
     [SerializeField] private CanvasGroup[] HideUIGroup;
     [SerializeField] private float fadeDuration = 0.4f;
 
+    [SerializeField] private DiceSpawnAnimation diceSpawnAnimation;
+
     private CancellationTokenSource cts;
 
     void Awake()
@@ -46,20 +48,26 @@ public class RoundController : MonoBehaviour
         roundIntroCanvas.gameObject.SetActive(true);
         HideGameUI();
 
-        await PlayEffectAsync(onComplete => roundStartEffect.Play(currentRound, onComplete), ct);
+        await PlayEffectAsync(onComplete => roundStartEffect.Play(onComplete), ct);
         await PlayEffectAsync(cardAppearEffect.Play, ct);
-        await PlayEffectAsync(roundCharacter.Play, ct);
+        //await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
         // 여기서 기믹 추가
 
+        await FadeInPlayerCharacter(ct);
         await FadeInEnemyCharacter(ct);
         
         playerUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
         await enemyUIGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad);
 
-        BattleManager.instance.TriggerFirstTurnStart();
+        await diceSpawnAnimation.PlayAsync(ct);
 
+        await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
+
+        await diceSpawnAnimation.PlayEnemyAsync(ct);
+
+        BattleManager.instance.TriggerFirstTurnStart();
         await PlayEffectAsync(onComplete => turnEffect.Play(1, onComplete), ct);
 
         await UniTask.Delay(
@@ -71,13 +79,19 @@ public class RoundController : MonoBehaviour
         roundIntroCanvas.gameObject.SetActive(false);      
     }
 
-    public void NextTurn(int currentTurn = 1)
+    public async UniTask NextTurn(int currentTurn = 1)
     {
-        NextTurnUI(cts.Token, currentTurn).Forget();
+        await NextTurnUI(cts.Token, currentTurn);
     }
 
     private async UniTask NextTurnUI(CancellationToken ct, int currentTurn = 1)
     {
+        await diceSpawnAnimation.PlayAsync(ct);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
+
+        await diceSpawnAnimation.PlayEnemyAsync(ct);
+
         roundIntroCanvas.gameObject.SetActive(true);
         await PlayEffectAsync(onComplete => turnEffect.Play(currentTurn, onComplete), ct);
         roundIntroCanvas.gameObject.SetActive(false);
@@ -97,30 +111,16 @@ public class RoundController : MonoBehaviour
 
     private async UniTask FadeInEnemyCharacter(CancellationToken ct)
     {
-        // 보스 - SpriteRenderer
-        var enemy = BattleInitalizer.instance.spawnEnemy;
-        if (enemy != null)
-        {
-            var renderers = enemy.GetComponentsInChildren<SpriteRenderer>();
-            foreach (var sr in renderers)
-                sr.color = new Color(1, 1, 1, 0);
+        var enemyCharacter = BattleInitalizer.instance.EnemyCharacter;
+        if (enemyCharacter != null)
+            await enemyCharacter.FadeIn(0.5f).AttachExternalCancellation(ct);
+    }
 
-            var tasks = renderers
-                .Select(sr => sr.DOFade(1f, 0.5f).SetEase(Ease.OutQuad).ToUniTask());
-
-            await UniTask.WhenAll(tasks).AttachExternalCancellation(ct);
-            return;
-        }
-
-        // 일반 적 - Image
-        var enemyImage = BattleInitalizer.instance.enemyImage;
-        if (enemyImage != null && enemyImage.gameObject.activeSelf)
-        {
-            enemyImage.color = new Color(1, 1, 1, 0);
-            await enemyImage.DOFade(1f, 0.5f).SetEase(Ease.OutQuad)
-                .ToUniTask()
-                .AttachExternalCancellation(ct);
-        }
+    private async UniTask FadeInPlayerCharacter(CancellationToken ct)
+    {
+        var playerCharacter = BattleInitalizer.instance.PlayerCharacter;
+        if (playerCharacter != null)
+            await playerCharacter.FadeIn(0.5f).AttachExternalCancellation(ct);
     }
 
     void OnDestroy()

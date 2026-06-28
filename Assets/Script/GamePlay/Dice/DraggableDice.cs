@@ -17,6 +17,7 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
     private CanvasGroup _canvasGroup;
     private Dice _dice;
     private bool _isDragging = false;
+    public bool _isDraggable = false;
     private FloatingEffect _floatingEffect;
 
     private void Awake()
@@ -35,10 +36,17 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
             shadowEffect.enabled = false;
     }
 
+    public void SetDraggable(bool isDraggable)
+    {
+        _isDraggable = isDraggable;
+    }
+
     public void OnPointerDown(PointerEventData eventData) { }
 
     public void OnBeginDrag(PointerEventData eventData)
     { 
+        if(!_isDraggable) return;
+
         _isDragging = true;
         _originalParent = transform.parent;
         _floatingEffect?.StopFloating();
