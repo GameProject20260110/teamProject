@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NotifyAllUI();
-        //AudioManager.instance.PlayBgm(BattleBgmKey);
+        AudioManager.instance.PlayBgm("Battle",true);
     }
 
     public void InitializeRoundData()

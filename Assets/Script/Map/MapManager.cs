@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 public class MapManager : MonoBehaviour
 {
@@ -38,8 +39,36 @@ public class MapManager : MonoBehaviour
         if (MapCameraController.instance != null)
             MapCameraController.instance.ResetZoom();
 
+        if (SceneController.instance.isFirstEntry)
+        {   
+            SetLineVisible(false);
+            MapIntroController.instancce.PlayIntro();            
+        }
+        else
+        {
+            MapIntroController.instancce.SkipIntro();
+            SetLineVisible(true);
+            MoveCameraToLayer(_currentLayer);
+            AudioManager.instance.PlayBgm(MapBgmKey);
+        }
+
+        if (MainOption.instance != null)
+            MainOption.instance.SetSettingsButtonActive(true);
+    }
+
+    public void StartIntro()
+    {
         MoveCameraToLayer(_currentLayer);
         AudioManager.instance.PlayBgm(MapBgmKey);
+        SetLineVisible(true);
+    }
+
+    private void SetLineVisible(bool visible)
+    {
+        foreach (Transform line in lineContainer)
+        {
+            line.gameObject.SetActive(visible);
+        }
     }
 
     public void GenerateMap()

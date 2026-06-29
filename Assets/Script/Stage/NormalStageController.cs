@@ -17,7 +17,7 @@ public class NormalStageController : BaseStageController
     {
         await PlayEffectAsync(onComplete => stageStartEffect.Play(onComplete), ct);
         await PlayEffectAsync(cardAppearEffect.Play, ct);
-        await PlayEffectAsync(roundCharacter.Play, ct);
+        //await PlayEffectAsync(roundCharacter.Play, ct);
         await PlayEffectAsync(enemyEffect.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
     }
