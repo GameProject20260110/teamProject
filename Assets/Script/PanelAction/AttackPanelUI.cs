@@ -8,7 +8,7 @@ public class AttackPanelUI : MonoBehaviour
     public TextMeshProUGUI attackValue;
     public Transform[] slots;
 
-    private List<Dice> _placedDices = new List<Dice>();
+    public List<Dice> _placedDices = new List<Dice>();
     private int _cuurentAttackValue = 0;
 
     public int GetTotal() => _cuurentAttackValue;
@@ -75,6 +75,17 @@ public class AttackPanelUI : MonoBehaviour
 
     public void Clear()
     {
+        foreach (var slot in slots)
+        {
+            if (slot.childCount > 0)
+            {
+                var leftover = slot.GetChild(0);
+                var leftoverDice = leftover.GetComponent<Dice>();
+                if (leftoverDice != null && leftoverDice.OriginalSlot != null)
+                    leftover.SetParent(leftoverDice.OriginalSlot, false);
+            }
+        }
+
         _placedDices.Clear();
         _cuurentAttackValue = 0;
         attackValue.text = "0";

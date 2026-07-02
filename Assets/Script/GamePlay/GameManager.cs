@@ -161,8 +161,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogException(e);
         }
-
-        DicePanelManager.instance?.ResetAllDice(diceManager.GetAllDice());
     }
 }
     

@@ -1,31 +1,31 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
 
 public class CardAppearEffect : MonoBehaviour
 {
-    [Header("Å¸°Ù")]
+    [Header("íƒ€ê²Ÿ")]
     [SerializeField] private RectTransform cardRect;
     [SerializeField] private CanvasGroup cardGroup; 
 
-    [Header("ÁÜ ¾Æ¿ô ¼³Á¤")]
+    [Header("ì¤Œ ì•„ì›ƒ ì„¤ì •")]
     [SerializeField] private float startScale = 1.8f;
     [SerializeField] private float zoomDuration = 0.25f;
 
-    [Header("Èçµé¸² ¼³Á¤")]
+    [Header("í”ë“¤ë¦¼ ì„¤ì •")]
     [SerializeField] private float shakeDuration = 0.5f;
     [SerializeField] private float shakeStrength = 12f;
     [SerializeField] private int shakeVibrato = 8;
 
-    [Header("ÆÄÆ¼Å¬")]
+    [Header("íŒŒí‹°í´")]
     [SerializeField] private ParticleSystem sparkleParticle;
 
-    [Header("ºû ÇÃ·¡½Ã")]
+    [Header("ë¹› í”Œë˜ì‹œ")]
     [SerializeField] private Image flashImage;
     [SerializeField] private float flashDuration = 0.3f;
 
-    [Header("ÅØ½ºÆ®")]
+    [Header("í…ìŠ¤íŠ¸")]
     [SerializeField] private CanvasGroup labelGroup;
 
     private Vector3 originalScale;

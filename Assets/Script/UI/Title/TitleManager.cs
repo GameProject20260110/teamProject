@@ -1,33 +1,46 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using DG.Tweening;
 
 public class TitleManager : MonoBehaviour
 {
-    [Header("¹è°æ")]
+    public static TitleManager instance;
+
+    [Header("ë°°ê²½")]
     public Image titleBackground;
-    public Image newBackground;
     public Image darkOverlay;
 
-    [Header("¿øÇü ÀüÈ¯")]
-    public Material circleHoleMaterial;
+    [Header("ì›í˜• ì „í™˜")]
+    public Material circleHoleMaterial;    // TitleBackìš© (ê¸°ì¡´ ìœ ì§€)
+    public Material circleRevealMaterial;  // âœ… BackgroundPanelìš© (ìƒˆë¡œ ì¶”ê°€)
+    public RawImage backgroundPanel;       // âœ… dark ë°°ê²½ RawImage
 
-    [Header("È¿°ú")]
+    [Header("íš¨ê³¼")]
     public Image flashOverlay;
 
-    [Header("Å¸ÀÌÆ² UI")]
+    [Header("íƒ€ì´í‹€ UI")]
     public CanvasGroup titleGroup;
 
-    [Header("¹öÆ°")]
+    [Header("ë²„íŠ¼")]
     public Button startButton;
     public Button settingsButton;
     public Button quitButton;
+
+    private void Awake()
+    {
+        if (instance == null) instance = this;
+        else Destroy(gameObject);
+    }
 
     void Start()
     {
         darkOverlay.color = new Color(0, 0, 0, 0);
         titleGroup.alpha = 1f;
         circleHoleMaterial.SetFloat("_Radius", 0f);
+
+        // âœ… BackgroundPanel ì´ˆê¸°í™” - ì²˜ìŒì—” ì•ˆ ë³´ì´ê²Œ
+        circleRevealMaterial.SetFloat("_Radius", 0f);
+        backgroundPanel.material = circleRevealMaterial;
 
         startButton.onClick.AddListener(OnStartClicked);
         settingsButton.onClick.AddListener(OnSettingsClicked);
@@ -37,26 +50,22 @@ public class TitleManager : MonoBehaviour
             MainOption.instance.SetSettingsButtonActive(false);
         if (AudioManager.instance != null)
             AudioManager.instance.PlayBgm("Title");
-
     }
 
-    // °ÔÀÓ ½ÃÀÛ
     void OnStartClicked()
     {
         startButton.interactable = false;
         settingsButton.interactable = false;
         quitButton.interactable = false;
-
+        AudioManager.instance.StopBgm();
         PlayTransition();
     }
 
-    // ¼³Á¤
     void OnSettingsClicked()
     {
         MainOption.instance.ToggleSettingsPanel();
     }
 
-    // Á¾·á
     void OnQuitClicked()
     {
 #if UNITY_EDITOR
@@ -66,15 +75,14 @@ public class TitleManager : MonoBehaviour
 #endif
     }
 
-
     void PlayTransition()
     {
         Sequence seq = DOTween.Sequence();
 
-        // 1´Ü°è: ¹öÆ° ÆäÀÌµå ¾Æ¿ô
+        // 1ë‹¨ê³„: ë²„íŠ¼ íŽ˜ì´ë“œ ì•„ì›ƒ
         seq.Append(titleGroup.DOFade(0f, 0.2f));
 
-        // 2´Ü°è: ¼öÃà ¡æ Æø¹ß Á÷Àü ¿¬Ãâ
+        // 2ë‹¨ê³„: ìˆ˜ì¶• â†’ í­ë°œ ì§ì „ ì—°ì¶œ
         seq.AppendCallback(() =>
         {
             flashOverlay.gameObject.SetActive(true);
@@ -82,7 +90,6 @@ public class TitleManager : MonoBehaviour
             flashOverlay.rectTransform.sizeDelta = Vector2.zero;
         });
 
-        // ÀÛÀº ¿øÀÌ »ý°Ü³²
         seq.Append(DOTween.To(
             () => flashOverlay.rectTransform.sizeDelta,
             x => flashOverlay.rectTransform.sizeDelta = x,
@@ -90,10 +97,8 @@ public class TitleManager : MonoBehaviour
         ).SetEase(Ease.OutCubic));
         seq.Join(flashOverlay.DOFade(0.9f, 0.3f));
 
-        // Àá±ñ À¯Áö
         seq.AppendInterval(0.2f);
 
-        // ¼ø°£ »ç¶óÁü (»¡·Áµé¾î°¡´Â ´À³¦)
         seq.Append(DOTween.To(
             () => flashOverlay.rectTransform.sizeDelta,
             x => flashOverlay.rectTransform.sizeDelta = x,
@@ -101,21 +106,20 @@ public class TitleManager : MonoBehaviour
         ).SetEase(Ease.InCubic));
         seq.Join(flashOverlay.DOFade(0f, 0.25f));
 
-        // Âû³ªÀÇ Á¤Àû
         seq.AppendInterval(0.1f);
 
-        // 3´Ü°è: ±¸¸Û Æø¹ß
+        // 3ë‹¨ê³„: âœ… BackgroundPanelì´ ì›ìœ¼ë¡œ ì»¤ì§€ë©´ì„œ ë“±ìž¥ (altar, field ì „ë¶€ ë®ìŒ)
         seq.Append(DOTween.To(
-            () => circleHoleMaterial.GetFloat("_Radius"),
-            x => circleHoleMaterial.SetFloat("_Radius", x),
+            () => circleRevealMaterial.GetFloat("_Radius"),
+            x => circleRevealMaterial.SetFloat("_Radius", x),
             2f, 1f
         ).SetEase(Ease.InExpo));
 
-        // 4´Ü°è: Á¡Á¡ ¾îµÎ¿öÁü
+        // 4ë‹¨ê³„: ì ì  ì–´ë‘ì›Œì§
         seq.Append(darkOverlay.DOFade(0.863f, 1.5f)
             .SetEase(Ease.InQuad));
 
-        // 5´Ü°è: ¾À ÀüÈ¯
+        // 5ë‹¨ê³„: ì”¬ ì „í™˜
         seq.AppendCallback(() =>
         {
             SceneController.instance.LoadMapFromTitle();
@@ -126,5 +130,7 @@ public class TitleManager : MonoBehaviour
     {
         if (circleHoleMaterial != null)
             circleHoleMaterial.SetFloat("_Radius", 0f);
+        if (circleRevealMaterial != null)
+            circleRevealMaterial.SetFloat("_Radius", 0f);
     }
 }

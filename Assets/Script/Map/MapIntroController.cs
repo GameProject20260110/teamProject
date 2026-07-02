@@ -10,6 +10,7 @@ public class MapIntroController : MonoBehaviour
 
     [Header("오버레이")]
     public Image darkOverlay;
+    public CanvasGroup NodeInfoImage;
 
     [Header("텍스트")]
     public TypeWriter typeWriter;
@@ -56,6 +57,7 @@ public class MapIntroController : MonoBehaviour
     {
         // 초기 상태
         darkOverlay.color = new Color(0, 0, 0, 1f);
+        NodeInfoImage.alpha = 0f;
         textGroup.alpha = 0f;
         mapMask.localPosition = new Vector3(mapMask.position.x, 5.4f, 0f);
         mapMask.localScale = new Vector3(mapOriginalScaleX, 0f, 1f);
@@ -65,22 +67,15 @@ public class MapIntroController : MonoBehaviour
         // 1단계: 씬 로드 직후 잠깐 대기
         await UniTask.Delay(500, cancellationToken: ct);
 
-        // 2단계: 검은 화면에서 텍스트 타이핑
-        textGroup.alpha = 1f;
-        await typeWriter.Play("첫 번째 텍스트...", ct);
-        await UniTask.Delay(800, cancellationToken: ct);
+        string[] texts = {
+        "태초의 완벽한 구조가 무너졌다.",
+        "카오스가 세계를 집어삼키고 있다.",
+        "주사위를 모아라.",
+        "구조를 완성하라."
+        };
+        foreach (var text in texts)
+            await TextAppear(text, ct);
 
-        await textGroup.DOFade(0f, 0.5f).AsyncWaitForCompletion();
-        await UniTask.Delay(400, cancellationToken: ct);
-
-        textGroup.alpha = 1f;
-        await typeWriter.Play("두 번째 텍스트...", ct);
-        await UniTask.Delay(800, cancellationToken: ct);
-
-        await textGroup.DOFade(0f, 0.5f).AsyncWaitForCompletion();
-        await UniTask.Delay(500, cancellationToken: ct);
-
-        // 3단계: 살짝 밝아지면서 두루마리 펼쳐짐
         await darkOverlay.DOFade(220f / 255f, 0.8f).SetEase(Ease.OutQuad);
         await mapRollRenderer.DOColor(new Color(1f, 1f, 1f, 1f), 1f).SetEase(Ease.InOutQuad);
 
@@ -100,13 +95,25 @@ public class MapIntroController : MonoBehaviour
         // 5단계: 제 1막 띠 등장
         await UniTask.Delay(300, cancellationToken: ct);
 
+        await NodeInfoImage.DOFade(1f, 0.3f).SetEase(Ease.OutQuad);
+
         bool bannerDone = false;
         roundIntroController.Play("<size=40><color=#FFD700>제 1막</color></size>\n<size=60>시련의 시작</size>", () => bannerDone = true);
+
         
 
         MapManager.instance.StartIntro();
         await UniTask.WaitUntil(() => bannerDone, cancellationToken: ct);
         // 끝
+    }
+
+    private async UniTask TextAppear(string text, CancellationToken ct)
+    {
+        textGroup.alpha = 1f;
+        await typeWriter.Play(text, ct);
+        await UniTask.Delay(800, cancellationToken: ct);
+        await textGroup.DOFade(0f, 0.5f).AsyncWaitForCompletion();
+        await UniTask.Delay(400, cancellationToken: ct);
     }
 
     void OnDestroy()

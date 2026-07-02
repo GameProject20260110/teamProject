@@ -79,6 +79,9 @@ public class SceneController : MonoBehaviour
         if (IsTransitioning) return;
         IsTransitioning = true;
 
+        DOTween.KillAll(false);
+        await UniTask.Yield();
+
         try
         {
             await LoadNormalSceneAsync(SceneMap, false);
@@ -97,6 +100,9 @@ public class SceneController : MonoBehaviour
     {
         if (IsTransitioning) return;
         IsTransitioning = true;
+
+        DOTween.KillAll(false);
+        await UniTask.Yield();
 
         try
         {

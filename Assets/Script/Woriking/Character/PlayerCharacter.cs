@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.Linq;
@@ -7,8 +6,7 @@ using System.Linq;
 public class PlayerCharacter : MonoBehaviour
 {
     private SpriteRenderer[] _renderers;
-
-    private Image _image;
+    public SpriteRenderer[] Renderers => _renderers;
 
     private Animator _animator;
 
@@ -16,9 +14,7 @@ public class PlayerCharacter : MonoBehaviour
     private void Awake()
     {
         _renderers = GetComponentsInChildren<SpriteRenderer>();
-        _image = GetComponentInChildren<Image>();
         _animator = GetComponent<Animator>();
-
     }
 
     public void SetAlpha(float alpha)
@@ -27,10 +23,6 @@ public class PlayerCharacter : MonoBehaviour
         {
             foreach (var sr in _renderers)
                 sr.color = new Color(1, 1, 1, alpha);
-        }
-        else if (_image != null)
-        {
-            _image.color = new Color(1, 1, 1, alpha);
         }
     }
 
@@ -42,33 +34,28 @@ public class PlayerCharacter : MonoBehaviour
                 .Select(sr => sr.DOFade(1f, duration).SetEase(Ease.OutQuad).ToUniTask());
             return UniTask.WhenAll(tasks);
         }
-        else if (_image != null)
-        {
-            return _image.DOFade(1f, duration).SetEase(Ease.OutQuad).ToUniTask();
-        }
-
         return UniTask.CompletedTask;
     }
 
-    //public void SubscribeToBattleEvents(BattleEventBus eventBus)
-    //{
-    //    eventBus.OnPlayerHit += HandleHitPlayer;
-    //    eventBus.OnEnemyAttackStart += HandleEnemyAttack;
-    //}
+    public void SubscribeToBattleEvents(BattleEventBus eventBus)
+    {
+        eventBus.OnPlayerHit += HandleHitPlayer;
+        eventBus.OnEnemyAttackStart += HandleEnemyAttack;
+    }
 
-    //public void UnsubscribeFromBattleEvents(BattleEventBus eventBus)
-    //{
-    //    eventBus.OnPlayerHit -= HandleHitPlayer;
-    //    eventBus.OnEnemyAttackStart -= HandleEnemyAttack;
-    //}
+    public void UnsubscribeFromBattleEvents(BattleEventBus eventBus)
+    {
+        eventBus.OnPlayerHit -= HandleHitPlayer;
+        eventBus.OnEnemyAttackStart -= HandleEnemyAttack;
+    }
 
-    //private void HandleEnemyAttack(DiceContext ctx)
-    //{
-    //    _animator.SetTrigger("Attack");
-    //}
+    private void HandleEnemyAttack(DiceContext ctx)
+    {
+        _animator.SetTrigger("Attack");
+    }
 
-    //private void HandleHitPlayer(DiceContext ctx, int damage)
-    //{
-    //    _animator.SetTrigger("Hit");
-    //}
+    private void HandleHitPlayer(DiceContext ctx, int damage)
+    {
+        _animator.SetTrigger("Hit");
+    }
 }

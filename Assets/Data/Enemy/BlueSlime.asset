@@ -15,7 +15,8 @@ MonoBehaviour:
   enemyName: "\uBE14\uB8E8 \uC2AC\uB77C\uC784"
   maxHp: 20
   attackPower: 1
-  enemyImage: {fileID: -7303984280810781722, guid: 564e2b12f16e18c4db0c8c43b5ccc412, type: 3}
+  IntroPrefab: {fileID: 844886456121063925, guid: 1e7d1c2468685f44bb8c3c0c8b4c5f57, type: 3}
+  enemyPrefab: {fileID: 5443414567145209507, guid: a0ea1b6f7ca5ba04bae2eb499d6e5566, type: 3}
   skillPrefab: {fileID: 9003740594294720738, guid: 832d0254706b8e14a8126bdf74c16c52, type: 3}
   aiStrategy: {fileID: 11400000, guid: 602de5bc7d85ec1418071ab0cbf6a4f8, type: 2}
   rewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}

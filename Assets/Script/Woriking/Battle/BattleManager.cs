@@ -102,6 +102,16 @@ public class BattleManager : MonoBehaviour
 
     #region Init
 
+    public void SetPlayerTransform(Transform playerTransform)
+    {
+        Playertrans = playerTransform;
+    }
+    
+    public void SetEnemyTransform(Transform enemyTransform)
+    {
+        Enemytrans = enemyTransform;
+    }
+
     public void InitializeBattle()
     {
         if (BattleInitalizer.instance == null) return;
