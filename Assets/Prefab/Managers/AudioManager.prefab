@@ -61,7 +61,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
     volume: 1
   - key: Boss
-    clip: {fileID: 8300000, guid: da03ccd69b6eea54eabb6209dad2c1b6, type: 3}
+    clip: {fileID: 8300000, guid: 97f716fabeb6dae4890723fe01064e24, type: 3}
     volume: 1
   - key: Map
     clip: {fileID: 8300000, guid: e75df5cd9c1f944ce99e585d983fa119, type: 3}
