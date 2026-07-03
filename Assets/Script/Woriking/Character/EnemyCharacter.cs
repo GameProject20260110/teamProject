@@ -7,6 +7,7 @@ using System.Linq;
 public class EnemyCharacter : MonoBehaviour
 {
     private SpriteRenderer[] _renderers;
+    public SpriteRenderer[] Renderers => _renderers;
 
     private Image _image;
 

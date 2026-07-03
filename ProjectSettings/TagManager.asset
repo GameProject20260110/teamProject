@@ -21,7 +21,7 @@ TagManager:
   - 
   - Water
   - UI
-  - 
+  - BackGround
   - 
   - 
   - 
@@ -56,6 +56,9 @@ TagManager:
     locked: 0
   - name: Cutscene
     uniqueID: 1120771793
+    locked: 0
+  - name: Character
+    uniqueID: 2037632001
     locked: 0
   m_RenderingLayers:
   - Default

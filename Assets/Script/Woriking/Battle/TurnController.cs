@@ -132,14 +132,17 @@ public class TurnController
         _bm.EnemyData.ResetShield();
         _bm.UpdateShieldUI();
 
-        // 주사위 세팅
-        DeckManager.instance.DrawDice();
-        EnemyDeckHandler.instance.SetupEnemyDice();
-
         // VFX 리셋
         _bm.ResetAllDiceVFX();
         _bm.ClearEnemyDices();
 
+        DicePanelManager.instance?.ResetAllDice(DiceManager.instance.GetAllDice());
+
+        // 주사위 세팅
+        DeckManager.instance.DrawDice();
+        EnemyDeckHandler.instance.SetupEnemyDice();
+
+       
         // 턴 종료
         _bm.EventBus.TriggerTurnEnd(playerCtx);
         _bm.currentTurn++;

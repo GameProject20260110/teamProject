@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using DG.Tweening;
 
 public class MainOption : MonoBehaviour
 {
@@ -116,16 +117,27 @@ public class MainOption : MonoBehaviour
     {
         if (UIWindow == null) return;
         bool open = !UIWindow.activeSelf;
-        if (BackPanel != null) BackPanel.SetActive(open);
-        UIWindow.SetActive(open);
+        
         
         if (open)
         {
             PullFromSettings();
             RefreshLabel();
+            
+            UIWindow.SetActive(open);
+            CanvasGroup cg = UIWindow.GetComponent<CanvasGroup>();
+            cg.alpha = 0f;
+            cg.DOFade(1f, 0.25f).SetEase(Ease.OutQuad);
         }
-        else 
+        else
+        {
             SettingsManager.instance.SaveSettings();
+
+            CanvasGroup cg = UIWindow.GetComponent<CanvasGroup>();
+            cg.DOFade(0f, 0.2f)
+                .SetEase(Ease.InQuad)
+                .OnComplete(() => UIWindow.SetActive(false));
+        }          
     }
 
     public void ShowTab(int index)

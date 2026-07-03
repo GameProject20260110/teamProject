@@ -18,6 +18,8 @@ public class SceneController : MonoBehaviour
     public const string ShopScene = "Shop";
     public const string BossScene = "Boss";
 
+    public bool isFirstEntry = true;
+
     [Header("·Îµù ÆÐ³Î(Å¸ÀÌÆ² -> ¸Ê)")]
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Slider progressBar;
@@ -62,7 +64,9 @@ public class SceneController : MonoBehaviour
 
     // ·ÎµùÃ¢ (Å¸ÀÌÆ² -> ¸Ê)
     public void LoadTitleScene() => LoadAsync(SceneTitle, true).Forget();
-    public void LoadMapFromTitle() => LoadAsync(SceneMap, true).Forget();
+    //public void LoadMapFromTitle() => LoadAsync(SceneMap, true).Forget();
+
+    public void LoadMapFromTitle() => LoadMapFromTitleAsync().Forget();
 
     // ÄÆ ÀÎ/¾Æ¿ô (¸Ê -> ½ºÅ×ÀÌÁö)
     public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget(); 
@@ -70,10 +74,35 @@ public class SceneController : MonoBehaviour
     public void LoadShopScene() => LoadAsync(ShopScene, false).Forget();
     public void LoadBossScene() => LoadAsync(BossScene, false).Forget();
 
+    private async UniTask LoadMapFromTitleAsync()
+    {
+        if (IsTransitioning) return;
+        IsTransitioning = true;
+
+        DOTween.KillAll(false);
+        await UniTask.Yield();
+
+        try
+        {
+            await LoadNormalSceneAsync(SceneMap, false);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"¾À ·Îµå ½ÇÆÐ ({SceneMap}): {e.Message}");
+        }
+        finally
+        {
+            IsTransitioning = false;
+        }
+    }
+
     private async UniTask LoadAsync(string sceneName, bool showLoadingUI)
     {
         if (IsTransitioning) return;
         IsTransitioning = true;
+
+        DOTween.KillAll(false);
+        await UniTask.Yield();
 
         try
         {
