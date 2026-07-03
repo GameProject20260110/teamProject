@@ -71,8 +71,6 @@ public class GameManager : MonoBehaviour
     {
 
         if (UiController.instance.rollBtn.interactable == false) return;
-        if (AudioManager.instance != null)
-            AudioManager.instance.PlaySfx("Roll");
 
         RollFlow().Forget();
     }

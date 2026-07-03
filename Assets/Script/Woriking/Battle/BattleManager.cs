@@ -6,7 +6,6 @@ using System.Collections.Generic;
 public class BattleManager : MonoBehaviour
 {
     public static BattleManager instance;
-
     [Header("전투 데이터")]
     [SerializeField] private PlayerBattleData playerData;
     [SerializeField] private EnemyBattleData enemyData;
@@ -177,7 +176,7 @@ public class BattleManager : MonoBehaviour
         }
 
         OnBattleEnd();
-        BattleInitalizer.instance.CompleteBattle(isSuccess);
+        BattleInitalizer.instance.CompleteBattleAsync(isSuccess);
     }
 
     private void OnBattleEnd()

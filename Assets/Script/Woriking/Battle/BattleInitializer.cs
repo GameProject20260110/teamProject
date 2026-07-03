@@ -1,8 +1,10 @@
+using System.Threading.Tasks;
 using UnityEngine;
 public class BattleInitalizer : MonoBehaviour
 {
     public static BattleInitalizer instance;
     [SerializeField] private BaseStageController stageController;
+    [SerializeField] private CardRevealAnimator ClearAnim;
 
     public GameObject spawnPlayer;
     public GameObject spawnEnemy;
@@ -76,7 +78,7 @@ public class BattleInitalizer : MonoBehaviour
         }
     }
 
-    public void CompleteBattle(bool isSuccess)
+    public async Task CompleteBattleAsync(bool isSuccess)
     {
         if (UiController.instance != null)
             UiController.instance.SetRollBtnInteractable(false);
@@ -97,7 +99,8 @@ public class BattleInitalizer : MonoBehaviour
                 BattleDataManager.instance?.Clear();
             }
             ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
-            RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
+            ClearAnim.gameObject.SetActive(true);
+            await ClearAnim.Reveal();
         }
         else
         {

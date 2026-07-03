@@ -340,7 +340,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200034858}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TitleController, Assembly-CSharp
         m_MethodName: OnClickConfirmExit
         m_Mode: 1
@@ -747,7 +747,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200034859}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TitleUiManager, Assembly-CSharp
         m_MethodName: OpenExitPanel
         m_Mode: 1
@@ -1401,6 +1401,34 @@ PrefabInstance:
     - target: {fileID: 505672611328661063, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.size
+      value: 13
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[0].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7320bfc4e1834e04cb0e81c4c6d50e44, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[12].key
+      value: MapNode
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[13].key
+      value: Void
+      objectReference: {fileID: 0}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[12].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: 414bab8a146eccf4c85d56f26c995a35, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[13].clip
+      value: 
+      objectReference: {fileID: 8300000, guid: d332a94fb6f314046ab62c7a67541863, type: 3}
+    - target: {fileID: 3713288751761694685, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+      propertyPath: sfxDatas.Array.data[13].volume
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7528108071998853804, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
       propertyPath: m_Name
@@ -3041,8 +3069,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1200034857}
-  - component: {fileID: 1200034859}
-  - component: {fileID: 1200034858}
   - component: {fileID: 1200034860}
   m_Layer: 0
   m_Name: TitleManager
@@ -3068,33 +3094,6 @@ Transform:
   - {fileID: 257374401}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1200034858
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200034855}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8413b6dbee1c0b741ae85895f9ebd36c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TitleController
-  uiManager: {fileID: 1200034859}
-  StartBtn: {fileID: 363883548}
---- !u!114 &1200034859
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1200034855}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 21993ee706141d74292a0cb0d0d82fdb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TitleUiManager
-  exitPanel: {fileID: 307135840}
 --- !u!114 &1200034860
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4772,7 +4771,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1200034858}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: TitleController, Assembly-CSharp
         m_MethodName: OnClickCancelExit
         m_Mode: 1

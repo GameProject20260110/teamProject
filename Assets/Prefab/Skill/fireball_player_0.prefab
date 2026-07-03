@@ -113,5 +113,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Skill
   spriteBaseAngle: -135
   moveType: 1
-  moveSpeed: 10
+  moveSpeed: 25
   sfxKey: Fire

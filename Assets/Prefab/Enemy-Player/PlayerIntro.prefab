@@ -1226,7 +1226,7 @@ GameObject:
   - component: {fileID: 9160376694530731047}
   - component: {fileID: 7625209846222990044}
   m_Layer: 0
-  m_Name: "\uD50C\uB808\uC774\uC5B42"
+  m_Name: PlayerIntro
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

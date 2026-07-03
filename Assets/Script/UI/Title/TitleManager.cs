@@ -11,9 +11,9 @@ public class TitleManager : MonoBehaviour
     public Image darkOverlay;
 
     [Header("원형 전환")]
-    public Material circleHoleMaterial;    // TitleBack용 (기존 유지)
-    public Material circleRevealMaterial;  // ✅ BackgroundPanel용 (새로 추가)
-    public RawImage backgroundPanel;       // ✅ dark 배경 RawImage
+    public Material circleHoleMaterial;
+    public Material circleRevealMaterial;
+    public RawImage backgroundPanel;
 
     [Header("효과")]
     public Image flashOverlay;
@@ -38,7 +38,6 @@ public class TitleManager : MonoBehaviour
         titleGroup.alpha = 1f;
         circleHoleMaterial.SetFloat("_Radius", 0f);
 
-        // ✅ BackgroundPanel 초기화 - 처음엔 안 보이게
         circleRevealMaterial.SetFloat("_Radius", 0f);
         backgroundPanel.material = circleRevealMaterial;
 
@@ -57,12 +56,14 @@ public class TitleManager : MonoBehaviour
         startButton.interactable = false;
         settingsButton.interactable = false;
         quitButton.interactable = false;
+        AudioManager.instance.PlaySfx("Click");
         AudioManager.instance.StopBgm();
         PlayTransition();
     }
 
     void OnSettingsClicked()
     {
+        AudioManager.instance.PlaySfx("Click");
         MainOption.instance.ToggleSettingsPanel();
     }
 
@@ -79,10 +80,8 @@ public class TitleManager : MonoBehaviour
     {
         Sequence seq = DOTween.Sequence();
 
-        // 1단계: 버튼 페이드 아웃
         seq.Append(titleGroup.DOFade(0f, 0.2f));
 
-        // 2단계: 수축 → 폭발 직전 연출
         seq.AppendCallback(() =>
         {
             flashOverlay.gameObject.SetActive(true);
@@ -108,18 +107,15 @@ public class TitleManager : MonoBehaviour
 
         seq.AppendInterval(0.1f);
 
-        // 3단계: ✅ BackgroundPanel이 원으로 커지면서 등장 (altar, field 전부 덮음)
         seq.Append(DOTween.To(
             () => circleRevealMaterial.GetFloat("_Radius"),
             x => circleRevealMaterial.SetFloat("_Radius", x),
             2f, 1f
         ).SetEase(Ease.InExpo));
 
-        // 4단계: 점점 어두워짐
         seq.Append(darkOverlay.DOFade(0.863f, 1.5f)
             .SetEase(Ease.InQuad));
 
-        // 5단계: 씬 전환
         seq.AppendCallback(() =>
         {
             SceneController.instance.LoadMapFromTitle();

@@ -49,6 +49,7 @@ public class MapNode : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     {
         if (!isSelectable || isVisited) return;
         if (MapCameraController.instance.IsDragging) return;
+        AudioManager.instance.PlaySfx("MapNode");
         MapManager.instance?.OnNodeSelected(this);
 
     }

@@ -20,7 +20,7 @@ public class DiceRoller : MonoBehaviour
         UiController.instance.SetRollBtnInteractable(false);
 
         float rollDuration = 1.5f;
-
+        AudioManager.instance.PlaySfx("Roll");
         DG.Tweening.Sequence rollSeq = BuildRollSequence(allDice, rollArea, rollDuration);
         await rollSeq.AsyncWaitForCompletion();
 

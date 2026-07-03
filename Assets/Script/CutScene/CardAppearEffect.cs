@@ -66,6 +66,9 @@ public class CardAppearEffect : MonoBehaviour
         currentSequence.Join(
             cardRect.DOScale(originalScale, zoomDuration).SetEase(Ease.OutBack)
         );
+        currentSequence.Join(
+            DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("Character"))
+        );
 
         if (flashImage != null)
         {

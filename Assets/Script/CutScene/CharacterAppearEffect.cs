@@ -70,6 +70,10 @@ public class CharacterAppearEffect : MonoBehaviour
             _targetTransform.DOScale(Vector3.one, zoomDuration).SetEase(Ease.OutBack)
         );
 
+        currentSequence.Join(
+            DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("Character"))
+        );
+
         // 파티클 재생
         currentSequence.AppendCallback(() =>
         {

@@ -108,11 +108,17 @@ public class RoundIntro : MonoBehaviour
         currentSequence.Append(
             spear1Rect.DOAnchorPos(crossPoint, spear1Duration).SetEase(spearEase)
         );
+        currentSequence.Join(
+                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("SlideIn"))
+        );
 
         // 3. 창2
         currentSequence.AppendInterval(spearDelay);
         currentSequence.Append(
             spear2Rect.DOAnchorPos(crossPoint, spear2Duration).SetEase(spearEase)
+        );
+        currentSequence.Join(
+                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("SlideIn"))
         );
 
         // 4. 창 충돌 연출
@@ -173,7 +179,11 @@ public class RoundIntro : MonoBehaviour
             currentSequence.Join(
                 FadeSpriteGroup(_spawnedEnemy, 1f, characterFadeInDuration * 0.5f)
             );
+            currentSequence.Join(
+                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("IntroCharacter"))
+            );
         }
+
 
         // 7. 홀드
         currentSequence.AppendInterval(holdDuration);
@@ -235,6 +245,8 @@ public class RoundIntro : MonoBehaviour
 
     private void OnTextLand()
     {
+
+        AudioManager.instance.PlaySfx("VS");
         PlayImpactFlash();
 
         RectTransform shakeTarget = visualsRoot.GetComponent<RectTransform>();
