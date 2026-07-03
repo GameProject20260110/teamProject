@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         NotifyAllUI();
-        //AudioManager.instance.PlayBgm(BattleBgmKey);
+        AudioManager.instance.PlayBgm("Battle",true);
     }
 
     public void InitializeRoundData()
@@ -71,8 +71,6 @@ public class GameManager : MonoBehaviour
     {
 
         if (UiController.instance.rollBtn.interactable == false) return;
-        if (AudioManager.instance != null)
-            AudioManager.instance.PlaySfx("Roll");
 
         RollFlow().Forget();
     }
@@ -161,8 +159,6 @@ public class GameManager : MonoBehaviour
         {
             Debug.LogException(e);
         }
-
-        DicePanelManager.instance?.ResetAllDice(diceManager.GetAllDice());
     }
 }
     

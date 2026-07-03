@@ -10,4 +10,5 @@ public class PlayerData : ScriptableObject
 
     [Header("ºñÁÖ¾ó")]
     public Sprite portrait;
+    public GameObject PlayerPrefab;
 }

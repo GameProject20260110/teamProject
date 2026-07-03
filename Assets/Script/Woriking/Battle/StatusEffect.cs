@@ -3,8 +3,8 @@ using Cysharp.Threading.Tasks;
 public abstract class StatusEffect
 {
     public string effectName;
-    public int duration;        // 남은 턴 수
-    public int value;           // 데미지, 감소량 등
+    public int duration;
+    public int value;
 
     // 턴 시작마다 호출
     public abstract UniTask OnTurnStart(IDamageable target, DiceContext ctx);
@@ -13,6 +13,6 @@ public abstract class StatusEffect
     public bool Tick()
     {
         duration--;
-        return duration <= 0; // true면 제거
+        return duration <= 0;
     }
 }

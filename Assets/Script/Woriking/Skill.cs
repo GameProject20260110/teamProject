@@ -4,14 +4,14 @@ using UnityEngine;
 
 public enum SkillMoveType
 {
-    None,       // 적 위치에서 바로 재생
-    Projectile,  // 플레이어 위치에서 날아감
+    None,
+    Projectile,
     Particle
 }
 
 public class Skill : MonoBehaviour
 {
-    [SerializeField] AudioClip sfxSound;
+    [SerializeField] float spriteBaseAngle = 0f;
     [SerializeField] SkillMoveType moveType;
     [SerializeField] float moveSpeed = 10f;
     [SerializeField] private string sfxKey;
@@ -40,7 +40,7 @@ public class Skill : MonoBehaviour
                 targetPosition = ctx.targetPos;
                 Vector3 direction = (ctx.targetPos - ctx.startPos).normalized;
                 float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
-                transform.rotation = Quaternion.Euler(0f, 0f, angle);
+                transform.rotation = Quaternion.Euler(0f, 0f, angle - spriteBaseAngle);
                 isMoving = true;
                 break;
 

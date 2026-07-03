@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Effect_Normal
   m_EditorClassIdentifier: Assembly-CSharp::DiceEffectData
   attackPrefab: {fileID: 266635143127538073, guid: be502453440b77646ae7895f4339c2b5, type: 3}
-  shieldPrefab: {fileID: 7394023633541940906, guid: 4c9178866f547e245b76be8e2885bbab, type: 3}
+  shieldPrefab: {fileID: 6745763947442250013, guid: 90241d994b1392942b020e8cc86f09aa, type: 3}
   bonusDamage: 0
   bonusShield: 3

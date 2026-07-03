@@ -1,56 +1,69 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using UnityEngine.UI;
 using UnityEngine;
+using TMPro;
 
 public class CardRevealAnimator : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Image cardImage;
-    [SerializeField] private RectMask2D contentMask;
-    [SerializeField] private CanvasGroup[] buttons;
+    [SerializeField] private CanvasGroup cardGroup;
+    [SerializeField] private RectTransform cardRect;
+    [SerializeField] private TextMeshProUGUI GoldText;
+    [SerializeField] private CanvasGroup button;
 
     [Header("Settings")]
-    [SerializeField] private float fillDuration = 0.8f;
-    [SerializeField] private float maskDuration = 2f;
-    [SerializeField] private int buttonDelayMs = 500;
+    [SerializeField] private float fadeDuration = 0.8f;
+    [SerializeField] private float UpOffset = 40f;
+    [SerializeField] private float UpDuration = 0.4f;
+    [SerializeField] private float DownDuration = 0.4f;
+    [SerializeField] private int buttonDelay = 1000;
+
+
+#pragma warning disable CS4014
 
     public async UniTask Reveal()
     {
         UiController.instance.backGround.SetActive(true);
 
-        cardImage.fillAmount = 0f;
-        cardImage.GetComponent<CanvasGroup>().alpha = 1f;
+        GoldText.text = BattleDataManager.instance.currentRewardData.clearGold.ToString();
+        cardGroup.alpha = 0f;
+        Vector2 originalPos = cardRect.anchoredPosition;
+        cardRect.anchoredPosition = originalPos;
 
-        await cardImage.DOFillAmount(1f, fillDuration)
-            .SetEase(Ease.OutQuad)
-            .AsyncWaitForCompletion();
+        Sequence seq = DOTween.Sequence();
+        seq.Join(cardGroup.DOFade(1f, fadeDuration).SetEase(Ease.OutQuad));
+        seq.Join(
+            cardRect.DOAnchorPosY(originalPos.y + UpOffset, UpDuration)
+                .SetEase(Ease.OutQuad)
+                .OnComplete(() =>
+                {
+                    cardRect.DOAnchorPosY(originalPos.y, DownDuration)
+                        .SetEase(Ease.OutBack);
+                })
+        );
 
-        contentMask.gameObject.SetActive(true);
-        var maskRect = contentMask.GetComponent<RectTransform>();
-        float targetHeight = maskRect.sizeDelta.y;
-        maskRect.sizeDelta = new Vector2(maskRect.sizeDelta.x, 0f);
+        await seq.AsyncWaitForCompletion();
 
-        await maskRect.DOSizeDelta(new Vector2(maskRect.sizeDelta.x, targetHeight), maskDuration)
-            .SetEase(Ease.OutQuad)
-            .AsyncWaitForCompletion();
+        await UniTask.Delay(buttonDelay);
+        await button.DOFade(1f, 1f);
+    }
 
-        foreach (var btn in buttons)
-        {
-            await UniTask.Delay(buttonDelayMs);
-            btn.DOFade(1f, 1f);
-        }
+    public void OnClick_UnRevealWrapper()
+    {
+        UnReveal().Forget();
     }
 
     public async UniTask UnReveal()
     {
-        foreach (var btn in buttons)
-        {
-            btn.alpha = 0f;
-        }
-
+        button.alpha = 0f;
         await UniTask.Delay(100);
         UiController.instance.backGround.SetActive(false);
         UiController.instance.resultUI.Hide();
+        RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
     }
+
+    [ContextMenu("Test")]
+    private void Reveal1() => Reveal().Forget();
+
+#pragma warning restore CS4014
 }

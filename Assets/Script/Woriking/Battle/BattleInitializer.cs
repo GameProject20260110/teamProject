@@ -1,13 +1,14 @@
+using System.Threading.Tasks;
 using UnityEngine;
-using UnityEngine.UI;
 public class BattleInitalizer : MonoBehaviour
 {
     public static BattleInitalizer instance;
-
     [SerializeField] private BaseStageController stageController;
-    public Image enemyImage;
-    public Image playerImage;
+    [SerializeField] private CardRevealAnimator ClearAnim;
+
+    public GameObject spawnPlayer;
     public GameObject spawnEnemy;
+
     private EnemyCharacter enemyCharacter;
     private PlayerCharacter playerCharacter;
 
@@ -25,41 +26,28 @@ public class BattleInitalizer : MonoBehaviour
         StartBattle();
     }
 
+    public void SetSpawnPlayer(GameObject player)
+    {
+        spawnPlayer = player;
+        playerCharacter = spawnPlayer.GetComponentInChildren<PlayerCharacter>();
+        BattleManager.instance.SetPlayerTransform(spawnPlayer.transform);
+    }
+
+    public void SetSpawnEnemy(GameObject enemy)
+    {
+        spawnEnemy = enemy;
+        enemyCharacter = spawnEnemy.GetComponentInChildren<EnemyCharacter>();
+        BattleManager.instance.SetEnemyTransform(spawnEnemy.transform);
+        EnemyDeathSequence.instance?.SetupEnemy(enemy);
+
+        if (BattleManager.instance != null)
+            enemyCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
+    }
+
     public void StartBattle()
-    {       
-        {
-            stageController.PlayIntroAnim();
-
-            var enemyPrefab = BattleDataManager.instance?.GetEnemyPrefab();
-            if (enemyPrefab != null)
-            {
-                var bossData = BattleDataManager.instance.currentEnemyData as BossDataSo;
-                enemyImage.gameObject.SetActive(false);
-                spawnEnemy = Instantiate(enemyPrefab);
-                spawnEnemy.transform.position = bossData.spawnPosition;
-                spawnEnemy.transform.localScale = bossData.bossScale;
-                enemyCharacter = spawnEnemy.GetComponent<EnemyCharacter>();
-                enemyCharacter.SetAlpha(0f);
-
-                
-            }
-            else if (enemyImage != null)
-            {
-                enemyImage.gameObject.SetActive(true);
-                enemyImage.sprite = BattleDataManager.instance?.GetEnemyImage();
-                enemyCharacter = enemyImage.GetComponent<EnemyCharacter>();
-                enemyCharacter.SetAlpha(0f);
-            }
-
-            if (playerImage != null)
-            {
-                playerImage.gameObject.SetActive(true);
-                playerImage.sprite = ResourceManager.instance?.PlayerImage;
-                playerCharacter = playerImage.GetComponent<PlayerCharacter>();
-                playerCharacter.SetAlpha(0f);
-            }
-        }
-
+    {             
+        stageController.PlayIntroAnim();
+ 
         if (GameManager.instance != null)
         {
             GameManager.instance.InitializeRoundData();
@@ -87,11 +75,10 @@ public class BattleInitalizer : MonoBehaviour
         if (BattleManager.instance != null)
         {
             BattleManager.instance.InitializeBattle();
-            enemyCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
         }
     }
 
-    public void CompleteBattle(bool isSuccess)
+    public async Task CompleteBattleAsync(bool isSuccess)
     {
         if (UiController.instance != null)
             UiController.instance.SetRollBtnInteractable(false);
@@ -112,7 +99,8 @@ public class BattleInitalizer : MonoBehaviour
                 BattleDataManager.instance?.Clear();
             }
             ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
-            RewardPanelUI.instance?.Show(BattleDataManager.instance.currentRewardData);
+            ClearAnim.gameObject.SetActive(true);
+            await ClearAnim.Reveal();
         }
         else
         {

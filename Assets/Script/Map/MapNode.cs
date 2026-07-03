@@ -1,7 +1,8 @@
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class MapNode : MonoBehaviour, IPointerClickHandler
+public class MapNode : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("노드 설정")]
     [SerializeField] private NodeType nodeType;
@@ -17,11 +18,13 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
     [SerializeField] private bool isVisited = false;
     [SerializeField] private bool isSelectable = false;
 
+    private Vector2 OriginScale;
     public int NodeId { get; private set; }
     public bool IsVisited => isVisited;
 
     public void Initialize(int id, NodeType type, bool selectable)
     {
+        OriginScale = transform.localScale;
         NodeId = id;
         nodeType = type;
         isSelectable = selectable;
@@ -46,6 +49,7 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
     {
         if (!isSelectable || isVisited) return;
         if (MapCameraController.instance.IsDragging) return;
+        AudioManager.instance.PlaySfx("MapNode");
         MapManager.instance?.OnNodeSelected(this);
 
     }
@@ -63,4 +67,13 @@ public class MapNode : MonoBehaviour, IPointerClickHandler
         isSelectable = selectable;
     }
 
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.DOScale(OriginScale * 1.3f, 0.2f).SetEase(Ease.OutQuad);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.DOScale(OriginScale, 0.3f).SetEase(Ease.OutQuad);
+    }
 }

@@ -4,9 +4,6 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "BossDataSo", menuName = "Battle/BossDataSo")]
 public class BossDataSo : BaseEnemyData
 {
-    [Header("프리팹")]
-    public GameObject enemyPrefab;
-
     [Header("보스 설정")]
     public Vector3 bossScale = new Vector3(0.42f, 0.42f, 1f);
     public Vector3 spawnPosition = new Vector3(0, 1.3f, 0);

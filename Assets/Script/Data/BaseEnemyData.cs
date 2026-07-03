@@ -5,7 +5,8 @@ public abstract class BaseEnemyData : ScriptableObject
     public string enemyName;
     public int maxHp;
     public int attackPower;
-    public Sprite enemyImage;
+    public GameObject IntroPrefab;
+    public GameObject enemyPrefab;
     public GameObject skillPrefab;
     public EnemyAIStrategy aiStrategy;
     // 패턴, 드롭 아이템 등 나중에 확장

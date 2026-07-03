@@ -1,7 +1,6 @@
 using System.Threading;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
-using DG.Tweening;
 using System.Linq;
 
 public class NormalStageController : BaseStageController
@@ -10,14 +9,15 @@ public class NormalStageController : BaseStageController
     [SerializeField] private RoundIntro stageStartEffect;
     [SerializeField] private CardAppearEffect cardAppearEffect;
     [SerializeField] private RoundCharacter roundCharacter;
-    [SerializeField] private CardAppearEffect playerEffect;
-    [SerializeField] private CardAppearEffect enemyEffect;
+    [SerializeField] private CharacterAppearEffect playerEffect;
+    [SerializeField] private CharacterAppearEffect enemyEffect;
 
     protected override async UniTask PlayIntroEffect(CancellationToken ct)
     {
         await PlayEffectAsync(onComplete => stageStartEffect.Play(onComplete), ct);
         await PlayEffectAsync(cardAppearEffect.Play, ct);
-        await PlayEffectAsync(roundCharacter.Play, ct);
+        var enemyPrefab = BattleDataManager.instance.GetEnemyPrefab();
+        enemyEffect.SetPrefab(enemyPrefab);
         await PlayEffectAsync(enemyEffect.Play, ct);
         await PlayEffectAsync(playerEffect.Play, ct);
     }

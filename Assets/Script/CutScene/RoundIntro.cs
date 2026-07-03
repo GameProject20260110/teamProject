@@ -1,4 +1,4 @@
-using UnityEngine;
+ï»¿using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
@@ -8,7 +8,7 @@ public class RoundIntro : MonoBehaviour
 {
     [SerializeField] private CardAppearEffect RoundEffect;
 
-    [Header("UI ¿ä¼Ò")]
+    [Header("UI ìš”ì†Œ")]
     [SerializeField] private GameObject visualsRoot;
     [SerializeField] private Image dimmer;
     [SerializeField] private RectTransform spear1Rect;
@@ -19,13 +19,17 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private TextMeshProUGUI vsText;
     [SerializeField] private Image blueBackground;
     [SerializeField] private Image redBackground;
-    [SerializeField] private Image playerCharacter;
-    [SerializeField] private Image enemyCharacter;
 
-    [Header("Ãß°¡ ÀÌÆåÆ®")]
+    // âœ… ë³€ê²½: Image â†’ Transform (ì†Œí™˜ ìœ„ì¹˜) + í”„ë¦¬íŒ¹
+    [Header("ìºë¦­í„° ì†Œí™˜")]
+    [SerializeField] private Transform playerSpawnPoint;
+    [SerializeField] private Transform enemySpawnPoint;
+    [SerializeField] private GameObject playerIntroPrefab;
+
+    [Header("ì¶”ê°€ ì´íŽ™íŠ¸")]
     [SerializeField] private Image impactFlash;
 
-    [Header("VS ÆÄÆ¼Å¬")]
+    [Header("VS íŒŒí‹°í´")]
     [SerializeField] private ParticleSystem energyBurst;
     [SerializeField] private ParticleSystem oraAura;
 
@@ -33,7 +37,7 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private float dimmerTargetAlpha = 0.65f;
     [SerializeField] private float dimmerDuration = 0.4f;
 
-    [Header("Spear ¼³Á¤")]
+    [Header("Spear ì„¤ì •")]
     [SerializeField] private float spearOffscreenDistance = 1400f;
     [SerializeField] private float spear1Duration = 0.3f;
     [SerializeField] private float spear2Duration = 0.3f;
@@ -41,45 +45,46 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private Ease spearEase = Ease.OutQuint;
     [SerializeField] private Vector2 crossPoint = Vector2.zero;
 
-    [Header("Ãæµ¹ È¿°ú")]
+    [Header("ì¶©ëŒ íš¨ê³¼")]
     [SerializeField] private float screenShakeStrength = 20f;
     [SerializeField] private float screenShakeDuration = 0.35f;
 
-    [Header("VS ÅØ½ºÆ®")]
+    [Header("VS í…ìŠ¤íŠ¸")]
     [SerializeField] private float vsAppearDuration = 0.25f;
     [SerializeField] private float vsStartScale = 5f;
     [SerializeField] private float bounceDuration = 0.1f;
 
-    [Header("Ä³¸¯ÅÍ / ¹è°æ")]
+    [Header("ìºë¦­í„° / ë°°ê²½")]
     [SerializeField] private float characterBackFadeInDuration = 0.5f;
     [SerializeField] private float characterFadeInDuration = 0.5f;
-    [SerializeField] private float characterSlideDistance = 300f;
+    [SerializeField] private float characterSlideDistance = 3f;
     [SerializeField] private float characterFadeInDelay = 0.1f;
 
-    [Header("¾Æ¿ôÆ®·Î")]
+    [Header("ì•„ì›ƒíŠ¸ë¡œ")]
     [SerializeField] private float holdDuration = 1.5f;
     [SerializeField] private float outroFadeDuration = 0.4f;
 
     private Sequence currentSequence;
-    private Vector2 playerCharacterOriginPos;
-    private Vector2 enemyCharacterOriginPos;
+
+    private Vector3 playerCharacterOriginPos;
+    private Vector3 enemyCharacterOriginPos;
+
+    private GameObject _spawnedPlayer;
+    private GameObject _spawnedEnemy;
 
     void Awake()
     {
         if (visualsRoot != null) visualsRoot.SetActive(false);
         ResetDimmer();
 
-        if (playerCharacter != null)
+        if (playerSpawnPoint != null)
         {
-            playerCharacterOriginPos = playerCharacter.rectTransform.anchoredPosition;
-            playerCharacter.sprite = ResourceManager.instance.PlayerImage;
+            playerCharacterOriginPos = playerSpawnPoint.position;
+            Debug.Log($"Player Origin: {playerCharacterOriginPos}");
         }
-            
-        if (enemyCharacter != null)
-        {
-            enemyCharacterOriginPos = enemyCharacter.rectTransform.anchoredPosition;
-            enemyCharacter.sprite = BattleDataManager.instance.GetEnemyImage();
-        }            
+
+        if (enemySpawnPoint != null)
+            enemyCharacterOriginPos = enemySpawnPoint.position;
     }
 
     public void Play() => Play(null);
@@ -88,6 +93,8 @@ public class RoundIntro : MonoBehaviour
     {
         KillCurrent();
         visualsRoot.SetActive(true);
+        SpawnCharacters();
+
         SetInitialState();
 
         currentSequence = DOTween.Sequence();
@@ -97,21 +104,27 @@ public class RoundIntro : MonoBehaviour
             dimmer.DOFade(dimmerTargetAlpha, dimmerDuration).SetEase(Ease.OutQuad)
         );
 
-        // 2. Ã¢1
+        // 2. ì°½1
         currentSequence.Append(
             spear1Rect.DOAnchorPos(crossPoint, spear1Duration).SetEase(spearEase)
         );
+        currentSequence.Join(
+                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("SlideIn"))
+        );
 
-        // 3. Ã¢2
+        // 3. ì°½2
         currentSequence.AppendInterval(spearDelay);
         currentSequence.Append(
             spear2Rect.DOAnchorPos(crossPoint, spear2Duration).SetEase(spearEase)
         );
+        currentSequence.Join(
+                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("SlideIn"))
+        );
 
-        // 4. Ã¢ Ãæµ¹ ¿¬Ãâ
+        // 4. ì°½ ì¶©ëŒ ì—°ì¶œ
         currentSequence.AppendCallback(() => OnSpearImpact());
 
-        // 5-1. VS ÅØ½ºÆ®
+        // 5-1. VS í…ìŠ¤íŠ¸
         currentSequence.AppendInterval(0.1f);
         currentSequence.Append(
             vsText.DOFade(1f, 0.1f)
@@ -121,12 +134,12 @@ public class RoundIntro : MonoBehaviour
             .SetEase(Ease.OutBack, 1.0f)
         );
 
-        // 5-2. VS ÅØ½ºÆ® ¿¬Ãâ
+        // 5-2. VS í…ìŠ¤íŠ¸ ì—°ì¶œ
         currentSequence.Join(
             DOVirtual.DelayedCall(0.2f, () => OnTextLand())
         );
 
-        // 5-3. VS ÆÄÆ¼Å¬
+        // 5-3. VS íŒŒí‹°í´
         currentSequence.AppendCallback(() =>
         {
             if (energyBurst != null) energyBurst.Play();
@@ -136,7 +149,7 @@ public class RoundIntro : MonoBehaviour
             });
         });
 
-        // 6. Ä³¸¯ÅÍ ½½¶óÀÌµå ÀÎ + ¹è°æ
+        // 6. ìºë¦­í„° ìŠ¬ë¼ì´ë“œ ì¸ + ë°°ê²½
         currentSequence.AppendInterval(characterFadeInDelay);
         currentSequence.Append(
             blueBackground.DOFillAmount(1f, characterBackFadeInDuration).SetEase(Ease.OutQuad)
@@ -144,35 +157,63 @@ public class RoundIntro : MonoBehaviour
         currentSequence.Join(
             redBackground.DOFillAmount(1f, characterBackFadeInDuration).SetEase(Ease.OutQuad)
         );
-        currentSequence.Join(
-            playerCharacter.rectTransform
-                .DOAnchorPos(playerCharacterOriginPos, characterFadeInDuration)
-                .SetEase(Ease.OutQuint)
-        );
-        currentSequence.Join(
-            playerCharacter.DOFade(1f, characterFadeInDuration * 0.5f).SetEase(Ease.OutQuad)
-        );
-        currentSequence.Join(
-            enemyCharacter.rectTransform
-                .DOAnchorPos(enemyCharacterOriginPos, characterFadeInDuration)
-                .SetEase(Ease.OutQuint)
-        );
-        currentSequence.Join(
-            enemyCharacter.DOFade(1f, characterFadeInDuration * 0.5f).SetEase(Ease.OutQuad)
-        );
 
-        // 7. È¦µå
+        if (_spawnedPlayer != null)
+        {
+            currentSequence.Join(
+                _spawnedPlayer.transform
+                    .DOMove(playerCharacterOriginPos, characterFadeInDuration)
+                    .SetEase(Ease.OutQuint)
+            );
+            currentSequence.Join(
+                FadeSpriteGroup(_spawnedPlayer, 1f, characterFadeInDuration * 0.5f)
+            );
+        }
+        if (_spawnedEnemy != null)
+        {
+            currentSequence.Join(
+                _spawnedEnemy.transform
+                    .DOMove(enemyCharacterOriginPos, characterFadeInDuration)
+                    .SetEase(Ease.OutQuint)
+            );
+            currentSequence.Join(
+                FadeSpriteGroup(_spawnedEnemy, 1f, characterFadeInDuration * 0.5f)
+            );
+            currentSequence.Join(
+                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("IntroCharacter"))
+            );
+        }
+
+
+        // 7. í™€ë“œ
         currentSequence.AppendInterval(holdDuration);
 
-        // 8. ¾Æ¿ôÆ®·Î
+        // 8. ì•„ì›ƒíŠ¸ë¡œ
         currentSequence.AppendCallback(() => PlayOutro());
         currentSequence.AppendInterval(outroFadeDuration);
         currentSequence.OnComplete(() =>
         {
             visualsRoot.SetActive(false);
             ResetDimmer();
+
+            if (_spawnedPlayer != null) Destroy(_spawnedPlayer);
+            if (_spawnedEnemy != null) Destroy(_spawnedEnemy);
+
             onComplete?.Invoke();
         });
+    }
+
+    private void SpawnCharacters()
+    {
+        if (_spawnedPlayer != null) Destroy(_spawnedPlayer);
+        if (_spawnedEnemy != null) Destroy(_spawnedEnemy);
+
+        if (playerIntroPrefab != null)
+            _spawnedPlayer = Instantiate(playerIntroPrefab, playerSpawnPoint.position, playerIntroPrefab.transform.rotation);
+
+        var enemyPrefab = BattleDataManager.instance.GetEnemyIntroPrefab(); // âœ… Sprite â†’ GameObject ë°˜í™˜ìœ¼ë¡œ ë³€ê²½ í•„ìš”
+        if (enemyPrefab != null)
+            _spawnedEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, enemyPrefab.transform.rotation);
     }
 
     private void OnSpearImpact()
@@ -183,7 +224,7 @@ public class RoundIntro : MonoBehaviour
 
         spear2Rect.DOAnchorPos(crossPoint + new Vector2(-5f, -5f), 0.05f)
             .SetEase(Ease.OutQuad)
-            .OnComplete(() => spear2Rect.DOAnchorPos(crossPoint, 0.1f).SetEase(Ease.InQuad)); 
+            .OnComplete(() => spear2Rect.DOAnchorPos(crossPoint, 0.1f).SetEase(Ease.InQuad));
     }
 
     private void PlayImpactFlash()
@@ -203,9 +244,11 @@ public class RoundIntro : MonoBehaviour
     }
 
     private void OnTextLand()
-    {        
+    {
+
+        AudioManager.instance.PlaySfx("VS");
         PlayImpactFlash();
-        
+
         RectTransform shakeTarget = visualsRoot.GetComponent<RectTransform>();
         if (shakeTarget != null)
         {
@@ -225,8 +268,10 @@ public class RoundIntro : MonoBehaviour
         vsText.DOFade(0f, d).SetEase(Ease.InQuad);
         blueBackground.DOFade(0f, d).SetEase(Ease.InQuad);
         redBackground.DOFade(0f, d).SetEase(Ease.InQuad);
-        playerCharacter.DOFade(0f, d).SetEase(Ease.InQuad);
-        enemyCharacter.DOFade(0f, d).SetEase(Ease.InQuad);
+
+        if (_spawnedPlayer != null) FadeSpriteGroup(_spawnedPlayer, 0f, d);
+        if (_spawnedEnemy != null) FadeSpriteGroup(_spawnedEnemy, 0f, d);
+
         if (impactFlash != null) impactFlash.DOFade(0f, d);
         if (oraAura != null)
             oraAura.Stop(true, ParticleSystemStopBehavior.StopEmitting);
@@ -251,17 +296,17 @@ public class RoundIntro : MonoBehaviour
         SetAlpha(blueBackground, 1f);
         SetAlpha(redBackground, 1f);
 
-        if (playerCharacter != null)
+        if (_spawnedPlayer != null)
         {
-            playerCharacter.rectTransform.anchoredPosition =
-                playerCharacterOriginPos + new Vector2(-characterSlideDistance, 0f);
-            SetAlpha(playerCharacter, 0f);
+            _spawnedPlayer.transform.position =
+                playerCharacterOriginPos + new Vector3(-characterSlideDistance, 0f, 0f);
+            FadeSpriteGroup(_spawnedPlayer, 0f, 0f);
         }
-        if (enemyCharacter != null)
+        if (_spawnedEnemy != null)
         {
-            enemyCharacter.rectTransform.anchoredPosition =
-                enemyCharacterOriginPos + new Vector2(characterSlideDistance, 0f);
-            SetAlpha(enemyCharacter, 0f);
+            _spawnedEnemy.transform.position =
+                enemyCharacterOriginPos + new Vector3(characterSlideDistance, 0f, 0f);
+            FadeSpriteGroup(_spawnedEnemy, 0f, 0f);
         }
 
         if (impactFlash != null) SetAlpha(impactFlash, 0f);
@@ -289,8 +334,10 @@ public class RoundIntro : MonoBehaviour
         vsText?.DOKill();
         blueBackground?.DOKill();
         redBackground?.DOKill();
-        playerCharacter?.DOKill();
-        enemyCharacter?.DOKill();
+
+        if (_spawnedPlayer != null) _spawnedPlayer.transform.DOKill();
+        if (_spawnedEnemy != null) _spawnedEnemy.transform.DOKill();
+
         impactFlash?.DOKill();
 
         if (energyBurst != null)
@@ -315,21 +362,32 @@ public class RoundIntro : MonoBehaviour
         tmp.color = c;
     }
 
-    public void SetEnemySprite(Sprite sprite)
+    private Tween FadeSpriteGroup(GameObject character, float targetAlpha, float duration)
     {
-        if (enemyCharacter != null) enemyCharacter.sprite = sprite;
+        SpriteRenderer[] renderers = character.GetComponentsInChildren<SpriteRenderer>();
+
+        Sequence seq = DOTween.Sequence();
+        foreach (var sr in renderers)
+        {
+            if (duration <= 0f)
+            {
+                sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, targetAlpha);
+            }
+            else
+            {
+                seq.Join(sr.DOFade(targetAlpha, duration));
+            }
+        }
+        return seq;
     }
 
-    public void SetPlayerSprite(Sprite sprite)
+    void OnDestroy()
     {
-        if (playerCharacter != null) playerCharacter.sprite = sprite;
+        KillCurrent();
+        if (_spawnedPlayer != null) Destroy(_spawnedPlayer);
+        if (_spawnedEnemy != null) Destroy(_spawnedEnemy);
     }
-
-    void OnDestroy() => KillCurrent();
 
     [ContextMenu("Test Round 1")]
     private void TestRound1() => Play();
-
-    [ContextMenu("Test Round 2")]
-    private void TestRound2() => Play();
 }

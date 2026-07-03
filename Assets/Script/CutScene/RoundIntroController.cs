@@ -41,10 +41,20 @@ public class RoundIntroController : MonoBehaviour
         Play(roundNumber, null);
     }
 
-    public void Play(int roundNumber, Action onComplete)
+    public void Play(int roundNumber, Action onComplete = null)
+    {
+        PlayWithText($"Turn {roundNumber}", onComplete);
+    }
+
+    public void Play(string customText, Action onComplete = null)
+    {
+        PlayWithText(customText, onComplete);
+    }
+
+    public void PlayWithText(string text, Action onComplete)
     {
         KillCurrent();
-        roundText.text = $"Turn {roundNumber}";
+        roundText.text = text;
         rootObject.SetActive(true);
 
         SetInitialState();
@@ -124,4 +134,7 @@ public class RoundIntroController : MonoBehaviour
     // 테스트용
     [ContextMenu("Test Play Round 1")]
     private void TestPlay() => Play(1);
+
+    [ContextMenu("Test Play Act 1")]
+    private void TestPlayAct() => Play("제 1막  시련의 시작");
 }

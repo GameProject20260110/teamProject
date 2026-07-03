@@ -47,16 +47,14 @@ public class BattleDataManager : MonoBehaviour
         return currentEnemyData?.maxHp ?? 0;
     }
 
-    public Sprite GetEnemyImage()
-    {
-        return currentEnemyData?.enemyImage;
-    }
-
     public GameObject GetEnemyPrefab()
     {
-        if (currentEnemyData is BossDataSo bossData)
-            return bossData.enemyPrefab;
-        return null;
+        return currentEnemyData.enemyPrefab;
+    }
+
+    public GameObject GetEnemyIntroPrefab()
+    {
+        return currentEnemyData.IntroPrefab;
     }
 
     public bool hasGimmick()
