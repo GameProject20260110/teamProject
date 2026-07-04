@@ -6,6 +6,6 @@ public class BalancedAI : EnemyAIStrategy
 {
     public override async UniTask PlaceDice(Dice[] hand)
     {
-        await PlaceByRole(hand); // 역할대로 배치
+        await PlaceByRole(hand);
     }
 }

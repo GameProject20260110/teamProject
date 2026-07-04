@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: GreenSlime
+  m_Controller: {fileID: 9100000, guid: f92335fa64b239a4eaae7e09d201563a, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: 7400000, guid: 38f3ec11a488d1c4f9b38d2730e289e1, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: cc447c56c335f874388daa70df401d96, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: a2748f475f0ff1a43aed7681203e1474, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: bdd538055a7672a4db781f116c0c148e, type: 2}
+  - m_OriginalClip: {fileID: 7400000, guid: 98ce5235cebb2864697e7c5a19baa51f, type: 2}
+    m_OverrideClip: {fileID: 7400000, guid: 36f2afcebf3743349b64f6c331ba3f4d, type: 2}

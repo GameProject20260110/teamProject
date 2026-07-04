@@ -20,14 +20,10 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private Image blueBackground;
     [SerializeField] private Image redBackground;
 
-    // ✅ 변경: Image → Transform (소환 위치) + 프리팹
     [Header("캐릭터 소환")]
     [SerializeField] private Transform playerSpawnPoint;
     [SerializeField] private Transform enemySpawnPoint;
     [SerializeField] private GameObject playerIntroPrefab;
-
-    [Header("추가 이펙트")]
-    [SerializeField] private Image impactFlash;
 
     [Header("VS 파티클")]
     [SerializeField] private ParticleSystem energyBurst;
@@ -142,7 +138,7 @@ public class RoundIntro : MonoBehaviour
         // 5-3. VS 파티클
         currentSequence.AppendCallback(() =>
         {
-            if (energyBurst != null) energyBurst.Play();
+            //if (energyBurst != null) energyBurst.Play();
             DOVirtual.DelayedCall(0.1f, () =>
             {
                 if (oraAura != null) oraAura.Play();
@@ -211,7 +207,7 @@ public class RoundIntro : MonoBehaviour
         if (playerIntroPrefab != null)
             _spawnedPlayer = Instantiate(playerIntroPrefab, playerSpawnPoint.position, playerIntroPrefab.transform.rotation);
 
-        var enemyPrefab = BattleDataManager.instance.GetEnemyIntroPrefab(); // ✅ Sprite → GameObject 반환으로 변경 필요
+        var enemyPrefab = BattleDataManager.instance.GetEnemyIntroPrefab();
         if (enemyPrefab != null)
             _spawnedEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, enemyPrefab.transform.rotation);
     }
@@ -227,27 +223,12 @@ public class RoundIntro : MonoBehaviour
             .OnComplete(() => spear2Rect.DOAnchorPos(crossPoint, 0.1f).SetEase(Ease.InQuad));
     }
 
-    private void PlayImpactFlash()
-    {
-        if (impactFlash == null) return;
-
-        SetAlpha(impactFlash, 1f);
-        impactFlash.transform.localScale = Vector3.one * 0.3f;
-
-        Sequence flashSeq = DOTween.Sequence();
-        flashSeq.Append(
-            impactFlash.transform.DOScale(Vector3.one * 1.5f, 0.15f).SetEase(Ease.OutQuint)
-        );
-        flashSeq.Join(
-            impactFlash.DOFade(0f, 0.3f).SetEase(Ease.InQuad)
-        );
-    }
-
     private void OnTextLand()
     {
 
         AudioManager.instance.PlaySfx("VS");
-        PlayImpactFlash();
+
+        if (energyBurst != null) energyBurst.Play();
 
         RectTransform shakeTarget = visualsRoot.GetComponent<RectTransform>();
         if (shakeTarget != null)
@@ -272,7 +253,6 @@ public class RoundIntro : MonoBehaviour
         if (_spawnedPlayer != null) FadeSpriteGroup(_spawnedPlayer, 0f, d);
         if (_spawnedEnemy != null) FadeSpriteGroup(_spawnedEnemy, 0f, d);
 
-        if (impactFlash != null) impactFlash.DOFade(0f, d);
         if (oraAura != null)
             oraAura.Stop(true, ParticleSystemStopBehavior.StopEmitting);
         if (energyBurst != null)
@@ -309,8 +289,6 @@ public class RoundIntro : MonoBehaviour
             FadeSpriteGroup(_spawnedEnemy, 0f, 0f);
         }
 
-        if (impactFlash != null) SetAlpha(impactFlash, 0f);
-
         if (energyBurst != null)
             energyBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         if (oraAura != null)
@@ -337,8 +315,6 @@ public class RoundIntro : MonoBehaviour
 
         if (_spawnedPlayer != null) _spawnedPlayer.transform.DOKill();
         if (_spawnedEnemy != null) _spawnedEnemy.transform.DOKill();
-
-        impactFlash?.DOKill();
 
         if (energyBurst != null)
             energyBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);

@@ -16,7 +16,7 @@ public class TitleManager : MonoBehaviour
     public RawImage backgroundPanel;
 
     [Header("효과")]
-    public Image flashOverlay;
+    public ParticleSystem convergeBurst; // 중심으로 모이는 파티클 (flashOverlay 대체)
 
     [Header("타이틀 UI")]
     public CanvasGroup titleGroup;
@@ -37,7 +37,6 @@ public class TitleManager : MonoBehaviour
         darkOverlay.color = new Color(0, 0, 0, 0);
         titleGroup.alpha = 1f;
         circleHoleMaterial.SetFloat("_Radius", 0f);
-
         circleRevealMaterial.SetFloat("_Radius", 0f);
         backgroundPanel.material = circleRevealMaterial;
 
@@ -47,6 +46,7 @@ public class TitleManager : MonoBehaviour
 
         if (MainOption.instance != null)
             MainOption.instance.SetSettingsButtonActive(false);
+
         if (AudioManager.instance != null)
             AudioManager.instance.PlayBgm("Title");
     }
@@ -56,6 +56,7 @@ public class TitleManager : MonoBehaviour
         startButton.interactable = false;
         settingsButton.interactable = false;
         quitButton.interactable = false;
+
         AudioManager.instance.PlaySfx("Click");
         AudioManager.instance.StopBgm();
         PlayTransition();
@@ -79,33 +80,18 @@ public class TitleManager : MonoBehaviour
     void PlayTransition()
     {
         Sequence seq = DOTween.Sequence();
-
         seq.Append(titleGroup.DOFade(0f, 0.2f));
 
         seq.AppendCallback(() =>
         {
-            flashOverlay.gameObject.SetActive(true);
-            flashOverlay.color = new Color(1f, 1f, 1f, 0f);
-            flashOverlay.rectTransform.sizeDelta = Vector2.zero;
+            if (convergeBurst != null)
+            {
+                convergeBurst.gameObject.SetActive(true);
+                convergeBurst.Play();
+            }
         });
 
-        seq.Append(DOTween.To(
-            () => flashOverlay.rectTransform.sizeDelta,
-            x => flashOverlay.rectTransform.sizeDelta = x,
-            new Vector2(100f, 100f), 0.4f
-        ).SetEase(Ease.OutCubic));
-        seq.Join(flashOverlay.DOFade(0.9f, 0.3f));
-
-        seq.AppendInterval(0.2f);
-
-        seq.Append(DOTween.To(
-            () => flashOverlay.rectTransform.sizeDelta,
-            x => flashOverlay.rectTransform.sizeDelta = x,
-            Vector2.zero, 0.25f
-        ).SetEase(Ease.InCubic));
-        seq.Join(flashOverlay.DOFade(0f, 0.25f));
-
-        seq.AppendInterval(0.1f);
+        seq.AppendInterval(0.5f);
 
         seq.Append(DOTween.To(
             () => circleRevealMaterial.GetFloat("_Radius"),
@@ -128,5 +114,8 @@ public class TitleManager : MonoBehaviour
             circleHoleMaterial.SetFloat("_Radius", 0f);
         if (circleRevealMaterial != null)
             circleRevealMaterial.SetFloat("_Radius", 0f);
+
+        if (convergeBurst != null)
+            convergeBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
 }

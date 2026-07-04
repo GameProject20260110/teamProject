@@ -68,10 +68,11 @@ public class MapIntroController : MonoBehaviour
         await UniTask.Delay(500, cancellationToken: ct);
 
         string[] texts = {
-        "태초의 완벽한 구조가 무너졌다.",
-        "카오스가 세계를 집어삼키고 있다.",
-        "주사위를 모아라.",
-        "구조를 완성하라."
+        "구조가 무너졌다",
+        "원인은 알 수 없다",
+        "주사위들이 스스로 흩어졌다",
+        "...누군가 그걸 원했을지도",
+        "모아라, 늦기 전에"
         };
         foreach (var text in texts)
             await TextAppear(text, ct);

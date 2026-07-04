@@ -56,7 +56,7 @@ public class EnemyCharacter : MonoBehaviour
         if (_animator == null) return;
 
         eventBus.OnHitEnemy += HandleHitEnemy;
-        eventBus.OnPlayerAttackStart += HandleAttack;
+        eventBus.OnEnemyAttackStart += HandleAttack;
     }
 
     public void UnsubscribeFromBattleEvents(BattleEventBus eventBus)
@@ -64,7 +64,7 @@ public class EnemyCharacter : MonoBehaviour
         if (_animator == null) return;
 
         eventBus.OnHitEnemy -= HandleHitEnemy;
-        eventBus.OnPlayerAttackStart -= HandleAttack;
+        eventBus.OnEnemyAttackStart -= HandleAttack;
     }
 
     private void HandleAttack(DiceContext ctx)

@@ -31,6 +31,9 @@ public class BattleInitalizer : MonoBehaviour
         spawnPlayer = player;
         playerCharacter = spawnPlayer.GetComponentInChildren<PlayerCharacter>();
         BattleManager.instance.SetPlayerTransform(spawnPlayer.transform);
+
+        if (BattleManager.instance != null)
+            PlayerCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
     }
 
     public void SetSpawnEnemy(GameObject enemy)
@@ -82,6 +85,9 @@ public class BattleInitalizer : MonoBehaviour
     {
         if (UiController.instance != null)
             UiController.instance.SetRollBtnInteractable(false);
+
+        if (BattleManager.instance != null)
+            PlayerCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);
 
         if (BattleManager.instance != null)
             enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);

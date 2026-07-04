@@ -2604,7 +2604,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::TypeWriter
   text: {fileID: 1493998155}
-  delay: 0.05
+  delay: 0.1
 --- !u!1 &1506277478
 GameObject:
   m_ObjectHideFlags: 0

@@ -27,7 +27,7 @@ public class NormalDiceVFX : DiceVFXBase
                 else
                 {
                     ctx.Player.TakeDamage(damage);
-                    ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                    ctx.EventBus.TriggerHitPlayer(ctx, damage);
                 }
                 
             },

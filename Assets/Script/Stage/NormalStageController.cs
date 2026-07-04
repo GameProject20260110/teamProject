@@ -8,7 +8,6 @@ public class NormalStageController : BaseStageController
     [Header("노말 스테이지 인트로 연출")]
     [SerializeField] private RoundIntro stageStartEffect;
     [SerializeField] private CardAppearEffect cardAppearEffect;
-    [SerializeField] private RoundCharacter roundCharacter;
     [SerializeField] private CharacterAppearEffect playerEffect;
     [SerializeField] private CharacterAppearEffect enemyEffect;
 
