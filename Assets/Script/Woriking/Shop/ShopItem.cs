@@ -115,6 +115,7 @@ public abstract class ShopItem<T> : MonoBehaviour,
 
         if(holdProgressFill != null)
         {
+            holdProgressFill.transform.parent.SetAsLastSibling();
             holdProgressFill.fillAmount = 0f;
             holdProgressFill.gameObject.SetActive(true);
         }
