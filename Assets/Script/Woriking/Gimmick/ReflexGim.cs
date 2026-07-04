@@ -35,7 +35,7 @@ public class ReflexGim : GimmickSo
     {
         if (!ShouldActivate(ctx.battle.CurrentTurn)) return;
         ctx.Player.TakeDamage(reflectAmount);
-        ctx.EventBus.TriggerPlayerHit(ctx, reflectAmount);
+        ctx.EventBus.TriggerHitPlayer(ctx, reflectAmount);
     }
 
     public override string GetActiveDesc() => $"반사 {reflectAmount} 데미지";

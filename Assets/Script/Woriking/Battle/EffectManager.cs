@@ -25,9 +25,8 @@ public class EffectManager : MonoBehaviour
             onHit = () =>
             {
                 target.TakeDamageRaw(damage);
-                Debug.Log(target  + "," + damage + "," + ctx.IsPlayer);
 
-                if(ctx.IsPlayer) ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                if(ctx.IsPlayer) ctx.EventBus.TriggerHitPlayer(ctx, damage);
                 else ctx.EventBus.TriggerHitEnemy(ctx, damage);
                     
             },

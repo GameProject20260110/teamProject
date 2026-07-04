@@ -28,7 +28,7 @@ public class BattleEventBus
 
 
 
-    public void TriggerPlayerHit(DiceContext ctx, int damage) => OnPlayerHit?.Invoke(ctx, damage);
+    public void TriggerHitPlayer(DiceContext ctx, int damage) => OnPlayerHit?.Invoke(ctx, damage);
     public void TriggerHitEnemy(DiceContext ctx, int damage) => OnHitEnemy?.Invoke(ctx, damage);
 
     public void TriggerEnemyDead(BattleContext ctx) => OnEnemyDead?.Invoke(ctx);

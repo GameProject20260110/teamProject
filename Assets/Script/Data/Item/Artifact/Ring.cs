@@ -26,7 +26,7 @@ public class Ring : BattleItemSo
     {
         int healAmount = Mathf.RoundToInt(ctx.Player.MaxHp * healPercent);
         ctx.Player.Heal(healAmount);
-
+        
         ArtifactUIController.instance.PlayEffect(this);
         PlayEffectAsync(healAmount).Forget();
     }

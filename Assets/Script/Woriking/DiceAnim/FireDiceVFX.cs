@@ -34,7 +34,7 @@ public class FireDiceVFX : DiceVFXBase
                 else
                 {
                     ctx.Player.TakeDamage(damage);
-                    ctx.EventBus.TriggerPlayerHit(ctx, damage);
+                    ctx.EventBus.TriggerHitPlayer(ctx, damage);
                 }
             },
             onEnd = () => completion.TrySetResult(true),

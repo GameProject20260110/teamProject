@@ -40,13 +40,13 @@ public class PlayerCharacter : MonoBehaviour
     public void SubscribeToBattleEvents(BattleEventBus eventBus)
     {
         eventBus.OnPlayerHit += HandleHitPlayer;
-        eventBus.OnEnemyAttackStart += HandleEnemyAttack;
+        eventBus.OnPlayerAttackStart += HandleEnemyAttack;
     }
 
     public void UnsubscribeFromBattleEvents(BattleEventBus eventBus)
     {
         eventBus.OnPlayerHit -= HandleHitPlayer;
-        eventBus.OnEnemyAttackStart -= HandleEnemyAttack;
+        eventBus.OnPlayerAttackStart -= HandleEnemyAttack;
     }
 
     private void HandleEnemyAttack(DiceContext ctx)
