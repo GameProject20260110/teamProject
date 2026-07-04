@@ -14,6 +14,7 @@ public abstract class BaseStageController : MonoBehaviour
     [SerializeField] protected float fadeDuration = 0.4f;
     [SerializeField] protected float interval = 0.17f;
     [SerializeField] protected DiceSpawnAnimation diceSpawnAnimation;
+    
 
     [Header("∞‘¿”UI")]
     [SerializeField] protected CanvasGroup[] HideUIGroup;

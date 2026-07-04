@@ -5,8 +5,8 @@ using System.Collections.Generic;
 public class BossDataSo : BaseEnemyData
 {
     [Header("보스 설정")]
-    public Vector3 bossScale = new Vector3(0.42f, 0.42f, 1f);
-    public Vector3 spawnPosition = new Vector3(0, 1.3f, 0);
+    public Vector3 bossScale = new Vector3(0.85f, 0.85f, 1f);
+    public Vector3 spawnPosition = new Vector3(3.2f, 0, 0);
 
     [Header("기믹")]
     public bool hasGimmick;
@@ -15,16 +15,11 @@ public class BossDataSo : BaseEnemyData
     [Header("주사위 설정")]
     public DiceData[] dicePool;
 
-//<<<<<<< Updated upstream
-//    [Header("정렬")]
-//    public int sortingOrder = 0;
-//=======
     [Header("대사")]
     public string[] appearDialogues;
     public string battleDialogue;
 
     public List<GimmickSo> GimmickList => gimmickList;
-//>>>>>>> Stashed changes
 
     public void RegisterAllGimmicks(BattleEventBus bus)
     {
