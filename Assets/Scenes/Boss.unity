@@ -3725,14 +3725,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ad614382d83d4f840a2cc65fe3ce1119, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CardRevealAnimator
-  cardImage: {fileID: 329430534}
-  contentMask: {fileID: 1216429100}
-  buttons:
-  - {fileID: 675130106}
-  - {fileID: 1974601331}
-  fillDuration: 0.8
-  maskDuration: 2
-  buttonDelayMs: 500
+  cardGroup: {fileID: 0}
+  cardRect: {fileID: 0}
+  GoldText: {fileID: 0}
+  button: {fileID: 0}
+  fadeDuration: 0.8
+  UpOffset: 40
+  UpDuration: 0.4
+  DownDuration: 0.4
+  buttonDelay: 1000
 --- !u!1 &344892736
 GameObject:
   m_ObjectHideFlags: 0
@@ -11958,6 +11959,7 @@ MonoBehaviour:
   - {fileID: 1649409584}
   - {fileID: 455215297}
   - {fileID: 2071018666}
+  _placedDices: []
 --- !u!225 &671396163
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -19265,6 +19267,7 @@ MonoBehaviour:
   - {fileID: 679513753}
   - {fileID: 209049181}
   - {fileID: 849057159}
+  bossSpawnEffect: {fileID: 869116292}
   bossStageIntro: {fileID: 926248038}
 --- !u!1 &812174708
 GameObject:
@@ -25297,6 +25300,58 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Button
+--- !u!1 &869116290
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 869116291}
+  - component: {fileID: 869116292}
+  m_Layer: 0
+  m_Name: CharacterAppearEffect
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &869116291
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869116290}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1363101782}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &869116292
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 869116290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 90f4722e5ec864543b1f91f9128fdbe2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAppearEffect
+  characterPrefab: {fileID: 1674477809305831931, guid: f7c6b367c8d0a874bb4b1192545af35b, type: 3}
+  spawnPoint: {fileID: 1004092605}
+  startScale: 1.8
+  zoomDuration: 0.25
+  shakeDuration: 0.5
+  shakeStrength: 0.1
+  shakeVibrato: 8
+  isPlayer: 0
 --- !u!1 &872847137
 GameObject:
   m_ObjectHideFlags: 0
@@ -34502,6 +34557,7 @@ MonoBehaviour:
   - {fileID: 1214424072}
   - {fileID: 755165942}
   - {fileID: 1147162488}
+  _placedDices: []
 --- !u!1 &1214424071
 GameObject:
   m_ObjectHideFlags: 0
@@ -36336,6 +36392,7 @@ Transform:
   - {fileID: 1478319279}
   - {fileID: 2098489622}
   - {fileID: 669844171}
+  - {fileID: 869116291}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1378069333
@@ -36646,7 +36703,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleDataManager
   currentEnemyData: {fileID: 11400000, guid: ec47eadbe94124845a62b2bbf8a28529, type: 2}
-  isBossBattle: 0
+  isBossBattle: 1
   currentRewardData: {fileID: 11400000, guid: ce76f0f718cd0c44dabcaba08ffc6c50, type: 2}
 --- !u!4 &1398599313
 Transform:
@@ -36741,11 +36798,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyDeathSequence
   magicCircle: {fileID: 139526497}
-  enemyEffect: {fileID: 1405984105}
   burst: {fileID: 1062327100}
   canvasGroup: {fileID: 1405984104}
   battlecanvasGroup: {fileID: 487895555}
-  enemyImageGroup: {fileID: 889818004}
 --- !u!1 &1419491499
 GameObject:
   m_ObjectHideFlags: 0
@@ -57642,10 +57697,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::BattleInitalizer
   stageController: {fileID: 794785514}
-  enemyImage: {fileID: 722693364}
-  playerImage: {fileID: 0}
+  ClearAnim: {fileID: 0}
   spawnPlayer: {fileID: 0}
-  spawnEnemy: {fileID: 0}
+  spawnEnemy: {fileID: 1674477809305831931, guid: f7c6b367c8d0a874bb4b1192545af35b, type: 3}
 --- !u!4 &2024758280
 Transform:
   m_ObjectHideFlags: 0
@@ -63082,8 +63136,9 @@ MonoBehaviour:
   vsText: {fileID: 0}
   blueBackground: {fileID: 0}
   redBackground: {fileID: 0}
-  playerCharacter: {fileID: 0}
-  enemyCharacter: {fileID: 0}
+  playerSpawnPoint: {fileID: 0}
+  enemySpawnPoint: {fileID: 0}
+  playerIntroPrefab: {fileID: 0}
   impactFlash: {fileID: 0}
   energyBurst: {fileID: 0}
   oraAura: {fileID: 0}

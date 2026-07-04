@@ -3,9 +3,11 @@ using DG.Tweening;
 using System.Threading;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class BossStageController : BaseStageController
 {
+    [SerializeField] private CharacterAppearEffect bossSpawnEffect;
     [SerializeField] private BossStageIntro bossStageIntro;
     protected override async UniTask PlayIntroEffect(CancellationToken ct)
     {
@@ -14,17 +16,12 @@ public class BossStageController : BaseStageController
 
     protected override async UniTask FadeInEnemy(CancellationToken ct)
     {
-        var enemy = BattleInitalizer.instance.spawnEnemy;
-        if (enemy == null) return;
+        var bossData = BattleDataManager.instance.currentEnemyData as BossDataSo;
+        if (bossData == null || bossData.enemyPrefab == null) return;
 
-        var renderers = enemy.GetComponentsInChildren<SpriteRenderer>();
-        foreach (var sr in renderers)
-            sr.color = new Color(1, 1, 1, 0);
-
-        await UniTask.WhenAll(renderers.Select(sr => sr.DOFade(1f, 0.5f)
-            .SetEase(Ease.OutQuad)
-            .ToUniTask(TweenCancelBehaviour.Kill, ct))
-        ).AttachExternalCancellation(ct);
+        bossSpawnEffect.SetPrefab(bossData.enemyPrefab);
+        bossSpawnEffect.SetSpawnOverride(bossData.spawnPosition, bossData.bossScale);
+        await PlayEffectAsync(OnComplete => bossSpawnEffect.Play(OnComplete), ct);
     }
 
     protected override async UniTask FadeInGameUI(CancellationToken ct)

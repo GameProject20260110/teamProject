@@ -20,6 +20,10 @@ public class CharacterAppearEffect : MonoBehaviour
     [Header("타입")]
     [SerializeField] private bool isPlayer = true;
 
+    // 보스별 스폰 위치/크기 오버라이드
+    private Vector3? _overridePosition;
+    private Vector3? _overrideScale;
+
     private GameObject _spawnedCharacter;
     private Transform _targetTransform;
     private Sequence currentSequence;
@@ -29,14 +33,22 @@ public class CharacterAppearEffect : MonoBehaviour
     [ContextMenu("Test Play")]
     public void Play() => Play(null);
 
+    public void SetSpawnOverride(Vector3 position, Vector3 scale)
+    {
+        _overridePosition = position;
+        _overrideScale = scale;
+    }
+
     public void Play(Action onComplete)
     {
         if (_spawnedCharacter != null)
             Destroy(_spawnedCharacter);
 
+        Vector3 spawnPos = _overridePosition ?? (spawnPoint != null ? spawnPoint.position : Vector3.zero);
+
         _spawnedCharacter = Instantiate(
             characterPrefab,
-            spawnPoint.position,
+            spawnPos,
             Quaternion.identity
         );
         _targetTransform = _spawnedCharacter.transform;
@@ -49,8 +61,10 @@ public class CharacterAppearEffect : MonoBehaviour
         currentSequence?.Kill();
         _targetTransform.DOKill();
 
+        Vector3 finalScale = _overrideScale ?? Vector3.one;
+
         // 초기 상태
-        _targetTransform.localScale = Vector3.one * startScale;
+        _targetTransform.localScale = finalScale * startScale;
         foreach (var sr in renderers)
             sr.color = new Color(sr.color.r, sr.color.g, sr.color.b, 0f);
 
@@ -67,7 +81,7 @@ public class CharacterAppearEffect : MonoBehaviour
             currentSequence.Join(sr.DOFade(1f, zoomDuration).SetEase(Ease.OutQuad));
 
         currentSequence.Join(
-            _targetTransform.DOScale(Vector3.one, zoomDuration).SetEase(Ease.OutBack)
+            _targetTransform.DOScale(finalScale, zoomDuration).SetEase(Ease.OutBack)
         );
 
         currentSequence.Join(
@@ -95,6 +109,9 @@ public class CharacterAppearEffect : MonoBehaviour
             else
                 BattleInitalizer.instance.SetSpawnEnemy(_spawnedCharacter);
             onComplete?.Invoke();
+
+            _overridePosition = null;
+            _overrideScale = null;
         });
     }
 
