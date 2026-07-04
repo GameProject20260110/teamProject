@@ -4,37 +4,79 @@ using System.Threading;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine.Playables;
-using Unity.VisualScripting;
+using Unity.Cinemachine;
+using UnityEngine.Rendering;
+using UnityEngine.Rendering.Universal;
+using System.Runtime.InteropServices;
 
 public class BossStageIntro : MonoBehaviour
 {
     public static BossStageIntro instance;
 
     [SerializeField] private GameObject bossIntroCanvas;
-    [SerializeField] private Transform bossTarget;
     [SerializeField] private CanvasGroup fadePanel; // 임시
-    [SerializeField] private Image wipePanel;
+    
 
     [Header("배경")]
     [SerializeField] private GameObject normalBackground;
+    [SerializeField] private GameObject normalCrackBackground;
     [SerializeField] private GameObject bossBackground;
+
+    [Header("공")]
+    [SerializeField] private GameObject ballObject;
+
+    [Header("충돌 연출")]
+    [SerializeField] private CanvasGroup whiteFlashPanel;
+    [SerializeField] private ParticleSystem crackParticle;
+
+    [Header("와이프")]
+    [SerializeField] private Image wipePanel;
+
+    [Header("충돌 설정")]
+    [SerializeField] private float flashDuration = 0.05f;
+    [SerializeField] private float flashOutDuration = 0.15f;
+    [SerializeField] private float impulseForce = 3f;
 
     [Header("타임라인")]
     [SerializeField] private PlayableDirector director;
+    [SerializeField] private PlayableAsset bossIntroTimeline;
 
-    [Header("playableAsset")]
-    [SerializeField] private PlayableAsset bossIntro01;
+    [Header("카메라")]
+    [SerializeField] private CinemachineCamera cutsceneCam;
+    [SerializeField] private CinemachineCamera defaultCam;
 
+    [Header("Bloom 제어")]
+    [SerializeField] private Volume cutsceneVolume;
+
+    [Header("보스")]
+    [SerializeField] private Transform bossTrans;
+    [SerializeField] private GameObject boss;
+
+    [Header("컷신 정리")]
+    [SerializeField] private GameObject blackExpandPanel;
+    [SerializeField] private GameObject spotLight;
+    [SerializeField] private GameObject explosionParticle;
+    [SerializeField] private GameObject letterBoxUI;
+
+    private CinemachineImpulseSource _impulseSource;
+    // 스킵
+    private CancellationTokenSource _skipCts;
+    private UniTaskCompletionSource _timelineTcs;
 
     private void Awake()
     {
         if (instance == null) instance = this;
         else Destroy(gameObject);
 
-        if (bossIntroCanvas != null)
-            bossIntroCanvas.SetActive(false);
+        _impulseSource = cutsceneCam?.GetComponent<CinemachineImpulseSource>();
 
-        bossBackground.SetActive(false);
+        if (bossIntroCanvas != null) bossIntroCanvas.SetActive(false);
+        if (bossBackground != null) bossBackground.SetActive(false);
+        if (normalCrackBackground != null) normalCrackBackground.SetActive(false);
+        if (ballObject != null) ballObject.SetActive(false);
+        if (cutsceneCam != null) cutsceneCam.Priority = 0;
+        if (defaultCam != null) defaultCam.Priority = 10;
+        
     }
 
 
@@ -43,41 +85,86 @@ public class BossStageIntro : MonoBehaviour
         var bossData = BattleDataManager.instance.currentEnemyData as BossDataSo;
         if (bossData == null) return;
 
-        // 1. 설정 버튼 비활성화 + 캔버스 활성화
+        _skipCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
+
         MainOption.instance?.SetSettingsButtonActive(false);
         bossIntroCanvas?.SetActive(true);
+        ballObject.SetActive(true);
 
-        // 2. BossIntro_01 재생
-        director.playableAsset = bossIntro01;
+        if (cutsceneCam != null) cutsceneCam.Priority = 20;
+        if (cutsceneVolume != null) cutsceneVolume.gameObject.SetActive(true);
+
+
+        // timeline 재생
+        director.playableAsset = bossIntroTimeline;
         director.Play();
-        await UniTask.WaitUntil(() => director.state == PlayState.Paused, cancellationToken: ct);
+        await WaitForTimelineSignal(_skipCts.Token);
 
+        if (bossData.appearDialogues != null && bossData.appearDialogues.Length > 0) 
+            await BossDialogueUI.instance.ShowDialogues(bossData.appearDialogues, bossTrans, _skipCts.Token);
 
-        // 박수 대기와 동시에 보스 등장
-        await UniTask.Delay(500, cancellationToken: ct);
+        
+        director.Play();
+        await WaitForTimelineSignal(_skipCts.Token);
 
-        // 모든 효과음/bgm off
-
-        // 보스 대사
-        if (bossData.appearDialogues != null && bossData.appearDialogues.Length > 0)
-        {
-            await BossDialogueUI.instance.ShowDialogues(bossData.appearDialogues, bossTarget, ct);
-        }
-
-        // 더치 앵글 + 줌 + 화면 흔들림(3회정도) / 마지막은 와이드되면서 원래 각도 복귀
-
-
-        // 와이프 + bgm 시작
         AudioManager.instance?.PlayBgm("Boss");
-        await WipeIn(ct);
-        await UniTask.Delay(1500, cancellationToken: ct);
-        await WipeOut(ct);
+        await WipeIn(_skipCts.Token);
 
+        OnBossStageReveal();
+
+        await UniTask.Delay(1500, cancellationToken: _skipCts.Token);
+        await WipeOut(_skipCts.Token);
         // 설정버튼 활성화 + 캔버스 비활성화
         MainOption.instance?.SetSettingsButtonActive(true);
         bossIntroCanvas.SetActive(false);
+
+        if (cutsceneCam != null) cutsceneCam.Priority = 0;
+        if (cutsceneVolume != null) cutsceneVolume.gameObject.SetActive(false);
     }
 
+    public void OnImpactSignal()
+    {
+        _impulseSource?.GenerateImpulse(impulseForce);
+        if (crackParticle != null) crackParticle.Play(); ;
+    }
+
+    public void SwapToBackground()
+    {
+        if (normalBackground != null) normalBackground.SetActive(false);
+        if (normalCrackBackground != null) normalCrackBackground.SetActive(true);
+        if (cutsceneCam != null) cutsceneCam.Target.TrackingTarget = null;
+    }
+
+    public void OnBossTransform()
+    {
+        if (ballObject != null) ballObject.SetActive(false);
+        if (boss != null) boss.SetActive(true);
+    }
+
+    public void OnTimelineComplete()
+    {
+        _timelineTcs?.TrySetResult();
+    }
+
+    public void OnDialoguePause()
+    {
+        director.Pause();
+        _timelineTcs?.TrySetResult();
+    }
+
+
+    public void OnBossStageReveal()
+    {
+        if (bossBackground != null) bossBackground.SetActive(true);
+        if (normalCrackBackground != null) normalCrackBackground.SetActive(false);
+
+        if (letterBoxUI != null) letterBoxUI.SetActive(false);
+        if (blackExpandPanel != null) blackExpandPanel.SetActive(false);
+        if (spotLight != null) spotLight.SetActive(false);
+        if (boss != null) boss.SetActive(false);
+        if (crackParticle != null) Destroy(crackParticle.gameObject);
+        if (explosionParticle != null) Destroy(explosionParticle.gameObject);
+    }
 
     private async UniTask WipeIn(CancellationToken ct)
     {
@@ -96,5 +183,20 @@ public class BossStageIntro : MonoBehaviour
         wipePanel.gameObject.SetActive(false);
     }
 
+    private UniTask WaitForTimelineSignal(CancellationToken ct)
+    {
+        _timelineTcs = new UniTaskCompletionSource();
+        ct.Register(() =>
+        {
+            _timelineTcs.TrySetCanceled();
+        });
+        return _timelineTcs.Task;
+    }
+
+    private void OnDestroy()
+    {
+        _skipCts?.Cancel();
+       _skipCts?.Dispose();
+    }
 
 }
