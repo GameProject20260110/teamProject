@@ -113,7 +113,7 @@ public class TitleManager : MonoBehaviour
             2f, 1f
         ).SetEase(Ease.InExpo));
 
-        seq.Append(darkOverlay.DOFade(0.863f, 1.5f)
+        seq.Append(darkOverlay.DOFade(1f, 1.5f)
             .SetEase(Ease.InQuad));
 
         seq.AppendCallback(() =>
