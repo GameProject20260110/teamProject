@@ -7,6 +7,8 @@ public class ShopDiceItem : ShopItem<DiceData>
         Data = data;
         if (data == null) return;
         img.sprite = data.skin.GetSprite(1);
+        if (nameText != null) nameText.text = data.abilityName;
+        if (goldText != null) goldText.text = data.gold.ToString();
     }
 
     protected override bool OnBuy()

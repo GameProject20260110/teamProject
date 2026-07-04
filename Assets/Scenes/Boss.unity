@@ -4852,7 +4852,6 @@ MonoBehaviour:
   inventoryUI: {fileID: 159763944}
   resultUI: {fileID: 1978101105}
   gameOverUI: {fileID: 174890769}
-  roundInfoText: {fileID: 1779552945}
   goldText: {fileID: 257948136}
   rollBtn: {fileID: 823676198}
   confirmBtn: {fileID: 823676198}
@@ -6309,7 +6308,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 8106786882045865019, guid: 3ae647d219454544fb2a30d58878a6e3, type: 3}
+  m_Sprite: {fileID: 6791504657886154005, guid: 8c1b7775bb2a60d468df612d87b1ce78, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

@@ -7,6 +7,9 @@ public class ShopBattleItem : ShopItem<BattleItemSo>
         Data = data;
         if (data == null) return;
         img.sprite = data.itemIcon;
+        if (nameText != null) nameText.text = data.itemName;
+        if (goldText != null) goldText.text = data.gold.ToString();
+
     }
 
     protected override bool OnBuy()

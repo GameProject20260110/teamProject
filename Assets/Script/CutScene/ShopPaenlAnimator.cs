@@ -63,7 +63,7 @@ public class ShopPanelAnimator : MonoBehaviour
     public async UniTask Hide()
     {
         //GameManager.instance.diceManager.SetupDiceBoard();
-        UiController.instance.RefreshInventory();
+        //UiController.instance.RefreshInventory();
         
         AudioManager.instance.PlayBgm("Battle", true);
 
@@ -75,7 +75,8 @@ public class ShopPanelAnimator : MonoBehaviour
         ribbonRect.DOAnchorPosY(500, 0.4f).SetEase(Ease.InBack);
         panelImage.DOFillAmount(0f, 0.4f).SetEase(Ease.InBack);
         await UniTask.Delay(400);
-        UiController.instance.backGround.SetActive(false);
+        
+        //UiController.instance.backGround.SetActive(false);
 
         shopCanvas.SetActive(false);
     }
