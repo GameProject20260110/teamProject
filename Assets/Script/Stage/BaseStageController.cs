@@ -95,13 +95,19 @@ public abstract class BaseStageController : MonoBehaviour
     protected virtual UniTask PlayBossGimmick(CancellationToken ct) => UniTask.CompletedTask;
     protected virtual UniTask FadeInPlayer(CancellationToken ct) => UniTask.CompletedTask;
 
-    public void NextTurn(int currentTurn = 1)
+    public UniTask NextTurn(int currentTurn = 1)
     {
-        NextTurnUI(cts.Token, currentTurn).Forget();
+        return NextTurnUI(cts.Token, currentTurn);
     }
 
     private async UniTask NextTurnUI(CancellationToken ct, int currentTurn = 1)
     {
+        await diceSpawnAnimation.PlayAsync(ct);
+
+        await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
+
+        await diceSpawnAnimation.PlayEnemyAsync(ct);
+
         stageIntroCanvas.gameObject.SetActive(true);
         await PlayEffectAsync(onComplete => turnEffect.Play(currentTurn, onComplete), ct);
         stageIntroCanvas.gameObject.SetActive(false);

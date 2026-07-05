@@ -28,11 +28,11 @@ public class FireDiceVFX : DiceVFXBase
             {
                 if (ctx.IsPlayer)
                 {
-                    ctx.Enemy.TakeDamage(damage);
+                    ctx.Enemy.TakeDamage(damage,ctx);
                 }
                 else
                 {
-                    ctx.Player.TakeDamage(damage);
+                    ctx.Player.TakeDamage(damage,ctx);
                 }
             },
             onEnd = () => completion.TrySetResult(true),
@@ -60,11 +60,11 @@ public class FireDiceVFX : DiceVFXBase
             {
                 if (ctx.IsPlayer)
                 {
-                    ctx.Player.ShieldUp(damage);
+                    ctx.Player.ShieldUp(damage,ctx);
                 }
                 else
                 {
-                    ctx.Enemy.ShieldUp(damage);
+                    ctx.Enemy.ShieldUp(damage, ctx);
                 }
             },
             onEnd = () => completion.TrySetResult(true),

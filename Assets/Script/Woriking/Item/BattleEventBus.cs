@@ -24,8 +24,8 @@ public class BattleEventBus
 
     // 아이템 이벤트
     public event Action<BattleContext> OnBattleEnd;
-    public event Func<BattleContext, UniTask> OnPlayerAttackEnd;
-    public event Func<BattleContext, UniTask> OnPlayerAttackBefore;
+    public event Func<DiceContext, UniTask> OnPlayerAttackEnd;
+    public event Func<DiceContext, UniTask> OnPlayerAttackBefore;
 
 
 
@@ -51,22 +51,22 @@ public class BattleEventBus
     // 아이템
     public void TriggerBattleEnd(BattleContext ctx) => OnBattleEnd?.Invoke(ctx);
 
-    public async UniTask TriggerPlayerAttackBefore(BattleContext ctx)
+    public async UniTask TriggerPlayerAttackBefore(DiceContext ctx)
     {
         if (OnPlayerAttackBefore == null) return;
 
         var handlers = OnPlayerAttackBefore.GetInvocationList()
-            .Cast<Func<BattleContext, UniTask>>();
+            .Cast<Func<DiceContext, UniTask>>();
 
         await UniTask.WhenAll(handlers.Select(h => h(ctx)));
     }
 
-    public async UniTask TriggerPlayerAttackAfter(BattleContext ctx)
+    public async UniTask TriggerPlayerAttackAfter(DiceContext ctx)
     {
         if (OnPlayerAttackEnd == null) return;
 
         var handlers = OnPlayerAttackEnd.GetInvocationList()
-            .Cast<Func<BattleContext, UniTask>>();
+            .Cast<Func<DiceContext, UniTask>>();
 
         await UniTask.WhenAll(handlers.Select(h => h(ctx)));
     }

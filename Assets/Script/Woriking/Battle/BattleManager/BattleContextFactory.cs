@@ -51,6 +51,17 @@ public class BattleContextFactory
 
     public DiceContext CreateDiceCtx(bool isPlayer, Dice dice, List<Dice> attack, List<Dice> defense)
     {
+        if (dice == null)
+        {
+            return new DiceContext
+            {
+                battle = CreateCtx(isPlayer),
+                baseDamage = 0,
+                diceState = null,
+                dices = new BattleDices { attackDices = attack, defenseDices = defense }
+            };
+        }
+
         return new DiceContext
         {
             battle = CreateCtx(isPlayer),

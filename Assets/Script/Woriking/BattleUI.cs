@@ -21,7 +21,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private GameObject damageTextPrefab;
     [SerializeField] private Transform playerDamageSpawn;
     [SerializeField] private Transform enemyDamageSpawn;
-    [SerializeField] private RoundController turnUI;
+    [SerializeField] private BaseStageController turnUI;
     [SerializeField] private float floatHeight = 100f;
     [SerializeField] private float floatDuration = 0.7f;
 

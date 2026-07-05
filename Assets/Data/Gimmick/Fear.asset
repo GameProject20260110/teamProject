@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Fear
   m_EditorClassIdentifier: Assembly-CSharp::FearGim
   gimmickName: "\uACF5\uD3EC"
-  description: "\uACF5\uD3EC"
+  description: "\uD50C\uB808\uC774\uC5B4\uC758 \uACF5\uACA9 -30%"
   icon: {fileID: 3040411234694419558, guid: 322b14a24f6a91b44afbf1baec62e450, type: 3}
   startTurn: 2
   activateInterval: 2

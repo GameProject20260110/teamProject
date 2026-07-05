@@ -24,7 +24,7 @@ public class Shoes : BattleItemSo
         bus.OnPlayerAttackEnd -= HandlePlayerAttackEnd;
     }
 
-    private async UniTask HandlePlayerAttackBefore(BattleContext ctx)
+    private async UniTask HandlePlayerAttackBefore(DiceContext ctx)
     {
         bonusDamage = Mathf.RoundToInt(ctx.Enemy.CurrentShield * damagePercent);
         turnOn = bonusDamage > 0;
@@ -35,7 +35,7 @@ public class Shoes : BattleItemSo
         await UniTask.Delay(200);
     }
 
-    private async UniTask HandlePlayerAttackEnd(BattleContext ctx)
+    private async UniTask HandlePlayerAttackEnd(DiceContext ctx)
     {
         if (turnOn)
         {
@@ -47,12 +47,12 @@ public class Shoes : BattleItemSo
         turnOn = true;
     }
 
-    private async UniTask PlayEffectAsync(BattleContext ctx, int damage)
+    private async UniTask PlayEffectAsync(DiceContext ctx, int damage)
     {
         await UniTask.Delay(200);
 
         BattleManager.instance?.ShowBonusDamageText(damage);
         AudioManager.instance?.PlaySfx("ShieldAttack");
-        ctx.Enemy.TakeDamageRaw(damage);
+        ctx.Enemy.TakeDamageRaw(damage, ctx);
     }
 }

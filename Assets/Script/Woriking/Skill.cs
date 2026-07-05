@@ -58,6 +58,8 @@ public class Skill : MonoBehaviour
                 // 애니메이션 이벤트로 타이밍 잡음
                 break;
         }
+
+        Debug.Log($"{transform.position}, {targetPosition}, {moveSpeed}");
     }
 
     private void Update()
