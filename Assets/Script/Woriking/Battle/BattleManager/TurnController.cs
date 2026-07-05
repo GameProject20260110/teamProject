@@ -78,12 +78,12 @@ public class TurnController
 
     private async UniTask ExecutePlayerAttack(CancellationToken ct)
     {
-        await _bm.EventBus.TriggerPlayerAttackBefore(_bm.CreateCtx());
+        await _bm.EventBus.TriggerPlayerAttackBefore(_bm.CreateDiceCtx(true, null, _bm.AttackDices, _bm.DefenseDices));
 
         foreach (var dice in _bm.AttackDices)
         {
             if (dice == null) continue;
-            _bm.EventBus.TriggerPlayerAttackStart(_bm.CreateDiceCtx(false, dice, _bm.AttackDices, _bm.DefenseDices));
+            _bm.EventBus.TriggerPlayerAttackStart(_bm.CreateDiceCtx(true, dice, _bm.AttackDices, _bm.DefenseDices));
             await UniTask.Delay(300, cancellationToken: ct);
 
             await dice.Glow.ShowGlowAsync(ct);
@@ -92,7 +92,7 @@ public class TurnController
             dice.Glow.HideGlow();
         }
 
-        await _bm.EventBus.TriggerPlayerAttackAfter(_bm.CreateCtx());
+        await _bm.EventBus.TriggerPlayerAttackAfter(_bm.CreateDiceCtx(false, null, _bm.AttackDices, _bm.DefenseDices));
     }
 
     private async UniTask ExecutePlayerDefense(CancellationToken ct)
