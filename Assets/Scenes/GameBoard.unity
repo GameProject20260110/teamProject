@@ -1478,8 +1478,8 @@ MonoBehaviour:
   gameOverPanel: {fileID: 712548582}
   anim: {fileID: 712548587}
   textGroup: {fileID: 1859505000}
-  targetScoreText: {fileID: 741732986}
-  LobbyBtn: {fileID: 354874717}
+  descText: {fileID: 0}
+  TitleBtn: {fileID: 0}
   RetryBtn: {fileID: 1007028285}
 --- !u!1 &183860985
 GameObject:
@@ -18245,7 +18245,7 @@ GameObject:
   - component: {fileID: 794785512}
   - component: {fileID: 794785514}
   m_Layer: 0
-  m_Name: RoundController
+  m_Name: StageController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -48342,7 +48342,7 @@ MonoBehaviour:
   damageTextPrefab: {fileID: 815641137313243952, guid: 2d3b055fd49a9e8429b8ef81f095cda9, type: 3}
   playerDamageSpawn: {fileID: 228663385}
   enemyDamageSpawn: {fileID: 853782679}
-  turnUI: {fileID: 794785512}
+  turnUI: {fileID: 794785514}
   floatHeight: 100
   floatDuration: 0.7
   shieldObject: {fileID: 679513749}

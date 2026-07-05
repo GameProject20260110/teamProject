@@ -105,7 +105,7 @@ public class GameManager : MonoBehaviour
         if(ResourceManager.instance != null)
             ResourceManager.instance.ResetData();
         
-        UiController.instance.ShowGameOverPanel(1);
+        UiController.instance.ShowGameOverPanel();
     }
 
     public void OnClickScoreConfirmButton()

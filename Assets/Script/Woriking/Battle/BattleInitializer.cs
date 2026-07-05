@@ -92,21 +92,42 @@ public class BattleInitalizer : MonoBehaviour
         if (BattleManager.instance != null)
             enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);
 
-        int currentHP = ResourceManager.instance != null ? ResourceManager.instance.heart : 0;
+        //int currentHP = ResourceManager.instance != null ? ResourceManager.instance.heart : 0;
 
         // 클리어 시 선택 보상
 
         if (isSuccess)
         {
-            // 보스전 클리어 후 맵 데이터 초기화
-            if (BattleDataManager.instance?.isBossBattle == true)
+            int goldReward = BattleDataManager.instance.GetGoldReward();
+            var rewardData = BattleDataManager.instance.currentRewardData;
+            bool wasBossBattle = BattleDataManager.instance?.isBossBattle == true;
+
+            if(wasBossBattle)
             {
                 MapManager.instance?.ClearMapSave();
                 BattleDataManager.instance?.Clear();
             }
-            ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
-            ClearAnim.gameObject.SetActive(true);
-            await ClearAnim.Reveal();
+
+            ResourceManager.instance.AddGold(goldReward);
+
+            if(wasBossBattle)
+            {
+                UiController.instance.ShowGameOverPanel(true);
+            }
+            else
+            {
+                RewardPanelUI.instance?.Show(rewardData);
+            }
+
+            //// 보스전 클리어 후 맵 데이터 초기화
+            //if (BattleDataManager.instance?.isBossBattle == true)
+            //{
+            //    MapManager.instance?.ClearMapSave();
+            //    BattleDataManager.instance?.Clear();
+            //}
+            //ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
+            //ClearAnim.gameObject.SetActive(true);
+            //await ClearAnim.Reveal();
         }
         else
         {
