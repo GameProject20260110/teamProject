@@ -68,6 +68,7 @@ public class BattleUI : MonoBehaviour
     // 데미지 텍스트
     public void ShowDamageText(int damage, bool isPlayer)
     {
+        Debug.Log(System.Environment.StackTrace);
         ShowFloatingText(damage, isPlayer, Color.red, "-");
     }
 
@@ -92,7 +93,14 @@ public class BattleUI : MonoBehaviour
         Transform spawnPos = isPlayer ? playerDamageSpawn : enemyDamageSpawn;
         if (spawnPos == null) return;
 
-        GameObject textObj = Instantiate(damageTextPrefab, spawnPos.position, Quaternion.identity, spawnPos);
+        GameObject textObj = ObjectPool.instance.Get(damageTextPrefab);
+        if (textObj == null) return;
+
+        RectTransform rt = textObj.GetComponent<RectTransform>();
+        rt.SetParent(spawnPos, false);
+        rt.anchoredPosition = Vector2.zero;
+        rt.localScale = Vector3.one;
+
         TextMeshProUGUI tmpText = textObj.GetComponent<TextMeshProUGUI>();
 
         if (tmpText != null)
@@ -100,10 +108,9 @@ public class BattleUI : MonoBehaviour
             tmpText.text = $"{prefix}{damage}";
             tmpText.color = color;
 
-            tmpText.transform.DOMoveY(floatHeight, floatDuration)
+            rt.DOAnchorPos(new Vector2(rt.anchoredPosition.x, floatHeight), floatDuration)
                 .SetRelative()
-                .SetEase(Ease.OutQuart)
-                .SetLink(textObj);
+                .SetEase(Ease.OutQuart);
 
             tmpText.DOFade(0f, floatDuration)
                 .SetEase(Ease.InQuad)

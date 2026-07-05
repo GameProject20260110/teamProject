@@ -7,39 +7,47 @@ public class Shoes : BattleItemSo
     [Range(0f, 1f)]
     public float damagePercent = 0.25f;
 
+    public bool turnOn = true;
+    private int bonusDamage = 0;
+
     public override void OnUse(DiceContext ctx) { }
 
     public override void OnEquip(BattleEventBus bus)
     {
-        //bus.OnPlayerAttackEnd += HandlePlayerAttackEnd;
-        bus.OnPlayerAttackBefore += HandlePlayerAttackBefore; //시작 전에 발동 시 이거 씀
+        bus.OnPlayerAttackBefore += HandlePlayerAttackBefore;
+        bus.OnPlayerAttackEnd += HandlePlayerAttackEnd;
     }
 
     public override void OnUnequip(BattleEventBus bus)
     {
-        //bus.OnPlayerAttackEnd -= HandlePlayerAttackEnd;
-        bus.OnPlayerAttackBefore += HandlePlayerAttackBefore;
+        bus.OnPlayerAttackBefore -= HandlePlayerAttackBefore;
+        bus.OnPlayerAttackEnd -= HandlePlayerAttackEnd;
     }
 
-    //private void HandlePlayerAttackEnd(BattleContext ctx)
-    //{
-    //    int bonusDamage = Mathf.RoundToInt(ctx.Enemy.CurrentShield * damagePercent);
-    //    if (bonusDamage <= 0) return;
-
-    //    ArtifactUIController.instance?.PlayEffect(this);
-    //    PlayEffectAsync(ctx, bonusDamage).Forget();
-    //}
-
-    private void HandlePlayerAttackBefore(BattleContext ctx)
+    private async UniTask HandlePlayerAttackBefore(BattleContext ctx)
     {
-        int bonusDamage = Mathf.RoundToInt(ctx.Enemy.CurrentShield * damagePercent);
-        if (bonusDamage <= 0) return;
+        bonusDamage = Mathf.RoundToInt(ctx.Enemy.CurrentShield * damagePercent);
+        turnOn = bonusDamage > 0;
 
-        ArtifactUIController.instance?.PlayEffect(this);
-        PlayEffectAsync(ctx, bonusDamage).Forget();
+        if (!turnOn) return;
+
+        ArtifactUIController.instance?.PlayTelegraph(this, true);
+        await UniTask.Delay(200);
     }
 
-    private async UniTaskVoid PlayEffectAsync(BattleContext ctx, int damage)
+    private async UniTask HandlePlayerAttackEnd(BattleContext ctx)
+    {
+        if (turnOn)
+        {
+            ArtifactUIController.instance?.PlayEffect(this);
+            await PlayEffectAsync(ctx, bonusDamage);
+            ArtifactUIController.instance?.PlayTelegraph(this, false);
+        }
+
+        turnOn = true;
+    }
+
+    private async UniTask PlayEffectAsync(BattleContext ctx, int damage)
     {
         await UniTask.Delay(200);
 

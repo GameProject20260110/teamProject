@@ -1,4 +1,6 @@
 using System;
+using Cysharp.Threading.Tasks;
+using System.Linq;
 
 public class BattleEventBus
 {
@@ -22,8 +24,8 @@ public class BattleEventBus
 
     // 아이템 이벤트
     public event Action<BattleContext> OnBattleEnd;
-    public event Action<BattleContext> OnPlayerAttackEnd;
-    public event Action<BattleContext> OnPlayerAttackBefore;
+    public event Func<BattleContext, UniTask> OnPlayerAttackEnd;
+    public event Func<BattleContext, UniTask> OnPlayerAttackBefore;
 
 
 
@@ -48,6 +50,24 @@ public class BattleEventBus
 
     // 아이템
     public void TriggerBattleEnd(BattleContext ctx) => OnBattleEnd?.Invoke(ctx);
-    public void TriggerPlayerAttackBefore(BattleContext ctx) => OnPlayerAttackBefore?.Invoke(ctx);
-    public void TriggerOnPlayerAttackEnd(BattleContext ctx) => OnPlayerAttackEnd?.Invoke(ctx); 
+
+    public async UniTask TriggerPlayerAttackBefore(BattleContext ctx)
+    {
+        if (OnPlayerAttackBefore == null) return;
+
+        var handlers = OnPlayerAttackBefore.GetInvocationList()
+            .Cast<Func<BattleContext, UniTask>>();
+
+        await UniTask.WhenAll(handlers.Select(h => h(ctx)));
+    }
+
+    public async UniTask TriggerPlayerAttackAfter(BattleContext ctx)
+    {
+        if (OnPlayerAttackEnd == null) return;
+
+        var handlers = OnPlayerAttackEnd.GetInvocationList()
+            .Cast<Func<BattleContext, UniTask>>();
+
+        await UniTask.WhenAll(handlers.Select(h => h(ctx)));
+    }
 }

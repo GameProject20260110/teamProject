@@ -57,8 +57,6 @@ public class SettingsManager : MonoBehaviour
 
     public void ApplySettings()
     {
-        Debug.Log($"[Settings] ApplySettings 호출 - AudioManager: {(AudioManager.instance == null ? "NULL" : "있음")}");
-
         if (AudioManager.instance == null) return;
 
         AudioManager.instance.SetMasterVolume(MasterVolume);
