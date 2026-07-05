@@ -18,6 +18,8 @@ public class ItemInventoryUI : MonoBehaviour
 
     public void Refresh()
     {
+        if (cardContainer == null) return;
+
         foreach (var card in _cardObjects)
             if (card != null) Destroy(card);
 

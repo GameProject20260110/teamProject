@@ -17,6 +17,7 @@ public class SceneController : MonoBehaviour
     public const string SceneMap = "Map";
     public const string ShopScene = "Shop";
     public const string BossScene = "Boss";
+    public const string EventScene = "Event";
 
     public bool isFirstEntry = true;
 
@@ -73,6 +74,7 @@ public class SceneController : MonoBehaviour
     public void LoadMapScene() => LoadAsync(SceneMap, false).Forget();
     public void LoadShopScene() => LoadAsync(ShopScene, false).Forget();
     public void LoadBossScene() => LoadAsync(BossScene, false).Forget();
+    public void LoadEventScene() => LoadAsync(EventScene, false).Forget();
 
     private async UniTask LoadMapFromTitleAsync()
     {

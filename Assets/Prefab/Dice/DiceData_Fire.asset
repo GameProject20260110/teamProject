@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b83e714b983844abd4da4a1520c267, type: 3}
   m_Name: DiceData_Fire
   m_EditorClassIdentifier: Assembly-CSharp::DiceData
-  multiBonusScore: 1
-  plusBonusScore: 0
-  type: 0
   diceNum: 2
   abilityName: "\uBD88 \uC8FC\uC0AC\uC704"
   aiRole: 0
   tier: 1
-  gold: 0
+  gold: 10
   sell: 0
-  Desc: 
+  Desc: "\uD654\uC0C1 \uD6A8\uACFC \uC801\uC6A9"
   effectDesc: 
   skin: {fileID: 11400000, guid: 19ee6f109c6b7504ba245cca99f19b9b, type: 2}
   dicePrefab: {fileID: 4049955241047962077, guid: 84b5809dab04feb478bdb89ab55cd4ef, type: 3}

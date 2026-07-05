@@ -295,6 +295,9 @@ public class MapManager : MonoBehaviour
                     }
                 }
                 break;
+            case NodeType.Event:
+                SceneController.instance?.LoadEventScene();
+                break;
         }
     }
     

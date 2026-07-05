@@ -96,7 +96,7 @@ public class PlayerShopManager : MonoBehaviour
         IsOpen = false;
     }
 
-    public async void CommitWithAnimation()
+    public async UniTask CommitWithAnimation()
     {
         Commit();
         await shopAnimator.Hide();

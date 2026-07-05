@@ -1,11 +1,13 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Threading;
 
 public abstract class ShopItem<T> : MonoBehaviour,
-    IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
+    IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler, IPointerDownHandler, IPointerUpHandler
     where T : class
 {
     [Header("References")]
@@ -13,12 +15,16 @@ public abstract class ShopItem<T> : MonoBehaviour,
     [SerializeField] protected RectTransform descPosition;
     //[SerializeField] private AudioClip PurchaseSound;
     [SerializeField] private string purchaseSoundKey;
-
+    [SerializeField] protected TextMeshProUGUI nameText;
+    [SerializeField] protected TextMeshProUGUI goldText;
+    [SerializeField] private Image holdProgressFill;
+    [SerializeField] private float holdDuration = 0.5f;
 
     public T Data { get; protected set; }
 
     protected bool isSold = false;
     private Vector3 originScale;
+    private CancellationTokenSource _holdCts;
 
     // 인벤토리 아이콘 위치 (외부에서 연결)
     public RectTransform inventoryIconRect { protected get; set; }
@@ -47,7 +53,7 @@ public abstract class ShopItem<T> : MonoBehaviour,
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (PopupManager.instance == null) return;
-        playPointerEnter().Forget();
+        PlayPointerEnter().Forget();
         OpenPopup();
     }
 
@@ -56,20 +62,83 @@ public abstract class ShopItem<T> : MonoBehaviour,
         if (PopupManager.instance == null) return;
         playPointerExit().Forget();
         PopupManager.instance.ClosePopup();
+        CancelHold();
+    }
+
+    public void OnPointerDown(PointerEventData eventData)
+    {
+        Debug.Log($"[ShopItem] OnPointerDown 호출됨, button :{eventData.button}, isSold: {isSold}");
+        if (isSold || eventData.button != PointerEventData.InputButton.Left) return;
+        _holdCts = new CancellationTokenSource();
+        HoldToBuyAsync(_holdCts.Token).Forget();
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        CancelHold();
     }
 
     public void OnPointerClick(PointerEventData eventData)
     {
         if (isSold) return;
 
-        if (eventData.button == PointerEventData.InputButton.Right)
-        {
-            TryBuyWithAnimation();
-            AudioManager.instance.PlaySfx(purchaseSoundKey);
-        }
+        //if (eventData.button == PointerEventData.InputButton.Right)
+        //{
+        //    TryBuyWithAnimation();
+        //    AudioManager.instance.PlaySfx(purchaseSoundKey);
+        //}
             
         if (eventData.button == PointerEventData.InputButton.Middle)
             OpenDescPopup();
+    }
+
+    #endregion
+
+
+    #region Hold To Buy
+
+    private void CancelHold()
+    {
+        _holdCts?.Cancel();
+        _holdCts?.Dispose();
+        _holdCts = null;
+        if(holdProgressFill != null)
+        {
+            holdProgressFill.fillAmount = 0f;
+            holdProgressFill.gameObject.SetActive(false);
+        }
+    }
+
+    private async UniTaskVoid HoldToBuyAsync(CancellationToken ct)
+    {
+        Debug.Log("[ShopItem] 홀딩 시작");
+
+        if(holdProgressFill != null)
+        {
+            holdProgressFill.transform.parent.SetAsLastSibling();
+            holdProgressFill.fillAmount = 0f;
+            holdProgressFill.gameObject.SetActive(true);
+        }
+
+        float elapsed = 0f;
+        while (elapsed < holdDuration)
+        {
+            if (ct.IsCancellationRequested)
+            {
+                Debug.Log("[ShopItem] 홀딩 취소됨");
+                return;
+            }
+                elapsed += Time.deltaTime;
+            if (holdProgressFill != null) holdProgressFill.fillAmount = elapsed / holdDuration;
+            await UniTask.Yield(PlayerLoopTiming.Update, ct);
+        }
+
+        if(ct.IsCancellationRequested) return;
+
+        Debug.Log("[SHopItem] 홀딩 완료 -> 구매 시도");
+        if(holdProgressFill != null) holdProgressFill.fillAmount = 0f;
+        TryBuyWithAnimation();
+        AudioManager.instance.PlaySfx(purchaseSoundKey);
     }
 
     #endregion
@@ -87,7 +156,7 @@ public abstract class ShopItem<T> : MonoBehaviour,
         PlayBuyAnimation().Forget();
     }
 
-    private async UniTaskVoid playPointerEnter()
+    private async UniTaskVoid PlayPointerEnter()
     {
         await transform.DOScale(originScale * 1.2f, 0.2f)
             .SetEase(Ease.Flash)

@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,11 +15,12 @@ public class ShopUIManager : MonoBehaviour
     [SerializeField] private ItemGachaTable itemGacha;
 
     [Header("UI")]
-    [SerializeField] private Button MapButton;
+    [SerializeField] private Button exitButton;
 
-    [Header("Inventory Icon")]
+    [Header("인벤토리")]
     [SerializeField] private RectTransform inventoryIconRect;
     [SerializeField] private Transform ShopCanvas;
+
 
     private void Awake()
     {
@@ -28,7 +30,10 @@ public class ShopUIManager : MonoBehaviour
 
     private void Start()
     {
-        MapButton.onClick.AddListener(() => SceneController.instance.LoadMapScene());
+        exitButton.onClick.AddListener(() =>
+        {
+            OnExitClicked().Forget();
+        });
     }
 
     public void Initialize()
@@ -72,5 +77,12 @@ public class ShopUIManager : MonoBehaviour
     {
         foreach (var item in battleItems)
             item.Setup(itemGacha.Roll());
+    }
+    
+    private async UniTaskVoid OnExitClicked()
+    {
+        exitButton.interactable = false;
+        await PlayerShopManager.instance.CommitWithAnimation();
+        SceneController.instance.LoadMapScene();
     }
 }

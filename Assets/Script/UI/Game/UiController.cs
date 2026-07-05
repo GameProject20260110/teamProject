@@ -13,7 +13,6 @@ public class UiController : MonoBehaviour
     public GameOverPanelUI gameOverUI;
 
     [Header("인게임 정보 UI (상시 표시)")]
-    public TextMeshProUGUI roundInfoText;
     public TextMeshProUGUI goldText;
 
     [Header("버튼")]
@@ -61,13 +60,11 @@ public class UiController : MonoBehaviour
     private void SubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged += UpdateGoldUi;
-        GameManager.instance.OnRoundAndGoalChanged += UpdateRoundAndGoalUi;
     }
 
     private void UnSubscribeToEvents()
     {
         GameManager.instance.OnGoldChanged -= UpdateGoldUi;
-        GameManager.instance.OnRoundAndGoalChanged -= UpdateRoundAndGoalUi;
     }
 
     private void UpdateGoldUi(int gold)
@@ -75,15 +72,6 @@ public class UiController : MonoBehaviour
         if(goldText != null)
         {
             goldText.text = gold.ToString("N0");
-        }
-    }
-
-
-    private void UpdateRoundAndGoalUi(int round)
-    { 
-        if (roundInfoText != null)
-        {
-            roundInfoText.SetText("{0}", round);
         }
     }
 

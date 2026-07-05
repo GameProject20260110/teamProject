@@ -32,7 +32,7 @@ MonoBehaviour:
       weight: 5
     - nodeType: 1
       weight: 5
-    - nodeType: 2
+    - nodeType: 4
       weight: 5
   - nodeTypeWeights:
     - nodeType: 0
@@ -51,7 +51,7 @@ MonoBehaviour:
       weight: 5
     - nodeType: 1
       weight: 5
-    - nodeType: 2
+    - nodeType: 4
       weight: 5
   - nodeTypeWeights:
     - nodeType: 0
@@ -70,6 +70,6 @@ MonoBehaviour:
       weight: 7
     - nodeType: 1
       weight: 3
-    - nodeType: 2
+    - nodeType: 4
       weight: 3
   bossEnemyData: {fileID: 11400000, guid: ec47eadbe94124845a62b2bbf8a28529, type: 2}

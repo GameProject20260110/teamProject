@@ -16,9 +16,9 @@ MonoBehaviour:
   abilityName: "\uC2A4\uCE74\uC774"
   aiRole: 1
   tier: 1
-  gold: 0
+  gold: 10
   sell: 0
-  Desc: 
+  Desc: "\uCCB4\uB825 \uD68C\uBCF5"
   effectDesc: 
   skin: {fileID: 11400000, guid: 6ce041719ccebf14392472690f7eb66f, type: 2}
   dicePrefab: {fileID: 4049955241047962077, guid: 5d75139d5283b61458be73faed8b52e3, type: 3}
