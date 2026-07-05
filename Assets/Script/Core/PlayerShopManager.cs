@@ -16,7 +16,6 @@ public class PlayerShopManager : MonoBehaviour
     [Header("Settings")]
     [SerializeField] private int baseRerollCost = 1;
     public int BaseRerollCost => baseRerollCost;
-    //[SerializeField] private AudioClip ShopBGM;
     [SerializeField] private string ShopBGMKey;
 
     [Header("UI References")]
@@ -70,7 +69,7 @@ public class PlayerShopManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError("shopAnimator 또는 gameObject가 null입니다!");
+            Debug.Log("shopAnimator 또는 gameObject가 null입니다!");
         }
     }
 
@@ -78,7 +77,7 @@ public class PlayerShopManager : MonoBehaviour
     {
         if (!IsOpen)
         {
-            Debug.LogWarning("Commit 호출됐지만 상점이 열려있지 않습니다.");
+            Debug.Log("Commit 호출됐지만 상점이 열려있지 않습니다.");
             return;
         }
 

@@ -78,6 +78,8 @@ public class TurnController
 
     private async UniTask ExecutePlayerAttack(CancellationToken ct)
     {
+        await _bm.EventBus.TriggerPlayerAttackBefore(_bm.CreateCtx());
+
         foreach (var dice in _bm.AttackDices)
         {
             if (dice == null) continue;
@@ -89,6 +91,8 @@ public class TurnController
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
         }
+
+        await _bm.EventBus.TriggerPlayerAttackAfter(_bm.CreateCtx());
     }
 
     private async UniTask ExecutePlayerDefense(CancellationToken ct)

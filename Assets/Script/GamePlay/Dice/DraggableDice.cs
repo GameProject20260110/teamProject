@@ -3,8 +3,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 
-public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler,
-    IPointerDownHandler
+public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
     public Shadow shadowEffect;
     public float dragScale = 1.2f;
@@ -103,6 +102,9 @@ public class DraggableDice : MonoBehaviour, IBeginDragHandler, IDragHandler, IEn
 
         if (_floatingEffect != null) _floatingEffect.enabled = true;
     }
+
+
+
 
     public void ReturnToOriginalSlot()
     {
