@@ -90,6 +90,7 @@ GameObject:
   - component: {fileID: 429246811831339751}
   - component: {fileID: -6346234430091568286}
   - component: {fileID: 5692319073335536534}
+  - component: {fileID: -8931834699206220190}
   m_Layer: 5
   m_Name: NormalDice
   m_TagString: Untagged
@@ -151,6 +152,7 @@ MonoBehaviour:
   shadowEffect: {fileID: 0}
   dragScale: 1.2
   dragScaleDuration: 0.1
+  _isDraggable: 0
 --- !u!114 &429246811831339751
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -195,6 +197,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::NormalDiceVFX
   burstPrefab: {fileID: 1138014108920318371, guid: 0e0e547d980a90743ba68187538a0e0c, type: 3}
   buffText: {fileID: 6302202792577197498}
+--- !u!114 &-8931834699206220190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4049955241047962077}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c131f72c1e16fda4ea17b9e54ffbdde5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DiceTooltipTrigger
+  diceData: {fileID: 11400000, guid: f096ee4cee8fab34a8e1e63a2b4cbb0d, type: 2}
 --- !u!1 &5886976930605974909
 GameObject:
   m_ObjectHideFlags: 0

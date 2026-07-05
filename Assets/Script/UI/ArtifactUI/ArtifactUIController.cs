@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Cysharp.Threading.Tasks;
 
 public class ArtifactUIController : MonoBehaviour
 {
@@ -50,11 +51,21 @@ public class ArtifactUIController : MonoBehaviour
         _icons.Add(iconUI);
     }
 
+    public void PlayTelegraph(BattleItemSo artifact, bool active)
+    {
+        Find(artifact).SetParticleActive(active);
+    }
+
     public void PlayEffect(BattleItemSo artifact)
     {
+        Find(artifact).PlayTriggerEffect();
+    }
+
+    private ArtifactIconUI Find(BattleItemSo artifact)
+    {
         int index = ItemManager.instance.artifacts.IndexOf(artifact);
-        if (index < 0 || index >= _icons.Count) return;
-        _icons[index].PlayTriggerEffect();
+        if (index < 0 || index >= _icons.Count) return null;
+        else return _icons[index];
     }
 
     public void PlayHealParticle()

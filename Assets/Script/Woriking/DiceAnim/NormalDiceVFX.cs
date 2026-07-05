@@ -22,12 +22,10 @@ public class NormalDiceVFX : DiceVFXBase
                 if (ctx.IsPlayer)
                 {
                     ctx.Enemy.TakeDamage(damage);
-                    ctx.EventBus.TriggerHitEnemy(ctx, damage);
                 }
                 else
                 {
                     ctx.Player.TakeDamage(damage);
-                    ctx.EventBus.TriggerHitPlayer(ctx, damage);
                 }
                 
             },
@@ -58,12 +56,10 @@ public class NormalDiceVFX : DiceVFXBase
                 if (ctx.IsPlayer)
                 {
                     ctx.Player.ShieldUp(damage);
-                    ctx.EventBus.TriggerPlayerDefend(ctx);
                 }
                 else
                 {
                     ctx.Enemy.ShieldUp(damage);
-                    ctx.EventBus.TriggerEnemyDefend(ctx);
                 }
                 
             },
