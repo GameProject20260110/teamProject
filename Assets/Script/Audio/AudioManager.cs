@@ -126,7 +126,7 @@ public class AudioManager : MonoBehaviour
     //    bgmEffect.enabled = isPlay;
     //}
 
-    public void PlaySfx(string key)
+    public void PlaySfx(string key, float pitch = 1f)
     {
         //if (sfxClips == null || (int)sfx >= sfxClips.Length) return;
         if (!sfxDictionary.TryGetValue(key, out AudioData data)) return;
@@ -145,6 +145,7 @@ public class AudioManager : MonoBehaviour
             channelIndex = loopIndex;
             sfxPlayer[loopIndex].clip = data.clip;
             sfxPlayer[loopIndex].volume = data.volume;
+            sfxPlayer[loopIndex].pitch = pitch;
             sfxPlayer[loopIndex].Play();
             break;
         }

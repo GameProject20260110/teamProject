@@ -667,8 +667,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::MapIntroController
   darkOverlay: {fileID: 1672494848}
   NodeInfoImage: {fileID: 1348141642}
-  typeWriter: {fileID: 1493998157}
-  textGroup: {fileID: 871396112}
   mapMask: {fileID: 600247569}
   mapRoll: {fileID: 1619739056}
   mapRollRenderer: {fileID: 1619739057}
@@ -1073,7 +1071,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!225 &871396112
 CanvasGroup:
   m_ObjectHideFlags: 0

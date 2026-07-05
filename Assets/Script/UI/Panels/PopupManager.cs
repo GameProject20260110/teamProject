@@ -27,6 +27,8 @@ public class PopupManager : MonoBehaviour
     [Header("플레이어 정보")]
     public TextMeshProUGUI playerGold;
 
+    [SerializeField] private GameObject hoverHintText;
+
     [Header("기타")]
     //public GameObject closePanel;
     public Button StartBtn;
@@ -59,6 +61,7 @@ public class PopupManager : MonoBehaviour
     private void Start()
     {
         ClosePopup();
+        if (hoverHintText != null) hoverHintText.SetActive(true);
         if (playerGold != null)
         {
             int gold = PlayerShopManager.instance != null && PlayerShopManager.instance.IsOpen ? 
@@ -103,6 +106,7 @@ public class PopupManager : MonoBehaviour
 
     public void OpenPopup(DiceData data, RectTransform targetRect)
     {
+        if (hoverHintText != null) hoverHintText.SetActive(false);
         if (diceDesc == null) return;
         this.diceDesc.text = data.Desc;
         if (diceIcon != null) diceIcon.sprite = data.skin.GetSprite(1);
@@ -115,6 +119,7 @@ public class PopupManager : MonoBehaviour
 
     public void OpenPopup(BattleItemSo data, RectTransform targetRect)
     {
+        if (hoverHintText != null) hoverHintText.SetActive(false);
         if (itemDesc == null) return;
         this.itemDesc.text = data.itemDesc;
         if (itemIcon != null) itemIcon.sprite = data.itemIcon;
@@ -130,19 +135,20 @@ public class PopupManager : MonoBehaviour
         if(diceDesc != null) dicePopup.gameObject.SetActive(false);
         if(itemDesc != null) itemPopup.gameObject.SetActive(false);
         if (DescPopup != null) DescPopup.gameObject.SetActive(false);
+        if(hoverHintText != null) hoverHintText.SetActive(true);
     }
 
     private void UpdateGold(int gold) => playerGold.text = $"{gold}";
 
-    private Vector2 CalcLocalPosPopup(RectTransform targetRect)
-    {
-        Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
-        RectTransformUtility.ScreenPointToLocalPointInRectangle(
-            rootCanvas.GetComponent<RectTransform>(),
-            screenPos,
-            rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-            out Vector2 localPos
-        );
-        return localPos + new Vector2(targetRect.sizeDelta.x, 0);
-    }
+    //private Vector2 CalcLocalPosPopup(RectTransform targetRect)
+    //{
+    //    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
+    //    RectTransformUtility.ScreenPointToLocalPointInRectangle(
+    //        rootCanvas.GetComponent<RectTransform>(),
+    //        screenPos,
+    //        rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
+    //        out Vector2 localPos
+    //    );
+    //    return localPos + new Vector2(targetRect.sizeDelta.x, 0);
+    //}
 }
