@@ -7,7 +7,6 @@ using UnityEngine.Playables;
 using Unity.Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
-using System.Runtime.InteropServices;
 
 public class BossStageIntro : MonoBehaviour
 {
@@ -18,24 +17,8 @@ public class BossStageIntro : MonoBehaviour
     
 
     [Header("배경")]
-    [SerializeField] private GameObject normalBackground;
-    [SerializeField] private GameObject normalCrackBackground;
+    [SerializeField] private GameObject baseBackground;
     [SerializeField] private GameObject bossBackground;
-
-    [Header("공")]
-    [SerializeField] private GameObject ballObject;
-
-    [Header("충돌 연출")]
-    [SerializeField] private CanvasGroup whiteFlashPanel;
-    [SerializeField] private ParticleSystem crackParticle;
-
-    [Header("와이프")]
-    [SerializeField] private Image wipePanel;
-
-    [Header("충돌 설정")]
-    [SerializeField] private float flashDuration = 0.05f;
-    [SerializeField] private float flashOutDuration = 0.15f;
-    [SerializeField] private float impulseForce = 3f;
 
     [Header("타임라인")]
     [SerializeField] private PlayableDirector director;
@@ -48,20 +31,39 @@ public class BossStageIntro : MonoBehaviour
     [Header("Bloom 제어")]
     [SerializeField] private Volume cutsceneVolume;
 
-    [Header("보스")]
-    [SerializeField] private Transform bossTrans;
-    [SerializeField] private GameObject boss;
+    [Header("핸더랜드 연출")]
+    [SerializeField] private RectTransform trans1;
+    [SerializeField] private RectTransform trans2;
+    [SerializeField] private RectTransform trans3;
+    [SerializeField] private Image bossEyeSprite;
+    [SerializeField] private CanvasGroup bossEyeGroup;
+    [SerializeField] private int eyeAppearCount = 3;
+    [SerializeField] private float[] eyeSpriteSizes = { 300f, 500f, 800f };
+    [SerializeField] private float[] eyeFadeInDuration = { 0.3f, 0.35f, 0.45f };
+    [SerializeField] private float[] eyeHoldDuration = { 0.4f, 0.3f, 0.2f };
+    [SerializeField] private float[] eyeFadeOutDuration = { 0.3f, 0.35f, 0.45f };
+    [SerializeField] private float eyeShakeStrengh = 5f;
+    [SerializeField] private float eyeImpulseForce = 0.5f;
 
-    [Header("컷신 정리")]
-    [SerializeField] private GameObject blackExpandPanel;
-    [SerializeField] private GameObject spotLight;
-    [SerializeField] private GameObject explosionParticle;
-    [SerializeField] private GameObject letterBoxUI;
+    [Header("스포트라이트 + 백광")]
+    [SerializeField] private SpriteRenderer spotLight;
+    [SerializeField] private SpriteRenderer whiteFlashRenderer;
+    [SerializeField] private float spotLightExpandDuration = 1f;
+    [SerializeField] private float whiteFlashHoldDuration = 0.5f;
+    [SerializeField] private float whiteFlashFadeOutDuration = 0.4f;
+    [SerializeField] private float eyeToSpotlightDelaysMs = 300f;
+    [SerializeField] private float bloomIntersityDuringlash = 5f;
+
+    [Header("효과음")]
+    [SerializeField] private string spotLightSfxKey;
+    [SerializeField] private string laughSfxKey;
+    [SerializeField] private float[] laughPitches = { 1f, 1.15f, 1.3f };
 
     private CinemachineImpulseSource _impulseSource;
     // 스킵
     private CancellationTokenSource _skipCts;
-    private UniTaskCompletionSource _timelineTcs;
+    private RectTransform[] EyeTrans => new[] { trans1, trans2, trans3 };
+    private Bloom _bloom;
 
     private void Awake()
     {
@@ -72,11 +74,9 @@ public class BossStageIntro : MonoBehaviour
 
         if (bossIntroCanvas != null) bossIntroCanvas.SetActive(false);
         if (bossBackground != null) bossBackground.SetActive(false);
-        if (normalCrackBackground != null) normalCrackBackground.SetActive(false);
-        if (ballObject != null) ballObject.SetActive(false);
         if (cutsceneCam != null) cutsceneCam.Priority = 0;
         if (defaultCam != null) defaultCam.Priority = 10;
-        
+        if (cutsceneVolume != null) cutsceneVolume.profile.TryGet(out _bloom);
     }
 
 
@@ -89,31 +89,15 @@ public class BossStageIntro : MonoBehaviour
 
         MainOption.instance?.SetSettingsButtonActive(false);
         bossIntroCanvas?.SetActive(true);
-        ballObject.SetActive(true);
-
         if (cutsceneCam != null) cutsceneCam.Priority = 20;
         if (cutsceneVolume != null) cutsceneVolume.gameObject.SetActive(true);
+        AudioManager.instance.StopBgm();
 
-
-        // timeline 재생
-        director.playableAsset = bossIntroTimeline;
-        director.Play();
-        await WaitForTimelineSignal(_skipCts.Token);
-
-        if (bossData.appearDialogues != null && bossData.appearDialogues.Length > 0) 
-            await BossDialogueUI.instance.ShowDialogues(bossData.appearDialogues, bossTrans, _skipCts.Token);
-
-        
-        director.Play();
-        await WaitForTimelineSignal(_skipCts.Token);
-
+        await PlayMoveEyes(_skipCts.Token);
+        await UniTask.Delay(500, cancellationToken: ct);
+        await PlaySpotlightReveal(_skipCts.Token);
         AudioManager.instance?.PlayBgm("Boss");
-        await WipeIn(_skipCts.Token);
 
-        OnBossStageReveal();
-
-        await UniTask.Delay(1500, cancellationToken: _skipCts.Token);
-        await WipeOut(_skipCts.Token);
         // 설정버튼 활성화 + 캔버스 비활성화
         MainOption.instance?.SetSettingsButtonActive(true);
         bossIntroCanvas.SetActive(false);
@@ -122,76 +106,97 @@ public class BossStageIntro : MonoBehaviour
         if (cutsceneVolume != null) cutsceneVolume.gameObject.SetActive(false);
     }
 
-    public void OnImpactSignal()
+    private async UniTask PlayMoveEyes(CancellationToken ct)
     {
-        _impulseSource?.GenerateImpulse(impulseForce);
-        if (crackParticle != null) crackParticle.Play(); ;
-    }
-
-    public void SwapToBackground()
-    {
-        if (normalBackground != null) normalBackground.SetActive(false);
-        if (normalCrackBackground != null) normalCrackBackground.SetActive(true);
-        if (cutsceneCam != null) cutsceneCam.Target.TrackingTarget = null;
-    }
-
-    public void OnBossTransform()
-    {
-        if (ballObject != null) ballObject.SetActive(false);
-        if (boss != null) boss.SetActive(true);
-    }
-
-    public void OnTimelineComplete()
-    {
-        _timelineTcs?.TrySetResult();
-    }
-
-    public void OnDialoguePause()
-    {
-        director.Pause();
-        _timelineTcs?.TrySetResult();
-    }
-
-
-    public void OnBossStageReveal()
-    {
-        if (bossBackground != null) bossBackground.SetActive(true);
-        if (normalCrackBackground != null) normalCrackBackground.SetActive(false);
-
-        if (letterBoxUI != null) letterBoxUI.SetActive(false);
-        if (blackExpandPanel != null) blackExpandPanel.SetActive(false);
-        if (spotLight != null) spotLight.SetActive(false);
-        if (boss != null) boss.SetActive(false);
-        if (crackParticle != null) Destroy(crackParticle.gameObject);
-        if (explosionParticle != null) Destroy(explosionParticle.gameObject);
-    }
-
-    private async UniTask WipeIn(CancellationToken ct)
-    {
-        wipePanel.fillAmount = 0f;
-        wipePanel.gameObject.SetActive(true);
-        await wipePanel.DOFillAmount(1f, 0.4f)
-            .SetEase(Ease.OutQuad)
-            .ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
-    }
-
-    private async UniTask WipeOut(CancellationToken ct)
-    {
-        await wipePanel.DOFillAmount(0f, 0.4f)
-            .SetEase(Ease.InQuad)
-            .ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
-        wipePanel.gameObject.SetActive(false);
-    }
-
-    private UniTask WaitForTimelineSignal(CancellationToken ct)
-    {
-        _timelineTcs = new UniTaskCompletionSource();
-        ct.Register(() =>
+        bossEyeGroup.gameObject.SetActive(true);
+        var eyeTrans = EyeTrans;
+        for(int i = 0; i < eyeAppearCount; i++)
         {
-            _timelineTcs.TrySetCanceled();
-        });
-        return _timelineTcs.Task;
+            RectTransform targetPos = eyeTrans[i % eyeTrans.Length];
+
+            bossEyeSprite.rectTransform.position = targetPos.position;
+            bossEyeSprite.rectTransform.sizeDelta = Vector2.one * eyeSpriteSizes[i];
+            bossEyeGroup.alpha = 0f;
+
+            _impulseSource?.GenerateImpulse(eyeImpulseForce);
+            AudioManager.instance?.PlaySfx(laughSfxKey, laughPitches[i]);
+            await bossEyeGroup.DOFade(1f, eyeFadeInDuration[i]).SetEase(Ease.OutBack).ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
+
+            bossEyeSprite.rectTransform.DOShakePosition(eyeHoldDuration[i], eyeShakeStrengh);
+
+            await UniTask.Delay((int)(eyeHoldDuration[i] * 1000), cancellationToken: ct);
+
+            await bossEyeGroup.DOFade(0f, eyeFadeOutDuration[i]).SetEase(Ease.InBack).ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
+
+            await UniTask.Delay(1000, cancellationToken: ct);
+        }
+
+        bossEyeGroup.gameObject.SetActive(false);
     }
+
+    private async UniTask PlaySpotlightReveal(CancellationToken ct)
+    {
+        await UniTask.Delay((int)eyeToSpotlightDelaysMs, cancellationToken: ct);
+
+        float halfWorldWidth = Camera.main.orthographicSize * Camera.main.aspect;
+        float taregtWidth = halfWorldWidth * 2f;
+
+        float spotTargetScaleX = taregtWidth / spotLight.sprite.bounds.size.x;
+        float flashTargetScaleX = taregtWidth / whiteFlashRenderer.sprite.bounds.size.x;
+
+        spotLight.gameObject.SetActive(true);
+        whiteFlashRenderer.gameObject.SetActive(true);
+        AudioManager.instance.PlaySfx(spotLightSfxKey);
+        SetAlpha(whiteFlashRenderer, 0f);
+
+
+        await UniTask.Delay(1000, cancellationToken: ct);
+           
+        Sequence seq = DOTween.Sequence();
+        seq.Join(spotLight.transform.DOScaleX(spotTargetScaleX, spotLightExpandDuration).SetEase(Ease.OutQuad));
+        seq.Join(whiteFlashRenderer.transform.DOScaleX(flashTargetScaleX, spotLightExpandDuration).SetEase(Ease.OutQuad));
+        seq.Join(FadeSpriteRenderer(whiteFlashRenderer, 1f, spotLightExpandDuration));
+
+        if (_bloom != null)
+            seq.Join(DOTween.To(() => _bloom.intensity.value,
+                v => _bloom.intensity.value = v,
+                bloomIntersityDuringlash, spotLightExpandDuration));
+
+        await seq.ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
+
+        await UniTask.Delay((int)(whiteFlashHoldDuration * 1000), cancellationToken: ct);
+
+        if (bossBackground != null) bossBackground.gameObject.SetActive(true);
+
+        Sequence fadeOutSeq = DOTween.Sequence();
+        fadeOutSeq.Join(FadeSpriteRenderer(whiteFlashRenderer, 0f, whiteFlashFadeOutDuration));
+        if(_bloom != null)
+            fadeOutSeq.Join(DOTween.To(() => _bloom.intensity.value,
+                v => _bloom.intensity.value = v,
+                0f, whiteFlashFadeOutDuration
+                ));
+
+        await fadeOutSeq.ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
+
+        spotLight.gameObject.SetActive(false);
+        whiteFlashRenderer.gameObject.SetActive(false);
+
+    }
+
+    private Tween FadeSpriteRenderer(SpriteRenderer sr, float targetAlpha, float duration)
+    {
+        return DOTween.To(() => sr.color.a,
+            a => SetAlpha(sr, a),
+            targetAlpha, duration);
+    }
+
+    private void SetAlpha(SpriteRenderer sr, float alpha)
+    {
+        Color c = sr.color;
+        c.a = alpha;
+        sr.color = c;
+    }
+
 
     private void OnDestroy()
     {
