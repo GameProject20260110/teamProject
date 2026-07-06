@@ -9,7 +9,11 @@ public class TitleController : MonoBehaviour
     void Start()
     {
         uiManager.InitUI();
-        StartBtn.onClick.AddListener(() => SceneController.instance.LoadMapFromTitle());
+        StartBtn.onClick.AddListener(() => 
+        {
+            TEMP_ClearMapSaveStart();
+            SceneController.instance.LoadMapFromTitle();
+        });
 
         if (AudioManager.instance != null)
         {
@@ -49,6 +53,11 @@ public class TitleController : MonoBehaviour
     public void OnClickCancelExit()
     {
         uiManager.CloseExitPanel();
+    }
+
+    private void TEMP_ClearMapSaveStart()
+    {
+        MapSaveLoad.instance?.Delete();
     }
 
 }

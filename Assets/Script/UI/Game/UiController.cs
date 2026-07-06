@@ -136,9 +136,9 @@ public class UiController : MonoBehaviour
         RefreshInventory();
     }
 
-    public void ShowGameOverPanel(int round)
+    public void ShowGameOverPanel(bool isSuccess = false)
     {
-        gameOverUI?.Show(round);
+        gameOverUI?.Show(isSuccess);
     }
 
     public void SetRollBtnInteractable(bool state)
@@ -159,7 +159,7 @@ public class UiController : MonoBehaviour
 
     public void OnClickGameEndBtn()
     {
-        gameOverUI?.Show(12);
+        gameOverUI?.Show();
     }
 
     public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)
