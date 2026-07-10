@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class SettingsManager : MonoBehaviour
 {
-    public static SettingsManager instance;
+    public static SettingsManager Instance;
 
     public int ResolutionIndex;
     public bool IsFullScreen;
@@ -17,20 +18,11 @@ public class SettingsManager : MonoBehaviour
     [SerializeField] private Button homeBtn;
     [SerializeField] private GameObject Panel;
 
-    private void Awake()
+    [Inject]
+    public void Construct()
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            LoadSettings();
-            Debug.Log("초기화 완료");
-        }
-        else
-        {
-            Destroy(gameObject);
-            return;
-        }
+        Instance = this;
+        LoadSettings();
     }
 
     public void SaveSettings()
@@ -47,23 +39,15 @@ public class SettingsManager : MonoBehaviour
     {
         ResolutionIndex = PlayerPrefs.GetInt("ResolutionIndex", 2);
         IsFullScreen = PlayerPrefs.GetInt("IsFullscreen", 1) == 1;
-        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 1f);
+        MasterVolume = PlayerPrefs.GetFloat("MasterVolume", 0f);
         MusicVolume = PlayerPrefs.GetFloat("MusicVolume", 0.6f);
         SfxVolume = PlayerPrefs.GetFloat("SfxVolume", 0.75f);
 
-        Debug.Log($"[Settings] 로드됨 - Master:{MasterVolume} BGM:{MusicVolume} SFX:{SfxVolume}");
         ApplySettings();
     }
 
     public void ApplySettings()
     {
-        if (AudioManager.instance == null) return;
-
-        AudioManager.instance.SetMasterVolume(MasterVolume);
-        AudioManager.instance.SetBgmVolume(MusicVolume);
-        AudioManager.instance.SetSfxVolume(SfxVolume);
-        Debug.Log($"[Settings] 볼륨 적용 완료");
-
         // 해상도 적용
         FullScreenMode mode = IsFullScreen ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
         switch (ResolutionIndex)

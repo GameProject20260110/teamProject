@@ -93,14 +93,10 @@ public class BattleUI : MonoBehaviour
         Transform spawnPos = isPlayer ? playerDamageSpawn : enemyDamageSpawn;
         if (spawnPos == null) return;
 
-        GameObject textObj = ObjectPool.instance.Get(damageTextPrefab);
+        GameObject textObj = UIPoolManager.instance.Get(damageTextPrefab, spawnPos, Vector2.zero);
         if (textObj == null) return;
 
         RectTransform rt = textObj.GetComponent<RectTransform>();
-        rt.SetParent(spawnPos, false);
-        rt.anchoredPosition = Vector2.zero;
-        rt.localScale = Vector3.one;
-
         TextMeshProUGUI tmpText = textObj.GetComponent<TextMeshProUGUI>();
 
         if (tmpText != null)
@@ -119,8 +115,8 @@ public class BattleUI : MonoBehaviour
         }
         else
         {
-            Destroy(textObj, 1f);
-        }   
+            UIPoolManager.instance.Return(textObj);
+        }
     }
 
     public void Show()

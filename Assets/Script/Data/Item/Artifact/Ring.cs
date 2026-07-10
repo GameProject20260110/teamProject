@@ -28,15 +28,16 @@ public class Ring : BattleItemSo
         ctx.Player.Heal(healAmount);
         
         ArtifactUIController.instance.PlayEffect(this);
-        PlayEffectAsync(healAmount).Forget();
+        PlayEffectAsync(healAmount, ctx).Forget();
     }
 
-    private async UniTaskVoid PlayEffectAsync(int healAmount)
+    private async UniTaskVoid PlayEffectAsync(int healAmount, BattleContext ctx)
     {
         await UniTask.Delay(200);
 
-        BattleManager.instance?.ShowHealText(healAmount);
-        AudioManager.instance?.PlaySfx("Heal");
-        ArtifactUIController.instance?.PlayHealParticle();
+        BattleManager.Instance?.ShowHealText(healAmount);
+        //AudioManager.instance?.PlaySfx("Heal");
+        //ArtifactUIController.instance?.PlayHealParticle();
+        EffectManager.Instance.PlayHealEffect(ctx.Positions.PlayerPosition);
     }
 }

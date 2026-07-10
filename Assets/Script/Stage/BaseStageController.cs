@@ -3,33 +3,40 @@ using DG.Tweening;
 using System;
 using System.Threading;
 using UnityEngine;
+using VContainer;
 
 public abstract class BaseStageController : MonoBehaviour
 {
-    public static BaseStageController instance;
-
     [Header("공통")]
     [SerializeField] protected Canvas stageIntroCanvas;
     [SerializeField] protected RoundIntroController turnEffect;
     [SerializeField] protected float fadeDuration = 0.4f;
     [SerializeField] protected float interval = 0.17f;
     [SerializeField] protected DiceSpawnAnimation diceSpawnAnimation;
-    
 
     [Header("게임UI")]
     [SerializeField] protected CanvasGroup[] HideUIGroup;
 
     protected CancellationTokenSource cts;
 
+    private BattleManager _battleManager;
+    private GameManager _gameManager;
+
+    [Inject]
+    public void Construct(BattleManager battleManager, GameManager gameManager)
+    {
+        _battleManager = battleManager;
+        _gameManager = gameManager;
+    }
+
     private void Awake()
     {
-        if (instance == null) instance = this;
         cts = new CancellationTokenSource();
     }
 
     protected void HideGameUI()
     {
-        foreach(var h in HideUIGroup)
+        foreach (var h in HideUIGroup)
         {
             h.alpha = 0f;
             h.interactable = false;
@@ -39,7 +46,7 @@ public abstract class BaseStageController : MonoBehaviour
 
     protected void ShowGameUI()
     {
-        foreach(var h in HideUIGroup)
+        foreach (var h in HideUIGroup)
         {
             h.interactable = true;
             h.blocksRaycasts = true;
@@ -57,22 +64,18 @@ public abstract class BaseStageController : MonoBehaviour
         {
             stageIntroCanvas.gameObject.SetActive(true);
             HideGameUI();
-
             await PlayIntroEffect(ct);
             await FadeInGameUI(ct);
             await FadeInPlayer(ct);
             await FadeInEnemy(ct);
             ShowGameUI();
-
-            if(diceSpawnAnimation != null)
+            if (diceSpawnAnimation != null)
             {
                 await diceSpawnAnimation.PlayAsync(ct);
                 await UniTask.Delay(200, cancellationToken: ct);
                 await diceSpawnAnimation.PlayEnemyAsync(ct);
             }
-
-            BattleManager.instance.TriggerFirstTurnStart();
-
+            _battleManager.TriggerFirstTurnStart();
             await PlayEffectAsync(onComplete => turnEffect.Play(1, onComplete), ct);
             await UniTask.Delay(200, cancellationToken: ct);
             await PlayBossGimmick(ct);
@@ -103,11 +106,8 @@ public abstract class BaseStageController : MonoBehaviour
     private async UniTask NextTurnUI(CancellationToken ct, int currentTurn = 1)
     {
         await diceSpawnAnimation.PlayAsync(ct);
-
         await UniTask.Delay(TimeSpan.FromSeconds(0.2f), cancellationToken: ct);
-
         await diceSpawnAnimation.PlayEnemyAsync(ct);
-
         stageIntroCanvas.gameObject.SetActive(true);
         await PlayEffectAsync(onComplete => turnEffect.Play(currentTurn, onComplete), ct);
         stageIntroCanvas.gameObject.SetActive(false);
@@ -122,7 +122,7 @@ public abstract class BaseStageController : MonoBehaviour
 
     protected async UniTask BeginStageLogic()
     {
-        await GameManager.instance.EnemyRoll();
+        await _gameManager.EnemyRoll();
     }
 
     protected async UniTask FadeIn(CanvasGroup cg, CancellationToken ct, float duration = -1f)

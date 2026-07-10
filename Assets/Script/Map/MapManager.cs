@@ -1,17 +1,13 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+using VContainer;
 
 public class MapManager : MonoBehaviour
 {
-    public static MapManager instance;
+    public static MapManager Instance { get; private set; }
     [Header("맵 데이터")]
     [SerializeField] private MapDataSo mapData;
-
-    [Header("프리팹")]
     [SerializeField] private MapNode nodePrefab;
-
-    [Header("컨테이너")]
     [SerializeField] private List<Transform> layerContainers;
     [SerializeField] private Transform lineContainer;
 
@@ -23,33 +19,49 @@ public class MapManager : MonoBehaviour
 
     [SerializeField] private string MapBgmKey;
 
-    private void Awake()
+    private BattleDataManager _battleDataManager;
+    private AudioManager _audioManager;
+    private SceneController _sceneController;
+    private MapPathDrawer _mapPathDrawer;
+    private MapSaveLoad _mapSaveLoad;
+    private MapCameraController _mapCameraController;
+    private MapIntroController _mapIntroController;
+
+    [Inject]
+    public void Construct(AudioManager audioManager, BattleDataManager battleDataManager, SceneController sceneController,
+        MapPathDrawer mapPathDrawer, MapSaveLoad mapSaveLoad, MapCameraController mapCameraController, MapIntroController mapIntroController)
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        _battleDataManager = battleDataManager;
+        _audioManager = audioManager;
+        _sceneController = sceneController;
+        _mapPathDrawer = mapPathDrawer;
+        _mapSaveLoad = mapSaveLoad;
+        _mapCameraController = mapCameraController;
+        _mapIntroController = mapIntroController;
+        Instance = this;
     }
 
     private void Start()
     {
-        if (MapSaveLoad.instance != null && MapSaveLoad.instance.HasSaveData())
+        if (_mapSaveLoad != null && _mapSaveLoad.HasSaveData())
             LoadMap();
         else
             GenerateMap();
 
-        if (MapCameraController.instance != null)
-            MapCameraController.instance.ResetZoom();
+        if (_mapCameraController != null)
+            _mapCameraController.ResetZoom();
 
-        if (SceneController.instance.isFirstEntry)
+        if (_sceneController.isFirstEntry)
         {   
             SetLineVisible(false);
-            MapIntroController.instancce.PlayIntro();            
+            _mapIntroController.PlayIntro();            
         }
         else
         {
-            MapIntroController.instancce.SkipIntro();
+            _mapIntroController.SkipIntro();
             SetLineVisible(true);
             MoveCameraToLayer(_currentLayer);
-            AudioManager.instance.PlayBgm(MapBgmKey);
+            _audioManager.PlayBgm(MapBgmKey);
         }
 
         if (MainOption.instance != null)
@@ -59,7 +71,7 @@ public class MapManager : MonoBehaviour
     public void StartIntro()
     {
         MoveCameraToLayer(_currentLayer);
-        AudioManager.instance.PlayBgm(MapBgmKey);
+        _audioManager.PlayBgm(MapBgmKey);
         SetLineVisible(true);
     }
 
@@ -104,20 +116,20 @@ public class MapManager : MonoBehaviour
                 Debug.Log($"노드 생성: {node.name}, id: {nodeData.id}");
             }
         }
-        MapPathDrawer.instance?.Initialize(lineContainer);
-        MapPathDrawer.instance?.DrawLines(_generateNodes, _spawnNode);
+        _mapPathDrawer?.Initialize(lineContainer);
+        _mapPathDrawer?.DrawLines(_generateNodes, _spawnNode);
 
         
         if(layerContainers.Count > 0)
         {
             float startY = layerContainers[_currentLayer].position.y;
-            MapCameraController.instance?.MoveToLayerImmediate(startY);
+            _mapCameraController?.MoveToLayerImmediate(startY);
         }
     }
 
     private void LoadMap()
     {
-        MapSaveData saveData = MapSaveLoad.instance.Load();
+        MapSaveData saveData = _mapSaveLoad.Load();
         if(saveData == null)
         {
             GenerateMap();
@@ -145,18 +157,18 @@ public class MapManager : MonoBehaviour
             node?.SetSelectable(true);
         }
 
-        MapPathDrawer.instance?.Initialize(lineContainer);
-        MapPathDrawer.instance?.DrawLines(_generateNodes, _spawnNode);
+        _mapPathDrawer?.Initialize(lineContainer);
+        _mapPathDrawer?.DrawLines(_generateNodes, _spawnNode);
 
         foreach(var pathLine in _pathLines)
         {
-            MapPathDrawer.instance?.RestorePathLine(pathLine.fromNodeId, pathLine.toNodeId, _spawnNode);
+            _mapPathDrawer?.RestorePathLine(pathLine.fromNodeId, pathLine.toNodeId, _spawnNode);
         }
 
         if(layerContainers.Count > 0 && _currentLayer < layerContainers.Count)
         {
             float startY = layerContainers[_currentLayer].position.y;
-            MapCameraController.instance?.MoveToLayerImmediate(startY);
+            _mapCameraController?.MoveToLayerImmediate(startY);
         }
     }
 
@@ -202,9 +214,9 @@ public class MapManager : MonoBehaviour
         node.SetVisited();
         SetNextLayerSelectable(nodeData);
 
-        if (_previousNodeId >= 0 && MapPathDrawer.instance != null)
+        if (_previousNodeId >= 0 && _mapPathDrawer != null)
         {
-            await MapPathDrawer.instance.DrawPathLineAnimated(_previousNodeId, nodeData.id, _spawnNode);
+            await _mapPathDrawer.DrawPathLineAnimated(_previousNodeId, nodeData.id, _spawnNode);
             _pathLines.Add(new PathLineData
             {
                 fromNodeId = _previousNodeId,
@@ -217,9 +229,9 @@ public class MapManager : MonoBehaviour
         _currentLayer++;
 
         List<int> visitedIds = _spawnNode.FindAll(n => n.IsVisited).ConvertAll(n => n.NodeId);
-        MapSaveLoad.instance?.Save(_generateNodes, visitedIds, _currentLayer, _previousNodeId, _pathLines);
+        _mapSaveLoad?.Save(_generateNodes, visitedIds, _currentLayer, _previousNodeId, _pathLines);
 
-        await MapCameraController.instance.ZoomToNode(node.transform.position);
+        await _mapCameraController.ZoomToNode(node.transform.position);
         HandleNodeType(nodeData.nodeType);
     }
 
@@ -236,7 +248,7 @@ public class MapManager : MonoBehaviour
     {
         if (layer >= layerContainers.Count) return;
         float targetY = layerContainers[layer].position.y;
-        MapCameraController.instance?.MoveToLayer(targetY);
+        _mapCameraController?.MoveToLayer(targetY);
     }
 
     private void HandleNodeType(NodeType nodeType)
@@ -270,16 +282,16 @@ public class MapManager : MonoBehaviour
                         Debug.LogWarning("적 데이터가 없습니다.");
                         return;
                     }
-                    BattleDataManager.instance?.SetBattleData(enemy);
+                    _battleDataManager?.SetBattleData(enemy);
                 }
-                SceneController.instance?.LoadGameScene();
+                _sceneController?.LoadGameScene();
                 break;
             case NodeType.Boss:
-                BattleDataManager.instance?.SetBossBattleData(mapData.bossEnemyData);
-                SceneController.instance?.LoadBossScene();
+                _battleDataManager?.SetBossBattleData(mapData.bossEnemyData);
+                _sceneController?.LoadBossScene();
                 break;
             case NodeType.Shop:
-                SceneController.instance.LoadShopScene();
+                _sceneController.LoadShopScene();
                 break;
             case NodeType.Random:
                 MapNodeData randomNodeData = _generateNodes.Find(n => n.id == _previousNodeId);
@@ -296,14 +308,14 @@ public class MapManager : MonoBehaviour
                 }
                 break;
             case NodeType.Event:
-                SceneController.instance?.LoadEventScene();
+                _sceneController?.LoadEventScene();
                 break;
         }
     }
     
     public void ClearMapSave()
     {
-        MapSaveLoad.instance?.Delete();
+        _mapSaveLoad?.Delete();
         _pathLines.Clear();
         _currentLayer = 0;
         _previousNodeId = -1;

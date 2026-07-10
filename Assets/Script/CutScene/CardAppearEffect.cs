@@ -2,6 +2,7 @@
 using UnityEngine.UI;
 using DG.Tweening;
 using System;
+using VContainer;
 
 public class CardAppearEffect : MonoBehaviour
 {
@@ -30,6 +31,15 @@ public class CardAppearEffect : MonoBehaviour
 
     private Vector3 originalScale;
     private Sequence currentSequence;
+
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(BattleDataManager battleDataManager, AudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
+
 
     void Awake()
     {
@@ -67,7 +77,7 @@ public class CardAppearEffect : MonoBehaviour
             cardRect.DOScale(originalScale, zoomDuration).SetEase(Ease.OutBack)
         );
         currentSequence.Join(
-            DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("Character"))
+            DOVirtual.DelayedCall(0f, () => _audioManager.PlaySfx("Character"))
         );
 
         if (flashImage != null)

@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 public class MapCameraController : MonoBehaviour
 {
-    public static MapCameraController instance;
+    public static MapCameraController Instance { get; private set; }
 
     [SerializeField] private SpriteRenderer background;
     [SerializeField] private Camera mapCamera;
@@ -28,10 +28,7 @@ public class MapCameraController : MonoBehaviour
 
     private void Awake()
     {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(gameObject);
+        Instance = this;
 
         if (background != null)
         {

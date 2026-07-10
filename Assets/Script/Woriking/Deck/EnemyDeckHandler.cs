@@ -1,29 +1,36 @@
 ﻿using UnityEngine;
+using VContainer;
 
 public class EnemyDeckHandler : MonoBehaviour
 {
-    public static EnemyDeckHandler instance;
-    void Awake() => instance = this;
+    private BattleDataManager _battleDataManager;
+    private DiceManager _diceManager;
+    private DiceSpawnAnimation _diceSpawnAnimation;
+
+    [Inject]
+    public void Construct(BattleDataManager battleDataManager, DiceManager diceManager, DiceSpawnAnimation diceSpawnAnimation)
+    {
+        _battleDataManager = battleDataManager;
+        _diceManager = diceManager;
+        _diceSpawnAnimation = diceSpawnAnimation;
+    }
 
     public void SetupEnemyDice()
     {
-        var baseData = BattleDataManager.instance.currentEnemyData;
-        DiceManager.instance.ClearEnemyAllSlots();
-
-        DiceSpawnAnimation.instance.ClearEnemyList();
-
+        var baseData = _battleDataManager.currentEnemyData;
+        _diceManager.ClearEnemyAllSlots();
+        _diceSpawnAnimation.ClearEnemyList();
         // 일반 몹
         if (baseData is EnemyData enemyData)
         {
             for (int i = 0; i < enemyData.dicePool.Length; i++)
             {
-                DiceManager.instance.EnemyPlaceDice(i, enemyData.dicePool[i]);
-
-                var dice = DiceManager.instance.enemyPanelDiceScript[i];
+                _diceManager.EnemyPlaceDice(i, enemyData.dicePool[i]);
+                var dice = _diceManager.enemyPanelDiceScript[i];
                 if (dice != null)
                 {
                     var particle = dice.GetComponentInChildren<ParticleSystem>();
-                    DiceSpawnAnimation.instance.RegisterEnemyDice(dice.gameObject, particle);
+                    _diceSpawnAnimation.RegisterEnemyDice(dice.gameObject, particle);
                 }
             }
         }
@@ -32,15 +39,14 @@ public class EnemyDeckHandler : MonoBehaviour
         {
             for (int i = 0; i < bossData.dicePool.Length; i++)
             {
-                DiceManager.instance.EnemyPlaceDice(i, bossData.dicePool[i]);
-
-                var dice = DiceManager.instance.enemyPanelDiceScript[i];
+                _diceManager.EnemyPlaceDice(i, bossData.dicePool[i]);
+                var dice = _diceManager.enemyPanelDiceScript[i];
                 if (dice != null)
                 {
                     var particle = dice.GetComponentInChildren<ParticleSystem>();
-                    DiceSpawnAnimation.instance.RegisterEnemyDice(dice.gameObject, particle);
+                    _diceSpawnAnimation.RegisterEnemyDice(dice.gameObject, particle);
                 }
-            }               
+            }
         }
     }
 }

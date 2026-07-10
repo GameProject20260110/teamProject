@@ -12,8 +12,8 @@ public class BurnEffect : StatusEffect
     public override async UniTask OnTurnStart(IDamageable target, DiceContext ctx)
     {
         var completion = new UniTaskCompletionSource<bool>();
-        AudioManager.instance.PlaySfx("Burn");
-        EffectManager.instance.PlayBurnEffect(target, value, ctx, () => completion.TrySetResult(true));
+        AudioManager.Instance.PlaySfx("Burn");
+        EffectManager.Instance.PlayBurnEffect(target, value, ctx, () => completion.TrySetResult(true));
         await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
     }
 }

@@ -57,8 +57,9 @@ public abstract class DiceVFXBase : MonoBehaviour
     protected void PlayBurst()
     {
         if (burstPrefab == null) return;
-        GameObject burst = ObjectPool.instance.Get(burstPrefab);
-        burst.transform.position = transform.position;
+
+        GameObject burst = UIPoolManager.instance.Get(burstPrefab, transform.parent, Vector2.zero);
+        //burst.transform.position = transform.position; // Get이 anchoredPosition=zero로 넣은 뒤, 정확한 위치로 재보정
         burst.transform.localScale = transform.localScale;
 
         Image img = burst.GetComponent<Image>();
@@ -67,6 +68,6 @@ public abstract class DiceVFXBase : MonoBehaviour
         Sequence seq = DOTween.Sequence();
         seq.Join(burst.transform.DOScale(transform.localScale * 2f, 0.4f).SetEase(Ease.OutQuad));
         seq.Join(img.DOFade(0f, 0.4f).SetEase(Ease.OutQuad));
-        seq.OnComplete(() => ObjectPool.instance.Return(burst));
+        seq.OnComplete(() => UIPoolManager.instance.Return(burst));
     }
 }

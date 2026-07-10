@@ -114,6 +114,6 @@ public class ItemCard : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void UseItem()
     {
         if (_item == null) return;
-        BattleManager.instance.UseItem(_item);
+        BattleManager.Instance.UseItem(_item);
     }
 }

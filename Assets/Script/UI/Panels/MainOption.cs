@@ -9,75 +9,58 @@ public class MainOption : MonoBehaviour
 
     [Header("설정UI")]
     public GameObject settingUI;
-
     [Header("버튼")]
     public Button optionBtn;
-
     [Header("패널")]
     public GameObject UIWindow = null;
     public GameObject BackPanel = null;
-
     [Header("탭 패널")]
     public GameObject gamePanel;
     public GameObject videoPanel;
     public GameObject audioPanel;
-
     public Button gamePanelBtn;
     public Button videoPanelBtn;
     public Button audioPanelBtn;
-
     [Header("비디오")]
     public TextMeshProUGUI screenModeLabel;
     private int _screenModeIndex = 0;
     private readonly string[] _screenModeNames = { "전체화면", "창모드" };
-
     public TextMeshProUGUI resolutionLabel;
     private int _resolutionIndex = 0;
     private readonly string[] _resolutionNames = { "1920 x 1080", "1600 x 900", "1280 x 720" };
-
     [Header("사운드")]
     public Slider masterSlider;
     public Slider bgmSlider;
     public Slider sfxSlider;
-
     public TextMeshProUGUI masterlabel;
     public TextMeshProUGUI bgmLabel;
     public TextMeshProUGUI sfxLabel;
-
     private bool _isUpdatingSlider = false;
 
     private void Awake()
     {
-        if(instance == null) instance = this;
-        
-        if(optionBtn != null)
-        {
+        if (instance == null) instance = this;
+        if (optionBtn != null)
             optionBtn.onClick.AddListener(ToggleSettingsPanel);
-        }
     }
 
     private void Start()
     {
-        Debug.Log($"[MainOption] masterSlider: {masterSlider}, SM: {SettingsManager.instance?.MasterVolume}");
-        if (SettingsManager.instance != null) PullFromSettings();
-        
+        if (SettingsManager.Instance != null) PullFromSettings();
         InitSliderListeners();
-
         RefreshLabel();
         ShowTab(0);
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
+        if (Input.GetKeyDown(KeyCode.Escape))
             ToggleSettingsPanel();
-        } 
     }
 
     private void InitSliderListeners()
     {
-        if(masterSlider)
+        if (masterSlider)
         {
             masterSlider.minValue = 0.0001f;
             masterSlider.maxValue = 1f;
@@ -99,13 +82,10 @@ public class MainOption : MonoBehaviour
 
     private void PullFromSettings()
     {
-        var sm = SettingsManager.instance;
-
+        var sm = SettingsManager.Instance;
         if (sm == null) return;
-
         _screenModeIndex = sm.IsFullScreen ? 0 : 1;
         _resolutionIndex = sm.ResolutionIndex;
-
         _isUpdatingSlider = true;
         if (masterSlider) masterSlider.value = sm.MasterVolume;
         if (bgmSlider) bgmSlider.value = sm.MusicVolume;
@@ -117,13 +97,10 @@ public class MainOption : MonoBehaviour
     {
         if (UIWindow == null) return;
         bool open = !UIWindow.activeSelf;
-        
-        
         if (open)
         {
             PullFromSettings();
             RefreshLabel();
-            
             UIWindow.SetActive(open);
             CanvasGroup cg = UIWindow.GetComponent<CanvasGroup>();
             cg.alpha = 0f;
@@ -131,13 +108,10 @@ public class MainOption : MonoBehaviour
         }
         else
         {
-            SettingsManager.instance.SaveSettings();
-
+            SettingsManager.Instance.SaveSettings();
             CanvasGroup cg = UIWindow.GetComponent<CanvasGroup>();
-            cg.DOFade(0f, 0.2f)
-                .SetEase(Ease.InQuad)
-                .OnComplete(() => UIWindow.SetActive(false));
-        }          
+            cg.DOFade(0f, 0.2f).SetEase(Ease.InQuad).OnComplete(() => UIWindow.SetActive(false));
+        }
     }
 
     public void ShowTab(int index)
@@ -149,80 +123,73 @@ public class MainOption : MonoBehaviour
 
     private void RefreshLabel()
     {
-        if(screenModeLabel) screenModeLabel.text = _screenModeNames[_screenModeIndex];
-        if(resolutionLabel) resolutionLabel.text = _resolutionNames[_resolutionIndex];
-
-        if(masterSlider && masterlabel)
-            masterlabel.text = Mathf.RoundToInt(masterSlider.value * 100) + "%";
-        if (bgmSlider && bgmLabel)
-            bgmLabel.text = Mathf.RoundToInt(bgmSlider.value * 100) + "%";
-        if (sfxSlider && sfxLabel)
-            sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100) + "%";
+        if (screenModeLabel) screenModeLabel.text = _screenModeNames[_screenModeIndex];
+        if (resolutionLabel) resolutionLabel.text = _resolutionNames[_resolutionIndex];
+        if (masterSlider && masterlabel) masterlabel.text = Mathf.RoundToInt(masterSlider.value * 100) + "%";
+        if (bgmSlider && bgmLabel) bgmLabel.text = Mathf.RoundToInt(bgmSlider.value * 100) + "%";
+        if (sfxSlider && sfxLabel) sfxLabel.text = Mathf.RoundToInt(sfxSlider.value * 100) + "%";
     }
 
     public void OnPlayerDeckResetClick()
     {
         Debug.Log("Reset Clicked");
-        if (PlayerDeck.instance != null && SceneController.instance != null)
+        if (PlayerDeck.Instance != null && SceneController.Instance != null)
         {
-            PlayerDeck.instance.DeleteSave();
+            PlayerDeck.Instance.DeleteSave();
             ToggleSettingsPanel();
-            SceneController.instance.ReloadCurrentScene();
+            SceneController.Instance.ReloadCurrentScene();
         }
-        else Debug.LogWarning($"SceneController: {SceneController.instance}");
+        else Debug.LogWarning($"SceneController: {SceneController.Instance}");
     }
 
     public void OnPlayerDataResetClick()
     {
         Debug.Log("Reset Clicked");
-        if (ResourceManager.instance != null && SceneController.instance != null)
+        if (ResourceManager.Instance != null && SceneController.Instance != null)
         {
-            ResourceManager.instance.ResetData();
+            ResourceManager.Instance.ResetData();
             ToggleSettingsPanel();
-            SceneController.instance.ReloadCurrentScene();
+            SceneController.Instance.ReloadCurrentScene();
         }
-        else Debug.LogWarning($"PlayerManager: {ResourceManager.instance}, SceneController: {SceneController.instance}");
+        else Debug.LogWarning($"PlayerManager: {ResourceManager.Instance}, SceneController: {SceneController.Instance}");
     }
 
     public void OnMapDataResetClick()
     {
         Debug.Log("Reset Clicked");
-        MapSaveLoad.instance?.Delete();
+        MapSaveLoad.Instance?.Delete();
         ToggleSettingsPanel();
-        SceneController.instance?.ReloadCurrentScene();
+        SceneController.Instance?.ReloadCurrentScene();
     }
 
     public void ScreenModePrev() => CycleScreenMode(-1);
     public void ScreenModNext() => CycleScreenMode(1);
-
     private void CycleScreenMode(int dir)
     {
         _screenModeIndex = (_screenModeIndex + dir + _screenModeNames.Length) % _screenModeNames.Length;
         ApplyScreenMode();
-        if(screenModeLabel) screenModeLabel.text = _screenModeNames[_screenModeIndex];
+        if (screenModeLabel) screenModeLabel.text = _screenModeNames[_screenModeIndex];
     }
 
     private void ApplyScreenMode()
     {
         bool full = _screenModeIndex == 0;
         Screen.fullScreenMode = full ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
-        SettingsManager.instance.IsFullScreen = full;
+        SettingsManager.Instance.IsFullScreen = full;
     }
 
     public void ResolutionPrev() => CycleResolution(-1);
     public void ResolutionNext() => CycleResolution(+1);
-
     private void CycleResolution(int dir)
     {
         _resolutionIndex = (_resolutionIndex + dir + _resolutionNames.Length) % _resolutionNames.Length;
         ApplyResolution();
-        if(resolutionLabel) resolutionLabel.text = _resolutionNames[_resolutionIndex];
-
+        if (resolutionLabel) resolutionLabel.text = _resolutionNames[_resolutionIndex];
     }
 
     private void ApplyResolution()
     {
-        SettingsManager.instance.ResolutionIndex = _resolutionIndex;
+        SettingsManager.Instance.ResolutionIndex = _resolutionIndex;
         switch (_resolutionIndex)
         {
             case 0: Screen.SetResolution(1920, 1080, Screen.fullScreenMode); break;
@@ -231,37 +198,33 @@ public class MainOption : MonoBehaviour
         }
     }
 
-
     private void OnMasterSliderChanged(float value)
     {
         if (_isUpdatingSlider) return;
-        AudioManager.instance.SetMasterVolume(value);
-        SettingsManager.instance.MasterVolume = value;
-        if(masterlabel) masterlabel.text = Mathf.RoundToInt(value * 100) + "%";
-
+        AudioManager.Instance.SetMasterVolume(value);
+        SettingsManager.Instance.MasterVolume = value;
+        if (masterlabel) masterlabel.text = Mathf.RoundToInt(value * 100) + "%";
     }
 
     private void OnBgmSliderChanged(float value)
     {
         if (_isUpdatingSlider) return;
-        AudioManager.instance.SetBgmVolume(value);
-        SettingsManager.instance.MusicVolume = value;
+        AudioManager.Instance.SetBgmVolume(value);
+        SettingsManager.Instance.MusicVolume = value;
         if (bgmLabel) bgmLabel.text = Mathf.RoundToInt(value * 100) + "%";
-
     }
 
     private void OnSfxSliderChanged(float value)
     {
         if (_isUpdatingSlider) return;
-        AudioManager.instance.SetSfxVolume(value);
-        SettingsManager.instance.SfxVolume = value;
+        AudioManager.Instance.SetSfxVolume(value);
+        SettingsManager.Instance.SfxVolume = value;
         if (sfxLabel) sfxLabel.text = Mathf.RoundToInt(value * 100) + "%";
-
     }
 
     public void SetSettingsButtonActive(bool active)
     {
-        if(settingUI != null) 
+        if (settingUI != null)
             settingUI.gameObject.SetActive(active);
     }
 }

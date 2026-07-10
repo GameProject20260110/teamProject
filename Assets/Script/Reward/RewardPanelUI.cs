@@ -3,11 +3,10 @@ using UnityEngine.UI;
 using System.Collections.Generic;
 using Cysharp.Threading.Tasks;
 using TMPro;
+using VContainer;
 
 public class RewardPanelUI : MonoBehaviour
 {
-    public static RewardPanelUI instance;
-
     [Header("UI")]
     [SerializeField] private GameObject rewardPanel;
     [SerializeField] private GameObject background;
@@ -32,14 +31,24 @@ public class RewardPanelUI : MonoBehaviour
     private List<GameObject> _spawnedCards = new List<GameObject>();
     private DiceData _preSelectedDice;
 
+    private PlayerDeck _playerDeck;
+    private ResourceManager _resourceManager;
+    private SceneController _sceneController;
+    private ItemManager _itemManager;
+
+    [Inject]
+    public void Construct(PlayerDeck playerDeck, ResourceManager resourceManager, SceneController sceneController, ItemManager itemManager)
+    {
+        _playerDeck = playerDeck;
+        _resourceManager = resourceManager;
+        _sceneController = sceneController;
+        _itemManager = itemManager;
+    }
+
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-
         rewardPanel.SetActive(false);
         diceRewardContainer.SetActive(false);
-
         skipButton?.onClick.AddListener(OnSkipButton);
         acquireButton?.onClick.AddListener(OnAcquireButton);
         diceRewardSkipButton?.onClick.AddListener(OnSkipButton);
@@ -142,9 +151,9 @@ public class RewardPanelUI : MonoBehaviour
     {
         if(preSelectedDice != null)
         {
-            bool replaced = PlayerDeck.instance.ReplaceDefaultDice(preSelectedDice);
+            bool replaced = _playerDeck.ReplaceDefaultDice(preSelectedDice);
             if (!replaced)
-                PlayerDeck.instance.AddDice(preSelectedDice);
+                _playerDeck.AddDice(preSelectedDice);
             Debug.Log($"{preSelectedDice.name} ¡÷ªÁ¿ß »πµÊ");
             return;
         }
@@ -152,23 +161,23 @@ public class RewardPanelUI : MonoBehaviour
         switch(reward.rewardType)
         {
             case RewardType.Gold:
-                if(ResourceManager.instance != null)
+                if(_resourceManager != null)
                 {
-                    ResourceManager.instance.AddGold(reward.goldAmount);
+                    _resourceManager.AddGold(reward.goldAmount);
                 }
                 break;
             case RewardType.HpPotion:
-                if(ResourceManager.instance != null )
+                if(_resourceManager != null )
                 {
-                    ResourceManager.instance.heart += reward.healAmount;
-                    ResourceManager.instance.Save();
+                    _resourceManager.heart += reward.healAmount;
+                    _resourceManager.Save();
                     Debug.Log($"{reward.healAmount} √º∑¬ »∏∫π");
                 }
                 break;
             case RewardType.Dice:
                 if(reward.dice != null)
                 {
-                    PlayerDeck.instance?.AddDice(reward.dice);
+                    _playerDeck?.AddDice(reward.dice);
                     Debug.Log($"{reward.dice.name} ¡÷ªÁ¿ß »πµÊ");
                 }
                 break;
@@ -176,7 +185,7 @@ public class RewardPanelUI : MonoBehaviour
             case RewardType.ActiveItem:
                 if (preSelecteItem != null)
                 {
-                    ItemManager.instance?.AddItem(preSelecteItem);
+                    _itemManager?.AddItem(preSelecteItem);
                     Debug.Log($"{preSelecteItem.itemName} æ∆¿Ã≈€ »πµÊ");
                 }
                 break;
@@ -210,6 +219,6 @@ public class RewardPanelUI : MonoBehaviour
 
     private void GoToMap()
     {
-        SceneController.instance?.LoadMapScene();
+        _sceneController?.LoadMapScene();
     }
 }

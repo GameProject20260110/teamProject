@@ -7,6 +7,6 @@ public class GoldEventSo : EventSo
 
     public override void Execute()
     {
-        ResourceManager.instance.gold += goldAmount;
+        ResourceManager.Instance.gold += goldAmount;
     }
 }

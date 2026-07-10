@@ -3,20 +3,31 @@ using DG.Tweening;
 using System.Threading;
 using System.Linq;
 using UnityEngine;
-using System;
+using VContainer;
 
 public class BossStageController : BaseStageController
 {
     [SerializeField] private CharacterAppearEffect bossSpawnEffect;
     [SerializeField] private BossStageIntro bossStageIntro;
+
+    private BattleDataManager _battleDataManager;
+
+    [Inject]
+    public void Construct(BattleDataManager battleDataManager, AudioManager audioManager, BattleInitalizer battleInitalizer)
+    {
+        _battleDataManager = battleDataManager;
+        bossSpawnEffect.SetDependencies(audioManager, battleInitalizer);
+    }
+
     protected override async UniTask PlayIntroEffect(CancellationToken ct)
     {
         await bossStageIntro.Play(ct);
+        
     }
 
     protected override async UniTask FadeInEnemy(CancellationToken ct)
     {
-        var bossData = BattleDataManager.instance.currentEnemyData as BossDataSo;
+        var bossData = _battleDataManager.currentEnemyData as BossDataSo;
         if (bossData == null || bossData.enemyPrefab == null) return;
 
         bossSpawnEffect.SetPrefab(bossData.enemyPrefab);
@@ -40,7 +51,7 @@ public class BossStageController : BaseStageController
 
     protected override UniTask PlayBossGimmick(CancellationToken ct)
     {
-        if (BattleDataManager.instance.currentEnemyData is BossDataSo bossData)
+        if (_battleDataManager.currentEnemyData is BossDataSo bossData)
             BossGimmickUIContainer.instance?.Setup(bossData.GimmickList);
 
         return UniTask.CompletedTask;

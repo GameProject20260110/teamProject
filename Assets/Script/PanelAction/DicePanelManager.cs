@@ -28,6 +28,7 @@ public class DicePanelManager : MonoBehaviour
     private void Awake()
     {
         if (instance == null) instance = this;
+        else Destroy(gameObject);
     }
 
     public void OnDicePickUp(Dice dice)

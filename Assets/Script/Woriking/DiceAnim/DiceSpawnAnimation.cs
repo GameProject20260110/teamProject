@@ -2,12 +2,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using VContainer;
 
 public class DiceSpawnAnimation : MonoBehaviour
 {
-    public static DiceSpawnAnimation instance;
-    //public AudioClip particleSFX;
-
     [System.Serializable]
     public class DiceEntry
     {
@@ -23,9 +21,12 @@ public class DiceSpawnAnimation : MonoBehaviour
     public float delayBetweenDice = 0.12f;
     public float fadeDuration = 0.15f;
 
-    void Awake()
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(AudioManager audioManager)
     {
-        instance = this;
+        _audioManager = audioManager;
     }
 
     public void RegisterDice(GameObject diceObject, ParticleSystem particle = null)
@@ -66,7 +67,6 @@ public class DiceSpawnAnimation : MonoBehaviour
                 cancellationToken: ct
             );
         }
-
         await UniTask.Delay(
             System.TimeSpan.FromSeconds(fadeDuration),
             cancellationToken: ct
@@ -89,7 +89,6 @@ public class DiceSpawnAnimation : MonoBehaviour
                 cancellationToken: ct
             );
         }
-
         await UniTask.Delay(
             System.TimeSpan.FromSeconds(fadeDuration),
             cancellationToken: ct
@@ -101,9 +100,9 @@ public class DiceSpawnAnimation : MonoBehaviour
         if (entry.dustParticle != null)
         {
             entry.dustParticle.Play();
-            AudioManager.instance.PlaySfx("particleSFX");
+            _audioManager.PlaySfx("particleSFX");
         }
-        
+
         await FadeInAsync(entry.diceObject);
     }
 
@@ -112,17 +111,14 @@ public class DiceSpawnAnimation : MonoBehaviour
         CanvasGroup cg = dice.GetComponent<CanvasGroup>();
         if (cg == null)
             cg = dice.AddComponent<CanvasGroup>();
-
         cg.alpha = 0f;
         float elapsed = 0f;
-
         while (elapsed < fadeDuration)
         {
             elapsed += Time.deltaTime;
             cg.alpha = Mathf.SmoothStep(0f, 1f, elapsed / fadeDuration);
             await UniTask.Yield();
         }
-
         cg.alpha = 1f;
     }
 

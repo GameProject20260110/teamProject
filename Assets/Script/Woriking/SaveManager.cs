@@ -1,24 +1,9 @@
 using UnityEngine;
 using System.IO;
 
-public class SaveManager : MonoBehaviour
+public class SaveManager
 {
-    public static SaveManager instance;
-
     private string savePath => Application.persistentDataPath;
-
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-    }
 
     public void Save<T>(T data, string fileName)
     {
@@ -27,9 +12,8 @@ public class SaveManager : MonoBehaviour
             string json = JsonUtility.ToJson(data, true);
             string path = Path.Combine(savePath, fileName);
             File.WriteAllText(path, json);
-            
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogError(e.Message);
         }
@@ -40,21 +24,14 @@ public class SaveManager : MonoBehaviour
         try
         {
             string path = Path.Combine(savePath, filename);
-
             if (File.Exists(path))
             {
                 string json = File.ReadAllText(path);
-                T data = JsonUtility.FromJson<T>(json);
-                Debug.Log($"로드 완료");
-                return data;
+                return JsonUtility.FromJson<T>(json);
             }
-            else
-            {
-                Debug.LogError($"파일 없음");
-                return new T();
-            }
+            return new T();
         }
-        catch(System.Exception e)
+        catch (System.Exception e)
         {
             Debug.LogError(e.Message);
             return new T();
@@ -63,8 +40,7 @@ public class SaveManager : MonoBehaviour
 
     public bool HasSaveFile(string fileName)
     {
-        string path = Path.Combine(savePath,fileName);
-        return File.Exists(path);
+        return File.Exists(Path.Combine(savePath, fileName));
     }
 
     public void Delete(string fileName)
@@ -72,17 +48,11 @@ public class SaveManager : MonoBehaviour
         try
         {
             string path = Path.Combine(savePath, fileName);
-
-            if (File.Exists(path))
-            {
-                File.Delete(path);
-                Debug.Log($"삭제 완료: {fileName}");
-            }
+            if (File.Exists(path)) File.Delete(path);
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"삭제 실패: {fileName}\n{e.Message}");
+            Debug.LogError(e.Message);
         }
     }
-
 }

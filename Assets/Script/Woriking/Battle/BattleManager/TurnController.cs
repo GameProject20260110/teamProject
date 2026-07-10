@@ -7,27 +7,34 @@ using UnityEngine;
 public class TurnController
 {
     private readonly BattleManager _bm;
+    private readonly DicePanelManager _dicePanelManager;
+    private readonly DeckManager _deckManager;
+    private readonly EnemyDeckHandler _enemyDeckHandler;
 
-    public TurnController(BattleManager battleManager)
+    public TurnController(
+        BattleManager battleManager,
+        DicePanelManager dicePanelManager,
+        DeckManager deckManager,
+        EnemyDeckHandler enemyDeckHandler)
     {
         _bm = battleManager;
+        _dicePanelManager = dicePanelManager;
+        _deckManager = deckManager;
+        _enemyDeckHandler = enemyDeckHandler;
     }
 
     public async UniTask RunOneTurnCycle()
     {
         var ct = _bm.BattleToken;
-
         try
         {
             // 1. 적 방어
             _bm.isPlayerTurn = false;
             await ExecuteEnemyDefense(ct);
             await UniTask.Delay(500, cancellationToken: ct);
-
             // 2. 내 방어
             await ExecutePlayerDefense(ct);
             await UniTask.Delay(500, cancellationToken: ct);
-
             // 3. 내 공격
             _bm.isPlayerTurn = true;
             await ExecutePlayerAttack(ct);
@@ -38,7 +45,6 @@ public class TurnController
                 return;
             }
             await UniTask.Delay(500, cancellationToken: ct);
-
             // 4. 적 공격
             _bm.isPlayerTurn = false;
             await ExecuteEnemyAttack(ct);
@@ -48,7 +54,6 @@ public class TurnController
                 return;
             }
             await UniTask.Delay(500, cancellationToken: ct);
-
             // 5. 턴 종료
             await ExecuteNewTurn(ct);
         }
@@ -63,7 +68,6 @@ public class TurnController
     }
 
     #region 페이즈 정보
-
     private async UniTask ExecuteEnemyDefense(CancellationToken ct)
     {
         foreach (var dice in _bm.DefenseEnemyDices)
@@ -79,19 +83,16 @@ public class TurnController
     private async UniTask ExecutePlayerAttack(CancellationToken ct)
     {
         await _bm.EventBus.TriggerPlayerAttackBefore(_bm.CreateDiceCtx(true, null, _bm.AttackDices, _bm.DefenseDices));
-
         foreach (var dice in _bm.AttackDices)
         {
             if (dice == null) continue;
             _bm.EventBus.TriggerPlayerAttackStart(_bm.CreateDiceCtx(true, dice, _bm.AttackDices, _bm.DefenseDices));
             await UniTask.Delay(300, cancellationToken: ct);
-
             await dice.Glow.ShowGlowAsync(ct);
             var ctx = _bm.CreateDiceCtx(true, dice, _bm.AttackDices, _bm.DefenseDices);
             await dice.Effect.OnAttack(ctx);
             dice.Glow.HideGlow();
         }
-
         await _bm.EventBus.TriggerPlayerAttackAfter(_bm.CreateDiceCtx(false, null, _bm.AttackDices, _bm.DefenseDices));
     }
 
@@ -114,7 +115,6 @@ public class TurnController
             if (dice == null) continue;
             _bm.EventBus.TriggerEnemyAttackStart(_bm.CreateDiceCtx(false, dice, _bm.AttackEnemyDices, _bm.DefenseEnemyDices));
             await UniTask.Delay(300, cancellationToken: ct);
-
             await dice.Glow.ShowGlowAsync(ct);
             var ctx = _bm.CreateDiceCtx(false, dice, _bm.AttackEnemyDices, _bm.DefenseEnemyDices);
             await dice.Effect.OnAttack(ctx);
@@ -126,45 +126,32 @@ public class TurnController
     {
         var playerCtx = _bm.CreateCtx(isPlayer: true);
         var enemyCtx = _bm.CreateCtx(isPlayer: false);
-
         var playerDiceCtx = new DiceContext { battle = playerCtx };
         var enemyDiceCtx = new DiceContext { battle = enemyCtx };
-
         await _bm.EnemyData.ProcessTurnStart(enemyDiceCtx);
         await _bm.PlayerData.ProcessTurnStart(playerDiceCtx);
-
         if (_bm.EnemyData.IsDead()) { await _bm.HandleBattleEnd(isSuccess: true); return; }
         if (_bm.PlayerData.IsDead()) { await _bm.HandleBattleEnd(isSuccess: false); return; }
-
         // 실드 리셋
         _bm.PlayerData.ResetShield();
         _bm.EnemyData.ResetShield();
         _bm.UpdateShieldUI();
-
         // VFX 리셋
         _bm.ResetAllDiceVFX();
         _bm.ClearEnemyDices();
-
-        DicePanelManager.instance?.ResetAllDice(DiceManager.instance.GetAllDice());
-
+        _dicePanelManager?.ResetAllDice(DiceManager.Instance.GetAllDice());
         // 주사위 세팅
-        DeckManager.instance.DrawDice();
-        EnemyDeckHandler.instance.SetupEnemyDice();
+        _deckManager.DrawDice();
+        _enemyDeckHandler.SetupEnemyDice();
 
-       
         // 턴 종료
         _bm.EventBus.TriggerTurnEnd(playerCtx);
         _bm.currentTurn++;
-
         // 턴 시작
         _bm.EventBus.TriggerTurnStart(_bm.CreateCtx());
-
         await _bm.UpdateTurnUI();
-
-        await GameManager.instance.EnemyRoll();
-
+        await GameManager.Instance.EnemyRoll();
         _bm.isPlayerTurn = true;
     }
-
     #endregion
 }

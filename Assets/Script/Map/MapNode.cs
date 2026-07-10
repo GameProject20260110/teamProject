@@ -1,6 +1,7 @@
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using VContainer;
 
 public class MapNode : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
@@ -48,9 +49,9 @@ public class MapNode : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         if (!isSelectable || isVisited) return;
-        if (MapCameraController.instance.IsDragging) return;
-        AudioManager.instance.PlaySfx("MapNode");
-        MapManager.instance?.OnNodeSelected(this);
+        if (MapCameraController.Instance.IsDragging) return;
+        AudioManager.Instance.PlaySfx("MapNode");
+        MapManager.Instance?.OnNodeSelected(this);
 
     }
 

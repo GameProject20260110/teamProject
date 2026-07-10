@@ -2,14 +2,24 @@ using TMPro;
 using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
+using VContainer;
 
 public class AttackPanelUI : MonoBehaviour
 {
     public TextMeshProUGUI attackValue;
     public Transform[] slots;
-
     public List<Dice> _placedDices = new List<Dice>();
     private int _cuurentAttackValue = 0;
+
+    private DicePanelManager _dicePanelManager;
+    private UiController _uiController;
+
+    [Inject]
+    public void Construct(DicePanelManager dicePanelManager, UiController uiController)
+    {
+        _dicePanelManager = dicePanelManager;
+        _uiController = uiController;
+    }
 
     public int GetTotal() => _cuurentAttackValue;
     public List<Dice> GetDices() => _placedDices;
@@ -20,12 +30,10 @@ public class AttackPanelUI : MonoBehaviour
         Transform emptySlot = FindEmptySlot();
         if (emptySlot == null) return false;
         if (_placedDices.Contains(dice)) return false;
-
         _placedDices.Add(dice);
         dice.transform.SetParent(emptySlot, false);
         dice.transform.localPosition = Vector3.zero;
         dice.transform.localScale = Vector3.one;
-
         UpdateValue();
         return true;
     }
@@ -39,7 +47,7 @@ public class AttackPanelUI : MonoBehaviour
 
     private Transform FindEmptySlot()
     {
-        foreach(var slot in slots)
+        foreach (var slot in slots)
         {
             if (slot.childCount == 0)
                 return slot;
@@ -50,27 +58,25 @@ public class AttackPanelUI : MonoBehaviour
     private void UpdateValue()
     {
         int newValue = 0;
-        foreach(var dice in _placedDices)
+        foreach (var dice in _placedDices)
         {
             newValue += dice.MyState.originalValue;
         }
-
         DOVirtual.Int(_cuurentAttackValue, newValue, 0.2f, (x) =>
         {
             attackValue.text = x.ToString();
         });
         _cuurentAttackValue = newValue;
-
         UpdateTurnEndButtonGlow();
     }
 
-    private void UpdateTurnEndButtonGlow() 
+    private void UpdateTurnEndButtonGlow()
     {
-        bool hasAnyDice = DicePanelManager.instance?.HasAnyDiceInPanel() ?? false;
+        bool hasAnyDice = _dicePanelManager != null && _dicePanelManager.HasAnyDiceInPanel();
         if (hasAnyDice)
-            UiController.instance?.ShowGlowImage();
-        else 
-            UiController.instance?.HideGlowImage();
+            _uiController.ShowGlowImage();
+        else
+            _uiController.HideGlowImage();
     }
 
     public void Clear()
@@ -85,7 +91,6 @@ public class AttackPanelUI : MonoBehaviour
                     leftover.SetParent(leftoverDice.OriginalSlot, false);
             }
         }
-
         _placedDices.Clear();
         _cuurentAttackValue = 0;
         attackValue.text = "0";

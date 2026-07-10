@@ -3,6 +3,7 @@ using UnityEngine.UI;
 using TMPro;
 using DG.Tweening;
 using System;
+using VContainer;
 
 public class RoundIntro : MonoBehaviour
 {
@@ -26,7 +27,7 @@ public class RoundIntro : MonoBehaviour
     [SerializeField] private GameObject playerIntroPrefab;
 
     [Header("VS 파티클")]
-    [SerializeField] private ParticleSystem energyBurst;
+    [SerializeField] private GameObject energyBurst;
     [SerializeField] private ParticleSystem oraAura;
 
     [Header("Dimmer")]
@@ -68,6 +69,16 @@ public class RoundIntro : MonoBehaviour
     private GameObject _spawnedPlayer;
     private GameObject _spawnedEnemy;
 
+    private BattleDataManager _battleDataManager;
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(BattleDataManager battleDataManager, AudioManager audioManager)
+    {
+        _battleDataManager = battleDataManager;
+        _audioManager = audioManager;
+    }
+
     void Awake()
     {
         if (visualsRoot != null) visualsRoot.SetActive(false);
@@ -105,7 +116,7 @@ public class RoundIntro : MonoBehaviour
             spear1Rect.DOAnchorPos(crossPoint, spear1Duration).SetEase(spearEase)
         );
         currentSequence.Join(
-                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("SlideIn"))
+                DOVirtual.DelayedCall(0f, () => _audioManager.PlaySfx("SlideIn"))
         );
 
         // 3. 창2
@@ -114,7 +125,7 @@ public class RoundIntro : MonoBehaviour
             spear2Rect.DOAnchorPos(crossPoint, spear2Duration).SetEase(spearEase)
         );
         currentSequence.Join(
-                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("SlideIn"))
+                DOVirtual.DelayedCall(0f, () => _audioManager.PlaySfx("SlideIn"))
         );
 
         // 4. 창 충돌 연출
@@ -176,7 +187,7 @@ public class RoundIntro : MonoBehaviour
                 FadeSpriteGroup(_spawnedEnemy, 1f, characterFadeInDuration * 0.5f)
             );
             currentSequence.Join(
-                DOVirtual.DelayedCall(0f, () => AudioManager.instance.PlaySfx("IntroCharacter"))
+                DOVirtual.DelayedCall(0f, () => _audioManager.PlaySfx("IntroCharacter"))
             );
         }
 
@@ -207,7 +218,7 @@ public class RoundIntro : MonoBehaviour
         if (playerIntroPrefab != null)
             _spawnedPlayer = Instantiate(playerIntroPrefab, playerSpawnPoint.position, playerIntroPrefab.transform.rotation);
 
-        var enemyPrefab = BattleDataManager.instance.GetEnemyIntroPrefab();
+        var enemyPrefab = _battleDataManager.GetEnemyIntroPrefab();
         if (enemyPrefab != null)
             _spawnedEnemy = Instantiate(enemyPrefab, enemySpawnPoint.position, enemyPrefab.transform.rotation);
     }
@@ -225,10 +236,10 @@ public class RoundIntro : MonoBehaviour
 
     private void OnTextLand()
     {
-
-        AudioManager.instance.PlaySfx("VS");
-
-        if (energyBurst != null) energyBurst.Play();
+        if (energyBurst != null)
+        {
+            WorldPoolManager.instance.Get(energyBurst, Vector3.zero, Quaternion.identity);
+        }
 
         RectTransform shakeTarget = visualsRoot.GetComponent<RectTransform>();
         if (shakeTarget != null)
@@ -255,8 +266,6 @@ public class RoundIntro : MonoBehaviour
 
         if (oraAura != null)
             oraAura.Stop(true, ParticleSystemStopBehavior.StopEmitting);
-        if (energyBurst != null)
-            energyBurst.Stop(true, ParticleSystemStopBehavior.StopEmitting);
     }
 
     private void SetInitialState()
@@ -289,8 +298,6 @@ public class RoundIntro : MonoBehaviour
             FadeSpriteGroup(_spawnedEnemy, 0f, 0f);
         }
 
-        if (energyBurst != null)
-            energyBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         if (oraAura != null)
             oraAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }
@@ -316,8 +323,6 @@ public class RoundIntro : MonoBehaviour
         if (_spawnedPlayer != null) _spawnedPlayer.transform.DOKill();
         if (_spawnedEnemy != null) _spawnedEnemy.transform.DOKill();
 
-        if (energyBurst != null)
-            energyBurst.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
         if (oraAura != null)
             oraAura.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
     }

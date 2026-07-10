@@ -1,13 +1,19 @@
 using UnityEngine;
+using VContainer;
 
 public class EnemyAI : MonoBehaviour
 {
-    public static EnemyAI instance;
-    void Awake() => instance = this;
+    private BattleDataManager _battleDataManager;
+
+    [Inject]
+    public void Construct(BattleDataManager battleDataManager)
+    {
+        _battleDataManager = battleDataManager;
+    }
 
     public void PlaceDice(Dice[] rolledDice)
     {
-        var strategy = BattleDataManager.instance.currentEnemyData.aiStrategy;
+        var strategy = _battleDataManager.currentEnemyData.aiStrategy;
         strategy.PlaceDice(rolledDice);
     }
 }

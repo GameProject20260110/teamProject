@@ -1,11 +1,10 @@
 ﻿using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 public class PlayerShopManager : MonoBehaviour
 {
-    public static PlayerShopManager instance;
-
     public int TempGold { get; private set; }
     public int RerollCount { get; private set; }
     public int RerollCost => BaseRerollCost + RerollCount;
@@ -29,30 +28,33 @@ public class PlayerShopManager : MonoBehaviour
 
     public bool IsOpen { get; private set; }
 
-    private void Awake()
+    private AudioManager _audioManager;
+    private ResourceManager _resourceManager;
+    private PlayerDeck _playerDeck;
+    private ItemManager _itemManager;
+
+    [Inject]
+    public void Construct(AudioManager audioManager, ResourceManager resourceManager, PlayerDeck playerDeck, ItemManager itemManager)
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        _audioManager = audioManager;
+        _resourceManager = resourceManager;
+        _playerDeck = playerDeck;
+        _itemManager = itemManager;
     }
 
     private void Start()
     {
         OpenWithAnimation();
-        AudioManager.instance.PlayBgm(ShopBGMKey);
+        _audioManager.PlayBgm(ShopBGMKey);
     }
 
     public void Open()
     {        
-        
-        var Resource = ResourceManager.instance;
-        var Deck = PlayerDeck.instance;
-        var Item = ItemManager.instance;
-
-        TempGold = Resource.gold;
+        TempGold = _resourceManager.gold;
         RerollCount = 0;
 
-        TempDices = new List<DiceData>(Deck.inventory);
-        TempItems = new List<BattleItemSo>(Item.items);
+        TempDices = new List<DiceData>(_playerDeck.inventory);
+        TempItems = new List<BattleItemSo>(_itemManager.items);
 
         IsOpen = true;
         OnGoldChanged?.Invoke(TempGold);
@@ -80,18 +82,12 @@ public class PlayerShopManager : MonoBehaviour
             Debug.Log("Commit 호출됐지만 상점이 열려있지 않습니다.");
             return;
         }
-
-        var Resource = ResourceManager.instance;
-        var Deck = PlayerDeck.instance;
-        var Item = ItemManager.instance;
-
-        Resource.gold = TempGold;
-        Deck.inventory = new List<DiceData>(TempDices);
-        Item.items = new List<BattleItemSo>(TempItems);
-
-        Resource.Save();
-        Deck.Save();
-        Item.Save();
+        _resourceManager.gold = TempGold;
+        _playerDeck.inventory = new List<DiceData>(TempDices);
+        _itemManager.items = new List<BattleItemSo>(TempItems);
+        _resourceManager.Save();
+        _playerDeck.Save();
+        _itemManager.Save();
         IsOpen = false;
     }
 
@@ -152,10 +148,7 @@ public class PlayerShopManager : MonoBehaviour
         return true;
     }
 
-    public void SetDiceAtSlot(int slotIndex, DiceData data)
-    { 
-        TempDices[slotIndex] = data;
-    }
+    public void SetDiceAtSlot(int slotIndex, DiceData data) => TempDices[slotIndex] = data;
 
     //---------- Private -------------
 

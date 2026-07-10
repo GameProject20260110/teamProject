@@ -7,6 +7,6 @@ public class HealEventSo : EventSo
 
     public override void Execute()
     {
-        ResourceManager.instance.heart += healAmount;
+        ResourceManager.Instance.heart += healAmount;
     }
 }

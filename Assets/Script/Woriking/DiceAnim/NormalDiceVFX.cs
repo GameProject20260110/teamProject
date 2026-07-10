@@ -7,12 +7,11 @@ public class NormalDiceVFX : DiceVFXBase
     {
         var completion = new UniTaskCompletionSource<bool>();
         var data = ctx.DiceData.effectData;
-        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
-
+        
         Vector3 startPos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
         Vector3 targetPos = ctx.IsPlayer ? ctx.Positions.EnemyPosition : ctx.Positions.PlayerPosition;
+        GameObject skill = WorldPoolManager.instance.Get(data.attackPrefab, targetPos, Quaternion.identity);
 
-        skill.transform.position = targetPos;
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = ctx.IsPlayer,
@@ -42,11 +41,10 @@ public class NormalDiceVFX : DiceVFXBase
         var completion = new UniTaskCompletionSource<bool>();
         var data = ctx.DiceData.effectData;
 
-        GameObject skill = ObjectPool.instance.Get(data.shieldPrefab);
-
         Vector3 pos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
+        
+        GameObject skill = WorldPoolManager.instance.Get(data.shieldPrefab, pos, Quaternion.identity);
 
-        skill.transform.position = pos;
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = ctx.IsPlayer,
