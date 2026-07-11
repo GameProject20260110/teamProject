@@ -1,24 +1,29 @@
 using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 public class DeckManager : MonoBehaviour
 {
-    public static DeckManager instance;
-
     [SerializeField] private int drawCount = 6;
-
     public List<DiceData> drawPile = new List<DiceData>();
     public List<DiceData> hand = new List<DiceData>();
     public List<DiceData> discardPile = new List<DiceData>();
 
-    void Awake()
+    private PlayerDeck _playerDeck;
+    private DiceManager _diceManager;
+    private DiceSpawnAnimation _diceSpawnAnimation;
+
+    [Inject]
+    public void Construct(PlayerDeck playerDeck, DiceManager diceManager, DiceSpawnAnimation diceSpawnAnimation)
     {
-        instance = this;
+        _playerDeck = playerDeck;
+        _diceManager = diceManager;
+        _diceSpawnAnimation = diceSpawnAnimation;
     }
 
     public void InitializeDeck()
     {
-        drawPile = new List<DiceData>(PlayerDeck.instance.inventory);
+        drawPile = new List<DiceData>(_playerDeck.inventory);
         Shuffle(drawPile);
         hand.Clear();
         discardPile.Clear();
@@ -27,9 +32,7 @@ public class DeckManager : MonoBehaviour
     public void DrawDice()
     {
         DiscardHand();
-
-        DiceSpawnAnimation.instance.ClearList();
-
+        _diceSpawnAnimation.ClearList();
         for (int i = 0; i < drawCount; i++)
         {
             if (drawPile.Count == 0)
@@ -37,24 +40,22 @@ public class DeckManager : MonoBehaviour
                 if (discardPile.Count == 0) break;
                 RefillFromDiscard();
             }
-
             DiceData data = drawPile[0];
             drawPile.RemoveAt(0);
             hand.Add(data);
-            DiceManager.instance.PlaceDice(i, data);
-
-            var dice = DiceManager.instance.panelDiceScript[i];
+            _diceManager.PlaceDice(i, data);
+            var dice = _diceManager.panelDiceScript[i];
             if (dice != null)
             {
                 var particle = dice.GetComponentInChildren<ParticleSystem>();
-                DiceSpawnAnimation.instance.RegisterDice(dice.gameObject, particle);
+                _diceSpawnAnimation.RegisterDice(dice.gameObject, particle);
             }
         }
     }
 
     public void DiscardHand()
     {
-        DiceManager.instance.ClearAllSlots();
+        _diceManager.ClearAllSlots();
         discardPile.AddRange(hand);
         hand.Clear();
     }

@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using VContainer;
 
 public class ItemInventoryUI : MonoBehaviour
 {
@@ -15,6 +16,14 @@ public class ItemInventoryUI : MonoBehaviour
 
     private List<GameObject> _cardObjects = new List<GameObject>();
     private Dictionary<int, ItemCard> _itemIndexToCard = new Dictionary<int, ItemCard>();
+
+    private ItemManager _itemManager;
+
+    [Inject]
+    public void Construct(ItemManager itemManager)
+    {
+        _itemManager = itemManager;
+    }
 
     public void Refresh()
     {
@@ -98,6 +107,6 @@ public class ItemInventoryUI : MonoBehaviour
 
     private List<BattleItemSo> GetItems()
     {
-        return ItemManager.instance?.items;
+        return _itemManager?.items;
     }
 }

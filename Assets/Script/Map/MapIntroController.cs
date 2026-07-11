@@ -3,18 +3,13 @@ using UnityEngine.UI;
 using DG.Tweening;
 using Cysharp.Threading.Tasks;
 using System.Threading;
+using VContainer;
 
 public class MapIntroController : MonoBehaviour
 {
-    public static MapIntroController instancce;
-
     [Header("오버레이")]
     public Image darkOverlay;
     public CanvasGroup NodeInfoImage;
-
-    //[Header("텍스트")]
-    //public TypeWriter typeWriter;
-    //public CanvasGroup textGroup;
 
     [Header("지도 두루마리")]
     public Transform mapMask;
@@ -32,15 +27,17 @@ public class MapIntroController : MonoBehaviour
 
     private CancellationTokenSource cts;
 
-    private void Awake()
+    private SceneController _sceneController;
+
+    [Inject]
+    public void Construct(SceneController sceneController)
     {
-        if (instancce == null) instancce = this;
-        else Destroy(gameObject);
+        _sceneController = sceneController;
     }
 
     public void PlayIntro()
     {
-        SceneController.instance.isFirstEntry = false;
+        _sceneController.isFirstEntry = false;
         cts = new CancellationTokenSource();
         PlayIntroAsync(cts.Token).Forget();
     }
@@ -63,19 +60,6 @@ public class MapIntroController : MonoBehaviour
         mapMask.localScale = new Vector3(mapOriginalScaleX, 0f, 1f);
         mapRoll.localPosition = new Vector3(mapRoll.position.x, 5.4f, 0f);
         mapRollRenderer.color = new Color(1f, 1f, 1f, 0f);
-
-        // 1단계: 씬 로드 직후 잠깐 대기
-        //await UniTask.Delay(500, cancellationToken: ct);
-
-        //string[] texts = {
-        //"구조가 무너졌다",
-        //"원인은 알 수 없다",
-        //"주사위들이 스스로 흩어졌다",
-        //"...누군가 그걸 원했을지도",
-        //"모아라, 늦기 전에"
-        //};
-        //foreach (var text in texts)
-        //    await TextAppear(text, ct);
 
         await darkOverlay.DOFade(220f / 255f, 0.8f).SetEase(Ease.OutQuad);
         await mapRollRenderer.DOColor(new Color(1f, 1f, 1f, 1f), 1f).SetEase(Ease.InOutQuad);
@@ -101,21 +85,10 @@ public class MapIntroController : MonoBehaviour
         bool bannerDone = false;
         roundIntroController.Play("<size=40><color=#FFD700>제 1막</color></size>\n<size=60>시련의 시작</size>", () => bannerDone = true);
 
-        
-
-        MapManager.instance.StartIntro();
+        MapManager.Instance.StartIntro();
         await UniTask.WaitUntil(() => bannerDone, cancellationToken: ct);
         // 끝
     }
-
-    //private async UniTask TextAppear(string text, CancellationToken ct)
-    //{
-    //    textGroup.alpha = 1f;
-    //    await typeWriter.Play(text, ct);
-    //    await UniTask.Delay(800, cancellationToken: ct);
-    //    await textGroup.DOFade(0f, 0.5f).AsyncWaitForCompletion();
-    //    await UniTask.Delay(400, cancellationToken: ct);
-    //}
 
     void OnDestroy()
     {

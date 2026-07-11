@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
 using UnityEngine;
+using VContainer;
+
 public class BattleInitalizer : MonoBehaviour
 {
-    public static BattleInitalizer instance;
     [SerializeField] private BaseStageController stageController;
     [SerializeField] private CardRevealAnimator ClearAnim;
 
@@ -15,10 +16,27 @@ public class BattleInitalizer : MonoBehaviour
     public EnemyCharacter EnemyCharacter => enemyCharacter;
     public PlayerCharacter PlayerCharacter => playerCharacter;
 
-    private void Awake()
+    private ResourceManager _resourceManager;
+    private BattleDataManager _battleDataManager;
+
+    private DeckManager _deckManager;
+    private EnemyDeckHandler _enemyDeckHandler;
+    private EnemyDeathSequence _enemyDeathSequence;
+
+    [Inject]
+    public void Construct(
+        ResourceManager resourceManager,
+        BattleDataManager battleDataManager,
+
+        DeckManager deckManager,
+        EnemyDeckHandler enemyDeckHandler,
+        EnemyDeathSequence enemyDeathSequence)
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        _resourceManager = resourceManager;
+        _battleDataManager = battleDataManager;
+        _deckManager = deckManager;
+        _enemyDeckHandler = enemyDeckHandler;
+        _enemyDeathSequence = enemyDeathSequence;
     }
 
     private void Start()
@@ -30,108 +48,65 @@ public class BattleInitalizer : MonoBehaviour
     {
         spawnPlayer = player;
         playerCharacter = spawnPlayer.GetComponentInChildren<PlayerCharacter>();
-        BattleManager.instance.SetPlayerTransform(spawnPlayer.transform);
-
-        if (BattleManager.instance != null)
-            PlayerCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
+        BattleManager.Instance.SetPlayerTransform(spawnPlayer.transform);
+        PlayerCharacter?.SubscribeToBattleEvents(BattleManager.Instance.EventBus);
     }
 
     public void SetSpawnEnemy(GameObject enemy)
     {
         spawnEnemy = enemy;
         enemyCharacter = spawnEnemy.GetComponentInChildren<EnemyCharacter>();
-        BattleManager.instance.SetEnemyTransform(spawnEnemy.transform);
-        EnemyDeathSequence.instance?.SetupEnemy(enemy);
-
-        if (BattleManager.instance != null)
-            enemyCharacter?.SubscribeToBattleEvents(BattleManager.instance.EventBus);
+        BattleManager.Instance.SetEnemyTransform(spawnEnemy.transform);
+        _enemyDeathSequence?.SetupEnemy(enemy);
+        enemyCharacter?.SubscribeToBattleEvents(BattleManager.Instance.EventBus);
     }
 
     public void StartBattle()
-    {             
+    {
         stageController.PlayIntroAnim();
- 
-        if (GameManager.instance != null)
+
+        GameManager.Instance?.InitializeRoundData();
+
+        if (UiController.Instance != null)
         {
-            GameManager.instance.InitializeRoundData();
+            UiController.Instance.HideAllPanels();
+            UiController.Instance.SetRollBtnInteractable(true);
+            UiController.Instance.SetConfirmBtnInteratable(false);
+            UiController.Instance.ResetItemCards();
         }
 
-        if (UiController.instance != null)
+        if (_deckManager != null)
         {
-            UiController.instance.HideAllPanels();
-            UiController.instance.SetRollBtnInteractable(true);
-            UiController.instance.SetConfirmBtnInteratable(false);
-            UiController.instance.ResetItemCards();
+            _deckManager.InitializeDeck();
+            _deckManager.DrawDice();
         }
 
-        if (DeckManager.instance != null)
-        {
-            DeckManager.instance.InitializeDeck();
-            DeckManager.instance.DrawDice();
-        }
-
-        if (EnemyDeckHandler.instance != null)
-        {
-            EnemyDeckHandler.instance.SetupEnemyDice();
-        }
-
-        if (BattleManager.instance != null)
-        {
-            BattleManager.instance.InitializeBattle();
-        }
+        _enemyDeckHandler?.SetupEnemyDice();
+        BattleManager.Instance?.InitializeBattle();
     }
 
     public async Task CompleteBattleAsync(bool isSuccess)
     {
-        if (UiController.instance != null)
-            UiController.instance.SetRollBtnInteractable(false);
+        UiController.Instance?.SetRollBtnInteractable(false);
+        PlayerCharacter?.UnsubscribeFromBattleEvents(BattleManager.Instance.EventBus);
+        enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.Instance.EventBus);
 
-        if (BattleManager.instance != null)
-            PlayerCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);
-
-        if (BattleManager.instance != null)
-            enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.instance.EventBus);
-
-        //int currentHP = ResourceManager.instance != null ? ResourceManager.instance.heart : 0;
-
-        // 클리어 시 선택 보상
+        int currentHP = _resourceManager != null ? _resourceManager.heart : 0;
 
         if (isSuccess)
         {
-            int goldReward = BattleDataManager.instance.GetGoldReward();
-            var rewardData = BattleDataManager.instance.currentRewardData;
-            bool wasBossBattle = BattleDataManager.instance?.isBossBattle == true;
-
-            if(wasBossBattle)
+            if (_battleDataManager?.isBossBattle == true)
             {
-                MapManager.instance?.ClearMapSave();
-                BattleDataManager.instance?.Clear();
+                MapManager.Instance?.ClearMapSave();
+                _battleDataManager?.Clear();
             }
-
-            ResourceManager.instance.AddGold(goldReward);
-
-            if(wasBossBattle)
-            {
-                UiController.instance.ShowGameOverPanel(true);
-            }
-            else
-            {
-                RewardPanelUI.instance?.Show(rewardData);
-            }
-
-            //// 보스전 클리어 후 맵 데이터 초기화
-            //if (BattleDataManager.instance?.isBossBattle == true)
-            //{
-            //    MapManager.instance?.ClearMapSave();
-            //    BattleDataManager.instance?.Clear();
-            //}
-            //ResourceManager.instance.AddGold(BattleDataManager.instance.GetGoldReward());
-            //ClearAnim.gameObject.SetActive(true);
-            //await ClearAnim.Reveal();
+            _resourceManager.AddGold(_battleDataManager.GetGoldReward());
+            ClearAnim.gameObject.SetActive(true);
+            await ClearAnim.Reveal();
         }
         else
         {
-            GameManager.instance.HandleGameOver();
+            GameManager.Instance.HandleGameOver();
         }
     }
 }

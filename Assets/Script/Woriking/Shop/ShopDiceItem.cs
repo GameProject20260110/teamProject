@@ -10,18 +10,8 @@ public class ShopDiceItem : ShopItem<DiceData>
         if (nameText != null) nameText.text = data.abilityName;
         if (goldText != null) goldText.text = data.gold.ToString();
     }
-
-    protected override bool OnBuy()
-    {
-        int cost = Data.gold;
-        return PlayerShopManager.instance.TryPurchaseDice(Data);
-    }
-
-    protected override void OpenPopup() =>
-        PopupManager.instance.OpenPopup(Data, descPosition);
-
-    protected override void OpenDescPopup() =>
-        PopupManager.instance.DescOpenPopup(Data);
-
+    protected override bool OnBuy() => _playerShopManager.TryPurchaseDice(Data);
+    protected override void OpenPopup() => _popupManager.OpenPopup(Data, descPosition);
+    protected override void OpenDescPopup() => _popupManager.DescOpenPopup(Data);
     public int GetTier() => Data.tier;
 }

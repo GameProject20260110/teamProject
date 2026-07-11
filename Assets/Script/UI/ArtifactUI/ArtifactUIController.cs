@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using Cysharp.Threading.Tasks;
+using VContainer;
 
 public class ArtifactUIController : MonoBehaviour
 {
@@ -12,10 +12,12 @@ public class ArtifactUIController : MonoBehaviour
 
     private List<ArtifactIconUI> _icons = new List<ArtifactIconUI>();
 
-    private void Awake()
+    private ItemManager _itemManager;
+
+    [Inject]
+    public void Construct(ItemManager itemManager)
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        _itemManager = itemManager;
     }
 
     private void Start()
@@ -29,7 +31,7 @@ public class ArtifactUIController : MonoBehaviour
             Destroy(icon.gameObject);
         _icons.Clear();
 
-        foreach(var artifact in ItemManager.instance.artifacts)
+        foreach(var artifact in _itemManager.artifacts)
         {
             GameObject obj = Instantiate(artifactIconPrefab, artifactContainer);
             ArtifactIconUI iconUi = obj.GetComponent<ArtifactIconUI>();
@@ -63,7 +65,7 @@ public class ArtifactUIController : MonoBehaviour
 
     private ArtifactIconUI Find(BattleItemSo artifact)
     {
-        int index = ItemManager.instance.artifacts.IndexOf(artifact);
+        int index = _itemManager.artifacts.IndexOf(artifact);
         if (index < 0 || index >= _icons.Count) return null;
         else return _icons[index];
     }

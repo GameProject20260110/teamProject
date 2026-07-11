@@ -9,18 +9,8 @@ public class ShopBattleItem : ShopItem<BattleItemSo>
         img.sprite = data.itemIcon;
         if (nameText != null) nameText.text = data.itemName;
         if (goldText != null) goldText.text = data.gold.ToString();
-
     }
-
-    protected override bool OnBuy()
-    {
-        int cost = Data.gold;
-        return PlayerShopManager.instance.TryPurchaseItem(Data);
-    }
-
-    protected override void OpenPopup() =>
-        PopupManager.instance.OpenPopup(Data, descPosition);
-
-    protected override void OpenDescPopup() =>
-        PopupManager.instance.DescOpenPopup(Data);
+    protected override bool OnBuy() => _playerShopManager.TryPurchaseItem(Data);
+    protected override void OpenPopup() => _popupManager.OpenPopup(Data, descPosition);
+    protected override void OpenDescPopup() => _popupManager.DescOpenPopup(Data);
 }

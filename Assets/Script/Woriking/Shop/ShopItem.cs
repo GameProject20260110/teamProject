@@ -13,7 +13,6 @@ public abstract class ShopItem<T> : MonoBehaviour,
     [Header("References")]
     [SerializeField] protected Image img;
     [SerializeField] protected RectTransform descPosition;
-    //[SerializeField] private AudioClip PurchaseSound;
     [SerializeField] private string purchaseSoundKey;
     [SerializeField] protected TextMeshProUGUI nameText;
     [SerializeField] protected TextMeshProUGUI goldText;
@@ -30,6 +29,15 @@ public abstract class ShopItem<T> : MonoBehaviour,
     public RectTransform inventoryIconRect { protected get; set; }
     public Transform ShopCanvas { protected get; set; }
 
+    protected PlayerShopManager _playerShopManager;
+    protected PopupManager _popupManager;
+
+    public void SetDependencies(PlayerShopManager playerShopManager, PopupManager popupManager)
+    {
+        _playerShopManager = playerShopManager;
+        _popupManager = popupManager;
+    }
+
     protected abstract void ApplyData(T data);
     protected abstract bool OnBuy();
     protected abstract void OpenPopup();
@@ -43,51 +51,37 @@ public abstract class ShopItem<T> : MonoBehaviour,
         ApplyData(data);
     }
 
-    public void Hide()
-    {
-        gameObject.SetActive(false);
-    }
+    public void Hide() => gameObject.SetActive(false);
 
     #region Pointer Events
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (PopupManager.instance == null) return;
+        if (_popupManager == null) return;
         PlayPointerEnter().Forget();
         OpenPopup();
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if (PopupManager.instance == null) return;
+        if (_popupManager == null) return;
         playPointerExit().Forget();
-        PopupManager.instance.ClosePopup();
+        _popupManager.ClosePopup();
         CancelHold();
     }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        Debug.Log($"[ShopItem] OnPointerDown È£ÃâµÊ, button :{eventData.button}, isSold: {isSold}");
         if (isSold || eventData.button != PointerEventData.InputButton.Left) return;
         _holdCts = new CancellationTokenSource();
         HoldToBuyAsync(_holdCts.Token).Forget();
     }
 
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        CancelHold();
-    }
+    public void OnPointerUp(PointerEventData eventData) => CancelHold();
 
     public void OnPointerClick(PointerEventData eventData)
     {
-        if (isSold) return;
-
-        //if (eventData.button == PointerEventData.InputButton.Right)
-        //{
-        //    TryBuyWithAnimation();
-        //    AudioManager.instance.PlaySfx(purchaseSoundKey);
-        //}
-            
+        if (isSold) return;           
         if (eventData.button == PointerEventData.InputButton.Middle)
             OpenDescPopup();
     }
@@ -111,8 +105,6 @@ public abstract class ShopItem<T> : MonoBehaviour,
 
     private async UniTaskVoid HoldToBuyAsync(CancellationToken ct)
     {
-        Debug.Log("[ShopItem] È¦µù ½ÃÀÛ");
-
         if(holdProgressFill != null)
         {
             holdProgressFill.transform.parent.SetAsLastSibling();
@@ -123,22 +115,17 @@ public abstract class ShopItem<T> : MonoBehaviour,
         float elapsed = 0f;
         while (elapsed < holdDuration)
         {
-            if (ct.IsCancellationRequested)
-            {
-                Debug.Log("[ShopItem] È¦µù Ãë¼ÒµÊ");
-                return;
-            }
-                elapsed += Time.deltaTime;
+            if (ct.IsCancellationRequested) return;
+            elapsed += Time.deltaTime;
             if (holdProgressFill != null) holdProgressFill.fillAmount = elapsed / holdDuration;
             await UniTask.Yield(PlayerLoopTiming.Update, ct);
         }
 
         if(ct.IsCancellationRequested) return;
 
-        Debug.Log("[SHopItem] È¦µù ¿Ï·á -> ±¸¸Å ½Ãµµ");
         if(holdProgressFill != null) holdProgressFill.fillAmount = 0f;
         TryBuyWithAnimation();
-        AudioManager.instance.PlaySfx(purchaseSoundKey);
+        AudioManager.Instance.PlaySfx(purchaseSoundKey);
     }
 
     #endregion
@@ -152,7 +139,7 @@ public abstract class ShopItem<T> : MonoBehaviour,
         if (!OnBuy()) return;
 
         isSold = true;
-        PopupManager.instance.ClosePopup();
+        _popupManager.ClosePopup();
         PlayBuyAnimation().Forget();
     }
 

@@ -2,7 +2,7 @@ using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-
+using VContainer;
 
 public class GameOverPanelUI : MonoBehaviour
 {
@@ -17,11 +17,19 @@ public class GameOverPanelUI : MonoBehaviour
     [SerializeField] private string victoryDesc = "카오스를 물리쳤습니다\n 세상의 구조가 원래대로 돌아가고 있습니다.";
     [SerializeField] private string defeatDesc = "카오스에게 패배하였습니다.";
 
+    private SceneController _sceneController;
+
+    [Inject]
+    public void Construct(SceneController sceneController)
+    {
+        _sceneController = sceneController;
+    }
+
     private void Awake()
     {
         if(titleBtn)
         {
-            titleBtn.onClick.AddListener(() => SceneController.instance.LoadTitleScene());
+            titleBtn.onClick.AddListener(() => _sceneController.LoadTitleScene());
         }
 
         if (quitBtn)

@@ -1,36 +1,46 @@
 using UnityEngine;
+using VContainer;
 
 public class EffectManager : MonoBehaviour
 {
-    public static EffectManager instance;
+    public static EffectManager Instance;
 
     [SerializeField] private GameObject burnEffect;
+    [SerializeField] private GameObject healEffect;
 
-    private void Awake()
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(AudioManager audioManager)
     {
-        if(instance == null) instance = this;
-        else Destroy(gameObject);
+        _audioManager = audioManager;
+        Instance = this;
     }
+
 
     public void PlayBurnEffect(IDamageable target, int damage, DiceContext ctx, System.Action onComplete)
     {
-        GameObject effect = ObjectPool.instance.Get(burnEffect);
+        Vector3 pos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
 
-        Vector3 pos = ctx.IsPlayer? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
+        GameObject effect = WorldPoolManager.instance.Get(burnEffect, pos, Quaternion.identity);
 
-        Debug.Log(ctx.IsPlayer);
-        effect.transform.position = pos;
         effect.GetComponent<Skill>().Init(new SkillContext
         {
             onHit = () =>
             {
                 target.TakeDamageRaw(damage, ctx);
-
                 if(ctx.IsPlayer) ctx.EventBus.TriggerHitPlayer(ctx, damage);
                 else ctx.EventBus.TriggerHitEnemy(ctx, damage);
                     
             },
             onEnd = () => onComplete?.Invoke()
         });
+    }
+
+    public void PlayHealEffect(Vector3 position)
+    {
+        _audioManager.PlaySfx("Heal");
+        if (healEffect != null)
+            WorldPoolManager.instance.Get(healEffect, position, Quaternion.identity);
     }
 }

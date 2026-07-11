@@ -4,8 +4,6 @@ using Cysharp.Threading.Tasks;
 
 public class MapPathDrawer : MonoBehaviour
 {
-    public static MapPathDrawer instance;
-
     [Header("라인 설정")]
     [SerializeField] private Material lineMaterial;
     [SerializeField] private float lineWidth = 0.05f;
@@ -18,17 +16,7 @@ public class MapPathDrawer : MonoBehaviour
     // 기존 라인 저장
     private Dictionary<string, GameObject> _lineObjects = new Dictionary<string, GameObject>();
 
-
-    private void Awake()
-    {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-    }
-
-    public void Initialize(Transform lineContainer)
-    {
-        _lineContainer = lineContainer;
-    }
+    public void Initialize(Transform lineContainer) { _lineContainer = lineContainer; }
 
     public void DrawLines(List<MapNodeData> generatedNodes, List<MapNode> spawnedNodes)
     {

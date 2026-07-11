@@ -51,8 +51,8 @@ public class Shoes : BattleItemSo
     {
         await UniTask.Delay(200);
 
-        BattleManager.instance?.ShowBonusDamageText(damage);
-        AudioManager.instance?.PlaySfx("ShieldAttack");
+        BattleManager.Instance?.ShowBonusDamageText(damage);
+        AudioManager.Instance.PlaySfx("ShieldAttack");
         ctx.Enemy.TakeDamageRaw(damage, ctx);
     }
 }

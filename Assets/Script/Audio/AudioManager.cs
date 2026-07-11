@@ -1,36 +1,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Rendering;
+using VContainer;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager instance;
+    public static AudioManager Instance { get; private set; }
 
     [Header("# Audio Master")]
     public AudioMixer masterMixer;
     public AudioMixerGroup bgmGroup;
     public AudioMixerGroup sfxGroup;
 
-    //public AudioClip[] bgmClip;
-    //AudioSource bgmPlayer;
-    //public Bgm bgm;
-    //AudioHighPassFilter bgmEffect;
-    //public float bgmVolume;
-    //public bool bgmVolumeMute;
-
-
     [Header("# BGM")]
     public AudioData[] bgmDatas;
     private Dictionary<string, AudioData> bgmDictionary = new Dictionary<string, AudioData>();
     private AudioSource bgmPlayer;
     private string currentBgm = "";
-    
-    //public AudioClip[] sfxClips;
-    //public float sfxVolume;
-    //public bool sfxVolumeMute;
-    //public int channels;
-    //AudioSource[] sfxPlayer;
-    //int channelIndex;
 
     [Header("# SFX")]
     public AudioData[] sfxDatas;
@@ -39,27 +26,18 @@ public class AudioManager : MonoBehaviour
     AudioSource[] sfxPlayer;
     int channelIndex;
 
-    private void Awake()
-    {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-            
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-        
-    }
+    private SettingsManager _settingsManager;
 
-    private void Start()
+    [Inject]
+    public void Construct(SettingsManager settingsManager)
     {
+        Instance = this;
+        _settingsManager = settingsManager;
         Init();
     }
 
-    void Init()
+
+    async void Init()
     {      
         // BGM 플레이어 초기화
         GameObject bgmObject = new GameObject("BgmPlayer");
@@ -96,9 +74,11 @@ public class AudioManager : MonoBehaviour
                 sfxDictionary.Add(data.key, data);
         }
 
-        if (SettingsManager.instance != null)
-            SettingsManager.instance.ApplySettings();
+        await Cysharp.Threading.Tasks.UniTask.NextFrame();
 
+        SetMasterVolume(_settingsManager.MasterVolume);
+        SetBgmVolume(_settingsManager.MusicVolume);
+        SetSfxVolume(_settingsManager.SfxVolume);
     }  
 
     public void PlayBgm(string key, bool isPlay = true)
@@ -120,11 +100,6 @@ public class AudioManager : MonoBehaviour
             this.currentBgm = "";
         }
     }
-
-    //public void EffectBgm(bool isPlay)
-    //{
-    //    bgmEffect.enabled = isPlay;
-    //}
 
     public void PlaySfx(string key, float pitch = 1f)
     {
@@ -158,31 +133,10 @@ public class AudioManager : MonoBehaviour
         currentBgm = "";
     }
 
-    //public void PlayBgm(AudioClip clip)
-    //{
-    //    if(clip == null) return;
-
-    //    bgmPlayer.clip = clip;
-    //    bgmPlayer.Play();       
-    //}
-
-    //public void PlaySfx(AudioClip clip)
-    //{
-    //    if (clip == null) return;
-    //    for (int index = 0; index < channels; index++)
-    //    {
-    //        int loopIndex = (index + channelIndex) % sfxPlayer.Length;
-    //        if (sfxPlayer[loopIndex].isPlaying) continue;
-
-    //        channelIndex = loopIndex;
-    //        sfxPlayer[loopIndex].clip = clip;
-    //        sfxPlayer[loopIndex].Play();
-    //        break;
-    //    }
-    //}
-
-    // 볼륨 제어 (오디오 믹서)
-    public void SetMasterVolume(float volume) => SetMixerVolume("Master", volume);
+    public void SetMasterVolume(float volume)
+    {
+        SetMixerVolume("Master", volume);
+    }
     public void SetBgmVolume(float volume) => SetMixerVolume("BGM", volume);
     public void SetSfxVolume(float volume) => SetMixerVolume("SFX", volume);
 
@@ -206,21 +160,4 @@ public class AudioManager : MonoBehaviour
             Debug.Log($"[Audio] {name} = {volume} → {db}dB");
         }
     }
-    //public void SetMasterVolume(float volume)
-    //{
-    //    AudioListener.volume = volume;
-    //}
-
-    //public void SetBgmVolume(float volume)
-    //{
-    //    bgmPlayer.volume = volume;
-    //}
-
-    //public void SetSfxVolume(float volume)
-    //{
-    //    for (int i = 0; i < channels; i++)
-    //    {
-    //        sfxPlayer[i].volume = volume;
-    //    }
-    //}
 }

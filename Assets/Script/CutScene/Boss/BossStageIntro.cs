@@ -7,15 +7,13 @@ using UnityEngine.Playables;
 using Unity.Cinemachine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
+using VContainer;
 
 public class BossStageIntro : MonoBehaviour
 {
-    public static BossStageIntro instance;
-
     [SerializeField] private GameObject bossIntroCanvas;
     [SerializeField] private CanvasGroup fadePanel; // 임시
     
-
     [Header("배경")]
     [SerializeField] private GameObject baseBackground;
     [SerializeField] private GameObject bossBackground;
@@ -65,11 +63,19 @@ public class BossStageIntro : MonoBehaviour
     private RectTransform[] EyeTrans => new[] { trans1, trans2, trans3 };
     private Bloom _bloom;
 
+
+    private BattleDataManager _battleDataManager;
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(BattleDataManager battleDataManager, AudioManager audioManager)
+    {
+        _battleDataManager = battleDataManager;
+        _audioManager = audioManager;
+    }
+
     private void Awake()
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
-
         _impulseSource = cutsceneCam?.GetComponent<CinemachineImpulseSource>();
 
         if (bossIntroCanvas != null) bossIntroCanvas.SetActive(false);
@@ -82,7 +88,7 @@ public class BossStageIntro : MonoBehaviour
 
     public async UniTask Play(CancellationToken ct)
     {
-        var bossData = BattleDataManager.instance.currentEnemyData as BossDataSo;
+        var bossData = _battleDataManager.currentEnemyData as BossDataSo;
         if (bossData == null) return;
 
         _skipCts = CancellationTokenSource.CreateLinkedTokenSource(ct);
@@ -91,12 +97,12 @@ public class BossStageIntro : MonoBehaviour
         bossIntroCanvas?.SetActive(true);
         if (cutsceneCam != null) cutsceneCam.Priority = 20;
         if (cutsceneVolume != null) cutsceneVolume.gameObject.SetActive(true);
-        AudioManager.instance.StopBgm();
+        _audioManager.StopBgm();
 
         await PlayMoveEyes(_skipCts.Token);
         await UniTask.Delay(500, cancellationToken: ct);
         await PlaySpotlightReveal(_skipCts.Token);
-        AudioManager.instance?.PlayBgm("Boss");
+        _audioManager?.PlayBgm("Boss");
 
         // 설정버튼 활성화 + 캔버스 비활성화
         MainOption.instance?.SetSettingsButtonActive(true);
@@ -119,7 +125,7 @@ public class BossStageIntro : MonoBehaviour
             bossEyeGroup.alpha = 0f;
 
             _impulseSource?.GenerateImpulse(eyeImpulseForce);
-            AudioManager.instance?.PlaySfx(laughSfxKey, laughPitches[i]);
+            _audioManager?.PlaySfx(laughSfxKey, laughPitches[i]);
             await bossEyeGroup.DOFade(1f, eyeFadeInDuration[i]).SetEase(Ease.OutBack).ToUniTask(TweenCancelBehaviour.Kill, cancellationToken: ct);
 
             bossEyeSprite.rectTransform.DOShakePosition(eyeHoldDuration[i], eyeShakeStrengh);
@@ -146,7 +152,7 @@ public class BossStageIntro : MonoBehaviour
 
         spotLight.gameObject.SetActive(true);
         whiteFlashRenderer.gameObject.SetActive(true);
-        AudioManager.instance.PlaySfx(spotLightSfxKey);
+        _audioManager.PlaySfx(spotLightSfxKey);
         SetAlpha(whiteFlashRenderer, 0f);
 
 

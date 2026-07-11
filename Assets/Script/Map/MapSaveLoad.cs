@@ -1,22 +1,24 @@
-using UnityEngine;
 using System.Collections.Generic;
+using VContainer.Unity;
 
-public class MapSaveLoad : MonoBehaviour
+public class MapSaveLoad : IInitializable
 {
-    public static MapSaveLoad instance;
+    public static MapSaveLoad Instance { get; private set; }
 
     private const string MAP_SAVE_DATA = "mapdata.json";
+    private readonly SaveManager _saveManager;
 
-    private void Awake()
+    public MapSaveLoad(SaveManager saveManager)
     {
-        if (instance == null) instance = this;
-        else Destroy(instance);
+        _saveManager = saveManager;
     }
 
-    public bool HasSaveData()
+    public void Initialize()
     {
-        return SaveManager.instance != null && SaveManager.instance.HasSaveFile(MAP_SAVE_DATA);
+        Instance = this;
     }
+
+    public bool HasSaveData() => _saveManager != null && _saveManager.HasSaveFile(MAP_SAVE_DATA);
 
     public void Save(List<MapNodeData> nodes, List<int> visitedNodeIds, int currentLayer, int previousNodeId, List<PathLineData> pathLines)
     {
@@ -28,17 +30,9 @@ public class MapSaveLoad : MonoBehaviour
             previousNodeId = previousNodeId,
             pathLines = pathLines
         };
-
-        SaveManager.instance?.Save(saveData, MAP_SAVE_DATA);
+        _saveManager?.Save(saveData, MAP_SAVE_DATA);
     }
 
-    public MapSaveData Load()
-    {
-        return SaveManager.instance?.Load<MapSaveData>(MAP_SAVE_DATA);
-    }
-
-    public void Delete()
-    {
-        SaveManager.instance?.Delete(MAP_SAVE_DATA);
-    }
+    public MapSaveData Load() => _saveManager?.Load<MapSaveData>(MAP_SAVE_DATA);
+    public void Delete() => _saveManager?.Delete(MAP_SAVE_DATA);
 }

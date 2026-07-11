@@ -18,12 +18,12 @@ public class HealDiceVFX : DiceVFXBase
     {
         var completion = new UniTaskCompletionSource<bool>();
         var data = ctx.DiceData.effectData;
-        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
 
         Vector3 startPos = transform.position;
         Vector3 targetPos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
 
-        skill.transform.position = targetPos;
+        GameObject skill = WorldPoolManager.instance.Get(data.attackPrefab, targetPos, Quaternion.identity);
+        
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = ctx.IsPlayer,

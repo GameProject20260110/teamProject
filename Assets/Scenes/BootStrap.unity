@@ -119,55 +119,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &452546015
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 452546016}
-  - component: {fileID: 452546017}
-  m_Layer: 0
-  m_Name: Bootstrap
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &452546016
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452546015}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1411.5609, y: 477.1455, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &452546017
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 452546015}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e6c0979ba3d1ad54d9d584cd05674278, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameBootstrap
-  sceneControlPrefab: {fileID: 822639163992330441, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
-  audioManagerPrefab: {fileID: 7528108071998853804, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
-  settingsManagerPrefab: {fileID: 1723131241955938791, guid: 236a30ab0a589ce4995ebef2f05de0e1, type: 3}
-  playerStatsManagerPrefab: {fileID: 855262972402716990, guid: 554aafaab026bd645b0298ea74c05baf, type: 3}
-  battleDataManagerPrefab: {fileID: 6322686787336117716, guid: ca885674b73cc584f8ea92c972251c95, type: 3}
 --- !u!1 &2058177989
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,4 +261,3 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 2058177992}
-  - {fileID: 452546016}

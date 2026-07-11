@@ -7,18 +7,16 @@ public class FireDiceVFX : DiceVFXBase
     {
         var data = ctx.DiceData.effectData as FireEffectData;
         var completion = new UniTaskCompletionSource<bool>();
-        GameObject skill = ObjectPool.instance.Get(data.attackPrefab);
 
         Vector3 startPos = transform.position;
         Vector3 targetPos = ctx.IsPlayer ? ctx.Positions.EnemyPosition : ctx.Positions.PlayerPosition;
+
+        GameObject skill = WorldPoolManager.instance.Get(data.attackPrefab, startPos,Quaternion.identity);
 
         if (ctx.IsPlayer)
             ctx.Enemy.ApplyStatusEffect(new BurnEffect(data.burnDamage, data.burnDuration));
         else
             ctx.Player.ApplyStatusEffect(new BurnEffect(data.burnDamage, data.burnDuration));
-
-        
-        skill.transform.position = startPos;
 
         skill.GetComponent<Skill>().Init(new SkillContext
         {
@@ -50,8 +48,8 @@ public class FireDiceVFX : DiceVFXBase
 
         Vector3 pos = ctx.IsPlayer ? ctx.Positions.PlayerPosition : ctx.Positions.EnemyPosition;
 
-        GameObject skill = ObjectPool.instance.Get(data.shieldPrefab);
-        skill.transform.position = pos;
+        GameObject skill = WorldPoolManager.instance.Get(data.shieldPrefab,pos,Quaternion.identity);
+        
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = true,

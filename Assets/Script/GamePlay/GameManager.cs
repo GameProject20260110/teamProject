@@ -2,37 +2,58 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using Cysharp.Threading.Tasks;
+using VContainer;
 
 public class GameManager : MonoBehaviour
 {
-    public static GameManager instance;
+    public static GameManager Instance { get; private set; }
+
 
     public event Action<int> OnGoldChanged;
     public event Action<int> OnScoreChanged;
     public event Action<int> OnRoundAndGoalChanged;
     public event Action<int> OnRerollCountChanged;
 
-    public DiceManager diceManager;
-    //[SerializeField] private string BattleBgmKey;
-
     public bool hasUsedPlusReroll = false;
 
-    private void Awake()
+    private DiceManager _diceManager;
+    private AudioManager _audioManager;
+    private ResourceManager _resourceManager;
+    private EnemyDeckHandler _enemyDeckHandler;
+    private DeckManager _deckManager;
+    private BattleButton _battleButton;
+    private EnemyAI _enemyAI;
+    private BattleManager _battleManager;
+    private DicePanelManager _dicePanelManager;
+
+    [Inject]
+    public void Construct(
+        DiceManager diceManager,
+        AudioManager audioManager,
+        ResourceManager resourceManager,
+        EnemyDeckHandler enemyDeckHandler,
+        DeckManager deckManager,
+        BattleButton battleButton,
+        EnemyAI enemyAI,
+        BattleManager battleManager,
+        DicePanelManager dicePanelManager)
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
+        _diceManager = diceManager;
+        _resourceManager = resourceManager;
+        _audioManager = audioManager;
+        _enemyDeckHandler = enemyDeckHandler;
+        _deckManager = deckManager;
+        _battleButton = battleButton;
+        _enemyAI = enemyAI;
+        _battleManager = battleManager;
+        _dicePanelManager = dicePanelManager;
+        Instance = this;
     }
 
     private void Start()
     {
         NotifyAllUI();
-        AudioManager.instance.PlayBgm("Battle",true);
+        _audioManager.PlayBgm("Battle", true);
     }
 
     public void InitializeRoundData()
@@ -42,36 +63,28 @@ public class GameManager : MonoBehaviour
 
     public void NotifyAllUI()
     {
-        int gold = ResourceManager.instance != null ? ResourceManager.instance.gold : 0;
+        int gold = _resourceManager != null ? _resourceManager.gold : 0;
         int currentRound = 0;
-
         OnGoldChanged?.Invoke(gold);
         OnRoundAndGoalChanged?.Invoke(currentRound);
     }
 
     public void StartRound()
     {
-        if (UiController.instance == null) return;
+        if (UiController.Instance == null) return;
         hasUsedPlusReroll = false;
-
         NotifyAllUI();
+        UiController.Instance.HideAllPanels();
+        UiController.Instance.SetRollBtnInteractable(true);
+        UiController.Instance.SetConfirmBtnInteratable(false);
 
-        UiController.instance.HideAllPanels();
-        UiController.instance.SetRollBtnInteractable(true);
-        UiController.instance.SetConfirmBtnInteratable(false);
-
-        if (EnemyDeckHandler.instance != null)
-            EnemyDeckHandler.instance.SetupEnemyDice();
-        
-        if (DeckManager.instance != null)
-            DeckManager.instance.DrawDice();       
+        _enemyDeckHandler?.SetupEnemyDice();
+        _deckManager?.DrawDice();
     }
 
     public void OnClickRollBtn()
     {
-
-        if (UiController.instance.rollBtn.interactable == false) return;
-
+        if (UiController.Instance.rollBtn.interactable == false) return;
         RollFlow().Forget();
     }
 
@@ -79,20 +92,18 @@ public class GameManager : MonoBehaviour
     {
         try
         {
-            BattleButton.instance.SetInteractable(false);
-            UiController.instance?.ResetItemCards();
-            
-            Dice[] allDice = await diceManager.StartRolling();
+            _battleButton.SetInteractable(false);
+            UiController.Instance?.ResetItemCards();
 
-            foreach(var dice in allDice)
+            Dice[] allDice = await _diceManager.StartRolling();
+            foreach (var dice in allDice)
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
                 var floatingEffect = dice.GetComponent<FloatingEffect>();
                 dice.GetComponent<DraggableDice>().SetDraggable(true);
                 if (floatingEffect != null) floatingEffect.enabled = true;
             }
-
-            await BattleButton.instance.SetState(BattleButton.State.PlaceComplete);
+            await _battleButton.SetState(BattleButton.State.PlaceComplete);
         }
         catch (Exception e)
         {
@@ -102,10 +113,10 @@ public class GameManager : MonoBehaviour
 
     public void HandleGameOver()
     {
-        if(ResourceManager.instance != null)
-            ResourceManager.instance.ResetData();
-        
-        UiController.instance.ShowGameOverPanel();
+        if (_resourceManager != null)
+            _resourceManager.ResetData();
+
+        UiController.Instance.ShowGameOverPanel(false);
     }
 
     public void OnClickScoreConfirmButton()
@@ -115,31 +126,27 @@ public class GameManager : MonoBehaviour
 
     public async UniTask EnemyRoll()
     {
-        await BattleButton.instance.SetState(BattleButton.State.EnemyTurn);
-
-        Dice[] allDice = await diceManager.StartEnemyRolling();
-
+        await _battleButton.SetState(BattleButton.State.EnemyTurn);
+        Dice[] allDice = await _diceManager.StartEnemyRolling();
         await UniTask.Delay(500);
-
-        EnemyAI.instance.PlaceDice(allDice);
-
-        await BattleButton.instance.SetState(BattleButton.State.Roll);
-        UiController.instance.SetRollBtnInteractable(true);
+        _enemyAI.PlaceDice(allDice);
+        await _battleButton.SetState(BattleButton.State.Roll);
+        UiController.Instance.SetRollBtnInteractable(true);
     }
 
     public async UniTask OnClickScoreConfirm()
     {
-        if (diceManager.isRolling) return;
-        if (BattleManager.instance == null) return;
+        if (_diceManager.isRolling) return;
+        if (_battleManager == null) return;
 
-        await BattleButton.instance.SetState(BattleButton.State.InBattle);
+        await _battleButton.SetState(BattleButton.State.InBattle);
 
-        List<Dice> attackDices = DicePanelManager.instance.attackPanel.GetDices();
-        List<Dice> defenceDices = DicePanelManager.instance.defensePanel.GetDices();
+        List<Dice> attackDices = _dicePanelManager.attackPanel.GetDices();
+        List<Dice> defenceDices = _dicePanelManager.defensePanel.GetDices();
 
-        BattleManager.instance.SetDiceInfo(attackDices, defenceDices);
+        _battleManager.SetDiceInfo(attackDices, defenceDices);
 
-        foreach (var dice in diceManager.panelDiceScript)
+        foreach (var dice in _diceManager.panelDiceScript)
         {
             if (dice == null || !dice.gameObject.activeSelf) continue;
             var floatingEffect = dice.GetComponent<FloatingEffect>();
@@ -149,7 +156,7 @@ public class GameManager : MonoBehaviour
 
         try
         {
-            await BattleManager.instance.RunOneTurnCycle();
+            await _battleManager.RunOneTurnCycle();
         }
         catch (OperationCanceledException)
         {
@@ -161,4 +168,3 @@ public class GameManager : MonoBehaviour
         }
     }
 }
-    

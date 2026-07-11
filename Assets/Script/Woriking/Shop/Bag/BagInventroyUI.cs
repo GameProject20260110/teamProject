@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using VContainer;
 
 public class BagInventroyUI : MonoBehaviour
 {
@@ -15,6 +16,16 @@ public class BagInventroyUI : MonoBehaviour
     private readonly List<GameObject> _spawnedDiceSlots = new();
     private readonly List<GameObject> _spawnedItemSlots = new();
 
+    private PlayerDeck _playerDeck;
+    private ItemManager _itemManager;
+
+    [Inject]
+    public void Construct(PlayerDeck playerDeck, ItemManager itemManager)
+    {
+        _playerDeck = playerDeck;
+        _itemManager = itemManager;
+    }
+
     public void Toggle()
     {
         bool next = !panelRoot.activeSelf;
@@ -27,8 +38,8 @@ public class BagInventroyUI : MonoBehaviour
         ClearSlots(_spawnedDiceSlots);
         ClearSlots(_spawnedItemSlots);
 
-        BuildDiceSlots(PlayerDeck.instance.inventory);
-        BuildItemSlots(ItemManager.instance.items);
+        BuildDiceSlots(_playerDeck.inventory);
+        BuildItemSlots(_itemManager.items);
     }
 
     private void BuildDiceSlots(List<DiceData> dices)

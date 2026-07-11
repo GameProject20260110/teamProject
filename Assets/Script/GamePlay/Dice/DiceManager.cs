@@ -2,76 +2,61 @@ using Cysharp.Threading.Tasks;
 using UnityEngine;
 using System.Linq;
 using DG.Tweening;
+using VContainer;
 
 public class DiceManager : MonoBehaviour
 {
-    public static DiceManager instance;
-  
+    public static DiceManager Instance { get; private set; }
+
     [Header("UI 연결")]
     public RectTransform rollArea;
-
     [Header("슬롯")]
     public Transform[] slots;
     public Transform[] enemySlots;
     public Transform[] enemyAttackSlots;
     public Transform[] enemyDefenseSlots;
-
     [Header("모듈")]
     public DiceRoller diceRoller;
-
     public bool isRolling => diceRoller != null && diceRoller.isRolling;
-
-    public Dice[] panelDiceScript; //{ get; private set; }
+    public Dice[] panelDiceScript;
     public Dice[] enemyPanelDiceScript;
+
+
+    [Inject]
+    public void Construct()
+    {
+        Instance = this;
+    }
 
     private void Awake()
     {
-        if(instance == null) instance = this;
-        else Destroy(gameObject);
         panelDiceScript = new Dice[slots.Length];
         enemyPanelDiceScript = new Dice[enemySlots.Length];
-    }
-
-    void Start()
-    {
-        if(GameManager.instance != null) GameManager.instance.diceManager = this;
     }
 
     public void PlaceDice(int slotIndex, DiceData data)
     {
         if (panelDiceScript[slotIndex] != null)
         {
-            ObjectPool.instance.Return(panelDiceScript[slotIndex].gameObject);
+            UIPoolManager.instance.Return(panelDiceScript[slotIndex].gameObject);
             panelDiceScript[slotIndex] = null;
         }
-
-        GameObject obj = ObjectPool.instance.Get(data.dicePrefab);
-        obj.transform.SetParent(slots[slotIndex], false);
-        obj.transform.localPosition = Vector3.zero;
-
+        GameObject obj = UIPoolManager.instance.Get(data.dicePrefab, slots[slotIndex], Vector2.zero);
         var draggable = obj.GetComponent<DraggableDice>();
-
         Dice dice = obj.GetComponent<Dice>();
         dice.Initialize(slotIndex, data);
         panelDiceScript[slotIndex] = dice;
     }
 
-
     #region 적 주사위 배치
-
-
     public void EnemyPlaceDice(int slotIndex, DiceData data)
     {
         if (enemyPanelDiceScript[slotIndex] != null)
         {
-            ObjectPool.instance.Return(enemyPanelDiceScript[slotIndex].gameObject);
+            UIPoolManager.instance.Return(enemyPanelDiceScript[slotIndex].gameObject);
             enemyPanelDiceScript[slotIndex] = null;
         }
-
-        GameObject obj = ObjectPool.instance.Get(data.dicePrefab);
-        obj.transform.SetParent(enemySlots[slotIndex], false);
-        obj.transform.localPosition = Vector3.zero;
-
+        GameObject obj = UIPoolManager.instance.Get(data.dicePrefab, enemySlots[slotIndex], Vector2.zero);
         Dice dice = obj.GetComponent<Dice>();
         dice.Initialize(slotIndex, data);
         enemyPanelDiceScript[slotIndex] = dice;
@@ -80,13 +65,13 @@ public class DiceManager : MonoBehaviour
     public async UniTask EnemyPlaceAttackDice(int slotIndex, Dice dice)
     {
         await MoveDiceToSlot(dice, enemyAttackSlots[slotIndex]);
-        BattleManager.instance.SetEnemyAttackDice(dice);
+        BattleManager.Instance.SetEnemyAttackDice(dice);
     }
 
     public async UniTask EnemyPlaceDefenseDice(int slotIndex, Dice dice)
     {
         await MoveDiceToSlot(dice, enemyDefenseSlots[slotIndex]);
-        BattleManager.instance.SetEnemyDefenseDice(dice);
+        BattleManager.Instance.SetEnemyDefenseDice(dice);
     }
 
     private async UniTask MoveDiceToSlot(Dice dice, Transform targetSlot, float duration = 0.4f)
@@ -95,14 +80,10 @@ public class DiceManager : MonoBehaviour
             .DOMove(targetSlot.position, duration)
             .SetEase(Ease.OutQuart)
             .AsyncWaitForCompletion();
-
         dice.transform.SetParent(targetSlot, true);
         dice.transform.localPosition = Vector3.zero;
     }
-
     #endregion
-
-
 
     public void ClearAllSlots()
     {
@@ -110,7 +91,7 @@ public class DiceManager : MonoBehaviour
         {
             if (panelDiceScript[i] != null)
             {
-                ObjectPool.instance.Return(panelDiceScript[i].gameObject);
+                UIPoolManager.instance.Return(panelDiceScript[i].gameObject);
                 panelDiceScript[i] = null;
             }
         }
@@ -122,7 +103,7 @@ public class DiceManager : MonoBehaviour
         {
             if (enemyPanelDiceScript[i] != null)
             {
-                ObjectPool.instance.Return(enemyPanelDiceScript[i].gameObject);
+                UIPoolManager.instance.Return(enemyPanelDiceScript[i].gameObject);
                 enemyPanelDiceScript[i] = null;
             }
         }
@@ -153,11 +134,11 @@ public class DiceManager : MonoBehaviour
         panelDiceScript.CopyTo(allDice, 0);
         return allDice;
     }
-    
+
     public Sprite[] GetLastDiceSprites()
     {
         Sprite[] lastDiceSprite = new Sprite[panelDiceScript.Length];
-        for(int i = 0; i < panelDiceScript.Length; i++)
+        for (int i = 0; i < panelDiceScript.Length; i++)
         {
             if (panelDiceScript[i] != null && panelDiceScript[i].gameObject.activeSelf) lastDiceSprite[i] = panelDiceScript[i].GetCurrentSprite();
         }

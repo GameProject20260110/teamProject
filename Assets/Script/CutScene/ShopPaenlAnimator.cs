@@ -2,6 +2,7 @@ using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine.UI;
 using UnityEngine;
+using VContainer;
 
 public class ShopPanelAnimator : MonoBehaviour
 {
@@ -18,6 +19,14 @@ public class ShopPanelAnimator : MonoBehaviour
     [SerializeField] private float panelDuration = 0.8f;
     [SerializeField] private float maskDuration = 2f;
     [SerializeField] private int elementDelayMs = 50;
+
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(AudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
 
     public async UniTask Show()
     {
@@ -64,8 +73,8 @@ public class ShopPanelAnimator : MonoBehaviour
     {
         //GameManager.instance.diceManager.SetupDiceBoard();
         //UiController.instance.RefreshInventory();
-        
-        AudioManager.instance.PlayBgm("Battle", true);
+
+        _audioManager.PlayBgm("Battle", true);
 
         foreach (var element in uiElements)
         {

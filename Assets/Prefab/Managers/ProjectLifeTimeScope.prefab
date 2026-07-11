@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &5137084178821267206
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2147445111222240792}
+  - component: {fileID: 7377699109625879045}
+  m_Layer: 0
+  m_Name: ProjectLifeTimeScope
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2147445111222240792
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137084178821267206}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.29726, y: -0.75043, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7377699109625879045
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137084178821267206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2d2ce01da42534c8b8ca62c92ef6c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::ProjectLifetimeScope
+  parentReference:
+    TypeName: 
+  autoRun: 1
+  autoInjectGameObjects: []
+  settingsManagerPrefab: {fileID: 8134743746130973379, guid: 236a30ab0a589ce4995ebef2f05de0e1, type: 3}
+  audioManagerPrefab: {fileID: 616425902411883141, guid: ac62b12995cdcb0408b1edfe1dea98c9, type: 3}
+  sceneControllerPrefab: {fileID: 3357080786707340854, guid: 2b45573705cb4e749ad05b205b65768f, type: 3}
+  itemManagerPrefab: {fileID: 6618925197509348915, guid: 7858bcbe0c1742f47898f5c682c6353e, type: 3}
+  playerDeckPrefab: {fileID: 1003436293679755162, guid: 5fee80cbefab69840909147c7630ae86, type: 3}
+  resourceManagerPrefab: {fileID: 6445173013922968433, guid: 27794ed811ba67b4289dac025c1dfb37, type: 3}
+  battleDataManagerPrefab: {fileID: 5094760965528366260, guid: ca885674b73cc584f8ea92c972251c95, type: 3}

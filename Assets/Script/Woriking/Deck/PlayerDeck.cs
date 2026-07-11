@@ -1,64 +1,52 @@
 using System.Collections.Generic;
-using System.IO;
 using UnityEngine;
+using VContainer;
+using VContainer.Unity;
 
-public class PlayerDeck : MonoBehaviour
+public class PlayerDeck : MonoBehaviour, IInitializable
 {
-    public static PlayerDeck instance;
+    public static PlayerDeck Instance;
 
-    [Header("주사위 초기 덱")]
+    [Header("덱 기본 데이터")]
     [SerializeField] private PlayerDeckData defaultDeckData;
 
-    [Header("주사위 종류")]
+    [Header("주사위 전체 데이터")]
     [SerializeField] private DiceData[] allDiceData;
 
-    [Header("가지고 있는 총 덱")]
+    [Header("현재 가지고 있는 덱")]
     public List<DiceData> inventory = new List<DiceData>();
 
-    private string SavePath => Application.persistentDataPath + "/deck.json";
+    private const string SAVE_FILE = "deck.json";
+    private SaveManager _saveManager;
 
-    void Awake()
+    [Inject]
+    public void Construct(SaveManager saveManager)
     {
-        if (instance == null)
-        {
-            instance = this;
-            DontDestroyOnLoad(gameObject);
-        }
-        else Destroy(gameObject);
+        _saveManager = saveManager;
+        Instance = this;
+    }
 
-        if (File.Exists(SavePath))
+    public void Initialize()
+    {
+        if (_saveManager.HasSaveFile(SAVE_FILE))
             Load();
         else
             inventory = new List<DiceData>(defaultDeckData.defultDeck);
     }
-    
-    public void AddDice(DiceData data)
-    {
-        inventory.Add(data);
-        Save();
-    }
 
-    public void RemoveDice(DiceData data)
-    {
-        inventory.Remove(data);
-        Save();
-    }
+    public void AddDice(DiceData data) { inventory.Add(data); Save(); }
+    public void RemoveDice(DiceData data) { inventory.Remove(data); Save(); }
 
     public void Save()
     {
         var saveData = new DeckSaveData();
-        foreach (var dice in inventory)
-            saveData.diceNums.Add(dice.diceNum);
-
-        string json = JsonUtility.ToJson(saveData);
-        File.WriteAllText(SavePath, json);
+        foreach (var dice in inventory) saveData.diceNums.Add(dice.diceNum);
+        _saveManager.Save(saveData, SAVE_FILE);
     }
 
     public void Load()
     {
-        string json = File.ReadAllText(SavePath);
-        var saveData = JsonUtility.FromJson<DeckSaveData>(json);
-
+        var saveData = _saveManager.Load<DeckSaveData>(SAVE_FILE);
         inventory.Clear();
         foreach (int num in saveData.diceNums)
         {
@@ -69,9 +57,7 @@ public class PlayerDeck : MonoBehaviour
 
     public void DeleteSave()
     {
-        if (File.Exists(SavePath))
-            File.Delete(SavePath);
-
+        _saveManager.Delete(SAVE_FILE);
         inventory = new List<DiceData>(defaultDeckData.defultDeck);
     }
 
@@ -92,9 +78,7 @@ public class PlayerDeck : MonoBehaviour
     {
         DiceData defaultDice = defaultDeckData.defultDeck[0];
         int index = inventory.FindIndex(d => d == defaultDice);
-
         if (index < 0) return false;
-
         inventory[index] = newDice;
         Save();
         return true;

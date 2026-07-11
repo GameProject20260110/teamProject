@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Effect_Sky
   m_EditorClassIdentifier: Assembly-CSharp::DiceEffectData
   attackPrefab: {fileID: 8072997939473755194, guid: 2a194bc9c80d1fb4ca9414bf44fbee91, type: 3}
-  shieldPrefab: {fileID: 7394023633541940906, guid: 4c9178866f547e245b76be8e2885bbab, type: 3}
+  shieldPrefab: {fileID: 8072997939473755194, guid: 2a194bc9c80d1fb4ca9414bf44fbee91, type: 3}
   bonusDamage: 0
   bonusShield: 0

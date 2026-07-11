@@ -1,11 +1,10 @@
 using Cysharp.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class ShopUIManager : MonoBehaviour
 {
-    public static ShopUIManager instance;
-
     [Header("Shop Items")]
     [SerializeField] private ShopDiceItem[] diceItems;
     [SerializeField] private ShopBattleItem[] battleItems;
@@ -21,11 +20,16 @@ public class ShopUIManager : MonoBehaviour
     [SerializeField] private RectTransform inventoryIconRect;
     [SerializeField] private Transform ShopCanvas;
 
+    private SceneController _sceneController;
+    private PlayerShopManager _playerShopManager;
+    private PopupManager _popupManager;
 
-    private void Awake()
+    [Inject]
+    public void Construct(SceneController sceneController, PlayerShopManager playerShopManager, PopupManager popupManager)
     {
-        if (instance == null) instance = this;
-        else Destroy(gameObject);
+        _sceneController = sceneController;
+        _playerShopManager = playerShopManager;
+        _popupManager = popupManager;
     }
 
     private void Start()
@@ -43,22 +47,23 @@ public class ShopUIManager : MonoBehaviour
         {
             item.inventoryIconRect = inventoryIconRect;
             item.ShopCanvas = ShopCanvas;
+            item.SetDependencies(_playerShopManager, _popupManager);
         }
             
         foreach (var item in battleItems)
         {
             item.inventoryIconRect = inventoryIconRect;
             item.ShopCanvas = ShopCanvas;
+            item.SetDependencies(_playerShopManager, _popupManager);
         }          
-
         ReRoll();
     }
 
     public void ReRoll()
     {
-        if (PlayerShopManager.instance.RerollCount > 0)
+        if (_playerShopManager.RerollCount > 0)
         {
-            bool success = PlayerShopManager.instance.TryReroll();
+            bool success = _playerShopManager.TryReroll();
             if (!success) return;
         }
 
@@ -82,7 +87,7 @@ public class ShopUIManager : MonoBehaviour
     private async UniTaskVoid OnExitClicked()
     {
         exitButton.interactable = false;
-        await PlayerShopManager.instance.CommitWithAnimation();
-        SceneController.instance.LoadMapScene();
+        await _playerShopManager.CommitWithAnimation();
+        _sceneController.LoadMapScene();
     }
 }

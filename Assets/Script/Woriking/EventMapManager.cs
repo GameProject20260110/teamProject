@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
-using Unity.VisualScripting;
+using VContainer;
 
 public class EventMapManager : MonoBehaviour
 {
@@ -14,16 +14,25 @@ public class EventMapManager : MonoBehaviour
     [SerializeField] private Image image;
     [SerializeField] private TypeWriter typeWriter;
     [SerializeField] private string eventDescription;
-    //[SerializeField] private AudioClip audioClip;
     [SerializeField] private string audioClipKey;
 
     private EventSo[] assignedEvents;
+
+    private AudioManager _audioManager;
+    private SceneController _sceneController;
+
+    [Inject]
+    public void Construct(AudioManager audioManager, SceneController sceneController)
+    {
+        _audioManager = audioManager;
+        _sceneController = sceneController;
+    }
 
     private void Start()
     {
         AssignRandomEvents();
         SetUpButtons();
-        AudioManager.instance.PlayBgm(audioClipKey);
+        _audioManager.PlayBgm(audioClipKey);
         PlayOpenAnimation().Forget();
     }
 
@@ -55,7 +64,7 @@ public class EventMapManager : MonoBehaviour
             eb.button.onClick.AddListener(() =>
             {
                 assignedEvents[index].Execute();
-                SceneController.instance.LoadMapScene();
+                _sceneController.LoadMapScene();
             });
         }
     }

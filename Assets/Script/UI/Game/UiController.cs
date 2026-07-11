@@ -1,12 +1,11 @@
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class UiController : MonoBehaviour
 {
-    public static UiController instance = null;
-
+    public static UiController Instance;
     [Header("¸ðµâ")]
     public ItemInventoryUI inventoryUI;
     public ResultPanelUI resultUI;
@@ -25,51 +24,45 @@ public class UiController : MonoBehaviour
     public GameObject itemDarkPanel;
     public GameObject DropZone;
 
-    [SerializeField] private Image _playerImage;
-
     [SerializeField] private Sprite clickBtn;
     [SerializeField] private Sprite NoclickBtn;
-    private void Awake()
+
+    private GameManager _gameManager;
+
+    [Inject]
+    public void Construct(GameManager gameManager)
     {
-        if (instance == null)
-            instance = this;
-        else
-            Destroy(gameObject);
+        _gameManager = gameManager;
+        Instance = this;
     }
 
     private void Start()
     {
-
-        if(GameManager.instance != null)
+        if (_gameManager != null)
         {
             SubscribeToEvents();
         }
         RefreshInventory();
-
-        if(ResourceManager.instance != null && _playerImage != null)
-        {
-            _playerImage.sprite = ResourceManager.instance.PlayerImage;
-        }
     }
 
     private void OnDisable()
     {
-        if (GameManager.instance != null) UnSubscribeToEvents();
+        if (_gameManager != null) UnSubscribeToEvents();
     }
 
     private void SubscribeToEvents()
     {
-        GameManager.instance.OnGoldChanged += UpdateGoldUi;
+        _gameManager.OnGoldChanged += UpdateGoldUi;
     }
 
     private void UnSubscribeToEvents()
     {
-        GameManager.instance.OnGoldChanged -= UpdateGoldUi;
+        _gameManager.OnGoldChanged -= UpdateGoldUi;
     }
 
     private void UpdateGoldUi(int gold)
     {
-        if(goldText != null)
+        if (goldText != null)
         {
             goldText.text = gold.ToString("N0");
         }
@@ -95,40 +88,14 @@ public class UiController : MonoBehaviour
     {
         resultUI?.Hide();
         gameOverUI?.Hide();
-
     }
 
-    public void ShowGlowImage()
-    {
-        confirmBtn.GetComponent<ButtonGlowController>().ShowImageGlow();
-    }
-
-    public void HideGlowImage()
-    {
-        confirmBtn.GetComponent<ButtonGlowController>().HideImageGlow();
-    }
-
-    public void ShowGlowShader()
-    {
-        confirmBtn.GetComponent<ButtonGlowController>().ShowShaderGlow();
-    }
-
-    public void HideGlowShader()
-    {
-        confirmBtn.GetComponent<ButtonGlowController>().HideShaderGlow();
-    }
-
-    public void ShowGlow()
-    {
-        confirmBtn.GetComponent<ButtonGlowController>().ShowGlow();
-    }
-
-    public void HideGlow()
-    {
-        confirmBtn.GetComponent<ButtonGlowController>().HideGlow();
-    }
-
-
+    public void ShowGlowImage() => confirmBtn.GetComponent<ButtonGlowController>().ShowImageGlow();
+    public void HideGlowImage() => confirmBtn.GetComponent<ButtonGlowController>().HideImageGlow();
+    public void ShowGlowShader() => confirmBtn.GetComponent<ButtonGlowController>().ShowShaderGlow();
+    public void HideGlowShader() => confirmBtn.GetComponent<ButtonGlowController>().HideShaderGlow();
+    public void ShowGlow() => confirmBtn.GetComponent<ButtonGlowController>().ShowGlow();
+    public void HideGlow() => confirmBtn.GetComponent<ButtonGlowController>().HideGlow();
 
     public void ShowResultPanel(bool isSuccess, int currentLife)
     {
@@ -136,50 +103,31 @@ public class UiController : MonoBehaviour
         RefreshInventory();
     }
 
-    public void ShowGameOverPanel(bool isSuccess = false)
+    public void ShowGameOverPanel(bool isWin)
     {
-        gameOverUI?.Show(isSuccess);
+        gameOverUI?.Show(isWin);
     }
 
     public void SetRollBtnInteractable(bool state)
     {
-        if(rollBtn != null)
-        {
-            rollBtn.interactable = state;
-        }
+        if (rollBtn != null) rollBtn.interactable = state;
     }
 
     public void SetConfirmBtnInteratable(bool state)
     {
-        if (confirmBtn != null)
-        {
-            confirmBtn.interactable = state;
-        }
+        if (confirmBtn != null) confirmBtn.interactable = state;
     }
 
-    public void OnClickGameEndBtn()
-    {
-        gameOverUI?.Show();
-    }
+    public void OnClickGameEndBtn() => gameOverUI?.Show(true);
 
     public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)
     {
         var card = inventoryUI?.FindCardByName(itemName);
         if (card != null) card.PlayNegateEffect(negateOverlayPrefab);
     }
-    public void ResetItemCards()
-    {
-        inventoryUI?.ResetCards();
-    }
 
-    public void OnClickConfirmBtn()
-    {
-        confirmBtn.image.sprite = clickBtn;
-    }
+    public void ResetItemCards() => inventoryUI?.ResetCards();
 
-    public void OffClickConfirmBtn()
-    {
-        confirmBtn.image.sprite = NoclickBtn;
-    }
-
+    public void OnClickConfirmBtn() => confirmBtn.image.sprite = clickBtn;
+    public void OffClickConfirmBtn() => confirmBtn.image.sprite = NoclickBtn;
 }

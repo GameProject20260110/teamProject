@@ -1,11 +1,10 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class PopupManager : MonoBehaviour
 {
-    public static PopupManager instance;
-
     [Header("주사위 팝업")]
     public RectTransform dicePopup;
     private TextMeshProUGUI diceDesc;
@@ -30,23 +29,22 @@ public class PopupManager : MonoBehaviour
     [SerializeField] private GameObject hoverHintText;
 
     [Header("기타")]
-    //public GameObject closePanel;
     public Button StartBtn;
     public Button SettingsBtn;
     public Canvas rootCanvas;
 
+    private ResourceManager _resourceManager;
+    private PlayerShopManager _playerShopManager;
+
+    [Inject]
+    public void Construct(ResourceManager resourceManager, PlayerShopManager playerShopManager)
+    {
+        _resourceManager = resourceManager;
+        _playerShopManager = playerShopManager;
+    }
 
     private void Awake()
     {
-        if(instance == null)
-        {
-            instance = this;
-        }
-        else
-        {
-            Destroy(gameObject);
-        }
-
         if(dicePopup != null)
         {
             diceDesc = dicePopup.GetComponentInChildren<TextMeshProUGUI>();
@@ -64,18 +62,14 @@ public class PopupManager : MonoBehaviour
         if (hoverHintText != null) hoverHintText.SetActive(true);
         if (playerGold != null)
         {
-            int gold = PlayerShopManager.instance != null && PlayerShopManager.instance.IsOpen ? 
-                PlayerShopManager.instance.TempGold : ResourceManager.instance.gold;
+            int gold = _playerShopManager != null && _playerShopManager.IsOpen ? 
+                _playerShopManager.TempGold : _resourceManager.gold;
             playerGold.text = gold.ToString();
         }
 
-        if (PlayerShopManager.instance != null)
-        {
-            PlayerShopManager.instance.OnGoldChanged += UpdateGold;
-        }
-
-        //if (StartBtn != null) 
-        //    StartBtn.onClick.AddListener(() => PlayerShopManager.instance.CommitWithAnimation());           
+        if (_playerShopManager != null)
+            _playerShopManager.OnGoldChanged += UpdateGold;
+     
 
         if(SettingsBtn != null)
             SettingsBtn.onClick.AddListener(() => MainOption.instance.ToggleSettingsPanel());           
@@ -83,13 +77,13 @@ public class PopupManager : MonoBehaviour
 
     private void OnDestroy()
     {
-        if (PlayerShopManager.instance != null)
-            PlayerShopManager.instance.OnGoldChanged -= UpdateGold;
+        if (_playerShopManager != null)
+            _playerShopManager.OnGoldChanged -= UpdateGold;
     }
 
     public void SetStatus()
     {
-        playerGold.text = ResourceManager.instance.gold.ToString();
+        playerGold.text = _resourceManager.gold.ToString();
     }
 
     public void DescOpenPopup(DiceData data)
@@ -139,16 +133,4 @@ public class PopupManager : MonoBehaviour
     }
 
     private void UpdateGold(int gold) => playerGold.text = $"{gold}";
-
-    //private Vector2 CalcLocalPosPopup(RectTransform targetRect)
-    //{
-    //    Vector2 screenPos = RectTransformUtility.WorldToScreenPoint(null, targetRect.position);
-    //    RectTransformUtility.ScreenPointToLocalPointInRectangle(
-    //        rootCanvas.GetComponent<RectTransform>(),
-    //        screenPos,
-    //        rootCanvas.renderMode == RenderMode.ScreenSpaceOverlay ? null : Camera.main,
-    //        out Vector2 localPos
-    //    );
-    //    return localPos + new Vector2(targetRect.sizeDelta.x, 0);
-    //}
 }

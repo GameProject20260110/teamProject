@@ -44,7 +44,7 @@ public class ItemDragHandler : MonoBehaviour,
         transform.SetAsLastSibling();
 
         canvasGroup.blocksRaycasts = false;
-        UiController.instance.ToggleItemDragPanel();
+        UiController.Instance.ToggleItemDragPanel();
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -75,7 +75,7 @@ public class ItemDragHandler : MonoBehaviour,
 
         if (!isDropped)
         {
-            UiController.instance.ToggleItemDragPanel();
+            UiController.Instance.ToggleItemDragPanel();
             ReturnToOrigin();
         }
             
@@ -86,7 +86,7 @@ public class ItemDragHandler : MonoBehaviour,
     public void OnDropped()
     {
         isDropped = true;
-        UiController.instance.ToggleItemDragPanel();
+        UiController.Instance.ToggleItemDragPanel();
     }
 
     private void ReturnToOrigin()

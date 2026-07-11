@@ -10,7 +10,7 @@ using DG.Tweening;
 
 public class SceneController : MonoBehaviour
 {
-    public static SceneController instance;
+    public static SceneController Instance;
 
     public const string SceneTitle = "Title";
     public const string SceneBattle = "GameBoard";
@@ -36,17 +36,12 @@ public class SceneController : MonoBehaviour
     [SerializeField] private float wipeDuration = 0.4f;
 
     private SceneInstance? currentAddressableScene;
-
     public bool IsTransitioning { get; private set; }
 
     private void Awake()
     {
-        if(instance == null) instance = this;
-        else Destroy(gameObject);
-        DontDestroyOnLoad(gameObject);
-
-
-        if(wipeImage != null)
+        Instance = this;
+        if (wipeImage != null)
         {
             wipeImage.fillAmount = 0f;
             wipeImage.gameObject.SetActive(false);
@@ -56,19 +51,14 @@ public class SceneController : MonoBehaviour
     
     private void OnValidate()
     {
-        if (wipeImage == null)
-            Debug.LogWarning("wipeImage가 비어있습니다.");
-        if (loadingPanel == null)
-            Debug.LogWarning("loadingPanel이 비어있습니다.");
+        if (wipeImage == null) Debug.LogWarning("wipeImage가 비어있습니다.");
+        if (loadingPanel == null) Debug.LogWarning("loadingPanel이 비어있습니다.");
     }
     public void ReloadCurrentScene() => LoadAsync(SceneManager.GetActiveScene().name, false).Forget();
-
     // 로딩창 (타이틀 -> 맵)
     public void LoadTitleScene() => LoadAsync(SceneTitle, true).Forget();
     //public void LoadMapFromTitle() => LoadAsync(SceneMap, true).Forget();
-
     public void LoadMapFromTitle() => LoadMapFromTitleAsync().Forget();
-
     // 컷 인/아웃 (맵 -> 스테이지)
     public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget(); 
     public void LoadMapScene() => LoadAsync(SceneMap, false).Forget();

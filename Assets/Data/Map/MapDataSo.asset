@@ -17,59 +17,56 @@ MonoBehaviour:
   layers:
   - nodeTypeWeights:
     - nodeType: 0
-      weight: 4
+      weight: 0
     - nodeType: 1
       weight: 2
     - nodeType: 2
-      weight: 3
-    enemies:
-    - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
-    - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
-    - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
-    - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
-    randomNodeWeight:
-    - nodeType: 0
       weight: 1
-    - nodeType: 1
-      weight: 2
-    - nodeType: 4
-      weight: 5
-  - nodeTypeWeights:
-    - nodeType: 0
-      weight: 3
-    - nodeType: 1
-      weight: 4
-    - nodeType: 2
-      weight: 2
     enemies:
     - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
     - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
     - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
-    - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
-    randomNodeWeight:
-    - nodeType: 0
-      weight: 1
-    - nodeType: 1
-      weight: 3
-    - nodeType: 4
-      weight: 5
-  - nodeTypeWeights:
-    - nodeType: 0
-      weight: 2
-    - nodeType: 1
-      weight: 5
-    - nodeType: 2
-      weight: 3
-    enemies:
-    - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
-    - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
-    - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
-    - {fileID: 11400000, guid: 7c6ef847d0eeffd4fbf3d19523f9508b, type: 2}
     randomNodeWeight:
     - nodeType: 0
       weight: 0
     - nodeType: 1
+      weight: 0
+    - nodeType: 4
       weight: 5
+  - nodeTypeWeights:
+    - nodeType: 0
+      weight: 0
+    - nodeType: 1
+      weight: 2
+    - nodeType: 2
+      weight: 2
+    enemies:
+    - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
+    - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
+    - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
+    randomNodeWeight:
+    - nodeType: 0
+      weight: 0
+    - nodeType: 1
+      weight: 0
+    - nodeType: 4
+      weight: 5
+  - nodeTypeWeights:
+    - nodeType: 0
+      weight: 0
+    - nodeType: 1
+      weight: 7
+    - nodeType: 2
+      weight: 3
+    enemies:
+    - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
+    - {fileID: 11400000, guid: dfdf95d6c26f3e0469ae197272bb1a37, type: 2}
+    - {fileID: 11400000, guid: 6936ac57087ee1c4da7d100750bd967b, type: 2}
+    randomNodeWeight:
+    - nodeType: 0
+      weight: 0
+    - nodeType: 1
+      weight: 0
     - nodeType: 4
       weight: 5
   bossEnemyData: {fileID: 11400000, guid: ec47eadbe94124845a62b2bbf8a28529, type: 2}

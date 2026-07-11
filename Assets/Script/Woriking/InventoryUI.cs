@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using VContainer;
 
 public class InventoryUI : MonoBehaviour
 {
@@ -11,6 +12,16 @@ public class InventoryUI : MonoBehaviour
     private List<GameObject> _totalIcons = new List<GameObject>();
     private List<GameObject> _drawPileIcons = new List<GameObject>();
 
+    private PlayerDeck _playerDeck;
+    private DeckManager _deckManager;
+
+    [Inject]
+    public void Construct(PlayerDeck playerDeck, DeckManager deckManager)
+    {
+        _playerDeck = playerDeck;
+        _deckManager = deckManager;
+    }
+
     void OnEnable()
     {
         Refresh();
@@ -18,8 +29,8 @@ public class InventoryUI : MonoBehaviour
 
     public void Refresh()
     {
-        RefreshList(PlayerDeck.instance.inventory, totalDeckList, _totalIcons);
-        RefreshList(DeckManager.instance.drawPile, drawPileList, _drawPileIcons);
+        RefreshList(_playerDeck.inventory, totalDeckList, _totalIcons);
+        RefreshList(_deckManager.drawPile, drawPileList, _drawPileIcons);
     }
 
     private void RefreshList(IList<DiceData> dataList, Transform parent, List<GameObject> icons)

@@ -15,16 +15,16 @@ public abstract class EnemyAIStrategy : ScriptableObject
             switch (dice.MyState.diceData.aiRole)
             {
                 case DiceData.DiceRole.Attack:
-                    await DiceManager.instance.EnemyPlaceAttackDice(attackSlot++, dice);
+                    await DiceManager.Instance.EnemyPlaceAttackDice(attackSlot++, dice);
                     break;
                 case DiceData.DiceRole.Defense:
-                    await DiceManager.instance.EnemyPlaceDefenseDice(defenseSlot++, dice);
+                    await DiceManager.Instance.EnemyPlaceDefenseDice(defenseSlot++, dice);
                     break;
                 case DiceData.DiceRole.Neutral:
                     if (attackSlot <= defenseSlot)
-                        await DiceManager.instance.EnemyPlaceAttackDice(attackSlot++, dice);
+                        await DiceManager.Instance.EnemyPlaceAttackDice(attackSlot++, dice);
                     else
-                        await DiceManager.instance.EnemyPlaceDefenseDice(defenseSlot++, dice);
+                        await DiceManager.Instance.EnemyPlaceDefenseDice(defenseSlot++, dice);
                     break;
             }
         }

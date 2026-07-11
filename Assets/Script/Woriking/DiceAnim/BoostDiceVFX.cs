@@ -31,8 +31,13 @@ public class BoostDiceVFX : DiceVFXBase
 
         // 2. 대상 주사위로 이펙트 날아감
         var completion = new UniTaskCompletionSource<bool>();
-        GameObject skill = ObjectPool.instance.Get(ctx.DiceData.effectData.attackPrefab);
-        skill.transform.position = highest.transform.position;
+
+        GameObject skill = WorldPoolManager.instance.Get(
+        ctx.DiceData.effectData.attackPrefab,
+        transform.position,
+        Quaternion.identity
+        );
+
         skill.GetComponent<Skill>().Init(new SkillContext
         {
             isPlayer = ctx.IsPlayer,
@@ -42,9 +47,8 @@ public class BoostDiceVFX : DiceVFXBase
             startPos = transform.position,
             targetPos = highest.transform.position
         });
-
         await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
-
+        
         // 3. 대상 주사위 펄스
         await highest.VFX.PlayBuff(ctx.diceState.modifiedValue, ctx.CancellationToken);
     }
