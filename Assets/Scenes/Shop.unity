@@ -1015,6 +1015,7 @@ MonoBehaviour:
   - {fileID: 243040672}
   - {fileID: 940110660}
   - {fileID: 1152043511}
+  - {fileID: 535363813}
   - {fileID: 321170777}
   - {fileID: 1525389222}
   shopCanvasGroup: {fileID: 1241135451}
@@ -3955,6 +3956,7 @@ GameObject:
   - component: {fileID: 535363810}
   - component: {fileID: 535363812}
   - component: {fileID: 535363811}
+  - component: {fileID: 535363813}
   m_Layer: 5
   m_Name: Inventory
   m_TagString: Untagged
@@ -4019,6 +4021,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 535363809}
   m_CullTransparentMesh: 1
+--- !u!225 &535363813
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 535363809}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1 &580184632
 GameObject:
   m_ObjectHideFlags: 0
