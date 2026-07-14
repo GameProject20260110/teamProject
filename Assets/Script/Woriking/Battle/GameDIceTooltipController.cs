@@ -19,7 +19,7 @@ public class GameDiceTooltipController : MonoBehaviour
         Hide();
     }
 
-    public void Show(string title, string desc, RectTransform target)
+    public void Show(string title, string desc, Transform target)
     {
         panel.SetActive(true);
         titleText.text = title;
@@ -33,7 +33,7 @@ public class GameDiceTooltipController : MonoBehaviour
         panel.SetActive(false);
     }
 
-    private void SetPosition(RectTransform target)
+    private void SetPosition(Transform target)
     {
         Vector2 screenPoint = RectTransformUtility.WorldToScreenPoint(uiCamera, target.position);
 

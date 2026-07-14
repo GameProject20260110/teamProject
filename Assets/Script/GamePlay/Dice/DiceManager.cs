@@ -8,19 +8,24 @@ public class DiceManager : MonoBehaviour
 {
     public static DiceManager Instance { get; private set; }
 
-    [Header("UI 연결")]
-    public RectTransform rollArea;
-    [Header("슬롯")]
-    public Transform[] slots;
-    public Transform[] enemySlots;
-    public Transform[] enemyAttackSlots;
-    public Transform[] enemyDefenseSlots;
+    [Header("슬롯 컨테이너")]
+    [SerializeField] private Transform slotContainer;
+    [SerializeField] private Transform enemySlotContainer;
+    [SerializeField] private Transform enemyAttackSlotContainer;
+    [SerializeField] private Transform enemyDefenseSlotContainer;
+
+    [Header("슬롯 (자동 채움, 인스펙터에서 손대지 마세요)")]
+    private Transform[] slots;
+    private Transform[] enemySlots;
+    private Transform[] enemyAttackSlots;
+    private Transform[] enemyDefenseSlots;
+
     [Header("모듈")]
     public DiceRoller diceRoller;
     public bool isRolling => diceRoller != null && diceRoller.isRolling;
+
     public Dice[] panelDiceScript;
     public Dice[] enemyPanelDiceScript;
-
 
     [Inject]
     public void Construct()
@@ -30,18 +35,43 @@ public class DiceManager : MonoBehaviour
 
     private void Awake()
     {
+        slots = GetSlotsFromContainer(slotContainer);
+        enemySlots = GetSlotsFromContainer(enemySlotContainer);
+        enemyAttackSlots = GetSlotsFromContainer(enemyAttackSlotContainer);
+        enemyDefenseSlots = GetSlotsFromContainer(enemyDefenseSlotContainer);
+
         panelDiceScript = new Dice[slots.Length];
         enemyPanelDiceScript = new Dice[enemySlots.Length];
+    }
+
+    private Transform[] GetSlotsFromContainer(Transform container)
+    {
+        if (container == null)
+        {
+            Debug.LogWarning("[DiceManager] 슬롯 컨테이너가 비어있습니다.");
+            return new Transform[0];
+        }
+
+        Transform[] result = new Transform[container.childCount];
+        for (int i = 0; i < container.childCount; i++)
+            result[i] = container.GetChild(i);
+        return result;
     }
 
     public void PlaceDice(int slotIndex, DiceData data)
     {
         if (panelDiceScript[slotIndex] != null)
         {
-            UIPoolManager.instance.Return(panelDiceScript[slotIndex].gameObject);
+            WorldPoolManager.instance.Return(panelDiceScript[slotIndex].gameObject);
             panelDiceScript[slotIndex] = null;
         }
-        GameObject obj = UIPoolManager.instance.Get(data.dicePrefab, slots[slotIndex], Vector2.zero);
+
+        GameObject obj = WorldPoolManager.instance.Get(
+            data.dicePrefab,
+            slots[slotIndex].position,
+            Quaternion.identity,
+            slots[slotIndex]);
+
         var draggable = obj.GetComponent<DraggableDice>();
         Dice dice = obj.GetComponent<Dice>();
         dice.Initialize(slotIndex, data);
@@ -53,10 +83,16 @@ public class DiceManager : MonoBehaviour
     {
         if (enemyPanelDiceScript[slotIndex] != null)
         {
-            UIPoolManager.instance.Return(enemyPanelDiceScript[slotIndex].gameObject);
+            WorldPoolManager.instance.Return(enemyPanelDiceScript[slotIndex].gameObject);
             enemyPanelDiceScript[slotIndex] = null;
         }
-        GameObject obj = UIPoolManager.instance.Get(data.dicePrefab, enemySlots[slotIndex], Vector2.zero);
+
+        GameObject obj = WorldPoolManager.instance.Get(
+            data.dicePrefab,
+            enemySlots[slotIndex].position,
+            Quaternion.identity,
+            enemySlots[slotIndex]);
+
         Dice dice = obj.GetComponent<Dice>();
         dice.Initialize(slotIndex, data);
         enemyPanelDiceScript[slotIndex] = dice;
@@ -80,7 +116,7 @@ public class DiceManager : MonoBehaviour
             .DOMove(targetSlot.position, duration)
             .SetEase(Ease.OutQuart)
             .AsyncWaitForCompletion();
-        dice.transform.SetParent(targetSlot, true);
+        dice.transform.SetParent(targetSlot, false);
         dice.transform.localPosition = Vector3.zero;
     }
     #endregion
@@ -91,7 +127,7 @@ public class DiceManager : MonoBehaviour
         {
             if (panelDiceScript[i] != null)
             {
-                UIPoolManager.instance.Return(panelDiceScript[i].gameObject);
+                WorldPoolManager.instance.Return(panelDiceScript[i].gameObject);
                 panelDiceScript[i] = null;
             }
         }
@@ -103,7 +139,7 @@ public class DiceManager : MonoBehaviour
         {
             if (enemyPanelDiceScript[i] != null)
             {
-                UIPoolManager.instance.Return(enemyPanelDiceScript[i].gameObject);
+                WorldPoolManager.instance.Return(enemyPanelDiceScript[i].gameObject);
                 enemyPanelDiceScript[i] = null;
             }
         }
@@ -112,19 +148,16 @@ public class DiceManager : MonoBehaviour
     public async UniTask<Dice[]> StartEnemyRolling()
     {
         Dice[] allDice = GetEnemyAllDice();
-        await diceRoller.StartRoll(allDice, rollArea);
+        await diceRoller.StartRoll(allDice);
         return allDice;
     }
 
-    public Dice[] GetEnemyAllDice()
-    {
-        return enemyPanelDiceScript.Where(d => d != null).ToArray();
-    }
+    public Dice[] GetEnemyAllDice() => enemyPanelDiceScript.Where(d => d != null).ToArray();
 
     public async UniTask<Dice[]> StartRolling()
     {
         Dice[] allDice = GetAllDice();
-        await diceRoller.StartRoll(allDice, rollArea);
+        await diceRoller.StartRoll(allDice);
         return allDice;
     }
 
@@ -140,7 +173,8 @@ public class DiceManager : MonoBehaviour
         Sprite[] lastDiceSprite = new Sprite[panelDiceScript.Length];
         for (int i = 0; i < panelDiceScript.Length; i++)
         {
-            if (panelDiceScript[i] != null && panelDiceScript[i].gameObject.activeSelf) lastDiceSprite[i] = panelDiceScript[i].GetCurrentSprite();
+            if (panelDiceScript[i] != null && panelDiceScript[i].gameObject.activeSelf)
+                lastDiceSprite[i] = panelDiceScript[i].GetCurrentSprite();
         }
         return lastDiceSprite;
     }

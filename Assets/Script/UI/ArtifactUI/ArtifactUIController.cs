@@ -8,7 +8,7 @@ public class ArtifactUIController : MonoBehaviour
 
     [SerializeField] private Transform artifactContainer;
     [SerializeField] private GameObject artifactIconPrefab;
-    [SerializeField] private ParticleSystem healParticle;
+    //[SerializeField] private ParticleSystem healParticle;
 
     private List<ArtifactIconUI> _icons = new List<ArtifactIconUI>();
 
@@ -18,6 +18,12 @@ public class ArtifactUIController : MonoBehaviour
     public void Construct(ItemManager itemManager)
     {
         _itemManager = itemManager;
+    }
+
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+        else Destroy(gameObject);
     }
 
     private void Start()
@@ -70,9 +76,9 @@ public class ArtifactUIController : MonoBehaviour
         else return _icons[index];
     }
 
-    public void PlayHealParticle()
-    {
-        if (healParticle != null)
-            healParticle.Play();
-    }
+    //public void PlayHealParticle()
+    //{
+    //    if (healParticle != null)
+    //        healParticle.Play();
+    //}
 }

@@ -12,9 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 50b83e714b983844abd4da4a1520c267, type: 3}
   m_Name: DiceData_Normal
   m_EditorClassIdentifier: Assembly-CSharp::DiceData
-  multiBonusScore: 1
-  plusBonusScore: 0
-  type: 0
   diceNum: 1
   abilityName: "\uB178\uBA40 \uC8FC\uC0AC\uC704"
   aiRole: 1
@@ -24,5 +21,5 @@ MonoBehaviour:
   Desc: 
   effectDesc: 
   skin: {fileID: 11400000, guid: a2a0f760336f6a2479154757fbdc27b7, type: 2}
-  dicePrefab: {fileID: 4049955241047962077, guid: 392f150f5ea1c8e4ca5446bd6e1cea79, type: 3}
+  dicePrefab: {fileID: 4049955241047962077, guid: 612184e791a02034ab2834a938754b33, type: 3}
   effectData: {fileID: 11400000, guid: 0d7b364f294a70b498962773304fd11a, type: 2}

@@ -8,7 +8,7 @@ using TMPro;
 public abstract class DiceVFXBase : MonoBehaviour
 {
     [SerializeField] protected GameObject burstPrefab;
-    [SerializeField] protected TextMeshProUGUI buffText;
+    [SerializeField] protected TextMeshPro buffText;
 
     private Vector3 originScale;
     private int totalBonus;

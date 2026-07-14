@@ -6,7 +6,11 @@ using VContainer;
 public class DiceRoller : MonoBehaviour
 {
     public bool isRolling { get; private set; } = false;
-    private float padding = 100.0f;
+
+    [Header("굴림 영역 (뷰포트 비율 0~0.5)")]
+    [SerializeField] private float marginX = 0.1f;
+    [SerializeField] private float marginY = 0.1f;
+    [SerializeField] private float boardDepth = 10f; // 카메라 - 보드 평면 거리
 
     private AudioManager _audioManager;
     private UiController _uiController;
@@ -18,29 +22,28 @@ public class DiceRoller : MonoBehaviour
         _uiController = uiController;
     }
 
-    public async UniTask StartRoll(Dice[] allDice, RectTransform rollArea)
+    public async UniTask StartRoll(Dice[] allDice)
     {
         if (isRolling) return;
-        await RollRoutine(allDice, rollArea);
+        await RollRoutine(allDice);
     }
 
-    private async UniTask RollRoutine(Dice[] allDice, RectTransform rollArea)
+    private async UniTask RollRoutine(Dice[] allDice)
     {
         isRolling = true;
-        _uiController.SetRollBtnInteractable(false);
         float rollDuration = 1.5f;
         _audioManager.PlaySfx("Roll");
-        DG.Tweening.Sequence rollSeq = BuildRollSequence(allDice, rollArea, rollDuration);
+        var rollSeq = BuildRollSequence(allDice, rollDuration);
         await rollSeq.AsyncWaitForCompletion();
         await UniTask.Delay(1000);
-        DG.Tweening.Sequence returnSeq = BuildReturnSequence(allDice);
+        var returnSeq = BuildReturnSequence(allDice);
         await returnSeq.AsyncWaitForCompletion();
         isRolling = false;
     }
 
-    private DG.Tweening.Sequence BuildRollSequence(Dice[] allDice, RectTransform rollArea, float duration)
+    private DG.Tweening.Sequence BuildRollSequence(Dice[] allDice, float duration)
     {
-        DG.Tweening.Sequence rollSeq = DOTween.Sequence();
+        var rollSeq = DOTween.Sequence();
         for (int i = 0; i < allDice.Length; i++)
         {
             Transform diceTransform = allDice[i].transform;
@@ -48,7 +51,7 @@ public class DiceRoller : MonoBehaviour
             float currentDuration = duration + Random.Range(-0.2f, 0.2f);
             int index = GetResultValue(i);
             currentDice.StartRoll(duration * 0.9f);
-            DG.Tweening.Sequence moveSeq = BuildMoveSequence(currentDice, rollArea, currentDuration, index);
+            var moveSeq = BuildMoveSequence(currentDice, currentDuration, index);
             Tween rotate = diceTransform.DORotate(new Vector3(0, 0, 365 * 5), duration, RotateMode.FastBeyond360);
             rollSeq.Join(moveSeq);
             rollSeq.Join(rotate);
@@ -56,17 +59,17 @@ public class DiceRoller : MonoBehaviour
         return rollSeq;
     }
 
-    private DG.Tweening.Sequence BuildMoveSequence(Dice dice, RectTransform rollArea, float duration, int resultValue)
+    private DG.Tweening.Sequence BuildMoveSequence(Dice dice, float duration, int resultValue)
     {
         Transform diceTransform = dice.transform;
         int boundCount = Random.Range(3, 5);
         float stopTime = duration * 0.3f;
         float boundTime = (duration - stopTime) / boundCount;
-        Vector3 stopPoint = GetRandomPointInRollArea(rollArea);
-        DG.Tweening.Sequence moveSeq = DOTween.Sequence();
+        Vector3 stopPoint = GetRandomPointInRollArea();
+        var moveSeq = DOTween.Sequence();
         for (int j = 0; j < boundCount; j++)
         {
-            Vector3 randomPoint = GetRandomPointInRollArea(rollArea);
+            Vector3 randomPoint = GetRandomPointInRollArea();
             moveSeq.Append(diceTransform.DOMove(randomPoint, boundTime).SetEase(Ease.InOutQuad));
         }
         moveSeq.Append(diceTransform.DOMove(stopPoint, stopTime).SetEase(Ease.OutCubic).OnComplete(() =>
@@ -78,7 +81,7 @@ public class DiceRoller : MonoBehaviour
 
     private DG.Tweening.Sequence BuildReturnSequence(Dice[] allDice)
     {
-        DG.Tweening.Sequence returnSeq = DOTween.Sequence();
+        var returnSeq = DOTween.Sequence();
         for (int i = 0; i < allDice.Length; i++)
         {
             if (allDice[i] == null || !allDice[i].gameObject.activeInHierarchy) continue;
@@ -89,20 +92,15 @@ public class DiceRoller : MonoBehaviour
         return returnSeq;
     }
 
-    private int GetResultValue(int index)
-    {
-        int result = Random.Range(1, 7);
-        return result;
-    }
+    private int GetResultValue(int index) => Random.Range(1, 7);
 
-    Vector3 GetRandomPointInRollArea(RectTransform rollArea)
+    private Vector3 GetRandomPointInRollArea()
     {
-        if (rollArea == null) return transform.position;
-        Rect rect = rollArea.rect;
-        float safePadX = Mathf.Min(padding, rect.width * 0.3f);
-        float safePadY = Mathf.Min(padding, rect.height * 0.3f);
-        float localX = Random.Range(rect.xMin + safePadX, rect.xMax - safePadX);
-        float localY = Random.Range(rect.yMin + safePadY, rect.yMax - safePadY);
-        return rollArea.TransformPoint(localX, localY, 0);
+        Camera cam = Camera.main;
+        Vector3 min = cam.ViewportToWorldPoint(new Vector3(marginX, marginY, boardDepth));
+        Vector3 max = cam.ViewportToWorldPoint(new Vector3(1f - marginX, 1f - marginY, boardDepth));
+        float x = Random.Range(min.x, max.x);
+        float y = Random.Range(min.y, max.y);
+        return new Vector3(x, y, 0f);
     }
 }
