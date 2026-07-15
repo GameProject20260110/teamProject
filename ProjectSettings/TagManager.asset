@@ -14,15 +14,16 @@ TagManager:
   - BuySpecialSlot
   - ShopCanvas
   - FailedCard
+  - BoardIgnoreAlpha
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Dice
   - Water
   - UI
   - BackGround
-  - 
+  - Board
   - 
   - 
   - 

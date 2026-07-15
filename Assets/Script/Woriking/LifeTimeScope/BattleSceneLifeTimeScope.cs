@@ -26,6 +26,7 @@ public class BattleSceneLifetimeScope : LifetimeScope
 
         // ø¨√‚/¿Ã∆Â∆Æ
         builder.RegisterComponentInHierarchy<CharacterAppearEffect>();
+        builder.RegisterComponentInHierarchy<CardAppearEffect>();
         builder.RegisterComponentInHierarchy<NormalStageController>();
         builder.RegisterComponentInHierarchy<CardRevealAnimator>();
         builder.RegisterComponentInHierarchy<GameEndAnimation>();

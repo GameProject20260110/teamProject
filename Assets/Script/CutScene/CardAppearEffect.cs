@@ -35,7 +35,7 @@ public class CardAppearEffect : MonoBehaviour
     private AudioManager _audioManager;
 
     [Inject]
-    public void Construct(BattleDataManager battleDataManager, AudioManager audioManager)
+    public void Construct(AudioManager audioManager)
     {
         _audioManager = audioManager;
     }

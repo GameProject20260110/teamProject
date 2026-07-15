@@ -14,29 +14,31 @@ public class NormalStageController : BaseStageController
 
     private BattleDataManager _battleDataManager;
     private BattleInitalizer _battleInitalizer;
+    private AudioManager _audioManager;
 
     [Inject]
     public void Construct(BattleDataManager battleDataManager, BattleInitalizer battleInitalizer, AudioManager audioManager)
     {
         _battleDataManager = battleDataManager;
         _battleInitalizer = battleInitalizer;
+        _audioManager = audioManager;
         playerEffect.SetDependencies(audioManager, battleInitalizer);
         enemyEffect.SetDependencies(audioManager, battleInitalizer);
     }
 
     protected override async UniTask PlayIntroEffect(CancellationToken ct)
     {
+        _audioManager.PlayBgm("Battle");
         await PlayEffectAsync(onComplete => stageStartEffect.Play(onComplete), ct);
-        await PlayEffectAsync(cardAppearEffect.Play, ct);
-
+        
         var enemyPrefab = _battleDataManager.GetEnemyPrefab();
-        enemyEffect.SetPrefab(enemyPrefab);
-        await PlayEffectAsync(enemyEffect.Play, ct);
-        await PlayEffectAsync(playerEffect.Play, ct);
+        enemyEffect.SetPrefab(enemyPrefab);      
     }
 
     protected override async UniTask FadeInPlayer(CancellationToken ct)
-    {
+    { 
+        await PlayEffectAsync(cardAppearEffect.Play, ct);
+        await PlayEffectAsync(playerEffect.Play, ct);
         var playerCharacter = _battleInitalizer.PlayerCharacter;
         if (playerCharacter != null)
             await playerCharacter.FadeIn(0.5f).AttachExternalCancellation(ct);
@@ -44,6 +46,7 @@ public class NormalStageController : BaseStageController
 
     protected override async UniTask FadeInEnemy(CancellationToken ct)
     {
+        await PlayEffectAsync(enemyEffect.Play, ct);
         var enemyCharacter = _battleInitalizer.EnemyCharacter;
         if (enemyCharacter != null)
             await enemyCharacter.FadeIn(0.5f).AttachExternalCancellation(ct);

@@ -3,6 +3,7 @@ using DG.Tweening;
 using System;
 using System.Threading;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using VContainer;
 
 public abstract class BaseStageController : MonoBehaviour
@@ -14,7 +15,14 @@ public abstract class BaseStageController : MonoBehaviour
     [SerializeField] protected float interval = 0.17f;
     [SerializeField] protected DiceSpawnAnimation diceSpawnAnimation;
 
-    [Header("°ÔÀÓUI")]
+    [SerializeField] private SpriteGroupAlpha boardGroup;
+    [SerializeField] private Camera mainCamera;
+
+    private Physics2DRaycaster boardRaycaster;
+    private LayerMask _fullEventMask;
+    private int _boardLayerMask;
+
+    [Header("¼û±è ´ë»ó UI")]
     [SerializeField] protected CanvasGroup[] HideUIGroup;
 
     protected CancellationTokenSource cts;
@@ -32,6 +40,22 @@ public abstract class BaseStageController : MonoBehaviour
     private void Awake()
     {
         cts = new CancellationTokenSource();
+        boardRaycaster = mainCamera.GetComponent<Physics2DRaycaster>();
+        _boardLayerMask = LayerMask.GetMask("Board");
+        _fullEventMask = boardRaycaster.eventMask;
+        boardRaycaster.eventMask &= ~_boardLayerMask;
+    }
+
+    protected async UniTask HideBoardAsync(CancellationToken ct, float duration = 0.4f)
+    {
+        boardRaycaster.eventMask &= ~_boardLayerMask;
+        await boardGroup.FadeAsync(0f, duration, ct);
+    }
+
+    protected async UniTask ShowBoardAsync(CancellationToken ct, float duration = 0.4f)
+    {
+        await boardGroup.FadeAsync(1f, duration, ct);
+        boardRaycaster.eventMask = _fullEventMask;
     }
 
     protected void HideGameUI()
@@ -65,9 +89,10 @@ public abstract class BaseStageController : MonoBehaviour
             stageIntroCanvas.gameObject.SetActive(true);
             HideGameUI();
             await PlayIntroEffect(ct);
-            await FadeInGameUI(ct);
+            await ShowBoardAsync(ct);     
             await FadeInPlayer(ct);
             await FadeInEnemy(ct);
+            await FadeInGameUI(ct);
             ShowGameUI();
             if (diceSpawnAnimation != null)
             {

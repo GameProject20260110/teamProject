@@ -8,6 +8,7 @@ using VContainer;
 public class BossStageController : BaseStageController
 {
     [SerializeField] private CharacterAppearEffect bossSpawnEffect;
+    [SerializeField] private CardAppearEffect cardAppearEffect;
     [SerializeField] private BossStageIntro bossStageIntro;
 
     private BattleDataManager _battleDataManager;
@@ -22,7 +23,11 @@ public class BossStageController : BaseStageController
     protected override async UniTask PlayIntroEffect(CancellationToken ct)
     {
         await bossStageIntro.Play(ct);
-        
+    }
+
+    protected override async UniTask FadeInPlayer(CancellationToken ct)
+    {
+        await PlayEffectAsync(cardAppearEffect.Play,ct);
     }
 
     protected override async UniTask FadeInEnemy(CancellationToken ct)

@@ -25,6 +25,12 @@ public class ItemManager : MonoBehaviour
             itemSearch[item.itemName] = item;
     }
 
+    private void Awake()
+    {
+        if(instance == null) instance = this;
+        else Destroy(gameObject);
+    }
+
     public void Save()
     {
         ItemSaveData data = new ItemSaveData();

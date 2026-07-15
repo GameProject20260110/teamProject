@@ -6,7 +6,7 @@ using VContainer;
 
 public class DefensePanelUI : MonoBehaviour
 {
-    public TextMeshProUGUI defenseValue;
+    public TextMeshPro defenseValue;
     public Transform[] slots;
     private int _currentDefenseValue = 0;
     private List<Dice> _placedDices = new List<Dice>();
@@ -34,7 +34,6 @@ public class DefensePanelUI : MonoBehaviour
         _placedDices.Add(dice);
         dice.transform.SetParent(emptySlot, false);
         dice.transform.localPosition = Vector3.zero;
-        dice.transform.localScale = Vector3.one;
         UpdateValue();
         return true;
     }

@@ -38,6 +38,6 @@ public class Ring : BattleItemSo
         BattleManager.Instance?.ShowHealText(healAmount);
         //AudioManager.instance?.PlaySfx("Heal");
         //ArtifactUIController.instance?.PlayHealParticle();
-        EffectManager.Instance.PlayHealEffect(ctx.Positions.PlayerPosition);
+        EffectManager.Instance?.PlayHealEffect(ctx.Positions.PlayerPosition);
     }
 }

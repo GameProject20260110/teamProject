@@ -8,14 +8,9 @@ public class UiController : MonoBehaviour
     public static UiController Instance;
     [Header("모듈")]
     public ItemInventoryUI inventoryUI;
-    public ResultPanelUI resultUI;
     public GameOverPanelUI gameOverUI;
 
-    [Header("인게임 정보 UI (상시 표시)")]
-    public TextMeshProUGUI goldText;
-
     [Header("버튼")]
-    public Button rollBtn;
     public Button confirmBtn;
 
     [Header("GameEndPanels")]
@@ -38,45 +33,13 @@ public class UiController : MonoBehaviour
 
     private void Start()
     {
-        if (_gameManager != null)
-        {
-            SubscribeToEvents();
-        }
         RefreshInventory();
-    }
-
-    private void OnDisable()
-    {
-        if (_gameManager != null) UnSubscribeToEvents();
-    }
-
-    private void SubscribeToEvents()
-    {
-        _gameManager.OnGoldChanged += UpdateGoldUi;
-    }
-
-    private void UnSubscribeToEvents()
-    {
-        _gameManager.OnGoldChanged -= UpdateGoldUi;
-    }
-
-    private void UpdateGoldUi(int gold)
-    {
-        if (goldText != null)
-        {
-            goldText.text = gold.ToString("N0");
-        }
     }
 
     public void ToggleItemDragPanel()
     {
         itemDarkPanel.SetActive(!itemDarkPanel.activeSelf);
         DropZone.SetActive(!DropZone.activeSelf);
-    }
-
-    public void ToggleInventoryPanel()
-    {
-        InventoryPanel.SetActive(!InventoryPanel.activeSelf);
     }
 
     public void RefreshInventory()
@@ -86,7 +49,6 @@ public class UiController : MonoBehaviour
 
     public void HideAllPanels()
     {
-        resultUI?.Hide();
         gameOverUI?.Hide();
     }
 
@@ -97,20 +59,9 @@ public class UiController : MonoBehaviour
     public void ShowGlow() => confirmBtn.GetComponent<ButtonGlowController>().ShowGlow();
     public void HideGlow() => confirmBtn.GetComponent<ButtonGlowController>().HideGlow();
 
-    public void ShowResultPanel(bool isSuccess, int currentLife)
-    {
-        resultUI?.Show(isSuccess, currentLife);
-        RefreshInventory();
-    }
-
     public void ShowGameOverPanel(bool isWin)
     {
         gameOverUI?.Show(isWin);
-    }
-
-    public void SetRollBtnInteractable(bool state)
-    {
-        if (rollBtn != null) rollBtn.interactable = state;
     }
 
     public void SetConfirmBtnInteratable(bool state)
@@ -118,16 +69,5 @@ public class UiController : MonoBehaviour
         if (confirmBtn != null) confirmBtn.interactable = state;
     }
 
-    public void OnClickGameEndBtn() => gameOverUI?.Show(true);
-
-    public void NegateItemCard(string itemName, GameObject negateOverlayPrefab)
-    {
-        var card = inventoryUI?.FindCardByName(itemName);
-        if (card != null) card.PlayNegateEffect(negateOverlayPrefab);
-    }
-
     public void ResetItemCards() => inventoryUI?.ResetCards();
-
-    public void OnClickConfirmBtn() => confirmBtn.image.sprite = clickBtn;
-    public void OffClickConfirmBtn() => confirmBtn.image.sprite = NoclickBtn;
 }

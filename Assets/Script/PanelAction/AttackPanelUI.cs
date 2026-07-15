@@ -6,7 +6,7 @@ using VContainer;
 
 public class AttackPanelUI : MonoBehaviour
 {
-    public TextMeshProUGUI attackValue;
+    public TextMeshPro attackValue;
     public Transform[] slots;
     public List<Dice> _placedDices = new List<Dice>();
     private int _cuurentAttackValue = 0;
@@ -33,7 +33,6 @@ public class AttackPanelUI : MonoBehaviour
         _placedDices.Add(dice);
         dice.transform.SetParent(emptySlot, false);
         dice.transform.localPosition = Vector3.zero;
-        dice.transform.localScale = Vector3.one;
         UpdateValue();
         return true;
     }

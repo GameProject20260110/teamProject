@@ -3,6 +3,7 @@ using UnityEngine;
 using Cysharp.Threading.Tasks;
 using System.Threading;
 using VContainer;
+using DG.Tweening;
 
 public class DiceSpawnAnimation : MonoBehaviour
 {
@@ -14,7 +15,7 @@ public class DiceSpawnAnimation : MonoBehaviour
     }
 
     [Header("주사위 목록")]
-    public List<DiceEntry> diceList = new List<DiceEntry>();
+    private List<DiceEntry> diceList = new List<DiceEntry>();
     private List<DiceEntry> enemyDiceList = new List<DiceEntry>();
 
     [Header("연출 타이밍")]
@@ -108,25 +109,25 @@ public class DiceSpawnAnimation : MonoBehaviour
 
     private async UniTask FadeInAsync(GameObject dice)
     {
-        CanvasGroup cg = dice.GetComponent<CanvasGroup>();
-        if (cg == null)
-            cg = dice.AddComponent<CanvasGroup>();
-        cg.alpha = 0f;
-        float elapsed = 0f;
-        while (elapsed < fadeDuration)
-        {
-            elapsed += Time.deltaTime;
-            cg.alpha = Mathf.SmoothStep(0f, 1f, elapsed / fadeDuration);
-            await UniTask.Yield();
-        }
-        cg.alpha = 1f;
+        SpriteGroupAlpha group = dice.GetComponent<SpriteGroupAlpha>();
+        if (group == null)
+            group = dice.AddComponent<SpriteGroupAlpha>();
+
+        group.alpha = 0f;
+
+        var completion = new UniTaskCompletionSource<bool>();
+        DOVirtual.Float(0f, 1f, fadeDuration, v => group.alpha = v)
+            .SetEase(Ease.OutQuad)
+            .OnComplete(() => completion.TrySetResult(true));
+
+        await completion.Task;
     }
 
     void SetAlpha(GameObject dice, float alpha)
     {
-        CanvasGroup cg = dice.GetComponent<CanvasGroup>();
-        if (cg == null)
-            cg = dice.AddComponent<CanvasGroup>();
-        cg.alpha = alpha;
+        SpriteGroupAlpha group = dice.GetComponent<SpriteGroupAlpha>();
+        if (group == null)
+            group = dice.AddComponent<SpriteGroupAlpha>();
+        group.alpha = alpha;
     }
 }

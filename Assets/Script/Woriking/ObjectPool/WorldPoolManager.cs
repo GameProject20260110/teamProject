@@ -1,3 +1,4 @@
+using DG.Tweening;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
@@ -11,6 +12,8 @@ public class WorldPoolManager : MonoBehaviour
     [SerializeField] private int maxSize = 100;
 
     private readonly Dictionary<GameObject, ObjectPool<GameObject>> pools = new();
+    private readonly Dictionary<GameObject, Vector3> _prefabScales = new();
+
 
     private void Awake()
     {
@@ -23,8 +26,9 @@ public class WorldPoolManager : MonoBehaviour
         ObjectPool<GameObject> pool = GetOrCreatePool(prefab);
         GameObject obj = pool.Get();
 
-        obj.transform.SetParent(parent, true);
+        obj.transform.SetParent(parent, false);
         obj.transform.SetPositionAndRotation(position, rotation);
+        obj.transform.localScale = _prefabScales[prefab];
 
         return obj;
     }
@@ -48,6 +52,9 @@ public class WorldPoolManager : MonoBehaviour
         if (pools.TryGetValue(prefab, out var existing))
             return existing;
 
+        if (!_prefabScales.ContainsKey(prefab))
+            _prefabScales[prefab] = prefab.transform.localScale;
+
         var newPool = new ObjectPool<GameObject>(
             createFunc: () =>
             {
@@ -61,6 +68,8 @@ public class WorldPoolManager : MonoBehaviour
                 obj.SetActive(true);
                 foreach (var receiver in obj.GetComponents<IPoolCallbackReceiver>())
                     receiver.OnRent();
+                obj.transform.DOKill();
+                obj.transform.SetParent(transform, false);
             },
             actionOnRelease: obj =>
             {
