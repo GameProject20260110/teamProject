@@ -78,8 +78,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -394030293
+  m_SortingLayer: 5
   m_SortingOrder: 2
   m_MaskInteraction: 0
   m_Sprite: {fileID: 2530564911472380330, guid: 781b4ded3f56a0f4681f55b25a54ffee, type: 3}
@@ -422,8 +422,8 @@ SortingGroup:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4049955241047962077}
   m_Enabled: 1
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -394030293
+  m_SortingLayer: 5
   m_SortingOrder: 20
   m_SortAtRoot: 0
   m_Sort3DAs2D: 0
@@ -466,6 +466,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpriteGroupAlpha
   hideOnAwake: 0
+  ignoreAlphaTag: BoardIgnoreAlpha
 --- !u!61 &6572481577911484523
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -589,8 +590,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -394030293
+  m_SortingLayer: 5
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: a1d845c523f82ec4e9434b897ffbe87d, type: 3}
@@ -697,8 +698,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -394030293
+  m_SortingLayer: 5
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 0}
@@ -790,6 +791,14 @@ PrefabInstance:
     - target: {fileID: 6444183727833496118, guid: 23360697a9560da4d83ccdb8ed52e897, type: 3}
       propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.scalar
       value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210114478816432668, guid: 23360697a9560da4d83ccdb8ed52e897, type: 3}
+      propertyPath: m_SortingLayer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8210114478816432668, guid: 23360697a9560da4d83ccdb8ed52e897, type: 3}
+      propertyPath: m_SortingLayerID
+      value: -394030293
       objectReference: {fileID: 0}
     - target: {fileID: 8210114478816432668, guid: 23360697a9560da4d83ccdb8ed52e897, type: 3}
       propertyPath: m_MaxParticleSize

@@ -52,14 +52,23 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: UI
-    uniqueID: 1260384235
+  - name: WeatherBack
+    uniqueID: 1779960495
     locked: 0
-  - name: Cutscene
-    uniqueID: 1120771793
+  - name: Board
+    uniqueID: 1075005771
     locked: 0
   - name: Character
     uniqueID: 2037632001
+    locked: 0
+  - name: UI
+    uniqueID: 1260384235
+    locked: 0
+  - name: Dice
+    uniqueID: 3900937003
+    locked: 0
+  - name: Cutscene
+    uniqueID: 1120771793
     locked: 0
   m_RenderingLayers:
   - Default

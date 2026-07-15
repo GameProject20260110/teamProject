@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 3560959021675488761}
   - component: {fileID: 3277733753527608734}
   - component: {fileID: 1693667811111032873}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: BattlePanel (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,8 +91,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2951029115339454030, guid: 9a211e245cecbf043b41ddf64d9c932e, type: 3}
@@ -181,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5109147385852278175}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -213,7 +213,7 @@ GameObject:
   m_Component:
   - component: {fileID: 185795438916199974}
   - component: {fileID: 9048827833267806394}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -280,8 +280,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -303,7 +303,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4377530868038811477}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6073885173239754430}
   - component: {fileID: 6473371928499609250}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -402,8 +402,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -425,7 +425,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7408662518634592896}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -463,7 +463,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5595614334327372545}
   - component: {fileID: 3715824334467466571}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DefenseIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -530,8 +530,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -7690335439021222541, guid: 4bd4a82191ad96d45b07ca0942378189, type: 3}
@@ -554,7 +554,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5980728841185911408}
   - component: {fileID: 6397072773236612289}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -621,8 +621,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -645,7 +645,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2909019919903635844}
   - component: {fileID: 5876229324828450403}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DefenseContainer (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -698,7 +698,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1960068930064008657}
   - component: {fileID: 6976190971312961595}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: AttackContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -753,7 +753,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3539264544231121507}
   - component: {fileID: 8181561315446509059}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -820,8 +820,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -844,7 +844,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8003585960049826673}
   - component: {fileID: 1151680257032068298}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -911,8 +911,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -935,7 +935,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2274982127863576094}
   - component: {fileID: 7352016251983546956}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1002,8 +1002,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -1025,7 +1025,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1909511403509089258}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1056,7 +1056,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2268499067328329666}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1087,7 +1087,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2257665131330781448}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1126,7 +1126,7 @@ GameObject:
   - component: {fileID: 6594420394377956618}
   - component: {fileID: 2806286013268030091}
   - component: {fileID: 2252117401138308912}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DefensePanel (1)
   m_TagString: BoardIgnoreAlpha
   m_Icon: {fileID: 0}
@@ -1142,7 +1142,7 @@ Transform:
   m_GameObject: {fileID: 2306671519007109504}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.65, y: 1.5, z: 0}
+  m_LocalPosition: {x: 3.65, y: 1.5, z: -0.1}
   m_LocalScale: {x: 1.6, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1193,8 +1193,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -636087057062790239, guid: 47d816b1fd7a4dd4da9a4aca7d45c3b3, type: 3}
@@ -1263,7 +1263,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6382097392547610679}
   - component: {fileID: 4154682602544444458}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1330,8 +1330,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -1354,7 +1354,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3811944824813703733}
   - component: {fileID: 6733859075084181959}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1421,8 +1421,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -1444,7 +1444,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2017689063727034586}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1479,7 +1479,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4082156562727653785}
   - component: {fileID: 2736293507456613581}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1546,8 +1546,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -1570,7 +1570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1820752836870893728}
   - component: {fileID: 1956204947873946045}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1637,8 +1637,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -1662,7 +1662,7 @@ GameObject:
   - component: {fileID: 4036404741792964432}
   - component: {fileID: 5944165347819671779}
   - component: {fileID: 2915940142896215516}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DefensePanel
   m_TagString: BoardIgnoreAlpha
   m_Icon: {fileID: 0}
@@ -1678,7 +1678,7 @@ Transform:
   m_GameObject: {fileID: 2854544075203918786}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.65, y: -1.5, z: 0}
+  m_LocalPosition: {x: 3.65, y: -1.5, z: -0.1}
   m_LocalScale: {x: 1.6, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1729,8 +1729,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -636087057062790239, guid: 47d816b1fd7a4dd4da9a4aca7d45c3b3, type: 3}
@@ -1799,7 +1799,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8714691790581107093}
   - component: {fileID: 4139816555295958691}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1866,8 +1866,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -1889,7 +1889,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7233902254331736111}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1927,7 +1927,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5828006577436174172}
   - component: {fileID: 2013874252132726779}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: AttackContainer (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1980,7 +1980,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4135014054689125409}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2012,7 +2012,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4753258990480700771}
   - component: {fileID: 8587812077278403006}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2079,8 +2079,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -2103,7 +2103,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3342353948678323384}
   - component: {fileID: 2024376924957498001}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2170,8 +2170,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -2193,7 +2193,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7319842850638488541}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2225,7 +2225,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3228294007952259176}
   - component: {fileID: 7485819006247684949}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2292,8 +2292,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -2315,7 +2315,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 857060764951019650}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Enemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2350,7 +2350,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2054367905091160398}
   - component: {fileID: 6209932966216124627}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2417,8 +2417,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -2441,7 +2441,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2910003965214723105}
   - component: {fileID: 4549246388097569725}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2508,8 +2508,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -2533,7 +2533,7 @@ GameObject:
   - component: {fileID: 7355320661374824514}
   - component: {fileID: 7445134750474032724}
   - component: {fileID: 3028449148453297422}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DicePanel (1)
   m_TagString: BoardIgnoreAlpha
   m_Icon: {fileID: 0}
@@ -2549,7 +2549,7 @@ Transform:
   m_GameObject: {fileID: 4328192509546371674}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -2.9, z: 0}
+  m_LocalPosition: {x: 0, y: -2.9, z: -0.1}
   m_LocalScale: {x: 2.1, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2600,8 +2600,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -636087057062790239, guid: 47d816b1fd7a4dd4da9a4aca7d45c3b3, type: 3}
@@ -2672,7 +2672,7 @@ GameObject:
   - component: {fileID: 3022617329976313990}
   - component: {fileID: 3826248344223727238}
   - component: {fileID: 8780411129716967267}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DefensePowerValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2859,7 +2859,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7946848420454912645}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2896,7 +2896,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4310156254616458288}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceSlotArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2934,7 +2934,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3142683397868496287}
   - component: {fileID: 8439037890676915166}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3001,8 +3001,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -3027,7 +3027,7 @@ GameObject:
   - component: {fileID: 5107987244855936710}
   - component: {fileID: 1465865489216770718}
   - component: {fileID: 199249084479722004}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: AttackPowerValue
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3215,7 +3215,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2892638750453175199}
   - component: {fileID: 5429954369019295269}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3282,8 +3282,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -3305,7 +3305,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7696961727515164144}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: EnemyDiceRollArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3338,7 +3338,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1095715149295237766}
   - component: {fileID: 331799222099269181}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3405,8 +3405,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -3428,7 +3428,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1845992004596699912}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3461,7 +3461,7 @@ GameObject:
   - component: {fileID: 114181450527238187}
   - component: {fileID: 687135449501716262}
   - component: {fileID: 8891538776728389011}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DicePanel
   m_TagString: BoardIgnoreAlpha
   m_Icon: {fileID: 0}
@@ -3477,7 +3477,7 @@ Transform:
   m_GameObject: {fileID: 6201608117683906901}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 2.9, z: 0}
+  m_LocalPosition: {x: 0, y: 2.9, z: -0.1}
   m_LocalScale: {x: 2.1, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3528,8 +3528,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -636087057062790239, guid: 47d816b1fd7a4dd4da9a4aca7d45c3b3, type: 3}
@@ -3598,7 +3598,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1963071748048103144}
   - component: {fileID: 3436035177877436593}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3665,8 +3665,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -3689,7 +3689,7 @@ GameObject:
   m_Component:
   - component: {fileID: 5991478721804620052}
   - component: {fileID: 6374599839496580012}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3756,8 +3756,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -3779,7 +3779,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5258711050865973131}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3812,7 +3812,7 @@ GameObject:
   - component: {fileID: 4845135787962706706}
   - component: {fileID: 5853928700236935213}
   - component: {fileID: 7040519620619709942}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: AttackPanel (1)
   m_TagString: BoardIgnoreAlpha
   m_Icon: {fileID: 0}
@@ -3828,7 +3828,7 @@ Transform:
   m_GameObject: {fileID: 6574496081761472954}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.65, y: 1.5, z: 0}
+  m_LocalPosition: {x: -3.65, y: 1.5, z: -0.1}
   m_LocalScale: {x: 1.6, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3879,8 +3879,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -636087057062790239, guid: 47d816b1fd7a4dd4da9a4aca7d45c3b3, type: 3}
@@ -3948,7 +3948,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8379403305183586853}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3980,7 +3980,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4279696776551596299}
   - component: {fileID: 8610509317738700298}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DefenseContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4035,7 +4035,7 @@ GameObject:
   - component: {fileID: 7188544760852696797}
   - component: {fileID: 4973236110550412735}
   - component: {fileID: 3704570006105364044}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: AttackPanel
   m_TagString: BoardIgnoreAlpha
   m_Icon: {fileID: 0}
@@ -4051,7 +4051,7 @@ Transform:
   m_GameObject: {fileID: 7572647186042759471}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.65, y: -1.5, z: 0}
+  m_LocalPosition: {x: -3.65, y: -1.5, z: -0.1}
   m_LocalScale: {x: 1.6, y: 0.25, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4102,8 +4102,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -636087057062790239, guid: 47d816b1fd7a4dd4da9a4aca7d45c3b3, type: 3}
@@ -4171,7 +4171,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8100052337936784761}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4203,7 +4203,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3262336156504736444}
   - component: {fileID: 4129749574730289644}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4270,8 +4270,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -4294,7 +4294,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2708925728364400045}
   - component: {fileID: 2650605889359726546}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4361,8 +4361,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -4384,7 +4384,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8973243416290281015}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceSlotArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4422,7 +4422,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6266656177366626527}
   - component: {fileID: 4322005776774668786}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: AttackIcon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4489,8 +4489,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: 7664189643869089098, guid: 45d8220e23762b34fb9f4119e00a96f7, type: 3}
@@ -4512,7 +4512,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4446662169578621007}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: DiceRollArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4545,7 +4545,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8975879892131095653}
   - component: {fileID: 8079218708130536566}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot 6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4612,8 +4612,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: 1075005771
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: be3c8ba7452f16a42884048d0f91a775, type: 3}
@@ -4635,7 +4635,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3115579441854035774}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot6
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4666,7 +4666,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4940968937197249182}
-  m_Layer: 5
+  m_Layer: 7
   m_Name: Slot4
   m_TagString: Untagged
   m_Icon: {fileID: 0}

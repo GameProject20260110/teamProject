@@ -8,13 +8,21 @@ public class NodeTypeWeight
     public int weight;
 }
 
-[System.Serializable]
-public class LayerConfig
+[CreateAssetMenu(fileName = "LayerConfig", menuName = "Stage/LayerConfig")]
+public class LayerConfig : ScriptableObject
 {
     public List<NodeTypeWeight> nodeTypeWeights;
     public List<EnemyData> enemies;
     public List<NodeTypeWeight> randomNodeWeight;
 }
+
+//[System.Serializable]
+//public class LayerConfig
+//{
+//    public List<NodeTypeWeight> nodeTypeWeights;
+//    public List<EnemyData> enemies;
+//    public List<NodeTypeWeight> randomNodeWeight;
+//}
 
 [CreateAssetMenu(fileName = "MapDataSo", menuName = "Stage/MapDataSo")]
 public class MapDataSo : ScriptableObject

@@ -1,7 +1,6 @@
 using Cysharp.Threading.Tasks;
 using DG.Tweening;
 using UnityEngine;
-using UnityEngine.EventSystems;
 
 public class MapCameraController : MonoBehaviour
 {
@@ -23,24 +22,34 @@ public class MapCameraController : MonoBehaviour
     private Vector2 _dragStartPos;
     private float _minY;
     private float _maxY;
-    public bool IsDragging { get; private set; }
 
+    public bool IsDragging { get; private set; }
 
     private void Awake()
     {
         Instance = this;
-
-        if (background != null)
-        {
-            float camHalfHeight = mapCamera.orthographicSize;
-            _minY = background.bounds.min.y + camHalfHeight;
-            _maxY = background.bounds.max.y - camHalfHeight;
-        }
+        RecalculateBounds();
 
         if (mapCamera != null)
         {
             _originalSize = mapCamera.orthographicSize;
             _originalPosition = mapCamera.transform.position;
+        }
+    }
+
+    public void RecalculateBounds()
+    {
+        if (background == null || mapCamera == null) return;
+
+        float camHalfHeight = mapCamera.orthographicSize;
+        _minY = background.bounds.min.y + camHalfHeight;
+        _maxY = background.bounds.max.y - camHalfHeight;
+
+        // 카메라 절반 높이가 맵 절반 높이보다 크면 min > max가 될 수 있으니 방어
+        if (_minY > _maxY)
+        {
+            float mid = (background.bounds.min.y + background.bounds.max.y) * 0.5f;
+            _minY = _maxY = mid;
         }
     }
 
@@ -51,23 +60,18 @@ public class MapCameraController : MonoBehaviour
             _dragStartPos = Input.mousePosition;
             IsDragging = false;
         }
-
         if (Input.GetMouseButton(0))
         {
             Vector2 delta = (Vector2)Input.mousePosition - _dragStartPos;
             if (delta.magnitude > dragThreshold)
             {
                 IsDragging = true;
-
                 float newY = mapCamera.transform.position.y + (-delta.y * dragSpeed);
                 newY = Mathf.Clamp(newY, _minY, _maxY);
-
                 mapCamera.transform.position = new Vector3(mapCamera.transform.position.x, newY, mapCamera.transform.position.z);
-
                 _dragStartPos = Input.mousePosition;
             }
         }
-
         if (Input.GetMouseButtonUp(0))
         {
             IsDragging = false;
@@ -90,16 +94,12 @@ public class MapCameraController : MonoBehaviour
     public async UniTask ZoomToNode(Vector3 position)
     {
         if (mapCamera == null) return;
-
         _originalSize = mapCamera.orthographicSize;
         _originalPosition = mapCamera.transform.position;
-
         Vector3 targetPos = new Vector3(position.x, position.y, mapCamera.transform.position.z);
-
         mapCamera.transform.DOMove(targetPos, zoomMoveDuration)
             .SetEase(Ease.InOutQuad)
             .SetLink(mapCamera.gameObject);
-
         await DOTween.To(
             () => mapCamera.orthographicSize,
             x => mapCamera.orthographicSize = x, zoomSize, zoomDuration)
@@ -111,7 +111,6 @@ public class MapCameraController : MonoBehaviour
     public void ResetZoom()
     {
         if (mapCamera == null) return;
-
         mapCamera.transform.DOKill();
         mapCamera.orthographicSize = _originalSize;
         mapCamera.transform.position = _originalPosition;
