@@ -8,19 +8,10 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance { get; private set; }
 
-
-    public event Action<int> OnGoldChanged;
-    public event Action<int> OnScoreChanged;
-    public event Action<int> OnRoundAndGoalChanged;
-    public event Action<int> OnRerollCountChanged;
-
     public bool hasUsedPlusReroll = false;
 
     private DiceManager _diceManager;
-    private AudioManager _audioManager;
     private ResourceManager _resourceManager;
-    private EnemyDeckHandler _enemyDeckHandler;
-    private DeckManager _deckManager;
     private BattleButton _battleButton;
     private EnemyAI _enemyAI;
     private BattleManager _battleManager;
@@ -29,10 +20,7 @@ public class GameManager : MonoBehaviour
     [Inject]
     public void Construct(
         DiceManager diceManager,
-        AudioManager audioManager,
         ResourceManager resourceManager,
-        EnemyDeckHandler enemyDeckHandler,
-        DeckManager deckManager,
         BattleButton battleButton,
         EnemyAI enemyAI,
         BattleManager battleManager,
@@ -40,9 +28,6 @@ public class GameManager : MonoBehaviour
     {
         _diceManager = diceManager;
         _resourceManager = resourceManager;
-        _audioManager = audioManager;
-        _enemyDeckHandler = enemyDeckHandler;
-        _deckManager = deckManager;
         _battleButton = battleButton;
         _enemyAI = enemyAI;
         _battleManager = battleManager;
@@ -50,41 +35,9 @@ public class GameManager : MonoBehaviour
         Instance = this;
     }
 
-    private void Start()
-    {
-        NotifyAllUI();
-        _audioManager.PlayBgm("Battle", true);
-    }
-
-    public void InitializeRoundData()
-    {
-        NotifyAllUI();
-    }
-
-    public void NotifyAllUI()
-    {
-        int gold = _resourceManager != null ? _resourceManager.gold : 0;
-        int currentRound = 0;
-        OnGoldChanged?.Invoke(gold);
-        OnRoundAndGoalChanged?.Invoke(currentRound);
-    }
-
-    public void StartRound()
-    {
-        if (UiController.Instance == null) return;
-        hasUsedPlusReroll = false;
-        NotifyAllUI();
-        UiController.Instance.HideAllPanels();
-        UiController.Instance.SetRollBtnInteractable(true);
-        UiController.Instance.SetConfirmBtnInteratable(false);
-
-        _enemyDeckHandler?.SetupEnemyDice();
-        _deckManager?.DrawDice();
-    }
-
+    
     public void OnClickRollBtn()
     {
-        if (UiController.Instance.rollBtn.interactable == false) return;
         RollFlow().Forget();
     }
 
@@ -99,7 +52,7 @@ public class GameManager : MonoBehaviour
             foreach (var dice in allDice)
             {
                 if (dice == null || !dice.gameObject.activeSelf) continue;
-                var floatingEffect = dice.GetComponent<FloatingEffect>();
+                var floatingEffect = dice.GetComponentInChildren<FloatingEffect>();
                 dice.GetComponent<DraggableDice>().SetDraggable(true);
                 if (floatingEffect != null) floatingEffect.enabled = true;
             }
@@ -131,7 +84,6 @@ public class GameManager : MonoBehaviour
         await UniTask.Delay(500);
         _enemyAI.PlaceDice(allDice);
         await _battleButton.SetState(BattleButton.State.Roll);
-        UiController.Instance.SetRollBtnInteractable(true);
     }
 
     public async UniTask OnClickScoreConfirm()
@@ -149,7 +101,7 @@ public class GameManager : MonoBehaviour
         foreach (var dice in _diceManager.panelDiceScript)
         {
             if (dice == null || !dice.gameObject.activeSelf) continue;
-            var floatingEffect = dice.GetComponent<FloatingEffect>();
+            var floatingEffect = dice.GetComponentInChildren<FloatingEffect>();
             dice.GetComponent<DraggableDice>().SetDraggable(false);
             if (floatingEffect != null) floatingEffect.StopFloating();
         }

@@ -65,12 +65,9 @@ public class BattleInitalizer : MonoBehaviour
     {
         stageController.PlayIntroAnim();
 
-        GameManager.Instance?.InitializeRoundData();
-
         if (UiController.Instance != null)
         {
             UiController.Instance.HideAllPanels();
-            UiController.Instance.SetRollBtnInteractable(true);
             UiController.Instance.SetConfirmBtnInteratable(false);
             UiController.Instance.ResetItemCards();
         }
@@ -87,7 +84,6 @@ public class BattleInitalizer : MonoBehaviour
 
     public async Task CompleteBattleAsync(bool isSuccess)
     {
-        UiController.Instance?.SetRollBtnInteractable(false);
         PlayerCharacter?.UnsubscribeFromBattleEvents(BattleManager.Instance.EventBus);
         enemyCharacter?.UnsubscribeFromBattleEvents(BattleManager.Instance.EventBus);
 
@@ -101,7 +97,6 @@ public class BattleInitalizer : MonoBehaviour
                 _battleDataManager?.Clear();
             }
             _resourceManager.AddGold(_battleDataManager.GetGoldReward());
-            ClearAnim.gameObject.SetActive(true);
             await ClearAnim.Reveal();
         }
         else

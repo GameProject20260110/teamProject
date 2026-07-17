@@ -19,9 +19,9 @@ public class DicePanelManager : MonoBehaviour
     public DefensePanelUI defenseEnemyPanel;
 
     [Header("배경 판때기")]
-    public RectTransform attackPanelBg;
-    public RectTransform defensePanelBg;
-    public RectTransform dicePanelBg;
+    public Transform attackPanelBg;
+    public Transform defensePanelBg;
+    public Transform dicePanelBg;
 
     private Dictionary<Dice, PanelType> _diceLocation = new Dictionary<Dice, PanelType>();
 

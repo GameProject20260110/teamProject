@@ -21,5 +21,5 @@ MonoBehaviour:
   Desc: "\uCCB4\uB825 \uD68C\uBCF5"
   effectDesc: 
   skin: {fileID: 11400000, guid: 6ce041719ccebf14392472690f7eb66f, type: 2}
-  dicePrefab: {fileID: 4049955241047962077, guid: 5d75139d5283b61458be73faed8b52e3, type: 3}
+  dicePrefab: {fileID: 4049955241047962077, guid: 1c0885cd5ae72a340ab99734660ce5cf, type: 3}
   effectData: {fileID: 11400000, guid: 807d263f4bad2644abdde2f72c249984, type: 2}

@@ -4,16 +4,12 @@ using UnityEngine.EventSystems;
 public class DiceTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private DiceData diceData;
-    private RectTransform rect;
-
-    private void Awake()
-    {
-        rect = GetComponent<RectTransform>();
-    }
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        GameDiceTooltipController.instance.Show(diceData.abilityName, diceData.Desc, rect);
+        Debug.Log($"{name} È£¹öµÊ / diceData: {(diceData != null ? diceData.name : "NULL")}");
+        if (diceData == null) return;
+        GameDiceTooltipController.instance.Show(diceData.abilityName, diceData.Desc, transform);
     }
 
     public void OnPointerExit(PointerEventData eventData)

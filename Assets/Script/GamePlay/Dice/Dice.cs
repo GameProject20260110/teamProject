@@ -1,12 +1,11 @@
 using UnityEngine;
-using UnityEngine.UI;
 using System.Collections;
 using DG.Tweening;
 using TMPro;
 
 public class Dice : MonoBehaviour
 {
-    public Image diceImage;
+    public SpriteRenderer diceImage;
 
     [Header("모듈")]
     public GameObject effectPrefab;
@@ -21,6 +20,7 @@ public class Dice : MonoBehaviour
     public DiceEffectBase Effect { get; private set; }
     public DiceVFXBase VFX { get; private set; }
     public DiceGlow Glow { get; private set; }
+    public MeshRenderer MeshRenderer { get; private set; }
 
     private int _currentDiceScore = 0;
 
@@ -29,6 +29,9 @@ public class Dice : MonoBehaviour
         Effect = GetComponent<DiceEffectBase>();
         VFX = GetComponent<DiceVFXBase>();
         Glow = GetComponentInChildren<DiceGlow>();
+        MeshRenderer = GetComponentInChildren<MeshRenderer>(true);
+        MeshRenderer.sortingLayerID = SortingLayer.NameToID("Dice");
+        MeshRenderer.sortingOrder = 3;
     }
 
     public void Initialize(int index, DiceData data)
