@@ -1,0 +1,40 @@
+# .github/workflows/block-pr-to-clean-branch.yml
+#
+# clean-context 브랜치는 봇이 자동 생성/관리하는 브랜치이므로
+# 사람이 실수로 여기에 PR을 올리면 자동으로 안내 코멘트를 달고 닫습니다.
+#
+# 추가로 완전히 막으려면 (권장):
+# 저장소 Settings > Rules > Rulesets 에서 clean-context 브랜치에 대해
+# "Restrict deletions" + "push 허용 대상을 github-actions 봇으로 제한"
+# 규칙을 만들어 두세요. 이건 파일로는 설정할 수 없고 저장소 설정 화면에서만 가능합니다.
+
+name: Block PRs to clean context branch
+
+on:
+  pull_request:
+    branches:
+      - clean-context
+
+permissions:
+  pull-requests: write
+
+jobs:
+  close-pr:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Comment and close PR
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: "`clean-context` 브랜치는 Claude 연동용으로 자동 생성되는 브랜치라 PR을 받지 않습니다. `main` 브랜치로 다시 요청해 주세요."
+            });
+            await github.rest.pulls.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              pull_number: context.issue.number,
+              state: "closed"
+            });
