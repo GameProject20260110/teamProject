@@ -35,7 +35,7 @@ public class DiceTooltipTrigger : MonoBehaviour, IPointerEnterHandler, IPointerE
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (diceData == null) return;
-        GameDiceTooltipController.instance.Show(diceData.abilityName, diceData.Desc, transform);
+        GameDiceTooltipController.instance.Show(diceData.abilityName, diceData.Desc, diceData.skin.sprites[0], transform);
     }
 
     public void OnPointerExit(PointerEventData eventData)

@@ -15,7 +15,7 @@ MonoBehaviour:
   startLayerEnemies:
   - {fileID: 11400000, guid: 105055c6a003c384d985177f94854d6b, type: 2}
   layers:
-  - {fileID: 11400000, guid: a78e8a6faf273da4fb789172ca0dbfa6, type: 2}
-  - {fileID: 11400000, guid: f97805801aec1c1458b7351b9f060d0f, type: 2}
-  - {fileID: 11400000, guid: 301dedd21f33d464babf113fd690d799, type: 2}
+  - {fileID: 11400000, guid: 5cee154007dabec4cb8a7dbd5accce42, type: 2}
+  - {fileID: 11400000, guid: 262c1a7ca737e654b8a2a9b00cb74b37, type: 2}
+  - {fileID: 11400000, guid: 743371ce07f31534ba337c0497e14b31, type: 2}
   bossEnemyData: {fileID: 11400000, guid: ec47eadbe94124845a62b2bbf8a28529, type: 2}

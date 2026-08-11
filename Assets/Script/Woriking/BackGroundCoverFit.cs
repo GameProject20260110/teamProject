@@ -10,6 +10,8 @@ public class BackgroundCoverFitter : MonoBehaviour
 
     private SpriteRenderer _spriteRenderer;
 
+    public Vector3 CoverScale { get; private set; } = Vector3.one;
+
     private void Awake()
     {
         Instance = this;
@@ -31,16 +33,20 @@ public class BackgroundCoverFitter : MonoBehaviour
     public void Fit()
     {
         if (targetCamera == null || _spriteRenderer == null || _spriteRenderer.sprite == null) return;
+
         // 카메라 크기
         float cameraHeight = targetCamera.orthographicSize * 2f;
         float cameraWidth = cameraHeight * targetCamera.aspect;
+
         // 원본 이미지
         Vector2 spriteNativeSize = _spriteRenderer.sprite.bounds.size;
+
         // 더 큰쪽으로
         float scaleX = cameraWidth / spriteNativeSize.x;
         float scaleY = cameraHeight / spriteNativeSize.y;
         float scale = Mathf.Max(scaleX, scaleY);
 
-        transform.localScale = new Vector3(scale, scale, 1f);
+        CoverScale = new Vector3(scale, scale, 1f);
+        transform.localScale = CoverScale;
     }
 }

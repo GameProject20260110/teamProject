@@ -67,6 +67,12 @@ TagManager:
   - name: Dice
     uniqueID: 3900937003
     locked: 0
+  - name: Skill
+    uniqueID: 1451897109
+    locked: 0
+  - name: PopUp
+    uniqueID: 1242484113
+    locked: 0
   - name: Cutscene
     uniqueID: 1120771793
     locked: 0

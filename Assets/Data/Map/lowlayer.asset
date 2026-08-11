@@ -9,8 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
-  m_Name: lowlayer
+  m_Script: {fileID: 11500000, guid: c4caa042d1cb25f478d7a21b6d3387dc, type: 3}
+  m_Name: LowLayer
   m_EditorClassIdentifier: Assembly-CSharp::LayerConfig
   nodeTypeWeights:
   - nodeType: 0

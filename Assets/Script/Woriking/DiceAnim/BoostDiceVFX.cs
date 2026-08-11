@@ -34,7 +34,7 @@ public class BoostDiceVFX : DiceVFXBase
 
         GameObject skill = WorldPoolManager.instance.Get(
         ctx.DiceData.effectData.attackPrefab,
-        transform.position,
+        highest.transform.position,
         Quaternion.identity
         );
 
@@ -44,7 +44,7 @@ public class BoostDiceVFX : DiceVFXBase
             damage = 0,
             onHit = () => { },
             onEnd = () => completion.TrySetResult(true),
-            startPos = transform.position,
+            startPos = highest.transform.position,
             targetPos = highest.transform.position
         });
         await completion.Task.AttachExternalCancellation(ctx.CancellationToken);
