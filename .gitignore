@@ -73,5 +73,8 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+# Custom: 테스트 폴더 및 메타데이터 빌드 제외
+/[Aa]ssets/Test/
+/[Aa]ssets/Test.meta
 
 # End of https://www.toptal.com/developers/gitignore/api/unity
