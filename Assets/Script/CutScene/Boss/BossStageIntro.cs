@@ -18,10 +18,6 @@ public class BossStageIntro : MonoBehaviour
     [SerializeField] private GameObject baseBackground;
     [SerializeField] private GameObject bossBackground;
 
-    [Header("타임라인")]
-    [SerializeField] private PlayableDirector director;
-    [SerializeField] private PlayableAsset bossIntroTimeline;
-
     [Header("카메라")]
     [SerializeField] private CinemachineCamera cutsceneCam;
     [SerializeField] private CinemachineCamera defaultCam;
