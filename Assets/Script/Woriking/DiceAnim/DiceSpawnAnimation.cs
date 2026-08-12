@@ -101,7 +101,7 @@ public class DiceSpawnAnimation : MonoBehaviour
         if (entry.dustParticle != null)
         {
             entry.dustParticle.Play();
-            _audioManager.PlaySfx("particleSFX");
+            _audioManager.PlaySfx("DiceSpawn");
         }
 
         await FadeInAsync(entry.diceObject);
