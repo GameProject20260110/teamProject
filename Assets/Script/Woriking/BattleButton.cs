@@ -13,9 +13,17 @@ public class BattleButton : MonoBehaviour
     [SerializeField] private CanvasGroup canvasGroup;
     [SerializeField] private ButtonGlowController glowController;
     private State currentState;
-    private float _currentAngle = 0f; // 누적 각도
+    private float _currentAngle = 0f;
     private UniTaskCompletionSource _waitForClick;
     private readonly string[] labels = { "상대 턴", "굴리기", "배치 완료", "전투 중" };
+
+    private AudioManager _audioManager;
+
+    [Inject]
+    public void Construct(AudioManager audioManager)
+    {
+        _audioManager = audioManager;
+    }
 
     private void Awake()
     {
@@ -26,6 +34,8 @@ public class BattleButton : MonoBehaviour
     public async UniTask SetState(State state)
     {
         _currentAngle += 90f;
+        _audioManager.PlaySfx("DiceButton");
+
         await transform.DORotate(new Vector3(0, 0, _currentAngle - 45f), 0.3f)
             .SetEase(Ease.InQuart)
             .AsyncWaitForCompletion();
@@ -51,7 +61,7 @@ public class BattleButton : MonoBehaviour
         }
         // 나머지 45도
         await transform.DORotate(new Vector3(0, 0, _currentAngle), 0.3f)
-            .SetEase(Ease.OutQuart)
+            .SetEase(Ease.OutBack)
             .AsyncWaitForCompletion();
     }
 

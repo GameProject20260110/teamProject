@@ -55,6 +55,7 @@ public class CharacterAppearEffect : MonoBehaviour
         Vector3 spawnPos = _overridePosition ?? (spawnPoint != null ? spawnPoint.position : Vector3.zero);
         _spawnedCharacter = Instantiate(characterPrefab, spawnPos, Quaternion.identity);
         _targetTransform = _spawnedCharacter.transform;
+        Vector3 prefabScale = _targetTransform.localScale;
 
         SpriteRenderer[] renderers = isPlayer
             ? _spawnedCharacter.GetComponentInChildren<PlayerCharacter>().Renderers
@@ -65,7 +66,7 @@ public class CharacterAppearEffect : MonoBehaviour
         currentSequence?.Kill();
         _targetTransform.DOKill();
 
-        Vector3 finalScale = _overrideScale ?? Vector3.one;
+        Vector3 finalScale = _overrideScale ?? prefabScale;
 
         _targetTransform.localScale = finalScale * startScale;
         foreach (var sr in renderers)

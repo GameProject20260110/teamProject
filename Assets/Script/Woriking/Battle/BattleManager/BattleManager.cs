@@ -18,6 +18,8 @@ public class BattleManager : MonoBehaviour
     [Header("reference")]
     [SerializeField] private BattleUI battleUI;
     [SerializeField] private EnemyDeathSequence enemyDeathSequence;
+    [SerializeField] private Transform boardDecorationsRoot;
+    private BoardDecorationController _boardDecorations;
 
     public bool isPlayerTurn = true;
     public bool isBattleActive = false;
@@ -116,6 +118,10 @@ public class BattleManager : MonoBehaviour
         _uiBinder.Subscribe(_eventBus);
         _subscriptionManager.Subscribe(_eventBus, enemyInfo);
         _turnController = new TurnController(this, _dicePanelManager, _deckManager, _enemyDeckHandler);
+        _boardDecorations = new BoardDecorationController(
+        _eventBus,
+        boardDecorationsRoot != null ? boardDecorationsRoot.GetComponentsInChildren<IcicleSlot>() : null,
+        boardDecorationsRoot != null ? boardDecorationsRoot.GetComponentsInChildren<SnowTile>() : null);
         battleUI.UpdateEnemyHP(enemyData.CurrentHP, enemyData.MaxHp);
         battleUI.UpdatePlayerHP(playerData.CurrentHP, playerData.MaxHp);
         _saveHandler.Save(isPlayerTurn, isBattleActive, currentTurn);
@@ -148,6 +154,7 @@ public class BattleManager : MonoBehaviour
         _saveHandler.Delete();
         _uiBinder?.Unsubscribe(_eventBus);
         _subscriptionManager.Unsubscribe(_eventBus, enemyInfo);
+        _boardDecorations?.Dispose();
     }
     #endregion
 

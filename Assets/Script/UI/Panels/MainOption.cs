@@ -176,6 +176,8 @@ public class MainOption : MonoBehaviour
         bool full = _screenModeIndex == 0;
         Screen.fullScreenMode = full ? FullScreenMode.FullScreenWindow : FullScreenMode.Windowed;
         SettingsManager.Instance.IsFullScreen = full;
+
+        BackgroundCoverFitter.Instance?.FitDelayed();
     }
 
     public void ResolutionPrev() => CycleResolution(-1);
@@ -196,6 +198,8 @@ public class MainOption : MonoBehaviour
             case 1: Screen.SetResolution(1600, 900, Screen.fullScreenMode); break;
             case 2: Screen.SetResolution(1280, 720, Screen.fullScreenMode); break;
         }
+
+        BackgroundCoverFitter.Instance?.FitDelayed();
     }
 
     private void OnMasterSliderChanged(float value)

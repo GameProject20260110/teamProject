@@ -23,7 +23,7 @@ public class BattleUI : MonoBehaviour
     [SerializeField] private Transform enemyDamageSpawn;
     [SerializeField] private BaseStageController turnUI;
     [SerializeField] private float floatHeight = 100f;
-    [SerializeField] private float floatDuration = 0.7f;
+    [SerializeField] private float floatDuration = 1f;
 
     [Header("Shield")]
     [SerializeField] private GameObject shieldObject;
