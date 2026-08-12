@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "DiceSkin", menuName = "Scriptable Objects/DiceSkin")]
+[CreateAssetMenu(fileName = "DiceSkin", menuName = "DiceSkin/DiceSkin")]
 public class DiceSkin : ScriptableObject
 {
     public Sprite[] sprites;
