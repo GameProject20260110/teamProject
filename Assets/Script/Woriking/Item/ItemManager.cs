@@ -43,8 +43,9 @@ public class ItemManager : MonoBehaviour
     }
 
     public void Load()
-    {        
-        ItemSaveData data = _saveManager.Load<ItemSaveData>(SAVE_FILE);
+    {
+        if (!_saveManager.Load(SAVE_FILE, out ItemSaveData data))
+            Debug.LogWarning("[ItemManager] 아이템 데이터를 불러오지 못했습니다. 빈 상태로 시작합니다.");
 
         items.Clear();
         artifacts.Clear();

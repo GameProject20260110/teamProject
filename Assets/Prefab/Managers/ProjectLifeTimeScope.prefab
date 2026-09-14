@@ -55,3 +55,5 @@ MonoBehaviour:
   playerDeckPrefab: {fileID: 1003436293679755162, guid: 5fee80cbefab69840909147c7630ae86, type: 3}
   resourceManagerPrefab: {fileID: 6445173013922968433, guid: 27794ed811ba67b4289dac025c1dfb37, type: 3}
   battleDataManagerPrefab: {fileID: 5094760965528366260, guid: ca885674b73cc584f8ea92c972251c95, type: 3}
+  playerCardCollectionPrefab: {fileID: 5075195981096430445, guid: 05539aba5efca384eb47f1fdc36340cb, type: 3}
+  DeckRepositoryPrefab: {fileID: 116251954669926866, guid: 77ac4f1441743da43b6d40b6857f06c0, type: 3}

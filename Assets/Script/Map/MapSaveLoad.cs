@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using VContainer.Unity;
+using UnityEngine;
 
 public class MapSaveLoad : IInitializable
 {
@@ -33,6 +34,17 @@ public class MapSaveLoad : IInitializable
         _saveManager?.Save(saveData, MAP_SAVE_DATA);
     }
 
-    public MapSaveData Load() => _saveManager?.Load<MapSaveData>(MAP_SAVE_DATA);
+    public MapSaveData Load()
+    {
+        if (_saveManager == null) return null;
+
+        if(!_saveManager.Load(MAP_SAVE_DATA, out MapSaveData data))
+        {
+            Debug.LogWarning("[MapSaveLoad] 맵 진행 상황을 불러오지 못했습니다. 새 맵으로 시작합니다.");
+            return null;
+        }
+
+        return data;
+    }
     public void Delete() => _saveManager?.Delete(MAP_SAVE_DATA);
 }

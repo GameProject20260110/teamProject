@@ -1,40 +1,51 @@
 using UnityEngine;
 using System.IO;
+using System;
 
 public class SaveManager
 {
     private string savePath => Application.persistentDataPath;
 
-    public void Save<T>(T data, string fileName)
+    public bool Save<T>(T data, string fileName)
     {
         try
         {
             string json = JsonUtility.ToJson(data, true);
-            string path = Path.Combine(savePath, fileName);
-            File.WriteAllText(path, json);
+            WriteFileAtomic(Path.Combine(savePath, fileName), json);
+            return true;
         }
         catch (System.Exception e)
         {
-            Debug.LogError(e.Message);
+            Debug.LogError($"[SaveManager] Save 실패({fileName}) : {e.Message}");
+            return false;
         }
     }
 
-    public T Load<T>(string filename) where T : new()
+    public bool Load<T>(string fileName, out T data) where T : new()
     {
+        string path = Path.Combine(savePath, fileName);
+        if(!File.Exists(path))
+        {
+            data = new T();
+            return false;
+        }
+
         try
         {
-            string path = Path.Combine(savePath, filename);
-            if (File.Exists(path))
+            string json = File.ReadAllText(path);
+            data = JsonUtility.FromJson<T>(json);
+            if(data == null)
             {
-                string json = File.ReadAllText(path);
-                return JsonUtility.FromJson<T>(json);
+                data = new T();
+                return false;
             }
-            return new T();
+            return true;
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
-            Debug.LogError(e.Message);
-            return new T();
+            Debug.LogError($"[SaveManager] Load 실패({fileName}) : {e.Message}");
+            data = new T();
+            return false;
         }
     }
 
@@ -43,16 +54,27 @@ public class SaveManager
         return File.Exists(Path.Combine(savePath, fileName));
     }
 
-    public void Delete(string fileName)
+    public bool Delete(string fileName)
     {
         try
         {
             string path = Path.Combine(savePath, fileName);
             if (File.Exists(path)) File.Delete(path);
+            return true;
         }
-        catch (System.Exception e)
+        catch (Exception e)
         {
-            Debug.LogError(e.Message);
+            Debug.LogError($"[SaveManager] Delete 실패({fileName}) : {e.Message}");
+            return false;
         }
+    }
+
+    // 임시 파일에 먼저 쓰고 나중에 교체
+    private static void WriteFileAtomic(string path, string content) 
+    {
+        string tempPath = path + ".tmp";
+        File.WriteAllText(tempPath, content);
+        if (File.Exists(path)) File.Delete(path);
+        File.Move(tempPath, path);
     }
 }
