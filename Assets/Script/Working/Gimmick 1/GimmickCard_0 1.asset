@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4ee316390527e347933fbd2cce28904, type: 3}
+  m_Name: GimmickCard_0 1
+  m_EditorClassIdentifier: Assembly-CSharp::GimmickCardData
+  gimmickId: "\uD574\uBCC0"
+  displayName: "\uD574\uBCC0"
+  description: "\uD640\uC218 \uB208\uAE08\uC758 \uC8FC\uC0AC\uC704\uB4E4\uC740 +2\uC758
+    \uACF5\uACA9\uB825\uC744 \uC5BB\uB294\uB2E4"
+  frontSprite: {fileID: -1980450724842703687, guid: f5fa5fdb52dc7d94eb67201e1d57610e, type: 3}

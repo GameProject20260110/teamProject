@@ -94,12 +94,12 @@ public abstract class BaseStageController : MonoBehaviour
             await FadeInEnemy(ct);
             await FadeInGameUI(ct);
             ShowGameUI();
-            if (diceSpawnAnimation != null)
-            {
-                await diceSpawnAnimation.PlayAsync(ct);
-                await UniTask.Delay(200, cancellationToken: ct);
-                await diceSpawnAnimation.PlayEnemyAsync(ct);
-            }
+            //if (diceSpawnAnimation != null)
+            //{
+            //    await diceSpawnAnimation.PlayAsync(ct);
+            //    await UniTask.Delay(200, cancellationToken: ct);
+            //    await diceSpawnAnimation.PlayEnemyAsync(ct);
+            //}
             _battleManager.TriggerFirstTurnStart();
             await PlayEffectAsync(onComplete => turnEffect.Play(1, onComplete), ct);
             await UniTask.Delay(200, cancellationToken: ct);

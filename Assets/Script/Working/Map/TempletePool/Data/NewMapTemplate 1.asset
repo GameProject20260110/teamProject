@@ -1,0 +1,94 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb5eed822f7bd7469a2b7ab1b221c01, type: 3}
+  m_Name: NewMapTemplate 1
+  m_EditorClassIdentifier: Assembly-CSharp::MapTemplate
+  stageIndex: 0
+  nodes:
+  - id: 0
+    typeData: {fileID: 0}
+    position: {x: -150, y: 350}
+    connectedNodeIds: 0300000004000000
+    isStartNode: 1
+    initialState: 1
+  - id: 1
+    typeData: {fileID: 0}
+    position: {x: 150, y: 350}
+    connectedNodeIds: 0400000005000000
+    isStartNode: 0
+    initialState: 1
+  - id: 2
+    typeData: {fileID: 11400000, guid: 5f68a4230b2239d4796dc8157deafaa2, type: 2}
+    position: {x: -600, y: 150}
+    connectedNodeIds: 06000000
+    isStartNode: 0
+    initialState: 1
+  - id: 3
+    typeData: {fileID: 0}
+    position: {x: -300, y: 150}
+    connectedNodeIds: 0000000006000000
+    isStartNode: 0
+    initialState: 1
+  - id: 4
+    typeData: {fileID: 11400000, guid: f24c159251b46114b9a714ad22eaf0b9, type: 2}
+    position: {x: 0, y: 150}
+    connectedNodeIds: 000000000100000007000000
+    isStartNode: 0
+    initialState: 1
+  - id: 5
+    typeData: {fileID: 0}
+    position: {x: 300, y: 150}
+    connectedNodeIds: 0100000008000000
+    isStartNode: 0
+    initialState: 1
+  - id: 6
+    typeData: {fileID: 11400000, guid: f24c159251b46114b9a714ad22eaf0b9, type: 2}
+    position: {x: -450, y: -50}
+    connectedNodeIds: 0200000003000000
+    isStartNode: 0
+    initialState: 1
+  - id: 7
+    typeData: {fileID: 11400000, guid: 5f68a4230b2239d4796dc8157deafaa2, type: 2}
+    position: {x: -150, y: -50}
+    connectedNodeIds: 0400000009000000
+    isStartNode: 0
+    initialState: 1
+  - id: 8
+    typeData: {fileID: 11400000, guid: 912545263f9842445acd0934d71efe87, type: 2}
+    position: {x: 450, y: -50}
+    connectedNodeIds: 050000000b000000
+    isStartNode: 0
+    initialState: 1
+  - id: 9
+    typeData: {fileID: 0}
+    position: {x: -300, y: -250}
+    connectedNodeIds: 070000000c000000
+    isStartNode: 0
+    initialState: 1
+  - id: 10
+    typeData: {fileID: 11400000, guid: 161f5f0a9436be849829e056a7a757fb, type: 2}
+    position: {x: 0, y: -250}
+    connectedNodeIds: 0c000000
+    isStartNode: 0
+    initialState: 1
+  - id: 11
+    typeData: {fileID: 0}
+    position: {x: 300, y: -250}
+    connectedNodeIds: 08000000
+    isStartNode: 0
+    initialState: 1
+  - id: 12
+    typeData: {fileID: 11400000, guid: 5f68a4230b2239d4796dc8157deafaa2, type: 2}
+    position: {x: -150, y: -450}
+    connectedNodeIds: 090000000a000000
+    isStartNode: 0
+    initialState: 1

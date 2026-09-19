@@ -55,6 +55,9 @@ TagManager:
   - name: WeatherBack
     uniqueID: 1779960495
     locked: 0
+  - name: BoardCard
+    uniqueID: 2261511241
+    locked: 0
   - name: Board
     uniqueID: 1075005771
     locked: 0
