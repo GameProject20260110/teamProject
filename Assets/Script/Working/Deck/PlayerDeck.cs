@@ -46,7 +46,11 @@ public class PlayerDeck : MonoBehaviour, IInitializable
 
     public void Load()
     {
-        var saveData = _saveManager.Load<DeckSaveData>(SAVE_FILE);
+        if(!_saveManager.Load(SAVE_FILE, out DeckSaveData saveData))
+        {
+            Debug.LogWarning("[PlayerDeck] 덱 데이터를 불러오지 못했습니다. 기본 덱으로 시작합니다.");
+            inventory = new List<DiceData>(defaultDeckData.defultDeck);
+        }
         inventory.Clear();
         foreach (int num in saveData.diceNums)
         {

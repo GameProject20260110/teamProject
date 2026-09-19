@@ -49,7 +49,13 @@ public class BattleSaveHandler
             _saveManager.Delete(BATTLE_SAVE_FILE);
             return null;
         }
-        return _saveManager.Load<BattleSaveData>(BATTLE_SAVE_FILE);
+        
+        if(!_saveManager.Load(BATTLE_SAVE_FILE, out BattleSaveData saveData))
+        {
+            Debug.LogWarning("[BattleSaveHandler] 전투 데이터를 불러오지 못했습니다.");
+            return null;
+        }
+        return saveData;
     }
 
     public void Delete()

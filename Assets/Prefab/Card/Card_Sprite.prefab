@@ -934,7 +934,7 @@ GameObject:
   - component: {fileID: 7190218669279497618}
   - component: {fileID: 7041626012159752770}
   m_Layer: 0
-  m_Name: Card
+  m_Name: Card_Sprite
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -975,6 +975,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CardUI
   rollAnimator: {fileID: 1304783231742364014}
   cardNameText: {fileID: 6338302045841590429}
-  manaCostText: {fileID: 0}
-  attackText: {fileID: 0}
+  manaCostText: {fileID: 7939330102894424502}
+  attackText: {fileID: 8281167264261262652}
   descText: {fileID: 1029730369619653973}
