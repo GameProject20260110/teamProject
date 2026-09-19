@@ -20,6 +20,7 @@ public class ResourceManager : MonoBehaviour, IInitializable
 
     public void Initialize()
     {
+        Debug.Log($"[ResourceManager] Initialize 호출됨!");
         Load();
     }
 
@@ -38,7 +39,8 @@ public class ResourceManager : MonoBehaviour, IInitializable
     public void Save()
     {
         ResourceSaveData resource = new ResourceSaveData { gold = gold, heart = heart };
-        _saveManager.Save(resource, SAVE_FILE);
+        if (!_saveManager.Save(resource, SAVE_FILE))
+            Debug.LogWarning("[ResourceManager] 재화 저장 실패");
     }
 
     public void Load()
@@ -48,7 +50,14 @@ public class ResourceManager : MonoBehaviour, IInitializable
             InitDefault();
             return;
         }
-        ResourceSaveData data = _saveManager.Load<ResourceSaveData>(SAVE_FILE);
+        
+        if(!_saveManager.Load(SAVE_FILE, out ResourceSaveData data))
+        {
+            Debug.LogWarning("[ResourceManager] 재화 데이터를 불러오지 못했습니다. 기본값으로 시작합니다.");
+            InitDefault();
+            return;
+        }
+
         gold = data.gold;
         heart = data.heart;
     }

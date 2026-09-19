@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a3b43fc5025282439b9a6e367033752, type: 3}
+  m_Name: DeckManagementConfig
+  m_EditorClassIdentifier: Assembly-CSharp::DeckManagementConfig
+  maxCardsPerDeck: 20
+  maxSavedDecks: 5
+  defaultDeckName: "\uC0C8 \uB371"
+  deckCardSize: {x: 100, y: 142}
+  ownedCardSize: {x: 120, y: 218}
+  dragSizeLerpSpeed: 12
+  returnDuration: 0.3
+  quickMoveDuration: 0.35
+  toastVisibleDuration: 1.2
+  toastFadeDuration: 0.25
+  sceneFadeDuration: 0.25
+  panelSlideDuration: 0.25
+  SelectScaleDuration: 0.15
+  hoverScale: 1.08

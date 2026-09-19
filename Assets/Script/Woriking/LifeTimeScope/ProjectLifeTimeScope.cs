@@ -13,6 +13,10 @@ public class ProjectLifetimeScope : LifetimeScope
     [SerializeField] private ResourceManager resourceManagerPrefab;
     [SerializeField] private BattleDataManager battleDataManagerPrefab;
 
+    [Header("덱 관리 시스템 (신규 카드)")]
+    [SerializeField] private PlayerCardCollection playerCardCollectionPrefab;
+    [SerializeField] private DeckRepository DeckRepositoryPrefab;
+
     protected override void Configure(IContainerBuilder builder)
     {
         builder.RegisterComponentInNewPrefab(settingsManagerPrefab, Lifetime.Singleton).DontDestroyOnLoad();
@@ -24,14 +28,26 @@ public class ProjectLifetimeScope : LifetimeScope
         builder.Register<SaveManager>(Lifetime.Singleton);
         builder.Register<MapSaveLoad>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
 
-        builder.RegisterComponentInNewPrefab(playerDeckPrefab, Lifetime.Singleton)
-            .DontDestroyOnLoad()
-            .AsImplementedInterfaces()
-            .AsSelf();
+        //builder.RegisterComponentInNewPrefab(playerDeckPrefab, Lifetime.Singleton)
+        //    .DontDestroyOnLoad()
+        //    .AsImplementedInterfaces()
+        //    .AsSelf();
 
         builder.RegisterComponentInNewPrefab(resourceManagerPrefab, Lifetime.Singleton)
             .DontDestroyOnLoad()
             .AsImplementedInterfaces()
             .AsSelf();
+
+        
+        builder.RegisterComponentInNewPrefab(DeckRepositoryPrefab, Lifetime.Singleton)
+            .DontDestroyOnLoad()
+            .AsImplementedInterfaces()
+            .AsSelf();
+
+        builder.RegisterComponentInNewPrefab(playerCardCollectionPrefab, Lifetime.Singleton)
+            .DontDestroyOnLoad()
+            .AsImplementedInterfaces()
+            .AsSelf();
+
     }
 }
