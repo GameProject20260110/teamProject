@@ -64,7 +64,7 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 97f716fabeb6dae4890723fe01064e24, type: 3}
     volume: 1
   - key: Map
-    clip: {fileID: 8300000, guid: e75df5cd9c1f944ce99e585d983fa119, type: 3}
+    clip: {fileID: 8300000, guid: 6666fa15dee3edd41a7145f9df007e8e, type: 3}
     volume: 1
   sfxDatas:
   - key: Click
@@ -126,5 +126,8 @@ MonoBehaviour:
     volume: 1
   - key: DiceButton
     clip: {fileID: 8300000, guid: aa1a4d25d4a216142baa2c4aae16bc95, type: 3}
+    volume: 1
+  - key: walk_wood
+    clip: {fileID: 8300000, guid: ec4bd5988d7de0c41ab2d9959705dd8b, type: 3}
     volume: 1
   channels: 5

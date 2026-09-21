@@ -1,0 +1,40 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb5eed822f7bd7469a2b7ab1b221c01, type: 3}
+  m_Name: NewMapTemplate 2
+  m_EditorClassIdentifier: Assembly-CSharp::MapTemplate
+  stageIndex: 0
+  nodes:
+  - id: 0
+    typeData: {fileID: 0}
+    position: {x: -600, y: 150}
+    connectedNodeIds: 01000000
+    isStartNode: 1
+    initialState: 1
+  - id: 1
+    typeData: {fileID: 11400000, guid: 912545263f9842445acd0934d71efe87, type: 2}
+    position: {x: -450, y: -50}
+    connectedNodeIds: 0000000002000000
+    isStartNode: 0
+    initialState: 1
+  - id: 2
+    typeData: {fileID: 0}
+    position: {x: -300, y: -250}
+    connectedNodeIds: 0100000003000000
+    isStartNode: 0
+    initialState: 1
+  - id: 3
+    typeData: {fileID: 11400000, guid: 5f68a4230b2239d4796dc8157deafaa2, type: 2}
+    position: {x: -150, y: -450}
+    connectedNodeIds: 02000000
+    isStartNode: 0
+    initialState: 1

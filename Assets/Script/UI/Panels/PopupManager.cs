@@ -28,11 +28,6 @@ public class PopupManager : MonoBehaviour
 
     [SerializeField] private GameObject hoverHintText;
 
-    [Header("기타")]
-    public Button StartBtn;
-    public Button SettingsBtn;
-    public Canvas rootCanvas;
-
     private ResourceManager _resourceManager;
     private PlayerShopManager _playerShopManager;
 
@@ -68,11 +63,7 @@ public class PopupManager : MonoBehaviour
         }
 
         if (_playerShopManager != null)
-            _playerShopManager.OnGoldChanged += UpdateGold;
-     
-
-        if(SettingsBtn != null)
-            SettingsBtn.onClick.AddListener(() => MainOption.instance.ToggleSettingsPanel());           
+            _playerShopManager.OnGoldChanged += UpdateGold;         
     }
 
     private void OnDestroy()

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6604b12799cd39f4695f0057b34b43cd, type: 3}
+  m_Name: EventPopupSo 1
+  m_EditorClassIdentifier: Assembly-CSharp::EventPopupSo
+  sprite: {fileID: 766539126590956964, guid: cb6e3a8a69865a24191d67c38b755014, type: 3}
+  title: "\uBC84\uC12F \uC232"
+  desc: "\uD615\uD615\uC0C9\uC0C9 \uBC84\uC12F\uB4E4\uC774 \uC740\uC740\uD55C \uBE5B\uC744
+    \uB0B4\uBA70 \uC232 \uC804\uCCB4\uB97C \uAC00\uB4DD \uCC44\uC6B0\uACE0 \uC788\uB2E4.\n\uC544\uB984\uB2F5\uC9C0\uB9CC,
+    \uC5B4\uB518\uAC00 \uC11C\uB298\uD55C \uAE30\uC6B4\uC774 \uBC1C\uBC11\uC5D0\uC11C\uBD80\uD130
+    \uC2A4\uBA40\uC2A4\uBA40 \uC62C\uB77C\uC628\uB2E4.\n\uC870\uC2EC\uD558\uC9C0
+    \uC54A\uC73C\uBA74 \uAE38\uC744 \uC783\uC744 \uAC83 \uAC19\uC740 \uC608\uAC10\uC774
+    \uB4E0\uB2E4."
+  eventBtns:
+  - text: "\uC55E\uC73C\uB85C \uB098\uC544\uAC04\uB2E4."
+    type: 0
+  - text: "\uC6B0\uD68C\uD574\uC11C \uC9C0\uB098\uAC04\uB2E4."
+    type: 0
+  - text: "\uB4A4\uB85C \uB3CC\uC544\uAC04\uB2E4."
+    type: 0

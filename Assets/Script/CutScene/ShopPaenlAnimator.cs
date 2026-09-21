@@ -20,14 +20,6 @@ public class ShopPanelAnimator : MonoBehaviour
     [SerializeField] private float maskDuration = 2f;
     [SerializeField] private int elementDelayMs = 50;
 
-    private AudioManager _audioManager;
-
-    [Inject]
-    public void Construct(AudioManager audioManager)
-    {
-        _audioManager = audioManager;
-    }
-
     public async UniTask Show()
     {
         if (shopCanvasGroup != null)
@@ -71,11 +63,6 @@ public class ShopPanelAnimator : MonoBehaviour
 
     public async UniTask Hide()
     {
-        //GameManager.instance.diceManager.SetupDiceBoard();
-        //UiController.instance.RefreshInventory();
-
-        _audioManager.PlayBgm("Battle", true);
-
         foreach (var element in uiElements)
         {
             element.alpha = 0f;
@@ -84,8 +71,6 @@ public class ShopPanelAnimator : MonoBehaviour
         ribbonRect.DOAnchorPosY(500, 0.4f).SetEase(Ease.InBack);
         panelImage.DOFillAmount(0f, 0.4f).SetEase(Ease.InBack);
         await UniTask.Delay(400);
-        
-        //UiController.instance.backGround.SetActive(false);
 
         shopCanvas.SetActive(false);
     }
