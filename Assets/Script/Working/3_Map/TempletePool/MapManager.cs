@@ -234,7 +234,7 @@ public class MapManager : MonoBehaviour
 
         if (view.Type == MNodeType.Event)
         {
-            await stageFlow.ShowEventAsync();
+            await stageFlow.ShowEventAsync((RectTransform)view.transform);
             CompleteCurrentNode(nodeId);
             return;
         }

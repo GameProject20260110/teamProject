@@ -464,7 +464,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &161387199
 Canvas:
   m_ObjectHideFlags: 0
@@ -474,8 +474,8 @@ Canvas:
   m_GameObject: {fileID: 161387196}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 2
+  m_Camera: {fileID: 1768659067}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -497,7 +497,7 @@ RectTransform:
   m_GameObject: {fileID: 161387196}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2078139419}
@@ -511,8 +511,8 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_SizeDelta: {x: 1920, y: 1080}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &227098628 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4806652182095185543, guid: 805a7a1362e61ba4ea2c23b7f612b1d7, type: 3}
@@ -2073,7 +2073,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1259215482}
-  - component: {fileID: 1259215481}
   m_Layer: 0
   m_Name: MapScrollAnimation
   m_TagString: Untagged
@@ -2081,34 +2080,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1259215481
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1259215480}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4c182b5bfbd4f2a41913735ef11ff8b3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::MapScrollAnimation
-  eventPopupSos: {fileID: 11400000, guid: f9aa3081abcace1428cf3a491f547ec4, type: 2}
-  popupRoot: {fileID: 105015341}
-  Panel: {fileID: 764440304}
-  magicCircle: {fileID: 2144120585}
-  leftScroll: {fileID: 1496116710}
-  rightScroll: {fileID: 1115482736}
-  EventPopup: {fileID: 1866443465}
-  Popup: {fileID: 325974693}
-  EventSprite: {fileID: 1815593251}
-  EventTitle: {fileID: 1072994298}
-  EventDesc: {fileID: 743178561}
-  test: {fileID: 11400000, guid: 573a97c8b4b894347b5b7abffee17ee0, type: 2}
-  Buttons:
-  - {fileID: 152342596}
-  - {fileID: 1729175923}
-  - {fileID: 1413598447}
 --- !u!4 &1259215482
 Transform:
   m_ObjectHideFlags: 0
@@ -2968,6 +2939,7 @@ MonoBehaviour:
     TypeName: 
   autoRun: 1
   autoInjectGameObjects: []
+  eventDatabase: {fileID: 11400000, guid: 7da8343fc0b21424c85051199be17dde, type: 2}
 --- !u!4 &1648301411
 Transform:
   m_ObjectHideFlags: 0
@@ -3116,6 +3088,7 @@ GameObject:
   - component: {fileID: 1768659067}
   - component: {fileID: 1768659066}
   - component: {fileID: 1768659069}
+  - component: {fileID: 1768659070}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3163,10 +3136,10 @@ Camera:
     width: 1
     height: 1
   near clip plane: 0.3
-  far clip plane: 1000
+  far clip plane: 2000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 540
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -3191,7 +3164,7 @@ Transform:
   m_GameObject: {fileID: 1768659065}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -10}
+  m_LocalPosition: {x: 0, y: 0, z: -1000}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3241,6 +3214,20 @@ MonoBehaviour:
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
   m_Version: 2
+--- !u!114 &1768659070
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1768659065}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cb12fad93e69c942b51f35350ae0110, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MapCameraController
+  mapCanvasRect: {fileID: 161387200}
+  defaultEase: 10
 --- !u!1 &1815593249
 GameObject:
   m_ObjectHideFlags: 0

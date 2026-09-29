@@ -1,17 +1,24 @@
 using Cysharp.Threading.Tasks;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class MapStageFlowController
 {
     private readonly MapProgressStore progressStore;
     private readonly SceneController sceneController;
-    private readonly MapScrollAnimation eventPopup;
+    private readonly EventObjectDatabase eventDatabase;
+    private readonly MapEventObjectSpawner objectSpawner;
+    private readonly MapCameraController cameraController;
 
-    public MapStageFlowController(MapProgressStore progressStore, SceneController sceneController, MapScrollAnimation eventPopup)
+    public MapStageFlowController(MapProgressStore progressStore, SceneController sceneController,
+                                   EventObjectDatabase eventDatabase, MapEventObjectSpawner objectSpawner,
+                                   MapCameraController cameraController)
     {
         this.progressStore = progressStore;
         this.sceneController = sceneController;
-        this.eventPopup = eventPopup;
+        this.eventDatabase = eventDatabase;
+        this.objectSpawner = objectSpawner;
+        this.cameraController = cameraController;
     }
 
     public bool HasSavedProgress => progressStore.HasProgress;
@@ -29,7 +36,22 @@ public class MapStageFlowController
         progressStore.Clear();
     }
 
-    public UniTask ShowEventAsync() => eventPopup.ShowEventAsync();
+    public async UniTask ShowEventAsync(RectTransform nodeRect)
+    {
+        var prefab = eventDatabase.RandomEventPick();
+        await cameraController.ZoomToAsync(nodeRect.position, 2, 0.5f);
+        try
+        {
+            var eventObject = objectSpawner.Spawn(nodeRect, prefab);
+            if (eventObject != null)
+                await eventObject.PlayAsync();
+        }
+        finally
+        {
+            objectSpawner.Despawn();
+            await cameraController.ResetAsync(0.5f);
+        }
+    }
 
     public bool TryTransitionToNodeScene(MNodeType type)
     {
