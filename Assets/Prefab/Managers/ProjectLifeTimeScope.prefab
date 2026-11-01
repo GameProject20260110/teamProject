@@ -58,3 +58,4 @@ MonoBehaviour:
   playerHudManagerPrefab: {fileID: 74801765141649290, guid: bef8608391cda974aa26cde80964ff06, type: 3}
   playerCardCollectionPrefab: {fileID: 5075195981096430445, guid: 05539aba5efca384eb47f1fdc36340cb, type: 3}
   DeckRepositoryPrefab: {fileID: 116251954669926866, guid: 77ac4f1441743da43b6d40b6857f06c0, type: 3}
+  cardDatabase: {fileID: 11400000, guid: 9033ec412f81123449869ba9cbf392ca, type: 2}

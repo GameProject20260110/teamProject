@@ -14,6 +14,7 @@ public class MapSceneLifetimeScope : LifetimeScope
         builder.RegisterComponentInHierarchy<MapCharacterMover>();
         builder.RegisterComponentInHierarchy<MapManager>();
         builder.RegisterComponentInHierarchy<MapCameraController>();
+        builder.RegisterComponentInHierarchy<ChestCanvasEvent>();
 
         builder.Register<MapPathfinder>(Lifetime.Singleton);
         builder.Register<MapIntroController>(Lifetime.Singleton);

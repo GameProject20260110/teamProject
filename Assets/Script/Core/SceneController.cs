@@ -18,7 +18,6 @@ public class SceneController : MonoBehaviour
     public const string ShopScene = "Shop";
     public const string BossScene = "Boss";
     public const string EventScene = "Event";
-    public const string InventoryScene = "DeckEdit";
 
     public bool isFirstEntry = true;
     public bool ShowHud =>
@@ -32,9 +31,8 @@ public class SceneController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI progressText;
 
     [Header("로딩 연출 속도 제어")]
-    [SerializeField] private float loadingSmoothSpeed = 1.2f; // 숫자가 낮을 시 느림
-    [SerializeField] private float finalPushSpeed = 0.3f; // 숫자가 낮을 시 더 지연
-
+    [SerializeField] private float loadingSmoothSpeed = 1.2f;
+    [SerializeField] private float finalPushSpeed = 0.3f;
 
     [Header("스테이지 전환용(맵 -> 스테이지)")]
     [SerializeField] private Image wipeImage;
@@ -42,7 +40,6 @@ public class SceneController : MonoBehaviour
 
     private SceneInstance? currentAddressableScene;
     public bool IsTransitioning { get; private set; }
-    public bool IsInventoryOpen { get; private set; }
 
     private void Awake()
     {
@@ -54,7 +51,7 @@ public class SceneController : MonoBehaviour
         }
         if (loadingPanel != null) loadingPanel.SetActive(false);
     }
-    
+
     private void OnValidate()
     {
         if (wipeImage == null) Debug.LogWarning("wipeImage가 비어있습니다.");
@@ -66,35 +63,11 @@ public class SceneController : MonoBehaviour
     //public void LoadMapFromTitle() => LoadAsync(SceneMap, true).Forget();
     public void LoadMapFromTitle() => LoadMapFromTitleAsync().Forget();
     // 컷 인/아웃 (맵 -> 스테이지)
-    public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget(); 
+    public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget();
     public void LoadMapScene() => LoadAsync(SceneMap, false).Forget();
     public void LoadShopScene() => LoadAsync(ShopScene, false).Forget();
     public void LoadBossScene() => LoadAsync(BossScene, false).Forget();
     public void LoadEventScene() => LoadAsync(EventScene, false).Forget();
-
-    public void ToggleInventory()
-    {
-        if (IsInventoryOpen)
-            CloseInventoryAsync().Forget();
-        else
-            OpenInventoryAsync().Forget();
-    }
-
-    private async UniTask OpenInventoryAsync()
-    {
-        if (IsInventoryOpen) return;
-
-        await SceneManager.LoadSceneAsync(InventoryScene, LoadSceneMode.Additive);
-        IsInventoryOpen = true;
-    }
-
-    private async UniTask CloseInventoryAsync()
-    {
-        if (!IsInventoryOpen) return;
-
-        await SceneManager.UnloadSceneAsync(InventoryScene);
-        IsInventoryOpen = false;
-    }
 
     private async UniTask LoadMapFromTitleAsync()
     {
@@ -128,7 +101,7 @@ public class SceneController : MonoBehaviour
 
         try
         {
-            if(showLoadingUI)
+            if (showLoadingUI)
             {
                 SetLoadingUI(true, 0f);
             }
@@ -139,7 +112,7 @@ public class SceneController : MonoBehaviour
 
             await LoadNormalSceneAsync(sceneName, showLoadingUI);
 
-            if(showLoadingUI)
+            if (showLoadingUI)
             {
                 SetLoadingUI(false, 0f);
             }
@@ -208,13 +181,13 @@ public class SceneController : MonoBehaviour
 
         while (op.progress < 0.9f || fakeProgress < 1f)
         {
-            if(updateUI)
+            if (updateUI)
             {
                 float targetProgress = Mathf.Clamp01(op.progress / 0.9f);
 
                 fakeProgress = Mathf.Lerp(fakeProgress, targetProgress, Time.unscaledDeltaTime * loadingSmoothSpeed);
 
-                if(op.progress >= 0.9f)
+                if (op.progress >= 0.9f)
                 {
                     fakeProgress = Mathf.MoveTowards(fakeProgress, 1f, Time.unscaledDeltaTime * finalPushSpeed);
                 }
@@ -247,7 +220,7 @@ public class SceneController : MonoBehaviour
 
         wipeImage.gameObject.SetActive(true);
 
-        if(isCovering)
+        if (isCovering)
         {
             wipeImage.fillOrigin = (int)Image.OriginHorizontal.Left;
             wipeImage.fillAmount = 0f;
@@ -270,5 +243,5 @@ public class SceneController : MonoBehaviour
             wipeImage.gameObject.SetActive(false);
         }
     }
-    
+
 }

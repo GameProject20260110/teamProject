@@ -9,16 +9,18 @@ public class MapStageFlowController
     private readonly EventObjectDatabase eventDatabase;
     private readonly MapEventObjectSpawner objectSpawner;
     private readonly MapCameraController cameraController;
+    private readonly ChestCanvasEvent chestCanvasEvent;
 
     public MapStageFlowController(MapProgressStore progressStore, SceneController sceneController,
                                    EventObjectDatabase eventDatabase, MapEventObjectSpawner objectSpawner,
-                                   MapCameraController cameraController)
+                                   MapCameraController cameraController, ChestCanvasEvent chestCanvasEvent)
     {
         this.progressStore = progressStore;
         this.sceneController = sceneController;
         this.eventDatabase = eventDatabase;
         this.objectSpawner = objectSpawner;
         this.cameraController = cameraController;
+        this.chestCanvasEvent = chestCanvasEvent;
     }
 
     public bool HasSavedProgress => progressStore.HasProgress;
@@ -44,7 +46,11 @@ public class MapStageFlowController
         {
             var eventObject = objectSpawner.Spawn(nodeRect, prefab);
             if (eventObject != null)
+            {
                 await eventObject.PlayAsync();
+                await chestCanvasEvent.PlayAsync();
+            }
+                
         }
         finally
         {

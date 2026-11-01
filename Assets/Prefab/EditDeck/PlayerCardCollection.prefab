@@ -44,4 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda5af27403a18748929c54c5bfd228a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCardCollection
-  defaultOwnedCards: []
+  debugCardId: 0
+  debugAmount: 1
+  defaultOwnedCards:
+  - cardId: 0
+    count: 0

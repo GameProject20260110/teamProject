@@ -57,7 +57,7 @@ public class PlayerCardCollection : MonoBehaviour, IInitializable
         _ownedCounts.TryGetValue(cardId, out int current);
         _ownedCounts[cardId] = current + amount;
         Save();
-        OnCollectionChanged.Invoke();
+        OnCollectionChanged?.Invoke();
     }
 
     public bool RemoveCard(int cardId, int amount = 1)

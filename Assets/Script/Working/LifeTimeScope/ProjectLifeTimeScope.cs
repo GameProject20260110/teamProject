@@ -17,6 +17,7 @@ public class ProjectLifetimeScope : LifetimeScope
     [Header("덱 관리 시스템 (신규 카드)")]
     [SerializeField] private PlayerCardCollection playerCardCollectionPrefab;
     [SerializeField] private DeckRepository DeckRepositoryPrefab;
+    [SerializeField] private CardDatabase cardDatabase;
 
     protected override void Configure(IContainerBuilder builder)
     {
@@ -54,6 +55,6 @@ public class ProjectLifetimeScope : LifetimeScope
             .DontDestroyOnLoad()
             .AsImplementedInterfaces()
             .AsSelf();
-
+        builder.RegisterInstance(cardDatabase);
     }
 }

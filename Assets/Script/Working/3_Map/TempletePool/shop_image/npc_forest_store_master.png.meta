@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: 2a8284b016bd4784ba2fda491513101f
+guid: 6161a9fdf90b6a54490530c1caa22973
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -8008952726169494551
-    second: img_store_area_bg_dummy_0
+      213: -3538116017031077431
+    second: npc_forest_store_master_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: img_store_area_bg_dummy_0
+      name: npc_forest_store_master_0
       rect:
         serializedVersion: 2
-        x: 77
-        y: 0
-        width: 1766
-        height: 1080
+        x: 23
+        y: 47
+        width: 420
+        height: 404
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 9eb55c5cdeb7ad090800000000000000
-      internalID: -8008952726169494551
+      spriteID: 9c12ebe6a3616eec0800000000000000
+      internalID: -3538116017031077431
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      img_store_area_bg_dummy_0: -8008952726169494551
+      npc_forest_store_master_0: -3538116017031077431
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

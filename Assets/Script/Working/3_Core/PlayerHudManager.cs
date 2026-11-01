@@ -1,3 +1,4 @@
+using Cysharp.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -34,7 +35,11 @@ public class PlayerHudManager : MonoBehaviour, IInitializable
 
     private void Awake()
     {
-        inventory.onClick.AddListener(() => _sceneController.ToggleInventory());
+        inventory.onClick.AddListener(() =>
+        { 
+            Debug.Log($"[HUD] 가방 클릭 / IsOpen={DeckSceneLoader.IsOpen} / DeckEdit 로드됨={SceneManager.GetSceneByName("DeckEdit").isLoaded}");
+            DeckSceneLoader.OpenAsync().Forget();
+        });
     }
 
     private void OnEnable()
