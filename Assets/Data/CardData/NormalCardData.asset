@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: NormalCardData
   m_EditorClassIdentifier: Assembly-CSharp::NormalCardData
   cardID: 0
-  cardName: "\uAE30\uBCF8 \uC8FC\uC0AC\uC704 \uCE74\uB4DC"
+  cardName: "\uAE30\uBCF8 \uC8FC\uC0AC\uC704"
   description: base card
   cost: 0
   diceSides: 6

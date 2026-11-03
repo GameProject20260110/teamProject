@@ -38,6 +38,27 @@ public class CardDatabase : ScriptableObject
         }
     }
 
+    #region Map
+
+    public CardData RandomPickCard()
+    {
+        int index = Random.Range(0, allCards.Count);
+        return allCards[index];
+    }
+
+    public List<CardData> PickRandomCards(int count)
+    {
+        var shuffled = new List<CardData>(allCards);
+        for (int i = shuffled.Count - 1; i > 0; i--)
+        {
+            int j = Random.Range(0, i + 1);
+            (shuffled[i], shuffled[j]) = (shuffled[j], shuffled[i]);
+        }
+        return shuffled.Take(Mathf.Min(count, shuffled.Count)).ToList();
+    }
+
+    #endregion
+
 #if UNITY_EDITOR
     [ContextMenu("모든 카드 데이터 다시 스캔")]
     private void RescanAllCards() 

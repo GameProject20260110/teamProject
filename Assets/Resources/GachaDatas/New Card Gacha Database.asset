@@ -1,0 +1,16 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b865d37fc1421fb40924596fe0a7d1dc, type: 3}
+  m_Name: New Card Gacha Database
+  m_EditorClassIdentifier: Assembly-CSharp::CardGachaDatabase
+  CardGachaList:
+  - {fileID: 11400000, guid: 022105a175a1809468e5ff9687b4a3b8, type: 2}

@@ -130,4 +130,7 @@ MonoBehaviour:
   - key: walk_wood
     clip: {fileID: 8300000, guid: ec4bd5988d7de0c41ab2d9959705dd8b, type: 3}
     volume: 1
+  - key: Purchase
+    clip: {fileID: 8300000, guid: f0936e06377f354459dadba0472df027, type: 3}
+    volume: 1
   channels: 5

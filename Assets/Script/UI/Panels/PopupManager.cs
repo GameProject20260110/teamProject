@@ -1,127 +1,36 @@
 ﻿using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using VContainer;
 
 public class PopupManager : MonoBehaviour
 {
-    [Header("주사위 팝업")]
-    public RectTransform dicePopup;
-    private TextMeshProUGUI diceDesc;
-    [SerializeField] private Image diceIcon;
-    [SerializeField] private TextMeshProUGUI diceName;
-
     [Header("아이템 팝업")]
-    public RectTransform itemPopup;
-    private TextMeshProUGUI itemDesc;
+    [SerializeField] private RectTransform itemPopup;
     [SerializeField] private Image itemIcon;
     [SerializeField] private TextMeshProUGUI itemName;
-
-    [Header("홀딩 안내")]
-    [SerializeField] private GameObject holdHint;
-
-    [Header("설명 팝업")]
-    public ShopDescPopup DescPopup;
-
-    [Header("플레이어 정보")]
-    public TextMeshProUGUI playerGold;
-
-    [SerializeField] private GameObject hoverHintText;
-
-    private ResourceManager _resourceManager;
-    private PlayerShopManager _playerShopManager;
-
-    [Inject]
-    public void Construct(ResourceManager resourceManager, PlayerShopManager playerShopManager)
-    {
-        _resourceManager = resourceManager;
-        _playerShopManager = playerShopManager;
-    }
+    private TextMeshProUGUI itemDesc;
 
     private void Awake()
     {
-        if(dicePopup != null)
-        {
-            diceDesc = dicePopup.GetComponentInChildren<TextMeshProUGUI>();
-        }
-        
-        if(itemPopup != null)
-        {
+        if (itemPopup != null)
             itemDesc = itemPopup.GetComponentInChildren<TextMeshProUGUI>();
-        }      
     }
 
-    private void Start()
+    private void Start() => ClosePopup();
+
+    public void OpenPopup(CardData data)
     {
-        ClosePopup();
-        if (hoverHintText != null) hoverHintText.SetActive(true);
-        if (playerGold != null)
-        {
-            int gold = _playerShopManager != null && _playerShopManager.IsOpen ? 
-                _playerShopManager.TempGold : _resourceManager.gold;
-            playerGold.text = gold.ToString();
-        }
+        if (itemPopup == null || data == null) return;
 
-        if (_playerShopManager != null)
-            _playerShopManager.OnGoldChanged += UpdateGold;         
-    }
-
-    private void OnDestroy()
-    {
-        if (_playerShopManager != null)
-            _playerShopManager.OnGoldChanged -= UpdateGold;
-    }
-
-    public void SetStatus()
-    {
-        playerGold.text = _resourceManager.gold.ToString();
-    }
-
-    public void DescOpenPopup(DiceData data)
-    {
-        DescPopup.gameObject.SetActive(true);
-        DescPopup.UpdateUI(data);
-    }
-
-    public void DescOpenPopup(BattleItemSo data)
-    {
-        DescPopup.gameObject.SetActive(true);
-        DescPopup.UpdateUI(data);
-    }
-
-    public void OpenPopup(DiceData data, RectTransform targetRect)
-    {
-        if (hoverHintText != null) hoverHintText.SetActive(false);
-        if (diceDesc == null) return;
-        this.diceDesc.text = data.Desc;
-        if (diceIcon != null) diceIcon.sprite = data.skin.GetSprite(1);
-        if (diceName != null) diceName.text = data.abilityName;
-
-        dicePopup.gameObject.SetActive(true);
-
-        if (holdHint != null) holdHint.SetActive(true);
-    }
-
-    public void OpenPopup(BattleItemSo data, RectTransform targetRect)
-    {
-        if (hoverHintText != null) hoverHintText.SetActive(false);
-        if (itemDesc == null) return;
-        this.itemDesc.text = data.itemDesc;
-        if (itemIcon != null) itemIcon.sprite = data.itemIcon;
-        if (itemName != null) itemName.text = data.itemName;
-
+        if (itemDesc != null) itemDesc.text = data.description;
+        if (itemIcon != null) itemIcon.sprite = data.diceSkin.GetSprite(1);
+        if (itemName != null) itemName.text = data.cardName;
 
         itemPopup.gameObject.SetActive(true);
-        if (holdHint != null) holdHint.SetActive(true);
     }
 
     public void ClosePopup()
     {
-        if(diceDesc != null) dicePopup.gameObject.SetActive(false);
-        if(itemDesc != null) itemPopup.gameObject.SetActive(false);
-        if (DescPopup != null) DescPopup.gameObject.SetActive(false);
-        if(hoverHintText != null) hoverHintText.SetActive(true);
+        if (itemPopup != null) itemPopup.gameObject.SetActive(false);
     }
-
-    private void UpdateGold(int gold) => playerGold.text = $"{gold}";
 }
