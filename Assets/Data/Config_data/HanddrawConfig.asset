@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3c1df38d1d9be534bae89ba4151b5d9a, type: 3}
+  m_Name: HanddrawConfig
+  m_EditorClassIdentifier: Assembly-CSharp::HanddrawConfig
+  firstTurnDrawCount: 6
+  perTurnDrawCount: 2
+  fanRadius: 20
+  maxFanAngle: 35
+  maxCardStepAngle: 5
+  drawInterval: 0.12
+  pullOutSortingLayer: Board
+  pullOutSortingOrder: -15
+  handSortingLayer: Hand
+  handSortingOrderBase: 100
+  pullOutOffset: {x: -1.6, y: 0}
+  autoPullOutDistance: 1
+  pullOutMargin: 0.2
+  pullOutDuration: 0.3
+  drawMoveDuration: 0.35
+  drawMoveCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  makeRoomStartRatio: 0.4
+  flipDuration: 0.25
+  flipStartRatio: 0.2
+  reshuffleDuration: 0.3

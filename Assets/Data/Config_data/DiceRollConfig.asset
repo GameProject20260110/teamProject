@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1d943f581e910a64288b10962c762894, type: 3}
+  m_Name: DiceRollConfig
+  m_EditorClassIdentifier: Assembly-CSharp::DiceRollConfig
+  title: "\uAE30\uBCF8 \uACF5\uACA9\uB825 \uAC78\uC84D"
+  sortingLayer: Popup
+  panelOrder: 1
+  backgroundOrder: 0
+  titleOrder: 1
+  itemBaseOrder: 10
+  overlayAlpha: 0.65
+  overlayFadeDuration: 0.25
+  panelAlpha: 1
+  panelFadeDuration: 0.5
+  panelPadding: {x: 0.4, y: 0.3}
+  titleAreaHeight: 0.8
+  itemSize: {x: 2, y: 4}
+  itemGap: 0.5
+  rowGap: 0.3
+  minItemScale: 0.6
+  maxRows: 2
+  itemAppearDuration: 0.2
+  itemAppearStagger: 0.02
+  rollDuration: 0.35
+  faceSwapInterval: 0.05
+  stopInterval: 0.06
+  maxStopSpread: 0.4
+  stopPunchScale: 1.1
+  stopPunchDuration: 0.1
+  revealDuration: 0.15
+  revealStartScale: 0.6
+  revealOvershoot: 1.2
+  skipInputDelay: 0.25
+  closeHoldDelay: 0.3
+  closeFadeDuration: 0.15

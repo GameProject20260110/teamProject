@@ -7,14 +7,18 @@ public class ProjectLifetimeScope : LifetimeScope
     [SerializeField] private SettingsManager settingsManagerPrefab;
     [SerializeField] private AudioManager audioManagerPrefab;
     [SerializeField] private SaveManager saveManagerPrefab;
-    [SerializeField] private SceneController sceneControllerPrefab;
-    [SerializeField] private ItemManager itemManagerPrefab;
+    [SerializeField] private SceneController sceneControllerPrefab;    
     [SerializeField] private PlayerDeck playerDeckPrefab;
     [SerializeField] private ResourceManager resourceManagerPrefab;
+    [SerializeField] private CardDatabase cardDatabase;
+    
+    // ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½É¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     [SerializeField] private BattleDataManager battleDataManagerPrefab;
     [SerializeField] private PlayerHudManager playerHudManagerPrefab;
+    [SerializeField] private ItemManager itemManagerPrefab;
 
-    [Header("µ¦ °ü¸® ½Ã½ºÅÛ (½Å±Ô Ä«µå)")]
+
+    [Header("ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã½ï¿½ï¿½ï¿½ (ï¿½Å±ï¿½ Ä«ï¿½ï¿½)")]
     [SerializeField] private PlayerCardCollection playerCardCollectionPrefab;
     [SerializeField] private DeckRepository DeckRepositoryPrefab;
     [SerializeField] private CardDatabase cardDatabase;
@@ -34,16 +38,18 @@ public class ProjectLifetimeScope : LifetimeScope
         builder.Register<SaveManager>(Lifetime.Singleton);
         builder.Register<MapSaveLoad>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         builder.Register<MapProgressStore>(Lifetime.Singleton);
+        if (cardDatabase != null) builder.RegisterInstance(cardDatabase);
+        else Debug.LogWarning("[ProjectLifetimeScope] cardDatabaseï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
 
-        //builder.RegisterComponentInNewPrefab(playerDeckPrefab, Lifetime.Singleton)
-        //    .DontDestroyOnLoad()
-        //    .AsImplementedInterfaces()
-        //    .AsSelf();
+            //builder.RegisterComponentInNewPrefab(playerDeckPrefab, Lifetime.Singleton)
+            //    .DontDestroyOnLoad()
+            //    .AsImplementedInterfaces()
+            //    .AsSelf();
 
-        builder.RegisterComponentInNewPrefab(resourceManagerPrefab, Lifetime.Singleton)
-            .DontDestroyOnLoad()
-            .AsImplementedInterfaces()
-            .AsSelf();
+            builder.RegisterComponentInNewPrefab(resourceManagerPrefab, Lifetime.Singleton)
+                .DontDestroyOnLoad()
+                .AsImplementedInterfaces()
+                .AsSelf();
 
         
         builder.RegisterComponentInNewPrefab(DeckRepositoryPrefab, Lifetime.Singleton)
