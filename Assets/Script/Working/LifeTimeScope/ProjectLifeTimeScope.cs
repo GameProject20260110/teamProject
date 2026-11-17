@@ -10,15 +10,15 @@ public class ProjectLifetimeScope : LifetimeScope
     [SerializeField] private SceneController sceneControllerPrefab;    
     [SerializeField] private PlayerDeck playerDeckPrefab;
     [SerializeField] private ResourceManager resourceManagerPrefab;
-    [SerializeField] private CardDatabase cardDatabase;
     
-    // ��� ���ɼ� ����
+    
+    // 나중에 지울것 
     [SerializeField] private BattleDataManager battleDataManagerPrefab;
     [SerializeField] private PlayerHudManager playerHudManagerPrefab;
     [SerializeField] private ItemManager itemManagerPrefab;
 
 
-    [Header("�� ���� �ý��� (�ű� ī��)")]
+    [Header("덱 관리 시스템(신규 카드)")]
     [SerializeField] private PlayerCardCollection playerCardCollectionPrefab;
     [SerializeField] private DeckRepository DeckRepositoryPrefab;
     [SerializeField] private CardDatabase cardDatabase;
@@ -38,8 +38,7 @@ public class ProjectLifetimeScope : LifetimeScope
         builder.Register<SaveManager>(Lifetime.Singleton);
         builder.Register<MapSaveLoad>(Lifetime.Singleton).AsImplementedInterfaces().AsSelf();
         builder.Register<MapProgressStore>(Lifetime.Singleton);
-        if (cardDatabase != null) builder.RegisterInstance(cardDatabase);
-        else Debug.LogWarning("[ProjectLifetimeScope] cardDatabase�� ��� �ֽ��ϴ�.");
+        
 
             //builder.RegisterComponentInNewPrefab(playerDeckPrefab, Lifetime.Singleton)
             //    .DontDestroyOnLoad()
@@ -61,6 +60,7 @@ public class ProjectLifetimeScope : LifetimeScope
             .DontDestroyOnLoad()
             .AsImplementedInterfaces()
             .AsSelf();
-        builder.RegisterInstance(cardDatabase);
+        if (cardDatabase != null) builder.RegisterInstance(cardDatabase);
+        else Debug.LogWarning("[ProjectLifetimeScope] cardDatabase가 존재하지 않습니다.");
     }
 }
