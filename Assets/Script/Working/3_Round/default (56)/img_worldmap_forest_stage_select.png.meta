@@ -1,10 +1,10 @@
 fileFormatVersion: 2
-guid: b9f8009de12b48942955a14d146f8baf
+guid: b4126668c25e68b46acc696d13b99738
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 6138273918625563100
-    second: Free Count_1781317360_123563_0
+      213: 8084926910733862790
+    second: img_worldmap_forest_stage_select_0
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -24,7 +24,7 @@ TextureImporter:
     heightScale: 0.25
     normalMapFilter: 0
     flipGreenChannel: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -100,13 +100,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: Free Count_1781317360_123563_0
+      name: img_worldmap_forest_stage_select_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 1024
-        height: 1024
+        x: 259
+        y: 24
+        width: 1319
+        height: 1018
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -115,8 +115,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: cd1c8b56b978f2550800000000000000
-      internalID: 6138273918625563100
+      spriteID: 687c945803e633070800000000000000
+      internalID: 8084926910733862790
       vertices: []
       indices: 
       edges: []
@@ -135,7 +135,7 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      Free Count_1781317360_123563_0: 6138273918625563100
+      img_worldmap_forest_stage_select_0: 8084926910733862790
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

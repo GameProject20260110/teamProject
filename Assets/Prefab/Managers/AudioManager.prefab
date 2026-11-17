@@ -66,6 +66,9 @@ MonoBehaviour:
   - key: Map
     clip: {fileID: 8300000, guid: 6666fa15dee3edd41a7145f9df007e8e, type: 3}
     volume: 1
+  - key: Round
+    clip: {fileID: 8300000, guid: 6469b409c6320cf4f83b46202b36da57, type: 3}
+    volume: 1
   sfxDatas:
   - key: Click
     clip: {fileID: 8300000, guid: 273d0d7274fdf2d48bcdc6b225fb4342, type: 3}

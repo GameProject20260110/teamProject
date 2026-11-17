@@ -14,6 +14,7 @@ public class SceneController : MonoBehaviour
 
     public const string SceneTitle = "Title";
     public const string SceneBattle = "GameBoard";
+    public const string SceneRound = "Round";
     public const string SceneMap = "Map";
     public const string ShopScene = "Shop";
     public const string BossScene = "Boss";
@@ -64,6 +65,7 @@ public class SceneController : MonoBehaviour
     public void LoadMapFromTitle() => LoadMapFromTitleAsync().Forget();
     // ÄÆ ÀÎ/¾Æ¿ô (¸Ê -> ½ºÅ×ÀÌÁö)
     public void LoadGameScene() => LoadAsync(SceneBattle, false).Forget();
+    public void LoadRoundScene() => LoadAsync(SceneRound, false).Forget();
     public void LoadMapScene() => LoadAsync(SceneMap, false).Forget();
     public void LoadShopScene() => LoadAsync(ShopScene, false).Forget();
     public void LoadBossScene() => LoadAsync(BossScene, false).Forget();
@@ -79,11 +81,11 @@ public class SceneController : MonoBehaviour
 
         try
         {
-            await LoadNormalSceneAsync(SceneMap, false);
+            await LoadNormalSceneAsync(SceneRound, false);
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"¾À ·Îµå ½ÇÆÐ ({SceneMap}): {e.Message}");
+            Debug.LogError($"¾À ·Îµå ½ÇÆÐ ({SceneRound}): {e.Message}");
         }
         finally
         {
