@@ -61,6 +61,12 @@ TagManager:
   - name: Board
     uniqueID: 1075005771
     locked: 0
+  - name: Field
+    uniqueID: 3079391363
+    locked: 0
+  - name: Hand
+    uniqueID: 3898544307
+    locked: 0
   - name: Character
     uniqueID: 2037632001
     locked: 0
@@ -73,11 +79,11 @@ TagManager:
   - name: Skill
     uniqueID: 1451897109
     locked: 0
-  - name: PopUp
-    uniqueID: 1242484113
+  - name: Drag
+    uniqueID: 1533211959
     locked: 0
-  - name: Cutscene
-    uniqueID: 1120771793
+  - name: Popup
+    uniqueID: 1242484113
     locked: 0
   m_RenderingLayers:
   - Default

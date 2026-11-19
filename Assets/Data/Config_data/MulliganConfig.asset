@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0699c8d66f106cd4080d9f10fd6bc4aa, type: 3}
+  m_Name: MulliganConfig
+  m_EditorClassIdentifier: Assembly-CSharp::MulliganConfig
+  sortingLayer: Popup
+  cardBaseOrder: 10
+  overlayAlpha: 0.65
+  showFadeDuration: 0.25
+  cardScale: 1
+  cardSpacing: 7
+  maxRowWidth: 15
+  cardAppearDuration: 0.3
+  cardAppearStagger: 0.03
+  confirmButtonFadeDuraiton: 0.2
+  selectRaise: 0.3
+  selectDuration: 0.12
+  selectBorderAlpha: 1
+  selectGlowAlpha: 0.35
+  exitDuration: 0.12
+  enterDuration: 0.15
+  closeHoldDelay: 0.4
+  closeFadeDuration: 0.25
